@@ -1,9 +1,34 @@
+# Dependencies & build output
 node_modules/
 build/
 dist/
 coverage/
+
+# OS / logs
 .DS_Store
+Thumbs.db
 *.log
+
+# Env
 .env*
 !.env.example
-.env
+
+# Test & audit reports (regenerated locally / in CI)
+test-results/
+playwright-report/
+lighthouse-report/
+.lighthouseci/
+
+# AI agent tooling (local only)
+.agents/
+.claude/
+.codex/
+
+# Design artifacts: keep only images imported by the site
+/artifacts/*
+!/artifacts/landing-media/
+/artifacts/landing-media/*
+!/artifacts/landing-media/images/
+!/artifacts/landing-media/vision/
+/artifacts/landing-media/vision/*
+!/artifacts/landing-media/vision/images/
