@@ -7,13 +7,13 @@ import ProductFilm from './ProductFilm';
 const copy = {
   it: {
     eyebrow: 'Per consulenti BPM e Operations', first: 'Process Intelligence Software', second: 'per Operations Efficienti ed Efficaci.',
-    body: 'Stop spending weeks reconstructing how your client really works. DeliR brings scattered knowledge into one verified As-Is, lets you simulate and compare different To-Be scenarios, and helps you deliver faster, evidence-backed recommendations your clients can trust.',
+    body: 'Stop spending weeks reconstructing how your client really works. DeliR turns scattered knowledge into a verified As-Is, compares To-Be scenarios, and continuously improves processes so you deliver better recommendations faster.',
     primary: 'Parliamo del tuo progetto', secondary: 'Vedi il prodotto',
     terms: ['Pilot a pagamento per milestone', 'Perimetro e criteri concordati', 'Primo contatto senza dati del cliente'],
   },
   en: {
     eyebrow: 'For BPM and Operations consultants', first: 'From AS-IS to TO-BE.', second: 'Ready for the decision.',
-    body: 'Stop spending weeks reconstructing how your client really works. DeliR brings scattered knowledge into one verified As-Is, lets you simulate and compare different To-Be scenarios, and helps you deliver faster, evidence-backed recommendations your clients can trust.',
+    body: 'Stop spending weeks reconstructing how your client really works. DeliR turns scattered knowledge into a verified As-Is, compares To-Be scenarios, and continuously improves processes so you deliver better recommendations faster.',
     primary: 'Discuss your project', secondary: 'See the product',
     terms: ['Paid pilot by milestone', 'Agreed scope and acceptance criteria', 'No client data at first contact'],
   },
