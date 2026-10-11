@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { pilotCtaLabel, projectContactHref } from '../lib/publicOffer';
+import { pilotCtaLabel, pilotApplicationHref } from '../lib/publicOffer';
 
 const copy = {
   it: {
@@ -27,7 +27,7 @@ export default function FinalCTA() {
     <h2 id="final-cta-title" className="mx-auto mt-5 max-w-3xl text-balance font-display text-[clamp(2rem,4vw,3.6rem)] font-semibold leading-tight tracking-[-0.04em]">{t.title}</h2>
     <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-300">{t.intro}</p>
     <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-300">{t.body}</p>
-    <a href={projectContactHref(language)} className="btn-primary mt-7 whitespace-normal">{pilotCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4 shrink-0" /></a>
+    <a href={pilotApplicationHref(language)} className="btn-primary mt-7 whitespace-normal">{pilotCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4 shrink-0" /></a>
     <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-slate-300">{t.terms}</p>
   </div></section>;
 }

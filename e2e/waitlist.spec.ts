@@ -1,10 +1,25 @@
 import { expect, test } from '@playwright/test';
 
-test('pilot offers a direct enquiry without a disabled form', async ({ page }) => {
-  await page.goto('/pilot');
-  await expect(page.getByRole('form')).toHaveCount(0);
-  await expect(page.getByRole('link', { name: 'Testa DeliR sul tuo progetto' })).toHaveAttribute('href', /^mailto:delir\.team@gmail\.com/);
-  await expect(page.getByText('Conosci perimetro e prezzo prima di iniziare')).toBeVisible();
+test('pilot previews a fillable form without transmitting data before activation', async ({ page }) => {
+  const requests: string[] = [];
+  page.on('request', request => { if (request.method() === 'POST') requests.push(request.url()); });
+  await page.goto('/');
+  await page.locator('.premium-hero').getByRole('link', { name: 'Testa DeliR sul tuo progetto' }).click();
+  await expect(page).toHaveURL(/\/pilot#application$/);
+  await expect(page.locator('#application')).toBeInViewport();
+  await expect(page.locator('#application')).toBeFocused();
+  await page.getByRole('button', { name: 'Verifica i dati' }).click();
+  await expect(page.getByLabel('Nome e cognome')).toBeFocused();
+  await expect(page.getByText('Inserisci il tuo nome.', { exact: true })).toBeVisible();
+  await page.getByLabel('Nome e cognome').fill('Demo User');
+  await page.getByLabel('Email di lavoro').fill('demo@example.test');
+  await page.getByLabel('Tipo di attività').selectOption('independent');
+  await page.getByLabel('Tempistica dell’incarico').selectOption('active');
+  await page.getByLabel('Processo o problema da analizzare').fill('Review a fictional procurement approval process.');
+  await page.getByRole('button', { name: 'Verifica i dati' }).click();
+  await expect(page.getByText('I dati sono pronti, ma l’invio non è ancora disponibile. La richiesta non è stata trasmessa.')).toBeVisible();
+  await expect(page.getByText('Candidatura ricevuta.', { exact: true })).toHaveCount(0);
+  expect(requests).toEqual([]);
 });
 
 test('waitlist does not collect data before privacy and delivery are ready', async ({ page }) => {
@@ -23,6 +38,6 @@ test('language choice is shareable and persists after reload', async ({ page, is
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await expect(page).toHaveTitle(/Sources, BPMN/);
   await page.goto('/pilot?lang=en');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Evaluate a DeliR pilot for your engagement.');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Test DeliR on Your Project.');
   await expect(page).toHaveTitle(/DeliR pilot/);
 });

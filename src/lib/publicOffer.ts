@@ -26,3 +26,7 @@ export const pilotCtaLabel = {
   it: 'Testa DeliR sul tuo progetto',
   en: 'Test DeliR on Your Project',
 } as const;
+
+export function pilotApplicationHref(language: 'it' | 'en') {
+  return `/pilot${language === 'en' ? '?lang=en' : ''}#application`;
+}

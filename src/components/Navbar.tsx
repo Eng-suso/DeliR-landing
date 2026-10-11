@@ -1,7 +1,7 @@
 import { Menu, Pause, Play, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { projectContactHref } from '../lib/publicOffer';
+import { pilotApplicationHref } from '../lib/publicOffer';
 import LanguageSwitch from './LanguageSwitch';
 import { useLanguage } from '../i18n/LanguageContext';
 
@@ -57,7 +57,7 @@ export default function Navbar() {
             </button>
             <div className="hidden items-center gap-4 lg:flex">
             <LanguageSwitch />
-            <a href={projectContactHref(language)} className="btn-primary min-h-11 rounded-full px-5 py-2">{t.cta}</a>
+            <a href={pilotApplicationHref(language)} className="btn-primary min-h-11 rounded-full px-5 py-2">{t.cta}</a>
             </div>
           </div>
           <button ref={menuButtonRef} type="button" onClick={() => setIsOpen((open) => !open)} aria-label={isOpen ? t.close : t.open} aria-expanded={isOpen} aria-controls="mobile-navigation" className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg text-brand-ink transition-colors hover:bg-slate-100 lg:hidden">
@@ -73,7 +73,7 @@ export default function Navbar() {
             </ul>
             <div className="flex items-center gap-4">
               <LanguageSwitch />
-              <a href={projectContactHref(language)} onClick={() => setIsOpen(false)} className="btn-primary flex-1 rounded-lg">{t.cta}</a>
+              <a href={pilotApplicationHref(language)} onClick={() => setIsOpen(false)} className="btn-primary flex-1 rounded-lg">{t.cta}</a>
             </div>
           </div>
         ) : null}

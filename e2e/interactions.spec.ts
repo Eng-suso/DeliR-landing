@@ -20,20 +20,19 @@ for (const language of ['it', 'en']) {
   });
 }
 
-test('hero makes the offer and an email enquiry available', async ({ page }) => {
+test('hero makes the offer and pilot application available', async ({ page }) => {
   await page.goto('/');
   await page.locator('#hero-title').waitFor();
   const hero = page.locator('section[aria-labelledby="hero-title"]');
   for (const term of ['Conosci perimetro e prezzo prima di iniziare', 'Paghi solo quando ogni milestone viene consegnata', 'Puoi fermarti in qualsiasi momento, senza impegni a lungo termine']) await expect(hero.getByText(term)).toBeVisible();
-  await expect(hero.getByRole('link', { name: 'Testa DeliR sul tuo progetto' })).toHaveAttribute('href', /^mailto:delir\.team@gmail\.com\?subject=/);
+  await expect(hero.getByRole('link', { name: 'Testa DeliR sul tuo progetto' })).toHaveAttribute('href', '/pilot#application');
   await hero.getByRole('link', { name: 'Vedi il prodotto' }).click();
   await expect(page).toHaveURL(/#caso$/);
   await page.goto('/pilot');
   await page.getByRole('heading', { level: 1 }).waitFor();
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Valuta un pilot DeliR sul tuo incarico.');
-  await expect(page.getByRole('form')).toHaveCount(0);
-  await expect(page.getByRole('heading', { name: 'Definisci il progetto' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Verifica e decidi' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Testa DeliR sul tuo progetto.');
+  await expect(page.getByRole('form')).toBeVisible();
+  await expect(page.getByLabel('Nome e cognome')).toBeEnabled();
 });
 
 test('product chapters and buying questions remain accessible', async ({ page }) => {

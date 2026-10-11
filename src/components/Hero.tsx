@@ -1,7 +1,7 @@
 import { ArrowDown, ArrowRight, Check } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { productClips } from '../lib/productClips';
-import { pilotCtaLabel, pilotRiskReversals, projectContactHref } from '../lib/publicOffer';
+import { pilotCtaLabel, pilotRiskReversals, pilotApplicationHref } from '../lib/publicOffer';
 import ProductFilm from './ProductFilm';
 
 const copy = {
@@ -42,7 +42,7 @@ export default function Hero() {
         <h1 id="hero-title" className="mt-5 text-balance font-display text-[clamp(2.25rem,4.2vw,3.85rem)] font-semibold leading-[1.06] tracking-[-0.05em] text-brand-ink lg:text-[clamp(2rem,3.2vw,3rem)]"><span className="block">{t.first}</span>{' '}<span className="block text-brand-blue">{t.second}</span></h1>
         <p className="mt-5 max-w-[36rem] text-pretty text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">{t.body}</p>
         <div className="mt-6 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
-          <a href={projectContactHref(language)} className="btn-primary whitespace-normal rounded-full px-7">{pilotCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4" /></a>
+          <a href={pilotApplicationHref(language)} className="btn-primary whitespace-normal rounded-full px-7">{pilotCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4" /></a>
           <a href="#caso" className="btn-secondary border-brand-blue/25 text-brand-blue">{t.secondary}<ArrowDown aria-hidden="true" className="size-4" /></a>
         </div>
         <ul aria-label={language === 'it' ? 'Condizioni del pilot' : 'Pilot terms'} className="mt-5 grid gap-2">{pilotRiskReversals[language].map(item => <li key={item} className="inline-flex items-start gap-1.5 text-xs leading-5 text-slate-600"><Check aria-hidden="true" className="mt-0.5 size-3.5 shrink-0 text-brand-blue" />{item}</li>)}</ul>
