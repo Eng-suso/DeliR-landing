@@ -54,3 +54,9 @@ Il copy evita garanzie su ogni passaggio, sull’assenza futura di lacune o sull
 - Suite coinvolte dopo il confronto: 50 test passati e 18 esclusi dai filtri per browser su Chromium, WebKit, Chrome mobile e Safari mobile.
 - La pipeline precedente segnalava un’aspettativa obsoleta nel test del cambio lingua: mancava lo spazio tra le due frasi della headline inglese. Corretto il test senza cambiare il prodotto; tutti i 12 test della suite waitlist passano sui quattro browser.
 - Lighthouse mobile dopo il confronto, mediana di tre run: performance 84/100, LCP 2,25 s, CLS 0; accessibilità, best practices e SEO 100/100. Tutti i budget configurati passano. Il punteggio performance è inferiore al precedente 95/100; il benchmark CPU nei nuovi run è 648,5–856, contro 510,5–2245,5 nella serie precedente. Le condizioni locali variabili non consentono di attribuire il cambiamento alla sezione. Report in `lighthouse-report/comparison-mobile`; non sono dati sul campo.
+
+## Bridge tra hero e pain
+
+La Subheadline V2 fornita dall’utente è inserita dopo la hero e prima del pain: inglese originale in EN e traduzione italiana in IT. Una sequenza statica e ordinata mostra documenti/interviste → evidenze → As-Is → To-Be → miglioramento continuo. La hero conserva headline, subheadline e CTA; il bridge non aggiunge promesse numeriche, media o tracker.
+
+Lint, typecheck e build passati. Controllo browser IT/EN su Chromium a 320, 768 e 1440 px e WebKit a 390 px: ordine hero/bridge/pain corretto, cinque fasi leggibili, assenza di overflow, axe A/AA senza violazioni rilevate e CTA demo funzionante da tastiera. Revisione visiva desktop e mobile completata. I controlli non costituiscono una certificazione WCAG o una misura dell’impatto sulle conversioni.
