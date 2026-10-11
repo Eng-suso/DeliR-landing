@@ -6,7 +6,7 @@ import ProductFilm from './ProductFilm';
 
 const copy = {
   it: {
-    eyebrow: 'Per consulenti BPM e Operations', first: 'Dall’AS-IS al TO-BE.', second: 'Pronto per la decisione.',
+    eyebrow: 'Per consulenti BPM e Operations', first: 'Process Intelligence Software', second: 'per Operations Efficienti ed Efficaci.',
     body: 'Porta al process owner una proposta che puoi spiegare e difendere. Con DeliR colleghi le fonti al processo, verifichi il modello e confronti gli scenari prima di raccomandare il cambiamento.',
     primary: 'Parliamo del tuo progetto', secondary: 'Vedi il prodotto',
     terms: ['Pilot a pagamento per milestone', 'Perimetro e criteri concordati', 'Primo contatto senza dati del cliente'],
@@ -41,7 +41,7 @@ export default function Hero() {
     <div className="section-shell grid items-center gap-10 lg:!max-w-[1600px] lg:grid-cols-[0.7fr_1.3fr] lg:gap-8 xl:gap-10">
       <div className="min-w-0">
         <p className="landing-eyebrow">{t.eyebrow}</p>
-        <h1 id="hero-title" className="mt-5 text-balance font-display text-[clamp(2.25rem,4.2vw,3.85rem)] font-semibold leading-[1.06] tracking-[-0.05em] text-brand-ink lg:text-[clamp(2rem,3.2vw,3rem)]"><span className="block">{t.first}</span><span className="block text-brand-blue">{t.second}</span></h1>
+        <h1 id="hero-title" className="mt-5 text-balance font-display text-[clamp(2.25rem,4.2vw,3.85rem)] font-semibold leading-[1.06] tracking-[-0.05em] text-brand-ink lg:text-[clamp(2rem,3.2vw,3rem)]"><span className="block">{t.first}</span>{' '}<span className="block text-brand-blue">{t.second}</span></h1>
         <p className="mt-5 max-w-[36rem] text-pretty text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">{t.body}</p>
         <div className="mt-6 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
           <a href={projectContactHref(language)} className="btn-primary rounded-full px-7">{t.primary}<ArrowRight aria-hidden="true" className="size-4" /></a>
