@@ -13,6 +13,7 @@ it.each([
   ['true', '/privacy', '', '', false, false],
 ] as const)('gates forms by readiness, privacy and a destination (%s, %s)', async (ready, privacy, pilot, waitlist, expectedPilot, expectedWaitlist) => {
   vi.resetModules();
+  vi.stubEnv('VITE_PRIVACY_NOTICE_READY', 'true');
   vi.stubEnv('VITE_LEAD_CAPTURE_READY', ready);
   vi.stubEnv('VITE_PRIVACY_NOTICE_URL', privacy);
   vi.stubEnv('VITE_PILOT_ENDPOINT', pilot);
@@ -20,4 +21,16 @@ it.each([
   const result = await import('./leadCaptureReadiness');
   expect(result.pilotCaptureReady).toBe(expectedPilot);
   expect(result.waitlistCaptureReady).toBe(expectedWaitlist);
+});
+
+it('keeps intake closed when the notice is not ready despite endpoint and capture flags', async () => {
+  vi.resetModules();
+  vi.stubEnv('VITE_PRIVACY_NOTICE_READY', 'false');
+  vi.stubEnv('VITE_LEAD_CAPTURE_READY', 'true');
+  vi.stubEnv('VITE_PRIVACY_NOTICE_URL', '/privacy');
+  vi.stubEnv('VITE_PILOT_ENDPOINT', '/api/pilot.php');
+  vi.stubEnv('VITE_WAITLIST_ENDPOINT', '/api/waitlist');
+  const result = await import('./leadCaptureReadiness');
+  expect(result.pilotCaptureReady).toBe(false);
+  expect(result.waitlistCaptureReady).toBe(false);
 });

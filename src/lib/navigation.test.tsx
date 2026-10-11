@@ -30,7 +30,7 @@ describe('contact drafts', () => {
   it.each(['it', 'en'] as const)('creates a valid %s email draft without client data', language => {
     const url = new URL(projectContactHref(language));
     expect(url.protocol).toBe('mailto:');
-    expect(url.pathname).toBe('delir.team@gmail.com');
+    expect(url.pathname).toBe('contact@delir.it');
     expect(url.searchParams.get('subject')).toMatch(/pilot/);
     expect(url.searchParams.get('body')).toContain('\n\n');
     expect(url.searchParams.get('body')).toMatch(/senza nomi di clienti|without client names/);

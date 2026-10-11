@@ -1,4 +1,4 @@
-export const publicContactEmail = 'delir.team@gmail.com';
+export const publicContactEmail = 'contact@delir.it';
 
 export function projectContactHref(language: 'it' | 'en') {
   const subject = language === 'it' ? 'DeliR — valutazione pilot' : 'DeliR — pilot enquiry';

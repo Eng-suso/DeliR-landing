@@ -41,7 +41,7 @@ Conservazione proposta delle richieste senza seguito: 12 mesi dall’ultimo cont
 
 1. Verificare tabelle, PHP/estensioni, posizione/permessi privati, HTTPS e informativa pubblica effettiva.
 2. Abilitare il backend durante una prova controllata con dati fittizi; verificare riga salvata, conferma solo dopo salvataggio, rifiuti/quote e assenza di dettagli nei messaggi/log; eliminare i dati di prova. Per provare la UI usare una build controllata prima di aprire la raccolta pubblica.
-3. Solo dopo la prova configurare `VITE_PILOT_ENDPOINT=/api/pilot.php`, `VITE_PRIVACY_NOTICE_URL` effettivo e `VITE_LEAD_CAPTURE_READY=true`. GA4/waitlist rimangono separati. Distribuire `dist` in `/public`; caricare il backend privato separatamente, non incluso nella build Vite.
+3. Solo dopo la prova configurare `VITE_PILOT_ENDPOINT=/api/pilot.php`, `VITE_PRIVACY_NOTICE_URL` effettivo e `VITE_LEAD_CAPTURE_READY=true` e `VITE_PRIVACY_NOTICE_READY=true`. GA4/waitlist rimangono separati. Distribuire `dist` in `/public`; caricare il backend privato separatamente, non incluso nella build Vite.
 4. Verificare browser e database sul dominio reale. Nessun merge/deploy automatico con questa modifica.
 
 Rollback: `enabled=false` blocca subito gli invii; ripristinare il frontend in anteprima. Conservare richieste già ricevute secondo le regole definite. Il fallback SPA non deve mascherare endpoint mancanti. PHP deve eseguire il file: le infrastrutture statiche Cloudflare precedenti non eseguono il backend. Non distribuire una raccolta attiva su un server statico.
@@ -73,3 +73,7 @@ La modifica diagnostica passa 40 controlli PHP locali, inclusi cinque scenari es
 Sintassi dei tre file PHP e 25 controlli locali passati su PHP 8.5.11: payload, UTF-8, guardie HTTP/origine, gate chiuso, dimensione del corpo e fallimento connessione senza conferma. Runtime portabile ufficiale con SHA-256 verificato, fuori dal repository. Nessun database locale disponibile: test SQL non eseguiti localmente.
 
 Il check GitHub `quality` impone test con MariaDB 11.8 temporaneo: importazione, salvataggio, testo SQL injection trattato come dato, quote IP/globali, scadenza, assenza di IP in chiaro e rollback su inserimento fallito. Lo step PHP/MariaDB del run GitHub 38154269516 è passato sul commit cbd912a; anche typecheck, lint, coverage e build sono passati. Le ulteriori verifiche browser/performance dello stesso run erano ancora in corso al momento del controllo. Questi test non verificano IONOS o il database di produzione.
+
+## Prova riferita dal titolare
+
+L’11 ottobre 2026 il titolare ha confermato risposta accepted: true e una riga fittizia nella tabella pilot_applications dopo aver corretto il percorso del file privato. Ha confermato anche la successiva chiusura e pulizia. Non sono stati conservati payload o credenziali nel repository. La prova non sostituisce la verifica UI sul dominio reale né completa i requisiti privacy.
