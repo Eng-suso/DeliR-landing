@@ -12,40 +12,44 @@ import {
   type PilotApplicationErrors,
   type PilotApplicationFields,
 } from '../lib/pilotApplication';
+import { privacyNoticeUrl } from '../lib/leadCaptureReadiness';
 
 const emptyFields: PilotApplicationFields = { name: '', email: '', practice: '', timing: '', projectBrief: '' };
 const fieldClass = 'control-enterprise mt-2';
+type PilotPageProps = { captureEnabled: boolean };
 
 const copy = {
   it: {
     back: 'Torna a DeliR', eyebrow: 'Pilot accompagnato', title: 'Prova DeliR su un incarico reale.',
     intro: 'Porta un progetto di miglioramento attivo o in partenza. Valutiamo il fit, concordiamo il perimetro e definiamo il successo prima di iniziare.',
     benefits: ['Discovery, As-Is, To-Be e simulazione nello stesso contesto.', 'Ogni output viene verificato prima di arrivare al cliente.', 'Nessun abbonamento o impegno a lungo termine.'],
-    privacy: 'Non inserire nomi di clienti, informazioni riservate o dati personali nella candidatura.',
+    privacy: 'Non inserire nomi di clienti, informazioni riservate o dati personali di terzi nella candidatura.',
     formTitle: 'Raccontaci l’incarico', formIntro: 'Cinque campi. In questa fase non servono documenti del cliente.',
     name: 'Nome e cognome', email: 'Email di lavoro', practice: 'Tipo di attività', practicePlaceholder: 'Seleziona', independent: 'Consulente indipendente', boutique: 'Boutique di consulenza',
     timing: 'Tempistica dell’incarico', timingPlaceholder: 'Seleziona', active: 'Già attivo', next: 'In partenza entro 90 giorni',
     brief: 'Processo o problema da analizzare', briefPlaceholder: 'Esempio: capire perché il ciclo di acquisto indiretto è troppo lungo e confrontare possibili scenari di miglioramento.',
     briefHelp: 'Descrivi obiettivo e incertezza attuale. Non identificare il cliente.', submit: 'Invia l’incarico per la valutazione', submitting: 'Invio in corso…',
     noProject: 'Non hai ancora un progetto adatto?', updates: 'Ricevi gli aggiornamenti.', success: 'Candidatura ricevuta.', successBody: 'Valuteremo il fit dell’incarico e ti contatteremo con il prossimo passo.',
+    pendingTitle: 'Candidature in preparazione', pendingBody: 'Questa è un’anteprima dei campi richiesti. Per ora il modulo non raccoglie dati: l’invio aprirà dopo la pubblicazione dell’informativa privacy.',
     errors: { name: { required: 'Inserisci il tuo nome.' }, email: { required: 'Inserisci la tua email di lavoro.', invalid: 'Inserisci un indirizzo email valido.' }, practice: { required: 'Seleziona il tipo di attività.' }, timing: { required: 'Seleziona quando parte l’incarico.' }, projectBrief: { required: 'Descrivi brevemente il processo o il problema.', short: 'Aggiungi un po’ di contesto in più.', long: 'Mantieni la descrizione entro 600 caratteri.' }, submission: 'Non siamo riusciti a inviare la candidatura. Riprova.' },
   },
   en: {
     back: 'Back to DeliR', eyebrow: 'Guided pilot', title: 'Test DeliR on a real engagement.',
     intro: 'Bring an active or upcoming process-improvement project. We assess the fit, agree the scope and define success before starting.',
     benefits: ['Discovery, As-Is, To-Be and simulation in one project context.', 'Review every output before it reaches your client.', 'No subscription or long-term commitment.'],
-    privacy: 'Do not include client names, confidential information or personal data in this application.',
+    privacy: 'Do not include client names, confidential information or other people’s personal data in this application.',
     formTitle: 'Tell us about the engagement', formIntro: 'Five fields. No client documents are required at this stage.',
     name: 'Full name', email: 'Work email', practice: 'Practice type', practicePlaceholder: 'Select one', independent: 'Independent consultant', boutique: 'Boutique consulting practice',
     timing: 'Engagement timing', timingPlaceholder: 'Select one', active: 'Active now', next: 'Starting within 90 days',
     brief: 'Process or problem to analyze', briefPlaceholder: 'Example: understand why the indirect procurement cycle takes too long and compare improvement scenarios.',
     briefHelp: 'Describe the objective and current uncertainty. Do not identify the client.', submit: 'Submit the engagement for review', submitting: 'Submitting…',
     noProject: 'No suitable project yet?', updates: 'Join product updates.', success: 'Application received.', successBody: 'We will review the engagement fit and contact you with the next step.',
+    pendingTitle: 'Applications are being prepared', pendingBody: 'This previews the requested fields. The form does not collect data yet; submission will open after the privacy notice is published.',
     errors: { name: { required: 'Enter your name.' }, email: { required: 'Enter your work email.', invalid: 'Enter a valid email address.' }, practice: { required: 'Select your practice type.' }, timing: { required: 'Select when the engagement starts.' }, projectBrief: { required: 'Briefly describe the process or problem.', short: 'Add a little more context.', long: 'Keep the description under 600 characters.' }, submission: 'We could not submit your application. Please try again.' },
   },
 } as const;
 
-export default function PilotPage() {
+export default function PilotPage({ captureEnabled }: PilotPageProps) {
   const { language } = useLanguage();
   const t = copy[language];
   const reduceMotion = useReducedMotion();
@@ -55,14 +59,14 @@ export default function PilotPage() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 
   useEffect(() => {
-    const hasDraft = status === 'idle' && Object.values(fields).some((value) => value.length > 0);
+    const hasDraft = captureEnabled && status === 'idle' && Object.values(fields).some((value) => value.length > 0);
     const warnBeforeLeave = (event: BeforeUnloadEvent) => {
       if (!hasDraft) return;
       event.preventDefault();
     };
     window.addEventListener('beforeunload', warnBeforeLeave);
     return () => window.removeEventListener('beforeunload', warnBeforeLeave);
-  }, [fields, status]);
+  }, [captureEnabled, fields, status]);
 
   const updateField = <Field extends keyof PilotApplicationFields>(field: Field, value: PilotApplicationFields[Field]) => {
     setFields((current) => ({ ...current, [field]: value }));
@@ -79,6 +83,7 @@ export default function PilotPage() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!captureEnabled) return;
     const nextErrors = validatePilotApplication(fields);
     setErrors(nextErrors);
     const firstInvalidField = (Object.keys(nextErrors) as Array<keyof PilotApplicationFields>)[0];
@@ -97,29 +102,31 @@ export default function PilotPage() {
   };
 
   return (
-    <div className="min-h-dvh bg-slate-50 text-slate-950">
+    <div className="min-h-dvh bg-[#FAFAF8] text-brand-ink">
       <SkipLink />
-      <header className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-6 sm:px-6 lg:px-8">
-        <Link to="/" className="inline-flex min-h-11 items-center gap-2 rounded-lg px-2 text-sm font-semibold text-slate-700 transition-colors hover:text-slate-950">
-          <ArrowLeft aria-hidden="true" className="h-4 w-4" />{t.back}
-        </Link>
-        <LanguageSwitch />
+      <header className="border-b border-slate-200 bg-white">
+        <div className="section-shell flex min-h-[72px] items-center justify-between gap-4">
+          <Link to="/" className="inline-flex min-h-11 items-center gap-2 rounded-lg text-sm font-semibold text-brand-ink transition-colors hover:text-brand-blue">
+            <ArrowLeft aria-hidden="true" className="h-4 w-4" />{t.back}
+          </Link>
+          <LanguageSwitch />
+        </div>
       </header>
 
-      <main id="main-content" className="mx-auto grid max-w-6xl gap-12 px-4 pb-20 pt-8 sm:px-6 sm:pt-14 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16 lg:px-8">
+      <main id="main-content" className="section-shell grid max-w-[1440px] gap-12 pb-20 pt-12 sm:pt-16 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20 lg:pt-24">
         <motion.section initial={reduceMotion ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.45 }} aria-labelledby="pilot-title" className="lg:sticky lg:top-12 lg:self-start">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">{t.eyebrow}</p>
-          <h1 id="pilot-title" className="mt-4 text-balance font-display text-4xl font-medium leading-tight tracking-[-0.035em] text-slate-950 sm:text-5xl">{t.title}</h1>
-          <p className="mt-6 text-lg leading-8 text-slate-600">{t.intro}</p>
+          <p className="landing-eyebrow"><span aria-hidden="true" className="h-px w-7 bg-brand-blue" />{t.eyebrow}</p>
+          <h1 id="pilot-title" className="mt-6 max-w-[14ch] text-balance font-display text-[clamp(2.8rem,4vw,4.8rem)] font-medium leading-[1.05] tracking-[-0.055em] text-brand-ink">{t.title}</h1>
+          <p className="mt-7 max-w-[33rem] text-[17px] leading-8 text-slate-600">{t.intro}</p>
           <ul className="mt-8 space-y-4 text-sm leading-6 text-slate-700">
             {t.benefits.map((item) => <li key={item} className="flex gap-3"><CheckCircle2 aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-blue-700" /><span>{item}</span></li>)}
           </ul>
-          <div className="mt-8 flex gap-3 rounded-xl border border-slate-200 bg-white p-4 text-sm leading-6 text-slate-600">
+          <div className="mt-8 flex gap-3 border-t border-slate-200 pt-5 text-sm leading-6 text-slate-600">
             <LockKeyhole aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-slate-500" /><p>{t.privacy}</p>
           </div>
         </motion.section>
 
-        <motion.section initial={reduceMotion ? false : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.45, delay: reduceMotion ? 0 : 0.08 }} aria-labelledby="application-title" className="rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_24px_70px_-42px_rgba(15,23,42,0.5)] sm:p-8">
+        <motion.section initial={reduceMotion ? false : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.45, delay: reduceMotion ? 0 : 0.08 }} aria-labelledby="application-title" className="border border-slate-200 bg-white p-5 sm:p-8 lg:p-10">
           {status === 'success' ? (
             <div role="status" className="flex min-h-[520px] flex-col items-center justify-center text-center">
               <span className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-700"><ClipboardCheck aria-hidden="true" className="h-8 w-8" /></span>
@@ -131,7 +138,9 @@ export default function PilotPage() {
             <>
               <h2 id="application-title" className="font-display text-2xl font-medium text-slate-950">{t.formTitle}</h2>
               <p className="mt-2 text-sm leading-6 text-slate-600">{t.formIntro}</p>
+              {!captureEnabled ? <div role="status" className="mt-6 border-l-2 border-brand-blue bg-[#EEF4F8] px-4 py-3 text-sm leading-6 text-brand-ink"><strong className="block font-semibold">{t.pendingTitle}</strong>{t.pendingBody}</div> : null}
               <form onSubmit={handleSubmit} noValidate className="mt-8 space-y-6" aria-label={t.formTitle}>
+                <fieldset disabled={!captureEnabled} className="space-y-6 disabled:opacity-65">
                 <div>
                   <label htmlFor="name" className="text-sm font-semibold text-slate-800">{t.name}</label>
                   <input id="name" name="name" type="text" autoComplete="name" required value={fields.name} onChange={(event) => updateField('name', event.target.value)} aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? 'name-error' : undefined} className={fieldClass} placeholder="Jane Doe…" />
@@ -162,10 +171,12 @@ export default function PilotPage() {
                   <p id="projectBrief-help" className="mt-2 text-xs leading-5 text-slate-500">{t.briefHelp}</p>
                   {errors.projectBrief ? <p id="projectBrief-error" role="alert" className="mt-2 text-sm text-red-700">{errorMessage('projectBrief')}</p> : null}
                 </div>
+                </fieldset>
                 {submitError ? <div role="alert" className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">{submitError}</div> : null}
-                <button type="submit" disabled={status === 'submitting'} aria-busy={status === 'submitting'} className="btn-primary w-full">
-                  {status === 'submitting' ? t.submitting : t.submit}{status === 'submitting' ? null : <ArrowRight aria-hidden="true" className="h-4 w-4" />}
+                <button type="submit" disabled={!captureEnabled || status === 'submitting'} aria-busy={status === 'submitting'} className="btn-primary w-full">
+                  {!captureEnabled ? t.pendingTitle : status === 'submitting' ? t.submitting : t.submit}{status === 'submitting' || !captureEnabled ? null : <ArrowRight aria-hidden="true" className="h-4 w-4" />}
                 </button>
+                {captureEnabled ? <p className="text-center text-xs leading-5 text-slate-500">{language === 'it' ? 'Leggi come trattiamo i dati nella ' : 'Read how we handle your data in the '}<a href={privacyNoticeUrl} className="font-semibold text-blue-700 underline underline-offset-4">{language === 'it' ? 'informativa privacy' : 'privacy notice'}</a>.</p> : null}
                 <p className="text-center text-xs leading-5 text-slate-500">{t.noProject} <Link to="/waitlist" className="font-semibold text-blue-700 underline decoration-blue-300 underline-offset-4 hover:text-blue-900">{t.updates}</Link></p>
               </form>
             </>

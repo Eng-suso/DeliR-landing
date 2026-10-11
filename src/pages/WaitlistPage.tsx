@@ -13,6 +13,7 @@ import {
   type WaitlistErrors,
   type WaitlistFields,
 } from '../lib/waitlist';
+import { privacyNoticeUrl } from '../lib/leadCaptureReadiness';
 
 const emptyFields: WaitlistFields = {
   firstName: '',
@@ -213,6 +214,7 @@ export default function WaitlistPage() {
                   <p className="text-xs text-slate-300 mb-6 text-center">
                     {it ? 'Invia solo dati professionali non riservati.' : 'Submit professional, non-confidential information only.'}
                   </p>
+                  <p className="mb-6 text-center text-xs leading-5 text-slate-300">{it ? 'Leggi la ' : 'Read the '}<a href={privacyNoticeUrl} className="font-semibold text-white underline underline-offset-4">{it ? 'informativa privacy' : 'privacy notice'}</a>{it ? ' prima di inviare.' : ' before submitting.'}</p>
 
                   {submitError && (
                     <div role="alert" className="mb-5 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-center text-sm text-red-200">

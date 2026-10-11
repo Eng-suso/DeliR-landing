@@ -1,42 +1,43 @@
-import { BookOpenCheck, BriefcaseBusiness, FileCheck2 } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { projectContactHref } from '../lib/publicOffer';
 
 const copy = {
   it: {
-    eyebrow: 'Costruito per chi firma l’analisi',
-    title: 'Più controllo sul delivery. Più valore nel metodo.',
-    body: 'DeliR è progettato per consulenti indipendenti e piccole practice che seguono direttamente l’incarico e devono poter sostenere ogni output davanti al cliente.',
-    cards: [
-      ['Delivery verificabile', 'Mantieni visibili fonti, assunzioni, versioni e decisioni prima che l’output arrivi al cliente.'],
-      ['Meno ricostruzioni manuali', 'Riutilizza struttura e metodo senza mescolare i contesti dei clienti o perdere la provenance.'],
-      ['Conoscenza che resta', 'Trasforma ciò che impari durante ogni incarico in una base più solida per quello successivo.'],
+    eyebrow: 'Dati, AI e responsabilità', title: 'Il contesto del cliente merita regole chiare.',
+    intro: 'Come viene gestito il contesto del tuo incarico. Le policy pubbliche sono in formalizzazione e saranno verificabili prima dell’avvio dei pilot.',
+    items: [
+      ['Separazione dei clienti', 'DeliR è progettato con separazione a livello applicativo e database, workspace distinti, autenticazione e policy di accesso dedicate.'],
+      ['Contesto per l’analisi e l’AI', 'I dati aziendali vengono utilizzati per costruire il contesto necessario all’analisi dei processi e alle funzionalità AI.'],
+      ['Policy da verificare prima del pilot', 'Hosting, conservazione, cancellazione e utilizzo dei dati da parte dei modelli AI sono in corso di formalizzazione. Richiedi le condizioni applicabili al tuo progetto.'],
     ],
+    proofTitle: 'Già discusso con chi lavora sui processi.',
+    proof: 'Il workflow di discovery, analisi e redesign è stato mostrato in sessioni di validazione con professionisti e figure Operations, raccogliendo feedback sull’utilizzo in casi reali.',
+    proofScope: 'Validazione qualitativa del prodotto. Case study pubblici, testimonianze nominative e risultati misurati non sono ancora disponibili.',
+    contact: 'Parliamo dei requisiti del tuo cliente',
   },
   en: {
-    eyebrow: 'Built for the person signing off the analysis',
-    title: 'More control over delivery. More value in the method.',
-    body: 'DeliR is designed for independent consultants and small practices that directly own the engagement and must be able to defend every output in front of the client.',
-    cards: [
-      ['Verifiable delivery', 'Keep sources, assumptions, versions and decisions visible before the output reaches the client.'],
-      ['Less manual reconstruction', 'Reuse structure and method without mixing client contexts or losing provenance.'],
-      ['Knowledge that remains', 'Turn what you learn during each engagement into a stronger starting point for the next one.'],
+    eyebrow: 'Data, AI and accountability', title: 'Client context needs clear rules.',
+    intro: 'How your engagement context is handled. Public policies are being formalized and will be available for verification before pilots begin.',
+    items: [
+      ['Client separation', 'DeliR is designed with application and database separation, distinct workspaces, authentication and dedicated access policies.'],
+      ['Context for analysis and AI', 'Company data builds the context required for process analysis and AI features.'],
+      ['Policies to verify before the pilot', 'Hosting, retention, deletion and AI model data use policies are being formalized. Request the terms applicable to your project.'],
     ],
+    proofTitle: 'Reviewed with people who work on processes.',
+    proof: 'The discovery, analysis and redesign workflow has been shown in validation sessions with professionals and Operations roles, collecting feedback about real-world use.',
+    proofScope: 'Qualitative product validation. Public case studies, named testimonials and measured results are not yet available.',
+    contact: 'Discuss your client’s requirements',
   },
-} as const;
-
-const icons = [FileCheck2, BriefcaseBusiness, BookOpenCheck];
+};
 
 export default function BuiltFor() {
-  const { language } = useLanguage();
-  const t = copy[language];
-  return (
-    <section id="consultants" className="section-defer relative scroll-mt-28 border-y border-slate-200 bg-slate-50 py-24 sm:py-28" aria-labelledby="practice-title">
-      <div className="section-shell grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-        <div className="lg:sticky lg:top-32"><p className="section-kicker">{t.eyebrow}</p><h2 id="practice-title" className="section-title mt-6">{t.title}</h2><p className="section-lead mt-6">{t.body}</p></div>
-        <div className="space-y-4">
-          {t.cards.map(([title, body], index) => { const Icon = icons[index]; return <article key={title} className="rounded-2xl border border-slate-200 bg-white p-6 sm:flex sm:gap-5 sm:p-8"><span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-700"><Icon aria-hidden="true" className="h-5 w-5" /></span><div className="mt-5 sm:mt-0"><h3 className="text-xl font-semibold text-slate-950">{title}</h3><p className="mt-3 text-base leading-7 text-slate-600">{body}</p></div></article>; })}
-        </div>
+  const { language } = useLanguage(); const t = copy[language];
+  return <section id="fiducia" className="premium-trust scroll-mt-24 border-y border-slate-200 bg-brand-light py-14 sm:py-20" aria-labelledby="trust-title">
+    <div id="consulenti" className="section-shell grid gap-10 lg:grid-cols-2">
+      <div data-reveal><p className="landing-eyebrow">{t.eyebrow}</p><h2 id="trust-title" className="landing-title mt-5">{t.title}</h2><p className="mt-5 text-base leading-7 text-slate-600">{t.intro}</p>
+        <div className="mt-7 border-l-2 border-brand-blue pl-5"><h3 className="text-lg font-semibold text-brand-ink">{t.proofTitle}</h3><p className="mt-3 text-sm leading-6 text-slate-600">{t.proof}</p><p className="mt-3 text-xs leading-5 text-slate-600">{t.proofScope}</p></div>
       </div>
-    </section>
-  );
+      <div className="trust-facts"><dl className="divide-y divide-slate-300">{t.items.map(([title, body]) => <div data-reveal key={title} className="py-5 first:pt-0"><dt className="text-lg font-semibold text-brand-ink">{title}</dt><dd className="mt-2 text-sm leading-7 text-slate-600">{body}</dd></div>)}</dl><a href={projectContactHref(language)} className="inline-flex min-h-11 items-center text-sm font-semibold text-brand-blue underline underline-offset-4">{t.contact}</a></div>
+    </div>
+  </section>;
 }

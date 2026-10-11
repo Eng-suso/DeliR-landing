@@ -11,6 +11,8 @@ export default function ScrollToTop() {
   }, []);
 
   useLayoutEffect(() => {
+    // The lazy-loaded page restores section anchors once its content is mounted.
+    if (window.location.hash) return;
     const root = document.documentElement;
     const previousScrollBehavior = root.style.scrollBehavior;
 

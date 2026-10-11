@@ -190,6 +190,7 @@ export default function EnterpriseReadinessPage() {
 
   return (
     <div className="min-h-screen bg-[#f7f8fb] text-slate-900">
+      <meta name="robots" content="noindex, nofollow" />
       <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
           <Link to="/" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 transition-colors hover:text-slate-950">

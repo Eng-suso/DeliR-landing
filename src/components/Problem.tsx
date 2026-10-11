@@ -1,64 +1,66 @@
-import { FileStack, Link2Off, RefreshCcw } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { Files, ScanSearch, Workflow, ChartNoAxesCombined } from 'lucide-react';
+
+const stageIcons = [Files, ScanSearch, Workflow, ChartNoAxesCombined];
 
 const copy = {
   it: {
-    chapter: '01 · Il costo della frammentazione',
-    title: 'Il cliente vede un unico incarico. Tu devi ricomporlo ogni volta.',
-    body: 'Interviste, procedure, fogli di calcolo, event log, modelli, simulazioni e requisiti vivono in strumenti diversi. Ogni passaggio perde una parte del contesto e rende più difficile capire perché una decisione è stata presa.',
-    cards: [
-      ['Il processo si frammenta', 'Fonti e versioni raccontano realtà diverse.'],
-      ['La decisione perde le prove', 'KPI, assunzioni e raccomandazioni restano separati.'],
-      ['Il metodo riparte da zero', 'La conoscenza costruita nell’incarico non diventa patrimonio della practice.'],
+    eyebrow: 'Perché DeliR',
+    title: 'Una proposta che puoi spiegare, dall’inizio alla fine.',
+    body: 'Un diagramma descrive il flusso. Un incarico richiede anche le fonti che lo giustificano, le questioni ancora aperte e le ipotesi dietro ogni scelta. DeliR mette questi elementi nello stesso spazio di lavoro.',
+    chain: [
+      ['01', 'Fonte', 'Interviste, documenti e dati dell’incarico'],
+      ['02', 'Review', 'Fatti da verificare e decisioni da prendere'],
+      ['03', 'Processo', 'Modello e criticità nel loro contesto'],
+      ['04', 'Scenario', 'Assunzioni e impatto della raccomandazione'],
     ],
-    closing: 'Finché il lavoro rimane frammentato, sei tu a fare da sistema di integrazione. E sei tu ad assorbirne il rischio.',
+    caption: 'Una traccia continua dall’input alla raccomandazione.',
   },
   en: {
-    chapter: '01 · The cost of fragmentation',
-    title: 'The client sees one engagement. You have to rebuild it every time.',
-    body: 'Interviews, procedures, spreadsheets, event logs, models, simulations and requirements live in different tools. Every handoff loses context and makes it harder to explain why a decision was made.',
-    cards: [
-      ['The process fragments', 'Sources and versions tell different stories.'],
-      ['The decision loses its evidence', 'KPIs, assumptions and recommendations stay separate.'],
-      ['The method starts over', 'Knowledge built in one engagement never becomes practice memory.'],
+    eyebrow: 'Why DeliR',
+    title: 'A proposal you can explain from start to finish.',
+    body: 'A diagram describes the flow. An engagement also needs the sources behind it, unresolved questions, and assumptions behind each choice. DeliR brings these elements into one workspace.',
+    chain: [
+      ['01', 'Source', 'Interviews, documents, and engagement data'],
+      ['02', 'Review', 'Facts to verify and decisions to make'],
+      ['03', 'Process', 'Model and constraints in context'],
+      ['04', 'Scenario', 'Assumptions and recommendation impact'],
     ],
-    closing: 'As long as the work stays fragmented, you are the integration layer—and you absorb the risk.',
+    caption: 'A continuous trace from input to recommendation.',
   },
 } as const;
-
-const icons = [FileStack, Link2Off, RefreshCcw];
 
 export default function Problem() {
   const { language } = useLanguage();
   const t = copy[language];
 
   return (
-    <section id="problem" className="section-defer relative scroll-mt-28 border-y border-slate-200 bg-slate-950 py-24 text-white sm:py-28" aria-labelledby="problem-title">
-      <div className="section-shell">
-        <p className="section-kicker !text-blue-300"><span className="h-px w-7 bg-blue-400" />{t.chapter}</p>
-        <div className="mt-6 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-          <h2 id="problem-title" className="max-w-[15ch] text-balance font-display text-4xl font-semibold leading-[1.02] tracking-[-0.04em] text-white sm:text-5xl">
-            {t.title}
-          </h2>
-          <p className="max-w-2xl text-lg leading-8 text-slate-300">{t.body}</p>
+    <section id="metodo" className="premium-method scroll-mt-24 bg-brand-navy py-12 text-white sm:py-16" aria-labelledby="problem-title">
+      <div className="section-shell relative z-10">
+        <div data-reveal className="grid gap-8 lg:grid-cols-[1fr_0.7fr] lg:items-end lg:gap-24">
+          <div>
+            <p className="landing-eyebrow text-blue-300">{t.eyebrow}</p>
+            <h2 id="problem-title" className="mt-6 max-w-[17ch] text-balance font-display text-[clamp(2.4rem,4.4vw,4.2rem)] font-semibold leading-[1.04] tracking-[-0.05em] text-white">{t.title}</h2>
+          </div>
+          <p className="max-w-[39rem] text-pretty text-[17px] leading-8 text-slate-300 lg:pb-2 lg:text-[19px] lg:leading-9">{t.body}</p>
         </div>
 
-        <div className="mt-14 grid gap-4 md:grid-cols-3">
-          {t.cards.map(([title, description], index) => {
-            const Icon = icons[index];
-            return (
-              <article key={title} className="rounded-2xl border border-slate-700 bg-slate-900/70 p-6">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-700 bg-slate-800 text-blue-300"><Icon aria-hidden="true" className="h-5 w-5" /></span>
-                <h3 className="mt-6 text-lg font-semibold text-white">{title}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-400">{description}</p>
-              </article>
-            );
-          })}
+        <div className="mt-12 lg:mt-16">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {t.chain.map(([number, title, detail], index) => {
+              const Icon = stageIcons[index];
+              return <div data-reveal data-reveal-delay={index * 60} key={number} className="method-card relative border-t border-white/25 pt-5">
+                <div className="flex items-center gap-4">
+                  <span className="method-icon"><Icon aria-hidden="true" className="size-5" strokeWidth={1.5} /></span>
+                  <span className="method-number font-mono text-xs text-blue-300">{number}</span>
+                </div>
+                <h3 className="mt-6 font-display text-[26px] font-semibold tracking-[-0.035em] text-white">{title}</h3>
+                <p className="mt-2 max-w-[15rem] text-[15px] leading-6 text-slate-300">{detail}</p>
+              </div>;
+            })}
+          </div>
         </div>
-
-        <blockquote className="mt-14 max-w-5xl border-l-2 border-blue-400 pl-6 text-balance font-display text-2xl font-medium leading-snug text-white sm:text-3xl">
-          {t.closing}
-        </blockquote>
+        <p className="mt-10 text-xs text-blue-300">{t.caption}</p>
       </div>
     </section>
   );

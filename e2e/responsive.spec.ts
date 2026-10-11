@@ -16,7 +16,8 @@ test('mobile navigation opens, remains operable, and closes after selection', as
   await page.goto('/');
   const toggle = page.getByRole('button', { name: 'Apri il menu' });
   await toggle.click();
-  await expect(page.getByRole('link', { name: 'Come funziona' })).toBeVisible();
-  await page.getByRole('link', { name: 'Come funziona' }).click();
+  const menu = page.locator('#mobile-navigation');
+  await expect(menu.getByRole('link', { name: 'Il prodotto' })).toBeVisible();
+  await menu.getByRole('link', { name: 'Il prodotto' }).click();
   await expect(page.getByRole('button', { name: 'Apri il menu' })).toHaveAttribute('aria-expanded', 'false');
 });

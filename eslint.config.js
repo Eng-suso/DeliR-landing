@@ -5,7 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['.agents', '.claude', '.codex', 'dist', 'coverage', 'lighthouse-report', 'playwright-report', 'test-results'] },
+  { ignores: ['.agents', '.claude', '.codex', 'artifacts', 'dist', 'coverage', 'lighthouse-report', '.lighthouseci', 'playwright-report', 'test-results', '.wrangler'] },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {

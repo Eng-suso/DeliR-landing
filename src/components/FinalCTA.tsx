@@ -1,40 +1,14 @@
 import { ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import DarkAnimatedBackground from './DarkAnimatedBackground';
 import { useLanguage } from '../i18n/LanguageContext';
-
-const copy = {
-  it: {
-    eyebrow: 'Il prossimo incarico può partire diversamente',
-    title: 'Porta un incarico reale. Mantieni collegato tutto ciò che serve per trasformarlo.',
-    body: 'Valuta DeliR su un progetto concreto con supporto diretto, perimetro concordato e criteri di successo definiti prima di iniziare.',
-    primary: 'Candida un incarico al pilot',
-    secondaryLead: 'Non hai ancora un incarico adatto?',
-    secondary: 'Ricevi gli aggiornamenti',
-  },
-  en: {
-    eyebrow: 'The next engagement can start differently',
-    title: 'Bring a real engagement. Keep everything needed to transform it connected.',
-    body: 'Evaluate DeliR on a concrete project with direct support, an agreed scope and success criteria defined before starting.',
-    primary: 'Apply with an engagement',
-    secondaryLead: 'No suitable engagement yet?',
-    secondary: 'Join product updates',
-  },
-} as const;
+import { projectContactHref, publicContactEmail } from '../lib/publicOffer';
 
 export default function FinalCTA() {
-  const { language } = useLanguage();
-  const t = copy[language];
-  return (
-    <section id="early-access" className="relative overflow-hidden bg-brand-navy py-24 text-white sm:py-28" aria-labelledby="final-cta-title">
-      <DarkAnimatedBackground />
-      <div className="section-shell relative z-10 text-center">
-        <p className="section-kicker justify-center !text-blue-300"><span className="h-px w-7 bg-blue-400" />{t.eyebrow}<span className="h-px w-7 bg-blue-400" /></p>
-        <h2 id="final-cta-title" className="mx-auto mt-7 max-w-5xl text-balance font-display text-4xl font-semibold leading-[1.03] tracking-[-0.045em] text-white sm:text-5xl lg:text-6xl">{t.title}</h2>
-        <p className="mx-auto mt-7 max-w-2xl text-lg leading-8 text-slate-300">{t.body}</p>
-        <div className="mt-9"><Link to="/pilot" className="btn-primary px-8 text-base">{t.primary}<ArrowRight aria-hidden="true" className="h-4 w-4" /></Link></div>
-        <p className="mt-6 text-sm text-slate-400">{t.secondaryLead} <Link to="/waitlist" className="font-semibold text-white underline decoration-slate-500 underline-offset-4 hover:decoration-white">{t.secondary}</Link></p>
-      </div>
-    </section>
-  );
+  const { language } = useLanguage(); const it = language === 'it';
+  return <section id="early-access" className="premium-final bg-brand-navy py-14 text-white sm:py-20" aria-labelledby="final-cta-title"><div data-reveal className="section-shell relative z-10 text-center">
+    <p className="landing-eyebrow !text-blue-300">{it ? 'Il prossimo passo' : 'The next step'}</p>
+    <h2 id="final-cta-title" className="mx-auto mt-5 max-w-3xl text-balance font-display text-[clamp(2rem,4vw,3.6rem)] font-semibold leading-tight tracking-[-0.04em]">{it ? 'Quale processo vuoi portare alla decisione?' : 'Which process needs a decision?'}</h2>
+    <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-slate-300">{it ? 'Raccontaci obiettivo e tempistica. Valutiamo il progetto e definiamo una proposta di pilot per milestone.' : 'Tell us the objective and timing. We assess the project and define a pilot proposal with milestones.'}</p>
+    <a href={projectContactHref(language)} className="btn-primary mt-6">{it ? 'Parliamo del tuo progetto' : 'Discuss your project'}<ArrowRight aria-hidden="true" className="size-4" /></a>
+    <p className="mt-4 text-sm text-slate-300"><a href={`mailto:${publicContactEmail}`} className="inline-flex min-h-11 items-center underline underline-offset-4">{publicContactEmail}</a></p>
+  </div></section>;
 }

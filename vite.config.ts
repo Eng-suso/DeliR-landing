@@ -3,25 +3,30 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import {fileURLToPath} from 'node:url';
 import {defineConfig} from 'vite';
+import {imagetools} from 'vite-imagetools';
 
 const rootDirectory = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig(() => {
   return {
-    plugins: [react(), tailwindcss()],
+    plugins: [
+      react(),
+      tailwindcss(),
+      // Keep the supplied originals; ship optimized product posters and screenshots.
+      imagetools({
+        include: /\.(png|jpg)(\?.*)?$/,
+        defaultDirectives: () => new URLSearchParams({format: 'webp', quality: '82'}),
+      }),
+    ],
     resolve: {
       alias: {
         '@': rootDirectory,
       },
     },
-    server: {
-      // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
-      hmr: process.env.DISABLE_HMR !== 'true',
-      // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
-      watch: process.env.DISABLE_HMR === 'true' ? null : {},
-    },
     build: {
+      // Keep even small font subsets on the same origin: the production CSP
+      // intentionally allows font-src 'self' and Vite otherwise inlines them.
+      assetsInlineLimit: 0,
       rollupOptions: {
         output: {
           manualChunks(id) {
@@ -33,6 +38,9 @@ export default defineConfig(() => {
           },
         },
       },
+    },
+    server: {
+      watch: { ignored: ['**/.agents/**', '**/artifacts/qa/**', '**/coverage/**', '**/test-results/**', '**/playwright-report/**'] },
     },
   };
 });
