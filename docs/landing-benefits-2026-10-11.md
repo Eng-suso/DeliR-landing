@@ -100,3 +100,13 @@ The three example steps are Define the project, Understand and improve, and Revi
 Lint, TypeScript and production build passed. Responsive, keyboard, accessibility and route checks are recorded below after completion.
 
 Pilot offer verification: 9 focused tests passed across Chromium, WebKit, mobile Chrome and mobile Safari; 3 production-smoke duplicates were intentionally skipped. Additional IT/EN checks at 320, 390, 768 and 1440 px passed for matching hero/pilot terms, three project steps, email CTA keyboard focus, no overflow, no automated axe A/AA violations in the changed sections, and consistent terms on the standalone pilot page. Desktop/mobile visuals reviewed. These checks do not verify contractual execution or live payments.
+
+## One complete table on every device — supersedes the card layout
+
+The owner rejected the mobile/tablet cards. The current comparison is one semantic table on every screen, with all eight columns and seven rows displayed together. Desktop uses a wider section and larger labels; tablet retains horizontal product names; below 640 px only product headers rotate vertically so full names remain readable without abbreviations. Row labels wrap normally. No cards, clipped columns or horizontal scroll region remain.
+
+DeliR's opaque black rating backgrounds were removed. White checks sit on the blue column with a soft radial aura and a light drop shadow. Accessible rating names, keyboard focus and the source/demo links remain. On narrow screens each rating target was checked to remain at least 24 px wide and 48 px tall; this is a dense-table compromise relative to the preferred 44 px width.
+
+Lint, TypeScript and production build passed. IT/EN at 320, 390, 768, 1024 and 1440 px: all 49 supplied values preserved, every cell within the viewport width, no horizontal scroll region, no automated axe A/AA violations in the comparison, keyboard source-panel focus passed. Desktop and phone table screenshots reviewed. Final cross-browser regressions follow below.
+
+All 8 final responsive/source-panel regressions passed across Chromium, WebKit, mobile Chrome and mobile Safari. The complete table stays visible in each browser, and shared evidence can be reopened after closing the details panel.

@@ -66,16 +66,15 @@ export default function Comparison() {
       target?.scrollIntoView({ block: 'start', behavior: 'instant' });
     });
   }
-  function statusLink(row: ComparisonRow, product?: typeof comparisonProducts[number], compact = false) {
+  function statusLink(row: ComparisonRow, product?: typeof comparisonProducts[number]) {
     const status = product ? row.cells[product.id].status : 'yes';
     const name = product?.name ?? 'DeliR';
     const Icon = status === 'yes' ? Check : X;
     return <a href={product ? `#comparison-evidence-${row.id}` : row.evidence}
       onClick={product ? () => showEvidence(row.id) : undefined}
       aria-label={`${name} · ${row.label[language]} · ${t[status]} · ${product ? t.cellSources : t.demoLabel}`}
-      className={`flex min-h-11 min-w-0 items-center justify-between gap-3 rounded-lg px-3 py-2 transition-colors ${compact ? 'mx-auto w-11 justify-center px-0' : ''} ${product ? 'text-slate-700 hover:bg-brand-mist' : 'bg-brand-navy font-semibold text-white hover:bg-brand-blue-hover'}`}>
-      {compact ? null : <span className="min-w-0 text-sm leading-5" translate="no">{name}</span>}
-      <Icon aria-hidden="true" className={`size-5 shrink-0 ${product && status === 'yes' ? 'text-brand-blue' : ''}`} />
+      className={`comparison-rating ${product ? (status === 'yes' ? 'comparison-rating--yes' : 'comparison-rating--no') : 'comparison-rating--delir'}`}>
+      <Icon aria-hidden="true" />
       <span className="sr-only">{t[status]}</span>
     </a>;
   }
@@ -90,31 +89,21 @@ export default function Comparison() {
         <DifferentiatorGrid />
         <h3 className="mt-12 text-balance font-display text-2xl font-semibold leading-tight tracking-tight text-brand-ink sm:mt-16">{t.tableTitle}</h3>
 
-        <div className="comparison-table mt-8 hidden rounded-2xl border border-slate-200 lg:block">
-          <table className="w-full table-fixed border-separate border-spacing-0 text-sm">
+        <div className="comparison-table mt-8">
+          <table className="w-full table-fixed border-separate border-spacing-0">
             <caption className="sr-only">{t.caption}. {t.proof}</caption>
-            <colgroup><col className="w-[32%]" /><col />{comparisonProducts.map(p => <col key={p.id} />)}</colgroup>
+            <colgroup><col className="comparison-feature-column" /><col />{comparisonProducts.map(p => <col key={p.id} />)}</colgroup>
             <thead><tr>
-              <th scope="col" className="rounded-tl-2xl border-b border-slate-200 bg-brand-light px-4 py-5 text-left font-medium text-slate-600">{t.feature}</th>
-              <th scope="col" className="border-b border-white/15 bg-brand-navy px-2 py-5 text-center font-bold text-white" translate="no">DeliR</th>
-              {comparisonProducts.map((p, index) => <th key={p.id} scope="col" className={`break-words border-b border-slate-200 bg-brand-light px-2 py-5 text-center text-xs font-semibold text-slate-800 xl:text-sm ${index === comparisonProducts.length - 1 ? 'rounded-tr-2xl' : ''}`} translate="no">{p.name}</th>)}
+              <th scope="col" className="comparison-feature-heading">{t.feature}</th>
+              <th scope="col" className="comparison-product-heading comparison-delir-heading"><span className="comparison-product-name" translate="no">DeliR</span></th>
+              {comparisonProducts.map(p => <th key={p.id} scope="col" className="comparison-product-heading"><span className="comparison-product-name" translate="no">{p.name}</span></th>)}
             </tr></thead>
-            <tbody>{comparisonRows.map((row, index) => <tr key={row.id}>
-              <th scope="row" className={`border-b border-slate-200 bg-white px-4 py-4 text-left font-semibold leading-6 text-brand-ink ${index === comparisonRows.length - 1 ? 'rounded-bl-2xl' : ''}`}>{row.label[language]}</th>
-              <td className="border-b border-white/15 bg-brand-navy py-3 text-center">{statusLink(row, undefined, true)}</td>
-              {comparisonProducts.map((p, productIndex) => <td key={p.id} className={`border-b border-slate-200 bg-white py-3 text-center ${index === comparisonRows.length - 1 && productIndex === comparisonProducts.length - 1 ? 'rounded-br-2xl' : ''}`}>{statusLink(row, p, true)}</td>)}
+            <tbody>{comparisonRows.map(row => <tr key={row.id}>
+              <th scope="row" className="comparison-feature-label">{row.label[language]}</th>
+              <td className="comparison-delir-cell">{statusLink(row)}</td>
+              {comparisonProducts.map(p => <td key={p.id}>{statusLink(row, p)}</td>)}
             </tr>)}</tbody>
           </table>
-        </div>
-
-        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:hidden" aria-label={t.caption}>
-          {comparisonRows.map(row => <section key={row.id} data-comparison-card={row.id} aria-labelledby={`comparison-card-${row.id}`} className="min-w-0 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
-            <h4 id={`comparison-card-${row.id}`} className="text-base font-semibold leading-6 text-brand-ink">{row.label[language]}</h4>
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              <div className="col-span-2">{statusLink(row)}</div>
-              {comparisonProducts.map(p => <div key={p.id} className="min-w-0">{statusLink(row, p)}</div>)}
-            </div>
-          </section>)}
         </div>
 
         <p className="mt-4 text-xs leading-5 text-slate-600">{t.legend}</p>

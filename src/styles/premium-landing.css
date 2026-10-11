@@ -112,11 +112,86 @@
   border-color: var(--studio-edge);
 }
 .premium-comparison .comparison-table {
-  border-color: var(--studio-edge);
-  border-radius: 24px;
+  border: 1px solid var(--studio-edge);
+  border-radius: 20px;
+  background: white;
   box-shadow: 0 20px 65px -42px rgb(20 22 28 / 28%);
 }
-.premium-comparison th:nth-child(2), .premium-comparison td:nth-child(2) { background: #004580; }
+.comparison-feature-column { width: 32%; }
+.comparison-table th, .comparison-table td {
+  border-bottom: 1px solid #e2e8f0;
+  border-right: 1px solid #f1f5f9;
+}
+.comparison-table tr > :last-child { border-right: 0; }
+.comparison-table tbody tr:last-child > * { border-bottom: 0; }
+.comparison-table thead th { background: #f8fafc; }
+.comparison-feature-heading, .comparison-feature-label {
+  padding: 20px 18px;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #0f172a;
+}
+.comparison-feature-heading { border-top-left-radius: 20px; font-weight: 500; }
+.comparison-feature-label { font-weight: 600; background: white; }
+.comparison-product-heading { padding: 20px 6px; font-size: 14px; line-height: 1.4; color: #334155; }
+.comparison-product-heading:last-child { border-top-right-radius: 20px; }
+.comparison-table tbody tr:last-child > :first-child { border-bottom-left-radius: 20px; }
+.comparison-table tbody tr:last-child > :last-child { border-bottom-right-radius: 20px; }
+.comparison-table .comparison-delir-heading, .comparison-table .comparison-delir-cell {
+  background: #004580;
+  color: white;
+  border-color: rgb(255 255 255 / 14%);
+}
+.comparison-product-name { overflow-wrap: anywhere; }
+.comparison-rating {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  border-radius: 999px;
+  color: #475569;
+}
+.comparison-rating svg { position: relative; width: 20px; height: 20px; flex-shrink: 0; }
+.comparison-rating--yes { color: #004580; }
+.comparison-rating--delir { color: white; }
+.comparison-rating--delir::before {
+  content: '';
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(147 215 255 / 50%), rgb(147 215 255 / 0%) 70%);
+}
+.comparison-rating--delir svg { filter: drop-shadow(0 0 6px rgb(147 215 255 / 70%)); }
+.comparison-rating:hover svg { filter: drop-shadow(0 0 5px rgb(0 69 128 / 30%)); }
+.comparison-rating--delir:hover svg { filter: drop-shadow(0 0 8px rgb(190 233 255 / 90%)); }
+.comparison-rating:focus-visible { outline: 2px solid currentColor; outline-offset: -3px; }
+@media (min-width: 1280px) {
+  .premium-comparison > .section-shell { max-width: 1500px; }
+  .comparison-feature-heading, .comparison-feature-label { font-size: 16px; padding: 22px 24px; }
+  .comparison-product-heading { font-size: 15px; }
+}
+@media (max-width: 767px) {
+  .comparison-feature-heading, .comparison-feature-label { padding: 12px 8px; font-size: 12px; line-height: 1.5; }
+  .comparison-product-heading { padding: 14px 3px; font-size: 12px; }
+  .comparison-rating svg { width: 17px; height: 17px; }
+}
+@media (max-width: 639px) {
+  .premium-comparison .comparison-table { margin-inline: -12px; border-radius: 12px; }
+  .comparison-feature-column { width: 34%; }
+  .comparison-table .comparison-product-heading { height: 144px; padding: 12px 0; vertical-align: middle; }
+  .comparison-product-name { display: inline-block; writing-mode: vertical-rl; transform: rotate(180deg); overflow-wrap: normal; white-space: nowrap; }
+  .comparison-feature-heading, .comparison-feature-label { padding: 12px 6px; }
+  .comparison-feature-heading { border-top-left-radius: 12px; }
+  .comparison-product-heading:last-child { border-top-right-radius: 12px; }
+  .comparison-table tbody tr:last-child > :first-child { border-bottom-left-radius: 12px; }
+  .comparison-table tbody tr:last-child > :last-child { border-bottom-right-radius: 12px; }
+  .comparison-rating svg { width: 15px; height: 15px; }
+  .comparison-rating--delir::before { width: 26px; height: 26px; }
+}
 .premium-comparison .comparison-next { background: #fff; border: 1px solid var(--studio-edge); }
 
 .landing-page .premium-trust {

@@ -26,8 +26,9 @@ test('comparison keeps every product visible without horizontal scrolling', asyn
   await page.goto('/#confronto');
   const comparison = page.locator('#confronto');
   await comparison.scrollIntoViewIfNeeded();
-  const desktop = (page.viewportSize()?.width ?? 0) >= 1024;
-  const rows = desktop ? comparison.locator('tbody tr') : comparison.locator('[data-comparison-card]');
+  await expect(comparison.locator('table')).toBeVisible();
+  await expect(comparison.locator('[data-comparison-card]')).toHaveCount(0);
+  const rows = comparison.locator('tbody tr');
   await expect(rows).toHaveCount(7);
   for (const row of await rows.all()) {
     await expect(row).toBeVisible();
