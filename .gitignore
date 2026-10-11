@@ -36,3 +36,7 @@ lighthouse-report/
 # Cloudflare local state
 .wrangler/
 .dev.vars*
+
+# IONOS private server configuration: examples are safe, live copies are not.
+private/
+server/ionos/config.php

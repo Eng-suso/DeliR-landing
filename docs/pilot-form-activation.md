@@ -8,7 +8,7 @@ L’anteprima è compilabile, valida i dati e non effettua POST né persiste la 
 
 ## Dipendenze ancora mancanti
 
-L’utente ha confermato che il database IONOS non è ancora creato. Non è disponibile un endpoint di ricezione o una connessione a un database. L’informativa del sito resta una bozza. I gate di invio e analytics non sono stati aperti. Il frontend completato non costituisce un backend attivo: le prove dei percorsi successo/errore usano risposte simulate solo nei test.
+L’utente ha ora creato il database MariaDB standard IONOS. È predisposto un backend PHP con schema e configurazione privata di esempio: [procedura e stato](ionos-pilot-backend.md). Non è ancora distribuito né collegato al database di produzione. L’informativa resta una bozza. I gate di invio e analytics non sono stati aperti. Le prove frontend successo/errore usano risposte simulate solo nei test.
 
 ## Primo passo su IONOS
 
@@ -20,7 +20,7 @@ Fonte verificata l’11 ottobre 2026: [IONOS — Configurare un database MySQL o
 
 `VITE_PILOT_ENDPOINT` deve indicare un endpoint server che accetti il JSON prodotto da `submitPilotApplication`, validi nuovamente campi e allowlist, limiti dimensione/frequenza delle richieste e salvi tramite query parametrizzate. Nessun payload con dati personali nei log. Accessi al database e credenziali rimangono lato server. La risposta di accettazione va restituita soltanto dopo la registrazione riuscita, mai come fallback di una pagina statica. Errori generici 4xx/5xx, niente dettagli SQL. L’informativa e le effettive modalità di conservazione/accesso vanno completate prima dell’attivazione.
 
-I valori pubblici di build da configurare dopo la verifica sono `VITE_LEAD_CAPTURE_READY=true`, `VITE_PRIVACY_NOTICE_URL` e `VITE_PILOT_ENDPOINT`. Non configurare il gate prima che destinazione, informativa e prova end-to-end reale siano pronte. L’invio della waitlist e GA4 restano separati. Il backend non è stato implementato o distribuito durante questo aggiornamento.
+I valori pubblici di build da configurare dopo la verifica sono `VITE_LEAD_CAPTURE_READY=true`, `VITE_PRIVACY_NOTICE_URL` e `VITE_PILOT_ENDPOINT`. Non configurare il gate prima che destinazione, informativa e prova end-to-end reale siano pronte. L’invio della waitlist e GA4 restano separati. Il backend PHP è stato implementato nel successivo aggiornamento; distribuzione e connessione IONOS restano da verificare.
 
 ## Prove
 

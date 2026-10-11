@@ -16,6 +16,20 @@ jobs:
       group: quality-${{ github.ref }}
       cancel-in-progress: ${{ github.event_name == 'pull_request' }}
     timeout-minutes: 30
+    services:
+      pilot-db:
+        image: mariadb:11.8
+        env:
+          MARIADB_DATABASE: delir_test
+          # Disposable CI fixture only; no production access or credentials.
+          MARIADB_ROOT_PASSWORD: test-only-password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -28,6 +42,16 @@ jobs:
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run test:coverage
+      - name: Validate IONOS PHP intake and MariaDB transactions
+        env:
+          DELIR_TEST_DSN: mysql:host=127.0.0.1;port=3306;dbname=delir_test;charset=utf8mb4
+          DELIR_TEST_USER: root
+          DELIR_TEST_PASSWORD: test-only-password
+        run: |
+          php -l public/api/pilot.php
+          php -l server/ionos/pilot.php
+          php -l server/ionos/config.example.php
+          php server/ionos/tests.php --require-db
       - run: npm run build
       - name: Keep the tested build for deployment
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
