@@ -28,18 +28,20 @@ test('landing remains usable from narrow phones through desktop', async ({ page 
   }
 });
 
-test('product navigation reveals five distinct real product screens', async ({ page }, testInfo) => {
+test('benefits are readable while scrolling and navigation reaches their real product screens', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Scroll behavior runs once in Chromium');
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/');
   await expect.poll(() => page.evaluate(() => document.documentElement.classList.contains('lenis'))).toBe(true);
 
-  const labels = ['Workspace', 'Process Discovery', 'Process Intelligence', 'Process Mining', 'Simulation & Delivery'];
+  const labels = ['Evidenze', 'Lacune', 'Contesto', 'Decisioni', 'Scenari'];
+  await expect(page.locator('[data-product-benefit="true"]')).toHaveCount(4);
+  await expect(page.locator('[data-product-module][hidden]')).toHaveCount(0);
   let previousImage = '';
   for (let index = 0; index < labels.length; index += 1) {
     const chapter = page.locator('[data-product-module]').nth(index);
-    await page.getByRole('navigation', { name: 'Viste del prodotto' }).getByRole('link', { name: labels[index], exact: true }).click();
+    await page.getByRole('navigation', { name: 'Benefici DeliR' }).getByRole('link', { name: labels[index], exact: true }).click();
     await chapter.scrollIntoViewIfNeeded();
     await expect(chapter).toHaveAttribute('data-product-module', labels[index]);
     const image = chapter.locator('img');
@@ -48,8 +50,8 @@ test('product navigation reveals five distinct real product screens', async ({ p
     expect(source).toBeTruthy();
     expect(source).not.toBe(previousImage);
     previousImage = source ?? '';
-    if (index === 2) {
-      await testInfo.attach('intelligence-chapter', { body: await chapter.screenshot({ path: testInfo.outputPath('intelligence-chapter.png') }), contentType: 'image/png' });
+    if (index === 0) {
+      await testInfo.attach('evidence-benefit', { body: await chapter.screenshot({ path: testInfo.outputPath('evidence-benefit.png') }), contentType: 'image/png' });
     }
   }
   await testInfo.attach('desktop-fifth-screen', { body: await page.screenshot(), contentType: 'image/png' });

@@ -51,14 +51,14 @@ test('landing has no runtime errors', async ({ page }, testInfo) => {
 
 test('chapters and scenes support keyboard navigation and direct links', async ({ page }) => {
   await page.goto('/');
-  const miningLink = page.getByRole('navigation', { name: 'Viste del prodotto' }).getByRole('link', { name: 'Process Mining', exact: true });
-  await miningLink.focus(); await miningLink.press('Enter');
+  const decisionLink = page.getByRole('navigation', { name: 'Benefici DeliR' }).getByRole('link', { name: 'Decisioni', exact: true });
+  await decisionLink.focus(); await decisionLink.press('Enter');
   await expect(page).toHaveURL(/#product-04$/);
   const chapter = page.locator('#product-04');
-  await expect(chapter.getByRole('heading', { name: 'Individua dove il flusso si ferma.' })).toBeInViewport();
+  await expect(chapter.getByRole('heading', { name: 'Spiega le modifiche che raccomandi.' })).toBeInViewport();
   const expand = chapter.getByRole('button', { name: /Apri il video completo/ });
   await expand.focus(); await expand.press('Enter');
-  const dialog = page.getByRole('dialog', { name: 'Heatmap e colli di bottiglia' });
+  const dialog = page.getByRole('dialog', { name: 'Review TO-BE' });
   await expect(dialog).toBeVisible(); await page.keyboard.press('Escape');
   await expect(dialog).not.toBeVisible(); await expect(expand).toBeFocused();
   await page.goto('/#scene-review-as-is');
