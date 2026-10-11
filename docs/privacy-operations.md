@@ -36,11 +36,11 @@ I contatori HMAC scadono in finestre di 15 minuti; la cancellazione su traffico 
 Da SSH, nella cartella privata, con il binario PHP effettivamente disponibile:
 
 ```sh
-php maintenance.php --dry-run
-php maintenance.php --apply
+/usr/bin/php8.4 maintenance.php --dry-run
+/usr/bin/php8.4 maintenance.php --apply
 ```
 
-Prima eseguire la prova controllata con dati fittizi. Poi configurare un cron **lato server** almeno giornaliero, monitorandone uscita e codice di errore. Il campo HTTP GET del pannello IONOS non esegue questo file CLI: non renderlo pubblico e non mettere una password nella URL. La guida IONOS distingue i cron web da quelli lato server; richiedono accesso SSH. Non è stato ancora configurato alcun cron di manutenzione. Finché non è verificato, l’informativa non deve dichiarare cancellazione automatica o scadenza effettiva di 15 minuti per i record memorizzati.
+Prima eseguire la prova controllata con dati fittizi. Poi configurare un cron **lato server** almeno giornaliero, monitorandone uscita e codice di errore. Il campo HTTP GET del pannello IONOS non esegue questo file CLI: non renderlo pubblico e non mettere una password nella URL. La guida IONOS distingue i cron web da quelli lato server; lo script privato richiede un cron di tipo UnixCron. Nel terminale dell’ambiente osservato dal titolare crontab non è disponibile, ma il pannello offre UnixCron. Il titolare ha confermato la creazione di un UnixCron giornaliero notturno nel pannello. La prima esecuzione automatica resta da verificare. Finché non è verificato, l’informativa non deve dichiarare cancellazione automatica o scadenza effettiva di 15 minuti per i record memorizzati.
 
 I log di hosting IONOS hanno regole separate: verificare configurazione e termini effettivi. La funzione di manutenzione interviene solo su diagnostic.log dell’applicazione.
 
@@ -68,3 +68,13 @@ In caso di accesso sospetto o divulgazione: bloccare la raccolta tramite enabled
 - [IONOS: trattamento incorporato nei contratti dal 19 luglio 2022](https://www.ionos.it/aiuto/protezione-dei-dati/informazioni-generali-sullordinanza-di-base-sulla-protezione-dei-dati-oderr/contratto-per-il-trattamento-dei-dati/).
 - [IONOS: backup automatici database per 14 giorni](https://www.ionos.it/aiuto/hosting/mysql-datenbank-sichern-wiederherstellen/ripristinare-un-database-mysql-o-mariadb-da-un-backup-di-7-giorni/).
 - [IONOS: cron web e cron lato server](https://www.ionos.it/aiuto/hosting/cronjob/cronjob-manager-di-11-ionos/).
+
+## Evidenza della configurazione sul server
+
+Il titolare ha riportato: directory /home/www/private/delir, PHP /usr/bin/php8.4, dry-run con 2 contatori scaduti e 0 righe diagnostiche da rimuovere, seguito da apply con gli stessi conteggi. Ha confermato la creazione nel pannello di delir-maintenance, tipo UnixCron, attivo, giornaliero notturno, con comando:
+
+```sh
+/usr/bin/php8.4 /home/www/private/delir/maintenance.php --apply
+```
+
+Prova manuale e creazione sono evidenze riferite dall’utente. Non è ancora disponibile l’esito della prima esecuzione automatica. Controllare nel pannello l’esito o eventuali notifiche di errore quando disponibili; in caso di fallimento, risolvere prima di fare affidamento sulla pulizia automatica. I contatori restano utilizzabili per una finestra di 15 minuti; la cancellazione giornaliera dei record scaduti è distinta dalla scadenza funzionale. La diagnostica oltre sette giorni viene eliminata alla successiva pulizia riuscita. Backup separati seguono le regole del fornitore. Nessuna richiesta pilot è stata selezionata o cancellata dallo script.
