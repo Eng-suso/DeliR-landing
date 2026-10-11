@@ -41,17 +41,19 @@ it('loads once, keeps ads denied, removes URL data and counts one page view per 
   trackPage('/', 'it', true);
   trackPage('/', 'it', true);
   trackPage('/pilot', 'en', true);
+  trackPage('/security-data', 'it', true);
+  trackPage('/comparison-sources', 'en', true);
   trackPage('/unknown/private-value', 'it', true);
   const queue = Reflect.get(window, 'dataLayer') as unknown[][];
   expect(queue[0]).toEqual(['consent', 'default', expect.objectContaining({ analytics_storage: 'denied', ad_user_data: 'denied' })]);
   expect(queue[1]).toEqual(['consent', 'update', expect.objectContaining({ analytics_storage: 'granted', ad_storage: 'denied', ad_personalization: 'denied' })]);
   expect(queue[3]).toEqual(['config', 'G-TEST', expect.objectContaining({ send_page_view: false, cookie_update: false, allow_google_signals: false, page_referrer: '' })]);
   const events = queue.filter(item => item[0] === 'event');
-  expect(events).toHaveLength(2);
+  expect(events).toHaveLength(4);
   expect(events[1][2]).toMatchObject({ page_location: 'https://delir.it/pilot?lang=en', page_referrer: '' });
   saveConsent(false);
   trackPage('/waitlist', 'it', true);
-  expect(queue.filter(item => item[0] === 'event')).toHaveLength(2);
+  expect(queue.filter(item => item[0] === 'event')).toHaveLength(4);
 });
 
 it('withdrawal disables GA, clears its cookies and queue, and preserves technical storage', async () => {

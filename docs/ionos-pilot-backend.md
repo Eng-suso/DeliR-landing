@@ -2,7 +2,7 @@
 
 ## Stato
 
-Database MariaDB standard creato dall’utente. I riferimenti ricevuti non vengono trascritti nel repository. Backend PHP predisposto, non distribuito e non collegato al database di produzione. Frontend e backend restano chiusi per impostazione predefinita. Nessun invio reale verificato.
+Database MariaDB standard creato dall’utente. I riferimenti ricevuti non vengono trascritti nel repository. Il titolare ha riferito una prova con dati fittizi riuscita sul backend IONOS, seguita da chiusura e pulizia. Frontend e backend restano chiusi per impostazione predefinita; la prova UI sul dominio reale non è ancora verificata.
 
 ## Primo passo: creare le tabelle
 
@@ -32,7 +32,7 @@ Il database è accessibile soltanto dalla rete IONOS. Il DSN usa la rete interna
 - Sei chiavi esatte: cinque campi e `source=delir-pilot-application`. Allowlist attività/tempistiche; nome 1–100 caratteri, email valida entro 254 byte, descrizione 20–600 caratteri. Corpo entro 8 KiB, lettura limitata anche senza Content-Length.
 - Query parametrizzate native e tabelle InnoDB. Conferma `201 {"accepted":true}` soltanto dopo commit. Errori generici, nessun payload, IP o dettaglio SQL nei log dell’applicazione.
 - Cinque invii validi per IP e cento complessivi per finestra fissa di 15 minuti. Contatori serializzati nel database; salvataggio fallito annulla anche l’incremento. Limiti iniziali da monitorare, non protezione DDoS completa: un bot può inviare richieste dirette e distribuire gli IP.
-- Nessun IP in chiaro nel database dell’applicazione; identificativi HMAC pseudonimizzati, non dichiarati anonimi. Scadono alla fine della finestra, cancellati al successivo traffico. Pianificare anche `DELETE FROM pilot_rate_limits WHERE expires_at <= UNIX_TIMESTAMP()` con job privato giornaliero per periodi senza traffico: job non ancora configurato. I log di hosting IONOS possono contenere IP e richiedono verifica separata.
+- Nessun IP in chiaro nel database dell’applicazione; identificativi HMAC pseudonimizzati, non dichiarati anonimi. Scadono alla fine della finestra, cancellati al successivo traffico. Pianificare anche `DELETE FROM pilot_rate_limits WHERE expires_at <= UNIX_TIMESTAMP()` con job privato giornaliero per periodi senza traffico: UnixCron giornaliero configurato dal titolare; prima esecuzione automatica non ancora verificata. I log di hosting IONOS possono contenere IP e richiedono verifica separata.
 - Raccolta pubblica senza account. Nessun endpoint per leggere/elencare richieste. Consultazione tramite IONOS/phpMyAdmin con accessi controllati; nessuna email automatica o CRM aggiunto.
 
 Conservazione proposta delle richieste senza seguito: 12 mesi dall’ultimo contatto. `created_at` registra soltanto la ricezione. Prima dell’attivazione definire revisione/cancellazione periodica e registro dei contatti successivi; nessuna cancellazione indiscriminata dei rapporti contrattuali. Non sono attestati conformità GDPR o cancellazione automatica delle richieste.
@@ -80,7 +80,7 @@ L’11 ottobre 2026 il titolare ha confermato risposta accepted: true e una riga
 
 ## Manutenzione privata predisposta
 
-server/ionos/maintenance.php va copiato esclusivamente in /private/delir. Esecuzione CLI con --dry-run o --apply esplicito: rimuove contatori scaduti e diagnostica oltre sette giorni, senza leggere o cancellare richieste pilot. Procedura, scadenze manuali, gestione diritti, incidenti e ripristini in [privacy-operations.md](privacy-operations.md). Il titolare ha confermato accesso solo SFTP: SSH e cron lato server non sono ancora configurati. Il cron HTTP del pannello non esegue questo file privato.
+server/ionos/maintenance.php va copiato esclusivamente in /private/delir. Esecuzione CLI con --dry-run o --apply esplicito: rimuove contatori scaduti e diagnostica oltre sette giorni, senza leggere o cancellare richieste pilot. Procedura, scadenze manuali, gestione diritti, incidenti e ripristini in [privacy-operations.md](privacy-operations.md). Il titolare ha successivamente attivato SFTP + SSH e configurato un UnixCron giornaliero; la prima esecuzione automatica resta da verificare. Il cron HTTP del pannello non esegue questo file privato.
 
 Validazione locale: sintassi PHP e 52 controlli passati, inclusi dry-run senza modifiche, scadenza/retention dei log, idempotenza ed errori CLI senza dati. La CI include prova MariaDB di contatori scaduti/attivi e conservazione di una richiesta fittizia; non eseguita localmente perché manca un database isolato. Non è stata eseguita manutenzione sul database di produzione.
 

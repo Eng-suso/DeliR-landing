@@ -15,7 +15,7 @@ export function validatePilotApplication(fields: PilotApplicationFields): PilotA
   if (!fields.name.trim()) errors.name = 'required';
   else if (fields.name.trim().length > 100) errors.name = 'long';
   if (!fields.email.trim()) errors.email = 'required';
-  else if (fields.email.trim().length > 254 || !emailPattern.test(fields.email.trim())) errors.email = 'invalid';
+  else if (fields.email.trim().length > 254 || (!/^[\x21-\x7e]+$/.test(fields.email.trim()) || !emailPattern.test(fields.email.trim()))) errors.email = 'invalid';
   if (!['independent', 'boutique', 'consulting-firm', 'in-house-operations'].includes(fields.practice)) errors.practice = 'required';
   if (!['active', 'next-90-days'].includes(fields.timing)) errors.timing = 'required';
 

@@ -62,6 +62,8 @@ export default function PilotPage({ captureEnabled }: PilotPageProps) {
   const [fields, setFields] = useState<PilotApplicationFields>(emptyFields);
   const [errors, setErrors] = useState<PilotApplicationErrors>({});
   const [submitError, setSubmitError] = useState('');
+  // Server HTML is inert; createRoot enables controls when it attaches handlers.
+  const clientReady = typeof window !== 'undefined';
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 
   useEffect(() => {
@@ -153,8 +155,8 @@ export default function PilotPage({ captureEnabled }: PilotPageProps) {
               <h2 id="application-title" className="font-display text-2xl font-medium text-slate-950">{t.formTitle}</h2>
               <p className="mt-2 text-sm leading-6 text-slate-600">{t.formIntro}</p>
               {!captureEnabled ? <div role="status" className="mt-6 border-l-2 border-brand-blue bg-[#EEF4F8] px-4 py-3 text-sm leading-6 text-brand-ink"><strong className="block font-semibold">{t.pendingTitle}</strong>{t.pendingBody}</div> : null}
-              <form onSubmit={handleSubmit} noValidate className="mt-8 space-y-6" aria-label={t.formTitle}>
-                <fieldset disabled={status === 'submitting'} className="space-y-6">
+              <form method="post" onSubmit={handleSubmit} noValidate className="mt-8 space-y-6" aria-label={t.formTitle}>
+                <fieldset disabled={!clientReady || status === 'submitting'} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="text-sm font-semibold text-slate-800">{t.name}</label>
                   <input id="name" name="name" type="text" autoComplete="name" maxLength={100} required value={fields.name} onChange={(event) => updateField('name', event.target.value)} aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? 'name-error' : undefined} className={fieldClass} placeholder={language === 'it' ? 'Il tuo nome' : 'Your name'} />
@@ -187,7 +189,7 @@ export default function PilotPage({ captureEnabled }: PilotPageProps) {
                 </div>
                 </fieldset>
                 {submitError ? <div role="alert" className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">{submitError}</div> : null}
-                <button type="submit" disabled={status === 'submitting'} aria-busy={status === 'submitting'} className="btn-primary w-full">
+                <button type="submit" disabled={!clientReady || status === 'submitting'} aria-busy={status === 'submitting'} className="btn-primary w-full">
                   {!captureEnabled ? t.previewSubmit : status === 'submitting' ? t.submitting : t.submit}{status === 'submitting' || !captureEnabled ? null : <ArrowRight aria-hidden="true" className="h-4 w-4" />}
                 </button>
                 {captureEnabled ? <p className="text-center text-xs leading-5 text-slate-500">{language === 'it' ? 'Leggi come trattiamo i dati nella ' : 'Read how we handle your data in the '}<a href={privacyNoticeUrl} className="font-semibold text-blue-700 underline underline-offset-4">{language === 'it' ? 'informativa privacy' : 'privacy notice'}</a>.</p> : null}

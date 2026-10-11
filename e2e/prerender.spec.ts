@@ -32,3 +32,25 @@ test('without JavaScript, content remains readable and forms cannot leak data th
     await context.close();
   }
 });
+
+
+test('pilot stays inert before client startup and becomes interactive afterward', async ({ page, browser, baseURL }) => {
+  await page.route('**/assets/*.js', route => route.abort());
+  await page.goto('/seo/pilot.en.html');
+  await expect(page.locator('form')).toBeVisible();
+  await expect(page.locator('form')).toHaveAttribute('method', 'post');
+  await expect(page.locator('#name')).toBeDisabled();
+  await expect(page.locator('button[type="submit"]')).toBeDisabled();
+  const initialUrl = page.url();
+  await page.locator('button[type="submit"]').evaluate((button: HTMLButtonElement) => button.click());
+  expect(page.url()).toBe(initialUrl);
+  // Isolate normal startup from the context in which module loading was deliberately blocked.
+  const started = await browser.newPage();
+  try {
+    await started.goto(`${baseURL}/pilot?lang=en`);
+    await expect(started.locator('#name')).toBeEnabled();
+    await expect(started.locator('button[type="submit"]')).toBeEnabled();
+  } finally {
+    await started.close();
+  }
+});

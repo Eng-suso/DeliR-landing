@@ -28,7 +28,7 @@ export default function ComparisonSourcesPage() {
   const t = copy[language];
   const home = language === 'en' ? '/?lang=en' : '/';
   useLayoutEffect(() => {
-    const target = document.getElementById(fragment || 'main-content');
+    const target = (fragment && document.getElementById(fragment)) || document.getElementById('main-content');
     target?.focus({ preventScroll: true });
   }, [fragment]);
   return <div className="offer-page min-h-screen bg-white text-brand-ink">

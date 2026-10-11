@@ -25,3 +25,16 @@ test('privacy draft and preferences are accessible with analytics closed', async
   await expect(page.getByRole('heading', { level: 1, name: 'Privacy and cookies' })).toBeVisible();
   expect(googleRequests).toEqual([]);
 });
+
+
+test('a consent choice from another tab closes an already open dialog', async ({ page, context }) => {
+  await page.goto('/privacy');
+  await page.getByRole('button', { name: 'Preferenze cookie' }).first().click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  const other = await context.newPage();
+  await other.goto('/privacy');
+  await other.getByRole('button', { name: 'Preferenze cookie' }).first().click();
+  await other.getByRole('button', { name: 'Rifiuta analytics', exact: true }).click();
+  await expect(page.getByRole('dialog')).not.toBeVisible();
+  await other.close();
+});

@@ -14,6 +14,10 @@ describe('validatePilotApplication', () => {
     expect(validatePilotApplication(validFields)).toEqual({});
   });
 
+  it.each(['josé@example.com', 'jane@exämple.com'])('rejects unsupported non-ASCII email %s with field guidance', email => {
+    expect(validatePilotApplication({ ...validFields, email }).email).toBe('invalid');
+  });
+
   it('reports every required field', () => {
     expect(validatePilotApplication({ name: '', email: '', practice: '', timing: '', projectBrief: '' })).toEqual({
       name: 'required', email: 'required', practice: 'required', timing: 'required', projectBrief: 'required',

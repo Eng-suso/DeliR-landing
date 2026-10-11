@@ -67,7 +67,7 @@ export function trackPage(pathname: string, language: 'it' | 'en', consented: bo
   if (!analyticsAvailable || !consented || !started || !readConsent()?.analytics) return;
   // Allowlist routes and language; never send arbitrary URL parameters, hash,
   // form content, titles, or a referrer query that might contain personal data.
-  if (!['/', '/pilot', '/waitlist', '/privacy'].includes(pathname)) return;
+  if (!['/', '/pilot', '/waitlist', '/privacy', '/security-data', '/comparison-sources'].includes(pathname)) return;
   const page = `${pathname}${language === 'en' ? '?lang=en' : ''}`;
   if (page === previousPage) return;
   const context = {

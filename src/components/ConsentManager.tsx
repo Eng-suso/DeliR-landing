@@ -21,6 +21,7 @@ export default function ConsentManager() {
       const next = readConsent();
       if (!next?.analytics && stopAnalytics()) location.reload();
       setConsent(next);
+      if (next) setOpen(false);
     };
     window.addEventListener('delir:cookie-preferences', show);
     window.addEventListener('storage', sync);
