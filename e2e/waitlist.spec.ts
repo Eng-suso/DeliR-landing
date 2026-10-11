@@ -36,7 +36,7 @@ test('language choice is shareable and persists after reload', async ({ page, is
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Process Intelligence Software for Efficient and Effective Operations.');
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-  await expect(page).toHaveTitle(/Sources, BPMN/);
+  await expect(page).toHaveTitle('DeliR | Process Intelligence for BPM & Operations Consultants');
   await page.goto('/pilot?lang=en');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Test DeliR on Your Project.');
   await expect(page).toHaveTitle(/DeliR pilot/);
