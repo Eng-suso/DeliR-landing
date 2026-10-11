@@ -1,55 +1,14 @@
-import { ArrowRight, TerminalSquare } from 'lucide-react';
-import { motion } from 'motion/react';
-import { Link } from 'react-router-dom';
-import DarkAnimatedBackground from './DarkAnimatedBackground';
+import { ArrowRight } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
+import { projectContactHref, publicContactEmail } from '../lib/publicOffer';
 
 export default function FinalCTA() {
-  return (
-    <section className="py-24 relative z-10 bg-brand-navy" id="early-access">
-      <DarkAnimatedBackground />
-      
-      {/* Blur circles wrapped in overflow-hidden to prevent them from spilling out of the section */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-blue-600/20 rounded-full blur-[150px]"></div>
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-indigo-600/30 rounded-full blur-[120px] transform translate-x-1/4 translate-y-1/4"></div>
-      </div>
-
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 text-white mb-8">
-           <TerminalSquare className="w-8 h-8" />
-        </div>
-        <h2 className="text-4xl md:text-[44px] font-display font-medium text-white mb-6 tracking-tight leading-[1.1]">
-          Start with one messy workflow.<br />
-          <span className="text-blue-200">Leave with a clear As-Is map, a better To-Be process and a report your team can actually use.</span>
-        </h2>
-        <p className="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">
-          Try the DeliR Process Demo and help shape the next generation of business operations.
-        </p>
-
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <motion.div 
-            whileHover={{ scale: 1.025 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 420, damping: 24 }}
-            className="w-full sm:w-auto"
-          >
-            <Link to="/waitlist" className="block w-full bg-brand-blue text-white px-8 py-4 rounded-lg text-base font-semibold hover:bg-blue-600 transition-colors shadow-lg cursor-pointer">
-              Try the Process Demo
-            </Link>
-          </motion.div>
-          <motion.div 
-            whileHover={{ scale: 1.025 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 420, damping: 24 }}
-            className="w-full sm:w-auto"
-          >
-            <Link to="/waitlist" className="block w-full bg-transparent border border-slate-600 text-white px-8 py-4 rounded-lg text-base font-medium hover:bg-slate-800 hover:border-slate-500 transition-colors flex items-center justify-center gap-2 cursor-pointer">
-              Join Early Access
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
+  const { language } = useLanguage(); const it = language === 'it';
+  return <section id="early-access" className="premium-final bg-brand-navy py-14 text-white sm:py-20" aria-labelledby="final-cta-title"><div data-reveal className="section-shell relative z-10 text-center">
+    <p className="landing-eyebrow !text-blue-300">{it ? 'Il prossimo passo' : 'The next step'}</p>
+    <h2 id="final-cta-title" className="mx-auto mt-5 max-w-3xl text-balance font-display text-[clamp(2rem,4vw,3.6rem)] font-semibold leading-tight tracking-[-0.04em]">{it ? 'Quale processo vuoi portare alla decisione?' : 'Which process needs a decision?'}</h2>
+    <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-slate-300">{it ? 'Raccontaci obiettivo e tempistica. Valutiamo il progetto e definiamo una proposta di pilot per milestone.' : 'Tell us the objective and timing. We assess the project and define a pilot proposal with milestones.'}</p>
+    <a href={projectContactHref(language)} className="btn-primary mt-6">{it ? 'Parliamo del tuo progetto' : 'Discuss your project'}<ArrowRight aria-hidden="true" className="size-4" /></a>
+    <p className="mt-4 text-sm text-slate-300"><a href={`mailto:${publicContactEmail}`} className="inline-flex min-h-11 items-center underline underline-offset-4">{publicContactEmail}</a></p>
+  </div></section>;
 }

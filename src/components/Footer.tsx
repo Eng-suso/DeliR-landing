@@ -1,21 +1,11 @@
+import { Link } from 'react-router-dom';
+import { useLanguage } from '../i18n/LanguageContext';
+import { publicContactEmail } from '../lib/publicOffer';
+
 export default function Footer() {
-  return (
-    <footer className="py-12 relative z-10 bg-slate-950 border-t border-slate-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
-        <div className="flex items-center">
-          <span className="font-display font-bold text-xl tracking-tighter text-white">
-            DeliR<span className="text-brand-blue">.</span>
-          </span>
-        </div>
-        <div className="text-slate-500 text-sm">
-          &copy; {new Date().getFullYear()} DeliR Inc. All rights reserved.
-        </div>
-        <div className="flex gap-6 text-sm text-slate-400">
-          <a href="#" className="hover:text-white transition-colors">Privacy</a>
-          <a href="#" className="hover:text-white transition-colors">Terms</a>
-          <a href="#" className="hover:text-white transition-colors">Contact</a>
-        </div>
-      </div>
-    </footer>
-  );
+  const { language } = useLanguage(); const it = language === 'it'; const home = it ? '/' : '/?lang=en';
+  return <footer className="relative z-10 border-t border-white/10 bg-brand-blue-hover py-8"><div className="section-shell flex flex-wrap items-center justify-between gap-x-8 gap-y-5">
+    <div><Link to={home} className="inline-flex min-h-11 items-center font-display text-xl font-bold tracking-tight text-white">DeliR.</Link><p className="text-xs text-slate-400">&copy; {new Date().getFullYear()} DeliR — Sohayb Raqaq</p></div>
+    <nav aria-label={it ? 'Collegamenti nel footer' : 'Footer links'} className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-300"><Link to={`${home}#caso`} className="inline-flex min-h-11 items-center hover:text-white">{it ? 'Il prodotto' : 'Product'}</Link><Link to={`${home}#fiducia`} className="inline-flex min-h-11 items-center hover:text-white">{it ? 'Dati e AI' : 'Data and AI'}</Link><Link to={`${home}#pilot`} className="inline-flex min-h-11 items-center hover:text-white">Pilot</Link><a href={`mailto:${publicContactEmail}`} className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-white">{publicContactEmail}</a></nav>
+  </div></footer>;
 }

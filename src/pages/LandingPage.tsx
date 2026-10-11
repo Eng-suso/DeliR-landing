@@ -1,46 +1,36 @@
-import { useEffect } from 'react';
+import '../styles/premium-landing.css';
+import ScrollExperience from '../components/ScrollExperience';
+import PremiumBackground from '../components/PremiumBackground';
+import FragmentNavigation from '../components/FragmentNavigation';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Problem from '../components/Problem';
 import Journey from '../components/Journey';
-import Differentiation from '../components/Differentiation';
+import Comparison from '../components/Comparison';
 import BuiltFor from '../components/BuiltFor';
-import ManagerSwitch from '../components/ManagerSwitch';
-import Vision from '../components/Vision';
+import PilotInvitation from '../components/PilotInvitation';
 import Faq from '../components/Faq';
 import FinalCTA from '../components/FinalCTA';
 import Footer from '../components/Footer';
-import PremiumBackground from '../components/PremiumBackground';
-import Lenis from 'lenis';
+import SkipLink from '../components/SkipLink';
+import SmoothScroll from '../components/SmoothScroll';
 
 export default function LandingPage() {
-  useEffect(() => {
-    const lenis = new Lenis();
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
-    return () => {
-      lenis.destroy();
-    };
-  }, []);
-
   return (
-    <div className="min-h-screen bg-transparent relative">
+    <div className="landing-page relative min-h-screen bg-white">
+      <SkipLink />
       <PremiumBackground />
+      <SmoothScroll />
+      <ScrollExperience />
+      <FragmentNavigation />
       <Navbar />
-      <main className="relative z-10">
+      <main id="main-content" className="relative z-10">
         <Hero />
         <Problem />
         <Journey />
-        <Differentiation />
+        <Comparison />
         <BuiltFor />
-        <ManagerSwitch />
-        <Vision />
+        <PilotInvitation />
         <Faq />
         <FinalCTA />
       </main>

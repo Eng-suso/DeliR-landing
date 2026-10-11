@@ -1,92 +1,57 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Plus, Minus } from 'lucide-react';
+import { Minus, Plus } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
-const faqs = [
-  {
-    question: "What problem does DeliR solve?",
-    answer: "Most companies do not have a clear view of how their processes really work.\n\nThe workflow is often spread across meetings, documents, spreadsheets, emails and people’s memory. DeliR helps turn that scattered information into clear process maps, KPI analysis, risk signals and improved To-Be processes."
+const copy = {
+  it: {
+    eyebrow: 'Prima di scegliere il pilot', title: 'Le domande che contano per iniziare.',
+    faqs: [
+      ['Quanto costa il pilot e come si paga?', 'Il pilot è a pagamento. Il preventivo definisce importi e ripartizione: una quota alla firma e quote collegate agli obiettivi AS-IS, TO-BE e alla consegna al process owner. Perimetro e criteri di accettazione vengono concordati prima della firma.'],
+      ['Quanto dura e quali output ricevo?', 'Durata e calendario dipendono dal processo, dalle fonti disponibili e dalle verifiche necessarie. La proposta specifica gli output AS-IS e TO-BE, le attività incluse e l’handover al process owner. Li definiamo insieme prima di iniziare.'],
+      ['Posso partire senza event log?', 'Sì. La discovery può partire da interviste, documenti, procedure e conoscenza operativa. Concordiamo quali fonti utilizzare e quali informazioni devono essere verificate prima di confermare il modello.'],
+      ['Cosa devo inviare per il primo contatto?', 'Bastano una descrizione del processo, l’obiettivo e la tempistica. Non inviare documenti riservati o dati del cliente nel primo messaggio. Le condizioni per utilizzare le fonti nell’incarico si verificano prima del pilot.'],
+      ['Come vengono gestiti i dati e l’AI?', 'DeliR è progettato con workspace separati tra clienti, separazione applicativa e database, autenticazione e accessi dedicati. I dati costruiscono il contesto per analisi e funzionalità AI. Le policy pubbliche su hosting, conservazione, cancellazione e uso dei dati da parte dei modelli AI sono in formalizzazione e saranno verificabili prima dei pilot.'],
+      ['Le simulazioni sono risultati già ottenuti?', 'No. Il confronto AS-IS / TO-BE valuta scenari basati su parametri e assunzioni. I numeri nei video appartengono al caso dimostrativo. La proposta va verificata con il process owner; una simulazione non garantisce il risultato dell’implementazione.'],
+      ['Chi conferma il modello e la raccomandazione?', 'La review resta umana. DeliR affianca al processo fonti, punti da discutere e proposte; il consulente e il process owner verificano le informazioni e prendono le decisioni.'],
+    ],
   },
-  {
-    question: "Who is DeliR built for?",
-    answer: "DeliR is built for consultants, operations teams, business analysts and managers who need to understand, explain and improve business processes.\n\nIt is especially useful when a process is important, but unclear, undocumented or difficult to explain to stakeholders."
+  en: {
+    eyebrow: 'Before choosing a pilot', title: 'The questions that matter before starting.',
+    faqs: [
+      ['What does the pilot cost and how do payments work?', 'The pilot is paid. The quote sets amounts and payment stages: an initial payment at signing and further payments tied to AS-IS, TO-BE and process owner handover objectives. Scope and acceptance criteria are agreed before signing.'],
+      ['How long does it take and what do I receive?', 'Duration and schedule depend on the process, available sources and required reviews. The proposal specifies AS-IS and TO-BE outputs, included activities and process owner handover. We define these together before starting.'],
+      ['Can I start without event logs?', 'Yes. Discovery can start with interviews, documents, procedures and operational knowledge. We agree which sources to use and what needs verification before confirming the model.'],
+      ['What should I send in the first enquiry?', 'Describe the process, objective and timing. Do not send confidential documents or client data in your first message. Conditions for using engagement sources are reviewed before the pilot.'],
+      ['How are data and AI handled?', 'DeliR is designed with separate client workspaces, application and database separation, authentication and dedicated access policies. Data builds the context for analysis and AI features. Public policies on hosting, retention, deletion and AI model data use are being formalized and will be available for verification before pilots.'],
+      ['Are simulation numbers actual achieved results?', 'No. AS-IS / TO-BE comparison evaluates scenarios based on parameters and assumptions. Video numbers belong to the demo case. The proposal needs process owner review; simulation does not guarantee implementation outcomes.'],
+      ['Who confirms the model and recommendation?', 'Review remains human. DeliR places sources, discussion points and proposals alongside the process; the consultant and process owner verify information and make decisions.'],
+    ],
   },
-  {
-    question: "Is DeliR just a process mapping tool?",
-    answer: "No.\n\nDeliR does more than draw process maps. It helps users understand the workflow, identify missing information, find bottlenecks, highlight risks and create process documentation that managers can actually use.\n\nThe map is only the starting point."
-  },
-  {
-    question: "Does the user stay in control?",
-    answer: "Yes.\n\nDeliR creates a structured first version of the process, but the user reviews, edits and confirms the final output. The AI helps accelerate the work, while the consultant or process owner keeps control of the analysis and decisions."
-  },
-  {
-    question: "Does DeliR improve over time?",
-    answer: "Yes.\n\nAs teams map more processes, DeliR helps build a clearer memory of how the company works: common steps, recurring risks, repeated bottlenecks, process versions and improvement decisions.\n\nThis makes future analysis faster, more consistent and easier to explain across teams."
-  },
-  {
-    question: "Can DeliR help before automation?",
-    answer: "Yes.\n\nMany automation projects fail because teams try to automate processes they do not fully understand. DeliR helps clarify the workflow first, so teams can decide what should be automated, what should stay human and where risks need to be controlled."
-  },
-  {
-    question: "Can managers understand the output?",
-    answer: "Yes.\n\nDeliR is designed to create outputs that are clear for both technical and non-technical stakeholders. A manager view is available at every stage of the process, providing clear maps, insights and reports that managers can review, discuss and act on."
-  },
-  {
-    question: "Is DeliR safe to use with business processes?",
-    answer: "DeliR is designed for careful, review-based process analysis.\n\nUsers can work with simplified or anonymized information when needed, review AI-generated outputs before sharing them, and avoid including unnecessary sensitive data in the analysis."
-  }
-];
+} as const;
 
 export default function Faq() {
+  const { language } = useLanguage();
+  const t = copy[language];
   const [openIndex, setOpenIndex] = useState<number | null>(0);
-
   return (
-    <section className="py-24 bg-white relative" id="faq">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="mb-16">
-          <h2 className="text-4xl md:text-5xl font-display font-medium text-slate-900 mb-6 tracking-tight">
-            Frequently Asked Questions
-          </h2>
-        </div>
-
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <div 
-              key={index} 
-              className="border-b border-slate-200 last:border-0"
-            >
-              <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full flex items-center justify-between py-6 text-left focus:outline-none group"
-              >
-                <span className={`text-lg font-medium pr-8 transition-colors ${openIndex === index ? 'text-blue-600' : 'text-slate-900 group-hover:text-blue-600'}`}>
-                  {faq.question}
+    <section id="faq" className="premium-faq relative scroll-mt-28 border-t border-slate-200 bg-white py-20 sm:py-24" aria-labelledby="faq-title">
+      <div className="section-shell grid gap-12 lg:grid-cols-[0.65fr_1.35fr]">
+        <div data-reveal><p className="landing-eyebrow">{t.eyebrow}</p><h2 id="faq-title" className="landing-title mt-6">{t.title}</h2></div>
+        <div>
+          {t.faqs.map(([question, answer], index) => {
+            const open = openIndex === index;
+            return <div data-reveal key={question} className="border-b border-slate-200">
+              <button type="button" onClick={() => setOpenIndex(open ? null : index)} className="group flex min-h-16 w-full items-center justify-between py-5 text-left" aria-expanded={open} aria-controls={`faq-panel-${index}`}>
+                <span className="pr-6 text-base font-medium text-brand-ink group-hover:text-brand-blue sm:text-lg">{question}</span>
+                <span className={`flex size-9 shrink-0 items-center justify-center rounded-full border transition-colors ${open ? 'border-brand-blue bg-brand-blue text-white' : 'border-slate-300 bg-white text-slate-500 group-hover:border-brand-blue group-hover:text-brand-blue'}`}>
+                  {open ? <Minus aria-hidden="true" className="size-4" /> : <Plus aria-hidden="true" className="size-4" />}
                 </span>
-                <div className={`shrink-0 w-8 h-8 rounded-full border flex items-center justify-center transition-colors ${openIndex === index ? 'bg-blue-600 border-blue-600 text-white' : 'bg-slate-50 border-slate-200 text-slate-400 group-hover:border-blue-600 group-hover:text-blue-600'}`}>
-                  {openIndex === index ? (
-                    <Minus className="w-4 h-4" />
-                  ) : (
-                    <Plus className="w-4 h-4" />
-                  )}
-                </div>
               </button>
-              
-              <AnimatePresence>
-                {openIndex === index && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                  >
-                    <div className="pb-8 text-slate-600 whitespace-pre-wrap leading-relaxed">
-                      {faq.answer}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
+              <div id={`faq-panel-${index}`} role="region" aria-label={question} hidden={!open}>
+                <p className="max-w-3xl pb-6 text-sm leading-7 text-slate-600 sm:text-base">{answer}</p>
+              </div>
+            </div>;
+          })}
         </div>
       </div>
     </section>
