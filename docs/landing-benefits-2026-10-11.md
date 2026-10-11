@@ -90,3 +90,13 @@ Local lint, TypeScript and production build passed. Additional visible-browser c
 The first cross-browser matrix regression run passed 35 tests and found one Safari mobile source-panel reopening failure. A diagnostic tap trace identified Safari hit testing the section instead of its rating link after off-screen content skipping. Rendering the comparison normally removes that failure; other sections retain their deferred rendering. The details summary also uses one explicit state transition. Lint and build passed after the correction; affected cross-browser regression results follow.
 
 After the Safari rendering correction, all 16 focused regressions passed across Chromium, WebKit, mobile Chrome and mobile Safari, including reopening shared evidence and keeping all products in the available width. Desktop header and mobile-card screenshots were reviewed. These are local checks, not live production or field performance results.
+
+## Pilot control and risk reversals — 2026-10-11
+
+The owner replaced the pilot offer with “Bring one project. Keep full control.” and three public terms: know scope and price before starting; pay only when each milestone is delivered; stop anytime with no long-term commitment. These terms are now shared between the hero and pilot section through `pilotRiskReversals` in `src/lib/publicOffer.ts`, in Italian and English.
+
+The three example steps are Define the project, Understand and improve, and Review and decide. The first enquiry needs only the project, objective and timing, not client documents. CTA: “Discuss your pilot” / “Parliamo del tuo pilot”. The payment FAQ uses the new delivery-based terms. This replaces the previous initial payment at signing; old payment wording in earlier report entries is historical. No cancellation fee, refund guarantee or treatment of partial milestones was added. No payment system or lead capture was activated.
+
+Lint, TypeScript and production build passed. Responsive, keyboard, accessibility and route checks are recorded below after completion.
+
+Pilot offer verification: 9 focused tests passed across Chromium, WebKit, mobile Chrome and mobile Safari; 3 production-smoke duplicates were intentionally skipped. Additional IT/EN checks at 320, 390, 768 and 1440 px passed for matching hero/pilot terms, three project steps, email CTA keyboard focus, no overflow, no automated axe A/AA violations in the changed sections, and consistent terms on the standalone pilot page. Desktop/mobile visuals reviewed. These checks do not verify contractual execution or live payments.

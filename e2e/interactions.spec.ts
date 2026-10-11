@@ -24,7 +24,7 @@ test('hero makes the offer and an email enquiry available', async ({ page }) => 
   await page.goto('/');
   await page.locator('#hero-title').waitFor();
   const hero = page.locator('section[aria-labelledby="hero-title"]');
-  for (const term of ['Pilot a pagamento per milestone', 'Perimetro e criteri concordati', 'Primo contatto senza dati del cliente']) await expect(hero.getByText(term)).toBeVisible();
+  for (const term of ['Conosci perimetro e prezzo prima di iniziare', 'Paghi solo quando ogni milestone viene consegnata', 'Puoi fermarti in qualsiasi momento, senza impegni a lungo termine']) await expect(hero.getByText(term)).toBeVisible();
   await expect(hero.getByRole('link', { name: 'Parliamo del tuo progetto' })).toHaveAttribute('href', /^mailto:delir\.team@gmail\.com\?subject=/);
   await hero.getByRole('link', { name: 'Vedi il prodotto' }).click();
   await expect(page).toHaveURL(/#caso$/);
@@ -32,8 +32,8 @@ test('hero makes the offer and an email enquiry available', async ({ page }) => 
   await page.getByRole('heading', { level: 1 }).waitFor();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Valuta un pilot DeliR sul tuo incarico.');
   await expect(page.getByRole('form')).toHaveCount(0);
-  await expect(page.getByRole('heading', { name: 'Firma e avvio' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Consegna al responsabile del processo' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Definisci il progetto' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Verifica e decidi' })).toBeVisible();
 });
 
 test('product chapters and buying questions remain accessible', async ({ page }) => {

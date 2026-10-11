@@ -7,3 +7,17 @@ export function projectContactHref(language: 'it' | 'en') {
     : 'I would like to discuss a DeliR pilot.\n\nProcess or problem (without client names):\nEngagement objective:\nIndicative timing:\n\n';
   return `mailto:${publicContactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
+
+// Shared between the hero and pilot offer to keep public terms consistent.
+export const pilotRiskReversals = {
+  it: [
+    'Conosci perimetro e prezzo prima di iniziare',
+    'Paghi solo quando ogni milestone viene consegnata',
+    'Puoi fermarti in qualsiasi momento, senza impegni a lungo termine',
+  ],
+  en: [
+    'Know the scope and price before you start',
+    'Pay only when each milestone is delivered',
+    'Stop anytime, no long-term commitment',
+  ],
+} as const;

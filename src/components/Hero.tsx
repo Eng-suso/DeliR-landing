@@ -1,7 +1,7 @@
 import { ArrowDown, ArrowRight, Check } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { productClips } from '../lib/productClips';
-import { projectContactHref } from '../lib/publicOffer';
+import { pilotRiskReversals, projectContactHref } from '../lib/publicOffer';
 import ProductFilm from './ProductFilm';
 
 const copy = {
@@ -9,13 +9,11 @@ const copy = {
     eyebrow: 'Per consulenti BPM e Operations', first: 'Software di Process Intelligence', second: 'per Operations efficienti ed efficaci.',
     body: 'Smetti di passare settimane a ricostruire come lavora davvero il tuo cliente. DeliR trasforma la conoscenza dispersa in un As-Is verificato, confronta scenari To-Be e migliora continuamente i processi, così puoi fornire raccomandazioni migliori più rapidamente.',
     primary: 'Parliamo del tuo progetto', secondary: 'Vedi il prodotto',
-    terms: ['Pilot a pagamento per milestone', 'Perimetro e criteri concordati', 'Primo contatto senza dati del cliente'],
   },
   en: {
     eyebrow: 'For BPM and Operations consultants', first: 'Process Intelligence Software', second: 'for Efficient and Effective Operations.',
     body: 'Stop spending weeks reconstructing how your client really works. DeliR turns scattered knowledge into a verified As-Is, compares To-Be scenarios, and continuously improves processes so you deliver better recommendations faster.',
     primary: 'Discuss your project', secondary: 'See the product',
-    terms: ['Paid pilot by milestone', 'Agreed scope and acceptance criteria', 'No client data at first contact'],
   },
 };
 
@@ -47,7 +45,7 @@ export default function Hero() {
           <a href={projectContactHref(language)} className="btn-primary rounded-full px-7">{t.primary}<ArrowRight aria-hidden="true" className="size-4" /></a>
           <a href="#caso" className="btn-secondary border-brand-blue/25 text-brand-blue">{t.secondary}<ArrowDown aria-hidden="true" className="size-4" /></a>
         </div>
-        <ul aria-label={language === 'it' ? 'Condizioni del pilot' : 'Pilot terms'} className="mt-5 grid gap-2">{t.terms.map(item => <li key={item} className="inline-flex items-start gap-1.5 text-xs leading-5 text-slate-600"><Check aria-hidden="true" className="mt-0.5 size-3.5 shrink-0 text-brand-blue" />{item}</li>)}</ul>
+        <ul aria-label={language === 'it' ? 'Condizioni del pilot' : 'Pilot terms'} className="mt-5 grid gap-2">{pilotRiskReversals[language].map(item => <li key={item} className="inline-flex items-start gap-1.5 text-xs leading-5 text-slate-600"><Check aria-hidden="true" className="mt-0.5 size-3.5 shrink-0 text-brand-blue" />{item}</li>)}</ul>
       </div>
       <div className="hero-visual min-w-0" data-scroll-visual="hero">
         <ProductFilm key={language} clip={productClips.hero} priority minimal narration={narration[language]} />
