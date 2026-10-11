@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test('pilot offers a direct enquiry without a disabled form', async ({ page }) => {
   await page.goto('/pilot');
   await expect(page.getByRole('form')).toHaveCount(0);
-  await expect(page.getByRole('link', { name: 'Parliamo del tuo pilot' })).toHaveAttribute('href', /^mailto:delir\.team@gmail\.com/);
+  await expect(page.getByRole('link', { name: 'Testa DeliR sul tuo progetto' })).toHaveAttribute('href', /^mailto:delir\.team@gmail\.com/);
   await expect(page.getByText('Conosci perimetro e prezzo prima di iniziare')).toBeVisible();
 });
 

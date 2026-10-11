@@ -3,6 +3,7 @@ import { useFragment } from '../lib/useFragment';
 import { ArrowRight, ArrowUpRight, Check, Plus, X } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { comparisonProducts, comparisonRows, comparisonSources, type ComparisonRow } from '../lib/comparisonContent';
+import { pilotCtaLabel, projectContactHref } from '../lib/publicOffer';
 import DifferentiatorGrid from './DifferentiatorGrid';
 
 const copy = {
@@ -21,7 +22,7 @@ const copy = {
     proof: 'Valutazione DeliR del percorso consulenziale; non è un test comparativo negli account dei competitor.',
     reason: 'Porta al cliente il modello e le prove dietro la proposta.',
     reasonBody: 'Con DeliR puoi discutere il processo insieme alle fonti, ai punti aperti e al confronto AS-IS / TO-BE. Questo è il percorso mostrato nella demo.',
-    primary: 'Scopri il pilot', secondary: 'Guarda il percorso completo',
+    secondary: 'Guarda il percorso completo',
     sources: 'Criteri e documentazione dei prodotti',
     method: 'La matrice riporta i giudizi forniti dal team DeliR sul workflow consulenziale descritto in ogni riga. I video illustrano il percorso DeliR; i link ufficiali forniscono il contesto dei prodotti, senza costituire una verifica indipendente di ogni giudizio. ChatGPT/Claude: utilizzo standard di chat, progetti e artifact. Codice su misura, estensioni e integrazioni sono fuori ambito. Un No riguarda questo percorso, non ogni configurazione possibile. Piani e disponibilità possono variare.',
     newTab: ' (si apre in una nuova scheda)',
@@ -41,7 +42,7 @@ const copy = {
     proof: 'DeliR’s assessment of the consulting workflow; not a comparative test in competitor accounts.',
     reason: 'Bring the model and the evidence behind your proposal to the client.',
     reasonBody: 'With DeliR, discuss the process alongside its sources, open questions and AS-IS / TO-BE comparison. This is the workflow shown in the demo.',
-    primary: 'Explore the pilot', secondary: 'Watch the complete workflow',
+    secondary: 'Watch the complete workflow',
     sources: 'Criteria and product documentation',
     method: 'This matrix reports ratings supplied by the DeliR team for the consulting workflow defined in each row. Videos illustrate the DeliR workflow; official links provide product context rather than independent verification of every rating. ChatGPT/Claude: standard chat, projects and artifacts. Custom code, extensions and integrations are outside scope. No concerns this workflow, not every possible configuration. Plans and availability may vary.',
     newTab: ' (opens in a new tab)',
@@ -111,7 +112,7 @@ export default function Comparison() {
 
         <div className="comparison-next mt-8 flex flex-col gap-6 rounded-2xl bg-brand-mist p-6 sm:p-7 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl"><h3 className="font-display text-xl font-semibold text-brand-ink">{t.reason}</h3><p className="mt-2 text-sm leading-6 text-slate-600">{t.reasonBody}</p></div>
-          <div className="flex shrink-0 flex-col items-start gap-4"><a href="#pilot" className="btn-primary whitespace-normal">{t.primary}<ArrowUpRight aria-hidden="true" className="size-4 shrink-0" /></a><a href="#caso" className="btn-text">{t.secondary}<ArrowRight aria-hidden="true" className="size-4" /></a></div>
+          <div className="flex shrink-0 flex-col items-start gap-4"><a href={projectContactHref(language)} className="btn-primary whitespace-normal">{pilotCtaLabel[language]}<ArrowUpRight aria-hidden="true" className="size-4 shrink-0" /></a><a href="#caso" className="btn-text">{t.secondary}<ArrowRight aria-hidden="true" className="size-4" /></a></div>
         </div>
 
         <details ref={sourcesRef} open={showSources} className="group mt-5 border-t border-slate-200">

@@ -25,7 +25,7 @@ test('hero makes the offer and an email enquiry available', async ({ page }) => 
   await page.locator('#hero-title').waitFor();
   const hero = page.locator('section[aria-labelledby="hero-title"]');
   for (const term of ['Conosci perimetro e prezzo prima di iniziare', 'Paghi solo quando ogni milestone viene consegnata', 'Puoi fermarti in qualsiasi momento, senza impegni a lungo termine']) await expect(hero.getByText(term)).toBeVisible();
-  await expect(hero.getByRole('link', { name: 'Parliamo del tuo progetto' })).toHaveAttribute('href', /^mailto:delir\.team@gmail\.com\?subject=/);
+  await expect(hero.getByRole('link', { name: 'Testa DeliR sul tuo progetto' })).toHaveAttribute('href', /^mailto:delir\.team@gmail\.com\?subject=/);
   await hero.getByRole('link', { name: 'Vedi il prodotto' }).click();
   await expect(page).toHaveURL(/#caso$/);
   await page.goto('/pilot');

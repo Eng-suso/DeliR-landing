@@ -21,3 +21,8 @@ export const pilotRiskReversals = {
     'Stop anytime, no long-term commitment',
   ],
 } as const;
+
+export const pilotCtaLabel = {
+  it: 'Testa DeliR sul tuo progetto',
+  en: 'Test DeliR on Your Project',
+} as const;
