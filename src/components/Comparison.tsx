@@ -3,12 +3,14 @@ import { useFragment } from '../lib/useFragment';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Minus, Plus, X } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { comparisonProducts, comparisonRows, comparisonSources } from '../lib/comparisonContent';
+import DifferentiatorGrid from './DifferentiatorGrid';
 
 const copy = {
   it: {
-    eyebrow: 'Il confronto, a colpo d’occhio',
-    title: 'Dall’AS-IS alla proposta. In un unico percorso.',
-    intro: 'Sei capacità nel lavoro del consulente: dalle informazioni del cliente al processo migliorato.',
+    eyebrow: 'Cosa conta nel tuo incarico',
+    title: 'Scegli un percorso che puoi spiegare al cliente.',
+    intro: 'Sei criteri per mantenere collegate fonti, ipotesi e decisioni. Esplora il percorso nella demo, poi confronta gli strumenti rispetto al lavoro che devi consegnare.',
+    tableTitle: 'Confronta gli strumenti sul percorso consulenziale.',
     feature: 'Capacità nel lavoro del consulente', delir: 'Per il consulente',
     caption: 'Confronto delle capacità per l’analisi di processo',
     demo: 'Demo',
@@ -27,9 +29,10 @@ const copy = {
     newTab: ' (si apre in una nuova scheda)',
   },
   en: {
-    eyebrow: 'The comparison at a glance',
-    title: 'From AS-IS to proposal. In one workflow.',
-    intro: 'Six capabilities in a consultant’s work: from client information to an improved process.',
+    eyebrow: 'What matters in your engagement',
+    title: 'Choose a workflow you can explain to your client.',
+    intro: 'Six criteria for keeping sources, hypotheses and decisions connected. Explore the workflow in the demo, then compare tools against the work you need to deliver.',
+    tableTitle: 'Compare tools against the consulting workflow.',
     feature: 'Capabilities in a consultant’s work', delir: 'For consultants',
     caption: 'Process analysis capability comparison',
     demo: 'Demo',
@@ -78,6 +81,9 @@ export default function Comparison() {
         <p className="landing-eyebrow">{t.eyebrow}</p>
         <h2 id="comparison-title" className="landing-title mt-5 max-w-[27ch]">{t.title}</h2>
         <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600">{t.intro}</p>
+
+        <DifferentiatorGrid />
+        <h3 className="mt-12 text-balance font-display text-2xl font-semibold leading-tight tracking-tight text-brand-ink sm:mt-16">{t.tableTitle}</h3>
 
         <div className="mt-8 flex items-center justify-between gap-3 xl:hidden">
           <p className="max-w-[28ch] text-xs leading-5 text-slate-600">{t.scroll}</p>

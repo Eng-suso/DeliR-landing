@@ -1,5 +1,25 @@
 import { expect, test } from '@playwright/test';
 
+for (const language of ['it', 'en']) {
+  test(`comparison criteria open their product evidence by keyboard (${language})`, async ({ page }) => {
+    await page.goto(`/?lang=${language}#confronto`);
+    const criteria = page.locator('#confronto [data-differentiator]');
+    await expect(criteria).toHaveCount(6);
+    for (let index = 0; index < 6; index++) {
+      const link = criteria.nth(index).getByRole('link');
+      const target = await link.getAttribute('href');
+      expect(target).toMatch(/^#(scene-|caso$)/);
+      await link.focus();
+      await link.press('Enter');
+      await expect(page).toHaveURL(new RegExp(`${target}$`));
+      await expect(page.locator(target!)).toBeInViewport();
+      if (target!.startsWith('#scene-')) {
+        await expect(page.locator(`[href="${target}"][aria-current="true"]`)).toHaveCount(1);
+      }
+    }
+  });
+}
+
 test('hero makes the offer and an email enquiry available', async ({ page }) => {
   await page.goto('/');
   await page.locator('#hero-title').waitFor();

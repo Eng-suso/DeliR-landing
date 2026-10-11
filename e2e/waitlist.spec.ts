@@ -18,7 +18,7 @@ test('language choice is shareable and persists after reload', async ({ page, is
   if (isMobile) await page.getByRole('button', { name: 'Apri il menu' }).click();
   await page.getByRole('button', { name: 'English' }).last().click();
   await expect(page).toHaveURL(/\?lang=en/);
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('From AS-IS to TO-BE.Ready for the decision.');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('From AS-IS to TO-BE. Ready for the decision.');
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await expect(page).toHaveTitle(/Sources, BPMN/);
