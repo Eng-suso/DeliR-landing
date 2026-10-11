@@ -4,7 +4,9 @@ Marketing site and lead capture (waitlist, pilot application) for DeliR.
 
 Latest delivery evidence: [GitHub readiness, 11 October 2026](docs/github-readiness-2026-10-11.md).
 
-Stack: React 19, TypeScript, Vite, Tailwind CSS 4, React Router. Hosted on Cloudflare Workers Static Assets.
+Current infrastructure decisions: [IONOS and delir.it](docs/infrastructure-decisions-2026-10-11.md). SEO audience, query hypotheses and Search Console activation: [SEO and Search Console](docs/seo-search-console-2026-10-11.md).
+
+Stack: React 19, TypeScript, Vite, Tailwind CSS 4, React Router. The production target is IONOS Hosting Plus at `https://delir.it`, with the domain connected to `/public`. The existing deployment tooling targets Cloudflare Workers Static Assets and has not yet been adapted to IONOS.
 
 ## Setup
 
@@ -53,7 +55,7 @@ The form routes show an honest availability page until the readiness flag, notic
 
 - `wrangler.jsonc` serves `dist/` with `not_found_handling: "single-page-application"`, so deep links and refreshes on client routes return `index.html`.
 - `public/_headers` sets security headers (CSP, HSTS, framing, referrer, permissions) and long-lived caching for hashed files under `/assets/`. Update the CSP when adding third-party origins.
-- `public/robots.txt`, `public/sitemap.xml` and the `og:image` URL in `index.html` assume the production domain `https://delir.ai`.
+- `public/robots.txt`, `public/sitemap.xml`, canonical/hreflang links and Open Graph URLs use the confirmed production domain `https://delir.it`.
 - Screenshot imports stay PNG in `artifacts/`; `vite-imagetools` emits WebP at build time.
 
 ## Delivery pipeline

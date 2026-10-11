@@ -41,7 +41,7 @@ export default function SiteMetadata() {
     setMeta('property', 'og:title', title);
     setMeta('property', 'og:description', description);
     setMeta('property', 'og:locale', language === 'it' ? 'it_IT' : 'en_US');
-    const canonical = `https://delir.ai${pathname}${language === 'en' ? '?lang=en' : ''}`;
+    const canonical = `https://delir.it${pathname}${language === 'en' ? '?lang=en' : ''}`;
     setMeta('property', 'og:url', canonical);
     let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!link) { link = document.createElement('link'); link.rel = 'canonical'; document.head.append(link); }
@@ -49,7 +49,7 @@ export default function SiteMetadata() {
     for (const locale of ['it', 'en']) {
       let alternate = document.head.querySelector<HTMLLinkElement>(`link[hreflang="${locale}"]`);
       if (!alternate) { alternate = document.createElement('link'); alternate.rel = 'alternate'; alternate.hreflang = locale; document.head.append(alternate); }
-      alternate.href = `https://delir.ai${pathname}${locale === 'en' ? '?lang=en' : ''}`;
+      alternate.href = `https://delir.it${pathname}${locale === 'en' ? '?lang=en' : ''}`;
     }
   }, [language, pathname]);
   return null;
