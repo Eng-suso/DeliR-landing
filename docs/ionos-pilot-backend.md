@@ -46,7 +46,29 @@ Conservazione proposta delle richieste senza seguito: 12 mesi dall’ultimo cont
 
 Rollback: `enabled=false` blocca subito gli invii; ripristinare il frontend in anteprima. Conservare richieste già ricevute secondo le regole definite. Il fallback SPA non deve mascherare endpoint mancanti. PHP deve eseguire il file: le infrastrutture statiche Cloudflare precedenti non eseguono il backend. Non distribuire una raccolta attiva su un server statico.
 
-## Evidenza
+## Diagnosi del 503
+
+L’endpoint mantiene la risposta pubblica generica. La versione aggiornata scrive soltanto timestamp e un codice fisso in `/private/delir/diagnostic.log`, con dimensione limitata a circa 64 KiB. Nessuna configurazione, password, chiave, IP, payload o testo dell’eccezione. La cartella deve essere scrivibile da PHP e fuori dalle directory pubbliche. Se manca la cartella o il file non è scrivibile, il log PHP di hosting riceve soltanto `delir_pilot_diagnostic_unavailable`.
+
+Per la diagnosi caricare entrambi i file aggiornati nelle rispettive destinazioni (`public/api/pilot.php` e `server/ionos/pilot.php`), senza sovrascrivere `config.php`. Ripetere una sola prova controllata, ripristinare `enabled=false` e consultare l’ultima riga di `diagnostic.log` in Webspace Explorer. Non condividere il file di configurazione.
+
+| Codice privato | Verifica successiva |
+| --- | --- |
+| `capture_disabled` | Il valore deve essere il booleano `true` durante la prova, salvato nel file corretto, poi ripristinato a `false`. |
+| `private_config_missing` / `private_library_missing` | Percorso `/private/delir` e nomi `config.php` / `pilot.php`. |
+| `private_config_invalid` / `private_library_invalid` | Sintassi PHP/lettura file; attenzione agli apostrofi e ai backslash nella password, senza condividerla. |
+| `php_extensions_missing` | Versione PHP e disponibilità di `mbstring` e `pdo_mysql`. |
+| `rate_secret_invalid` | Stringa di 64 caratteri esadecimali minuscoli, senza spazi o a capo. |
+| `database_configuration_invalid` | Host, porta, database e credenziali compilati nei campi corretti. |
+| `database_connection_failed` | Accesso al database dalla rete IONOS: controllare riferimenti e password sul server. |
+| `database_write_failed` | Importazione delle due tabelle, struttura/permessi e spazio disponibile. |
+| `request_failed` | Errore residuo da indagare, senza esporre configurazione o stack trace. |
+
+La prova HTTP da PowerShell deve usare dati fittizi e `Origin: https://delir.it`. Un 201 non basta alla verifica operativa: controllare anche la riga in phpMyAdmin, poi rimuovere soltanto il dato di prova. Non attivare il modulo pubblico finché informativa e prova completa non sono pronte.
+
+## Evidenza precedente e verifica diagnostica
+
+La modifica diagnostica passa 40 controlli PHP locali, inclusi cinque scenari eseguiti sul vero entrypoint in una directory temporanea: invio chiuso, config non valido, libreria/config mancanti e estensioni mancanti. In tutti i casi la risposta resta generica e il codice va nel solo log privato. Sintassi dei due file PHP aggiornata verificata. Nessuna prova o mutazione sul server IONOS è stata eseguita da Codex durante questa diagnosi.
 
 Sintassi dei tre file PHP e 25 controlli locali passati su PHP 8.5.11: payload, UTF-8, guardie HTTP/origine, gate chiuso, dimensione del corpo e fallimento connessione senza conferma. Runtime portabile ufficiale con SHA-256 verificato, fuori dal repository. Nessun database locale disponibile: test SQL non eseguiti localmente.
 

@@ -42,18 +42,20 @@ function delir_handle_pilot(array $server, array $config, callable $readBody, ?c
     if (strlen($raw) > 8192) return delir_result(413, 'body_too_large');
     $data = delir_validate_pilot($raw);
     if ($data === null) return delir_result(422, 'invalid_application');
-    if (!preg_match('/^[a-f0-9]{64}$/', $config['rate_secret'] ?? '')) throw new RuntimeException('invalid_configuration');
+    if (!is_string($config['rate_secret'] ?? null) || !preg_match('/^[a-f0-9]{64}$/', $config['rate_secret'])) throw new RuntimeException('rate_secret_invalid');
     $ip = $server['REMOTE_ADDR'] ?? '';
     if (!filter_var($ip, FILTER_VALIDATE_IP)) return delir_result(403, 'client_unavailable');
-    $pdo = $connect ? $connect() : delir_connect_pilot($config);
-    return delir_store_pilot($pdo, $data, $ip, $config['rate_secret'], time());
+    try { $pdo = $connect ? $connect() : delir_connect_pilot($config); }
+    catch (PDOException $error) { throw new RuntimeException('database_connection_failed', 0, $error); }
+    try { return delir_store_pilot($pdo, $data, $ip, $config['rate_secret'], time()); }
+    catch (PDOException $error) { throw new RuntimeException('database_write_failed', 0, $error); }
 }
 
 function delir_connect_pilot(array $config): PDO
 {
-    if (!preg_match('/^[a-z0-9.-]+$/i', $config['db_host'] ?? '') || !preg_match('/^[a-z0-9_]+$/i', $config['db_name'] ?? '')) throw new RuntimeException('invalid_configuration');
+    if (!preg_match('/^[a-z0-9.-]+$/i', $config['db_host'] ?? '') || !preg_match('/^[a-z0-9_]+$/i', $config['db_name'] ?? '')) throw new RuntimeException('database_configuration_invalid');
     $port = filter_var($config['db_port'] ?? 3306, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 65535]]);
-    if ($port === false || empty($config['db_user']) || empty($config['db_password'])) throw new RuntimeException('invalid_configuration');
+    if ($port === false || empty($config['db_user']) || empty($config['db_password'])) throw new RuntimeException('database_configuration_invalid');
     return new PDO(
         'mysql:host=' . $config['db_host'] . ';port=' . $port . ';dbname=' . $config['db_name'] . ';charset=utf8mb4',
         $config['db_user'], $config['db_password'],

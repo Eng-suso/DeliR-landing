@@ -34,6 +34,36 @@ try {
     check(false, 'database failure must not accept');
 } catch (RuntimeException $error) { check(true, 'connection failure propagates to generic endpoint handler'); }
 
+// Exercise the actual public entrypoint in a temporary document root, with no
+// production config and no extensions: responses stay generic, logs stay private.
+$fixture = sys_get_temp_dir() . '/delir-endpoint-test-' . bin2hex(random_bytes(8));
+mkdir($fixture . '/public/api', 0700, true);
+mkdir($fixture . '/private/delir', 0700, true);
+copy(__DIR__ . '/../../public/api/pilot.php', $fixture . '/public/api/pilot.php');
+foreach (['capture_disabled', 'private_config_invalid', 'private_library_missing', 'private_config_missing', 'php_extensions_missing'] as $case) {
+    $configFile = $fixture . '/private/delir/config.php';
+    $libraryFile = $fixture . '/private/delir/pilot.php';
+    $logFile = $fixture . '/private/delir/diagnostic.log';
+    if (is_file($logFile)) unlink($logFile);
+    copy(__DIR__ . '/pilot.php', $libraryFile);
+    file_put_contents($configFile, "<?php return ['enabled' => false, 'test_marker' => 'not-a-secret-test-marker'];");
+    if ($case === 'private_config_invalid') file_put_contents($configFile, '<?php invalid syntax');
+    if ($case === 'private_library_missing') unlink($libraryFile);
+    if ($case === 'private_config_missing') unlink($configFile);
+    if ($case === 'php_extensions_missing') file_put_contents($configFile, "<?php return ['enabled' => true];");
+    $process = proc_open([PHP_BINARY, '-n', $fixture . '/public/api/pilot.php'], [1 => ['pipe', 'w'], 2 => ['pipe', 'w']], $pipes);
+    if (!is_resource($process)) throw new RuntimeException('test process unavailable');
+    $output = stream_get_contents($pipes[1]);
+    $stderr = stream_get_contents($pipes[2]);
+    fclose($pipes[1]); fclose($pipes[2]);
+    check(proc_close($process) === 0, 'entrypoint catches ' . $case);
+    check(json_decode($output, true) === ['accepted' => false, 'error' => 'temporarily_unavailable'], 'generic response ' . $case);
+    $log = file_get_contents($logFile);
+    check(str_contains($log, $case) && !str_contains($output . $log . $stderr, 'not-a-secret-test-marker'), 'safe private diagnostic ' . $case);
+}
+foreach ([$configFile, $libraryFile, $logFile, $fixture . '/public/api/pilot.php'] as $file) if (is_file($file)) unlink($file);
+foreach (['/public/api', '/public', '/private/delir', '/private', ''] as $directory) rmdir($fixture . $directory);
+
 $dsn = getenv('DELIR_TEST_DSN');
 if ($dsn) {
     // Only an isolated disposable test database. Never run against production.
