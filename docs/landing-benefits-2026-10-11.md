@@ -76,3 +76,17 @@ Verifica finale della build corretta: dieci combinazioni IT/EN su Chromium a 320
 ## Data section and dedicated page
 
 The current trust section now uses the user-supplied three-point copy immediately before the pilot: separate client workspaces, AI context and rules before real data. The demo proof block previously described above was removed from this section so it answers the data objection directly. Its details link, the data FAQ and footer lead to `/security-data`, translated in IT/EN. Evidence limits and validation for the new page are recorded in `docs/security-data-2026-10-11.md`.
+
+## Replacement comparison matrix — 2026-10-11
+
+The product owner supplied a new seven-row matrix: DeliR, Visio, Bizagi, Miro, ChatGPT / Claude, PRIME BPM and LucidFlow. Row order and all 49 yes/no cells are preserved exactly; English labels express the same criteria. Previous competitor columns and partial ratings were removed. Stable evidence IDs are retained and the new BPMN-workflow row links to the As-Is review demo.
+
+Desktop at 1024 px and wider uses a fixed-layout, full-width semantic table. Below 1024 px the same data becomes seven capability cards: DeliR highlighted, with all six alternatives visible in each card. Tablet has two cards per row; phones have one. No sideways scrolling, clipping, carousel, drag gesture or scroll-arrow controls are used. Every rating retains an accessible name and links to the demo or product context; keyboard focus on the opened source criterion is preserved.
+
+Official Microsoft, Bizagi, Miro, PRIME BPM and LucidFlow pages were checked to replace the old product-context links. These pages describe product features and do not independently prove every supplied yes/no rating. In particular, LucidFlow's public FAQ describes document-to-BPMN and financial/transformation analysis; its quantitative simulation rating remains the owner's supplied assessment. The visible methodology continues to label the entire matrix as DeliR's assessment of the specified workflow, with plans/integrations outside the comparison scope. No account-based competitive test is claimed.
+
+Local lint, TypeScript and production build passed. Additional visible-browser checks in IT/EN at 320, 390, 768, 1024 and 1440 px verified all 49 supplied ratings, each cell inside the viewport width, no horizontal scroll region, no automated axe A/AA violations in the comparison and keyboard source-panel focus. Responsive and cross-browser regression results are recorded below after completion.
+
+The first cross-browser matrix regression run passed 35 tests and found one Safari mobile source-panel reopening failure. A diagnostic tap trace identified Safari hit testing the section instead of its rating link after off-screen content skipping. Rendering the comparison normally removes that failure; other sections retain their deferred rendering. The details summary also uses one explicit state transition. Lint and build passed after the correction; affected cross-browser regression results follow.
+
+After the Safari rendering correction, all 16 focused regressions passed across Chromium, WebKit, mobile Chrome and mobile Safari, including reopening shared evidence and keeping all products in the available width. Desktop header and mobile-card screenshots were reviewed. These are local checks, not live production or field performance results.

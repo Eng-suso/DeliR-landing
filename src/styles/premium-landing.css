@@ -194,7 +194,12 @@
     contain-intrinsic-block-size: auto 800px;
   }
   .landing-page .premium-journey { contain-intrinsic-block-size: auto 1100px; }
-  .landing-page .premium-comparison { contain-intrinsic-block-size: auto 1200px; }
+  /* Safari touch hit testing can target the section instead of a rating link
+     after its details panel closes when this long card layout is skipped. */
+  .landing-page main > section.premium-comparison {
+    content-visibility: visible;
+    contain-intrinsic-block-size: none;
+  }
   .landing-page .premium-trust { contain-intrinsic-block-size: auto 1000px; }
   .landing-page .premium-final { contain-intrinsic-block-size: auto 450px; }
   .landing-page main > section:target,

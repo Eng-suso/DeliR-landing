@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import { useFragment } from '../lib/useFragment';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Minus, Plus, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Check, Plus, X } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { comparisonProducts, comparisonRows, comparisonSources } from '../lib/comparisonContent';
+import { comparisonProducts, comparisonRows, comparisonSources, type ComparisonRow } from '../lib/comparisonContent';
 import DifferentiatorGrid from './DifferentiatorGrid';
 
 const copy = {
@@ -16,16 +16,14 @@ const copy = {
     demo: 'Demo',
     demoLabel: 'Mostrato nella demo DeliR. Guarda il video',
     cellSources: 'Consulta il criterio e la documentazione di riferimento',
-    yes: 'Sì', partial: 'Parziale', no: 'No',
-    legend: '✓ Sì: copre il percorso descritto · − Parziale: copre una parte del percorso · ✗ No: fuori dal percorso confrontato.',
+    yes: 'Sì', no: 'No',
+    legend: '✓ Sì: copre il percorso descritto · ✗ No: fuori dal percorso confrontato.',
     proof: 'Valutazione DeliR del percorso consulenziale; non è un test comparativo negli account dei competitor.',
-    scroll: 'Scorri per confrontare le alternative. DeliR resta visibile.',
-    left: 'Scorri verso le prime alternative', right: 'Scorri verso le ultime alternative',
     reason: 'Porta al cliente il modello e le prove dietro la proposta.',
     reasonBody: 'Con DeliR puoi discutere il processo insieme alle fonti, ai punti aperti e al confronto AS-IS / TO-BE. Questo è il percorso mostrato nella demo.',
     primary: 'Scopri il pilot', secondary: 'Guarda il percorso completo',
     sources: 'Criteri e documentazione dei prodotti',
-    method: 'La matrice riporta i giudizi forniti dal team DeliR sul workflow consulenziale descritto in ogni riga. I video illustrano il percorso DeliR; i link ufficiali forniscono il contesto dei prodotti, senza costituire una verifica indipendente di ogni giudizio. ChatGPT/Claude: utilizzo standard di chat, progetti e artifact. Camunda: Web Modeler e validazione esecutiva. Codice su misura, estensioni e integrazioni sono fuori ambito. Un No riguarda questo percorso, non ogni configurazione possibile. Piani e disponibilità possono variare.',
+    method: 'La matrice riporta i giudizi forniti dal team DeliR sul workflow consulenziale descritto in ogni riga. I video illustrano il percorso DeliR; i link ufficiali forniscono il contesto dei prodotti, senza costituire una verifica indipendente di ogni giudizio. ChatGPT/Claude: utilizzo standard di chat, progetti e artifact. Codice su misura, estensioni e integrazioni sono fuori ambito. Un No riguarda questo percorso, non ogni configurazione possibile. Piani e disponibilità possono variare.',
     newTab: ' (si apre in una nuova scheda)',
   },
   en: {
@@ -38,23 +36,20 @@ const copy = {
     demo: 'Demo',
     demoLabel: 'Shown in the DeliR demo. Watch the video',
     cellSources: 'Read the criterion and reference documentation',
-    yes: 'Yes', partial: 'Partial', no: 'No',
-    legend: '✓ Yes: covers the described workflow · − Partial: covers part of the workflow · ✗ No: outside the compared workflow.',
+    yes: 'Yes', no: 'No',
+    legend: '✓ Yes: covers the described workflow · ✗ No: outside the compared workflow.',
     proof: 'DeliR’s assessment of the consulting workflow; not a comparative test in competitor accounts.',
-    scroll: 'Scroll to compare alternatives. DeliR stays in view.',
-    left: 'Scroll toward the first alternatives', right: 'Scroll toward the last alternatives',
     reason: 'Bring the model and the evidence behind your proposal to the client.',
     reasonBody: 'With DeliR, discuss the process alongside its sources, open questions and AS-IS / TO-BE comparison. This is the workflow shown in the demo.',
     primary: 'Explore the pilot', secondary: 'Watch the complete workflow',
     sources: 'Criteria and product documentation',
-    method: 'This matrix reports ratings supplied by the DeliR team for the consulting workflow defined in each row. Videos illustrate the DeliR workflow; official links provide product context rather than independent verification of every rating. ChatGPT/Claude: standard chat, projects and artifacts. Camunda: Web Modeler and execution validation. Custom code, extensions and integrations are outside scope. No concerns this workflow, not every possible configuration. Plans and availability may vary.',
+    method: 'This matrix reports ratings supplied by the DeliR team for the consulting workflow defined in each row. Videos illustrate the DeliR workflow; official links provide product context rather than independent verification of every rating. ChatGPT/Claude: standard chat, projects and artifacts. Custom code, extensions and integrations are outside scope. No concerns this workflow, not every possible configuration. Plans and availability may vary.',
     newTab: ' (opens in a new tab)',
   },
 } as const;
 
 export default function Comparison() {
   const { language } = useLanguage();
-  const scrollRef = useRef<HTMLDivElement>(null);
   const sourcesRef = useRef<HTMLDetailsElement>(null);
   const [sourcesOpen, setSourcesOpen] = useState(false);
   const fragment = useFragment();
@@ -71,8 +66,18 @@ export default function Comparison() {
       target?.scrollIntoView({ block: 'start', behavior: 'instant' });
     });
   }
-  function scroll(direction: number) {
-    scrollRef.current?.scrollBy({ left: direction * 260, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+  function statusLink(row: ComparisonRow, product?: typeof comparisonProducts[number], compact = false) {
+    const status = product ? row.cells[product.id].status : 'yes';
+    const name = product?.name ?? 'DeliR';
+    const Icon = status === 'yes' ? Check : X;
+    return <a href={product ? `#comparison-evidence-${row.id}` : row.evidence}
+      onClick={product ? () => showEvidence(row.id) : undefined}
+      aria-label={`${name} · ${row.label[language]} · ${t[status]} · ${product ? t.cellSources : t.demoLabel}`}
+      className={`flex min-h-11 min-w-0 items-center justify-between gap-3 rounded-lg px-3 py-2 transition-colors ${compact ? 'mx-auto w-11 justify-center px-0' : ''} ${product ? 'text-slate-700 hover:bg-brand-mist' : 'bg-brand-navy font-semibold text-white hover:bg-brand-blue-hover'}`}>
+      {compact ? null : <span className="min-w-0 text-sm leading-5" translate="no">{name}</span>}
+      <Icon aria-hidden="true" className={`size-5 shrink-0 ${product && status === 'yes' ? 'text-brand-blue' : ''}`} />
+      <span className="sr-only">{t[status]}</span>
+    </a>;
   }
 
   return (
@@ -85,41 +90,31 @@ export default function Comparison() {
         <DifferentiatorGrid />
         <h3 className="mt-12 text-balance font-display text-2xl font-semibold leading-tight tracking-tight text-brand-ink sm:mt-16">{t.tableTitle}</h3>
 
-        <div className="mt-8 flex items-center justify-between gap-3 xl:hidden">
-          <p className="max-w-[28ch] text-xs leading-5 text-slate-600">{t.scroll}</p>
-          <div className="flex shrink-0 gap-2">
-            <button type="button" onClick={() => scroll(-1)} aria-label={t.left} className="flex size-11 items-center justify-center rounded-full border border-slate-300 text-brand-blue hover:bg-brand-mist"><ArrowLeft aria-hidden="true" className="size-4" /></button>
-            <button type="button" onClick={() => scroll(1)} aria-label={t.right} className="flex size-11 items-center justify-center rounded-full border border-slate-300 text-brand-blue hover:bg-brand-mist"><ArrowRight aria-hidden="true" className="size-4" /></button>
-          </div>
+        <div className="comparison-table mt-8 hidden rounded-2xl border border-slate-200 lg:block">
+          <table className="w-full table-fixed border-separate border-spacing-0 text-sm">
+            <caption className="sr-only">{t.caption}. {t.proof}</caption>
+            <colgroup><col className="w-[32%]" /><col />{comparisonProducts.map(p => <col key={p.id} />)}</colgroup>
+            <thead><tr>
+              <th scope="col" className="rounded-tl-2xl border-b border-slate-200 bg-brand-light px-4 py-5 text-left font-medium text-slate-600">{t.feature}</th>
+              <th scope="col" className="border-b border-white/15 bg-brand-navy px-2 py-5 text-center font-bold text-white" translate="no">DeliR</th>
+              {comparisonProducts.map((p, index) => <th key={p.id} scope="col" className={`break-words border-b border-slate-200 bg-brand-light px-2 py-5 text-center text-xs font-semibold text-slate-800 xl:text-sm ${index === comparisonProducts.length - 1 ? 'rounded-tr-2xl' : ''}`} translate="no">{p.name}</th>)}
+            </tr></thead>
+            <tbody>{comparisonRows.map((row, index) => <tr key={row.id}>
+              <th scope="row" className={`border-b border-slate-200 bg-white px-4 py-4 text-left font-semibold leading-6 text-brand-ink ${index === comparisonRows.length - 1 ? 'rounded-bl-2xl' : ''}`}>{row.label[language]}</th>
+              <td className="border-b border-white/15 bg-brand-navy py-3 text-center">{statusLink(row, undefined, true)}</td>
+              {comparisonProducts.map((p, productIndex) => <td key={p.id} className={`border-b border-slate-200 bg-white py-3 text-center ${index === comparisonRows.length - 1 && productIndex === comparisonProducts.length - 1 ? 'rounded-br-2xl' : ''}`}>{statusLink(row, p, true)}</td>)}
+            </tr>)}</tbody>
+          </table>
         </div>
 
-        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- A focusable scroll region lets keyboard users inspect the entire table. */}
-        <div data-lenis-prevent ref={scrollRef} role="region" aria-label={t.caption} tabIndex={0} className="comparison-table isolate mt-5 overflow-x-auto rounded-2xl border border-slate-200 xl:mt-10">
-          <table className="w-full min-w-[1140px] table-fixed border-separate border-spacing-0 text-sm">
-            <caption className="sr-only">{t.caption}. {t.proof}</caption>
-            <colgroup><col className="w-[160px] sm:w-[336px]" /><col className="w-[88px] sm:w-[104px]" />{comparisonProducts.map(p => <col key={p.id} />)}</colgroup>
-            <thead>
-              <tr>
-                <th scope="col" className="sticky left-0 z-20 border-b border-slate-200 bg-brand-light px-3 py-6 text-left font-medium text-slate-600 sm:px-5">{t.feature}</th>
-                <th scope="col" className="sticky left-[160px] z-20 border-b border-white/15 bg-brand-navy px-2 py-5 text-center text-white sm:left-[336px] sm:px-3"><span className="block font-display text-xl font-bold" translate="no">DeliR</span></th>
-                {comparisonProducts.map(p => <th key={p.id} scope="col" className="border-b border-slate-200 bg-brand-light px-2 py-5 text-center font-semibold text-slate-800"><span className="block" translate="no">{p.name}</span></th>)}
-              </tr>
-            </thead>
-            <tbody>
-              {comparisonRows.map(row => <tr key={row.id}>
-                <th scope="row" className="sticky left-0 z-10 border-b border-slate-200 bg-white px-3 py-4 text-left text-[13px] font-semibold leading-5 text-brand-ink sm:px-5 sm:py-5 sm:text-sm">{row.label[language]}</th>
-                <td className="sticky left-[160px] z-10 border-b border-white/15 bg-brand-navy px-2 text-center sm:left-[336px]">
-                  <a href={row.evidence} aria-label={`DeliR · ${row.label[language]} · ${t.yes} · ${t.demoLabel}`} className="inline-flex min-h-11 flex-col items-center justify-center gap-2 rounded-lg px-1 py-3 text-sm font-bold leading-5 text-white transition-colors hover:bg-white/10"><Check aria-hidden="true" className="size-4 text-blue-200" /><span>{t.yes}</span></a>
-                </td>
-                {comparisonProducts.map(p => {
-                  const status = row.cells[p.id].status;
-                  const Icon = status === 'yes' ? Check : status === 'partial' ? Minus : X;
-                  const value = t[status];
-                  return <td key={p.id} className="border-b border-slate-200 bg-white px-2 py-4 text-center"><a href={`#comparison-evidence-${row.id}`} onClick={() => showEvidence(row.id)} aria-label={`${p.name} · ${row.label[language]} · ${value} · ${t.cellSources}`} className={`inline-flex min-h-11 min-w-11 flex-col items-center justify-center gap-1 rounded-lg px-2 text-sm leading-5 transition-colors hover:bg-brand-mist ${status === 'yes' ? 'font-semibold text-brand-blue' : 'text-slate-600'}`}><Icon aria-hidden="true" className="size-5" /><span>{value}</span></a></td>;
-                })}
-              </tr>)}
-            </tbody>
-          </table>
+        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:hidden" aria-label={t.caption}>
+          {comparisonRows.map(row => <section key={row.id} data-comparison-card={row.id} aria-labelledby={`comparison-card-${row.id}`} className="min-w-0 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
+            <h4 id={`comparison-card-${row.id}`} className="text-base font-semibold leading-6 text-brand-ink">{row.label[language]}</h4>
+            <div className="mt-4 grid grid-cols-2 gap-2">
+              <div className="col-span-2">{statusLink(row)}</div>
+              {comparisonProducts.map(p => <div key={p.id} className="min-w-0">{statusLink(row, p)}</div>)}
+            </div>
+          </section>)}
         </div>
 
         <p className="mt-4 text-xs leading-5 text-slate-600">{t.legend}</p>
@@ -130,12 +125,12 @@ export default function Comparison() {
           <div className="flex shrink-0 flex-col items-start gap-4"><a href="#pilot" className="btn-primary whitespace-normal">{t.primary}<ArrowUpRight aria-hidden="true" className="size-4 shrink-0" /></a><a href="#caso" className="btn-text">{t.secondary}<ArrowRight aria-hidden="true" className="size-4" /></a></div>
         </div>
 
-        <details ref={sourcesRef} open={showSources} onToggle={event => {
-          const open = event.currentTarget.open;
-          setSourcesOpen(open);
-          if (!open) setDismissedFragment(fragment);
-        }} className="group mt-5 border-t border-slate-200">
-          <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 py-3 text-xs font-medium text-slate-600 hover:text-brand-blue [&::-webkit-details-marker]:hidden">{t.sources}<Plus aria-hidden="true" className="size-4 shrink-0 transition-transform group-open:rotate-45" /></summary>
+        <details ref={sourcesRef} open={showSources} className="group mt-5 border-t border-slate-200">
+          <summary onClick={event => {
+            event.preventDefault();
+            setSourcesOpen(!showSources);
+            setDismissedFragment(showSources ? fragment : null);
+          }} className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 py-3 text-xs font-medium text-slate-600 hover:text-brand-blue [&::-webkit-details-marker]:hidden">{t.sources}<Plus aria-hidden="true" className="size-4 shrink-0 transition-transform group-open:rotate-45" /></summary>
           {showSources ? <>
           <p className="max-w-4xl text-xs leading-6 text-slate-600">{t.method}</p>
           <div className="my-5 space-y-6">{comparisonRows.map(row => <div id={`comparison-evidence-${row.id}`} key={row.id} tabIndex={-1} className="scroll-mt-24 rounded-xl border border-slate-200 bg-white p-4 sm:p-5"><h3 className="text-sm font-semibold text-slate-800">{row.label[language]}</h3><p className="mt-2 max-w-4xl text-xs leading-6 text-slate-600">{row.definition[language]}</p><a href={row.evidence} className="mt-1 inline-flex min-h-11 items-center text-xs font-medium text-brand-blue underline underline-offset-4">DeliR · {t.demo}</a><dl className="mt-2 grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">{comparisonProducts.map(p => <div key={p.id}><dt className="text-xs font-semibold text-slate-800">{p.name} · {t[row.cells[p.id].status]}</dt><dd className="mt-1 text-xs leading-6">{row.cells[p.id].sources.map((id, index) => { const source = comparisonSources[id]; return <span key={id}>{index > 0 ? ' · ' : ''}<a href={source.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center text-brand-blue underline underline-offset-4">{source.label}<span className="sr-only">{t.newTab}</span></a></span>; })}</dd></div>)}</dl></div>)}</div>

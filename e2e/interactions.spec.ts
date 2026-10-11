@@ -102,7 +102,7 @@ test('shared evidence links open the source panel directly', async ({ page }) =>
   await expect(page.locator('#comparison-evidence-review').locator('xpath=ancestor::details')).toHaveAttribute('open', '');
   await page.locator('#confronto summary').click();
   await expect(page.locator('#confronto details')).not.toHaveAttribute('open', '');
-  await page.locator('#confronto table a[href="#comparison-evidence-review"]').first().click();
+  await page.locator('#confronto a[href="#comparison-evidence-review"]:visible').first().click();
   await expect(page.locator('#comparison-evidence-review')).toBeInViewport();
 });
 
