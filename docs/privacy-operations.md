@@ -4,7 +4,7 @@ Procedura predisposta l’11 ottobre 2026. È una proposta operativa da mettere 
 
 ## Responsabilità e canale
 
-Il titolare gestisce le richieste attraverso contact@delir.it su IONOS. Accedere con account personali autorizzati, evitare copie su Gmail o strumenti AI e controllare eventuali inoltri/client di posta configurati. Proteggere l’account IONOS con autenticazione a più fattori, ove disponibile, e verificare la protezione separata della casella. Nessun invio automatico o servizio newsletter è configurato dal codice corrente.
+Il titolare usa contact@delir.it su IONOS e ha confermato l’inoltro automatico delle email ricevute a una Gmail gratuita, scegliendo di mantenerlo. Questo modifica il precedente percorso ipotizzato solo IONOS: la corrispondenza viene copiata anche nei servizi consumer Google. Il backend non invia automaticamente i dati del modulo alla posta; le successive risposte via email rientrano però nel percorso IONOS/Gmail. Non considerare applicabile il DPA Google Workspace alla Gmail gratuita. La verifica di ruoli, condizioni e trasferimenti di questo percorso è ancora aperta; vedere `pilot-privacy-release-review.md`. Accedere con account personali autorizzati, evitare copie in strumenti AI, proteggere IONOS e Google con autenticazione a più fattori e verificare la protezione separata della casella. Nessun servizio newsletter è configurato dal codice corrente.
 
 ## Valutazione delle richieste spontanee
 
@@ -13,6 +13,8 @@ Finalità: comprendere la richiesta, rispondere e valutare il perimetro di un pi
 ## Conservazione e revisione
 
 Regola scelta: richieste senza seguito per non oltre 12 mesi dall’ultimo contatto. I rapporti contrattuali passano a regole separate, comunicate prima del relativo trattamento. Prima di aprire il modulo, assegnare al titolare la revisione periodica e un controllo delle scadenze; nessuna automazione è stata installata per questa attività.
+
+Aggiornamento del titolare: confermata gestione manuale iniziale, verifica giornaliera delle nuove richieste in phpMyAdmin e revisione settimanale delle scadenze. La cancellazione comprende le copie di corrispondenza gestite su IONOS e Gmail. La conferma della procedura non attesta operazioni già eseguite né la cancellazione immediata dalle copie di sicurezza dei provider.
 
 Nel database attuale esiste created_at, ma non last_contact_at o stato del rapporto. Non cancellare automaticamente righe solo perché la loro creazione risale a 12 mesi: potrebbe esserci una conversazione recente. Durante la revisione usare ricevuti/inviati nella Webmail e il registro operativo privato per identificare ultimo contatto e scadenza. Registrare solo riferimenti minimi necessari in uno spazio protetto fuori dal repository. Per il volume iniziale, verifica manuale settimanale e cancellazione entro la scadenza; se il volume cresce, implementare lo stato e le scadenze prima di affidarsi a una cancellazione automatica.
 
