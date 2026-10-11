@@ -51,6 +51,12 @@ A cross-origin endpoint must also be allowed in the `connect-src` directive of `
 
 The form routes show an honest availability page until the readiness flag, notice URL and corresponding endpoint are set. The form endpoints are not implemented in this repository. Never put a CRM token or private webhook in a `VITE_*` variable. Verify server-side validation, rate limiting, delivery and error handling before opening intake.
 
+## Privacy and analytics
+
+`/privacy` contains an explicitly labelled draft. The footer opens native cookie preferences. GA4 remains off unless both `VITE_PRIVACY_NOTICE_READY=true` and `VITE_ANALYTICS_READY=true` are set with a valid public `VITE_GA_MEASUREMENT_ID`. Do not enable these flags until the notice is complete, provider terms and actual GA4 settings are checked, and the consent flows are validated in production. Forms have separate readiness gates and remain closed.
+
+See [privacy and GA4 review](docs/privacy-ga4-review-2026-10-11.md) for official sources, the processing inventory, retention proposals, technical tests and remaining release conditions. The tag uses Basic Consent Mode and loads only after an affirmative, valid stored analytics choice. Revocation clears the managed GA cookies and reloads the document to stop the loaded tag. Google Ads remains denied. This implementation does not itself establish GDPR compliance.
+
 ## Hosting
 
 - `wrangler.jsonc` serves `dist/` with `not_found_handling: "single-page-application"`, so deep links and refreshes on client routes return `index.html`.

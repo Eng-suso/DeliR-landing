@@ -1,0 +1,27 @@
+import AxeBuilder from '@axe-core/playwright';
+import { expect, test } from '@playwright/test';
+
+test('privacy draft and preferences are accessible with analytics closed', async ({ page }) => {
+  const googleRequests: string[] = [];
+  page.on('request', request => {
+    if (/google-analytics|googletagmanager|doubleclick/.test(request.url())) googleRequests.push(request.url());
+  });
+  await page.goto('/privacy?private_test=must-not-be-transmitted');
+  await expect(page.getByRole('heading', { level: 1, name: 'Privacy e cookie' })).toBeVisible();
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
+  await page.getByRole('button', { name: 'Preferenze cookie' }).first().click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole('button', { name: 'Accetta analytics' })).toBeDisabled();
+  await expect(dialog.getByRole('button', { name: 'Rifiuta analytics' })).toBeFocused();
+  expect((await new AxeBuilder({ page }).include('dialog').withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze()).violations).toEqual([]);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.keyboard.press('Escape');
+  await expect(dialog).not.toBeVisible();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('delir-consent-v1')!).analytics)).toBe(false);
+  await page.reload();
+  await expect(dialog).not.toBeVisible();
+  await page.goto('/privacy?lang=en');
+  await expect(page.getByRole('heading', { level: 1, name: 'Privacy and cookies' })).toBeVisible();
+  expect(googleRequests).toEqual([]);
+});

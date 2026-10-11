@@ -6,12 +6,14 @@ import LeadCapturePendingPage from './pages/LeadCapturePendingPage';
 import { pilotCaptureReady, waitlistCaptureReady } from './lib/leadCaptureReadiness';
 import SiteMetadata from './components/SiteMetadata';
 import LandingPage from './pages/LandingPage';
+import ConsentManager from './components/ConsentManager';
 
 // The primary conversion page is critical content: avoid a second JS/CSS
 // waterfall before the hero. Secondary routes still load on demand.
 const WaitlistPage = lazy(() => import('./pages/WaitlistPage'));
 const PilotPage = lazy(() => import('./pages/PilotPage'));
 const PilotOverviewPage = lazy(() => import('./pages/PilotOverviewPage'));
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const EnterpriseReadinessPage = import.meta.env.DEV ? lazy(() => import('./pages/EnterpriseReadinessPage')) : null;
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 // Dev-only preview of the v2 direction; eliminated from production builds.
@@ -28,11 +30,13 @@ export default function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/pilot" element={pilotCaptureReady ? <PilotPage captureEnabled /> : <PilotOverviewPage />} />
             <Route path="/waitlist" element={waitlistCaptureReady ? <WaitlistPage /> : <LeadCapturePendingPage kind="waitlist" />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
             {EnterpriseReadinessPage ? <Route path="/enterprise-readiness" element={<EnterpriseReadinessPage />} /> : null}
             {LandingV2Page ? <Route path="/v2" element={<LandingV2Page />} /> : null}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
+        <ConsentManager />
       </LanguageProvider>
     </Router>
   );

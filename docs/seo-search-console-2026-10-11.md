@@ -4,7 +4,7 @@ Data: 11 ottobre 2026. Dominio confermato: `https://delir.it`.
 
 ## Pubblico e obiettivo
 
-Pubblico confermato dall'utente: consulenti BPM/Operations e responsabili Operations delle PMI. Obiettivo attuale del sito: mostrare il percorso del prodotto e portare al contatto per il pilot. GA4 e Search Console non sono ancora configurati. Google Business Profile è escluso.
+Pubblico confermato dall'utente: consulenti BPM/Operations e responsabili Operations delle PMI. Obiettivo attuale del sito: mostrare il percorso del prodotto e portare al contatto per il pilot. L'utente ha creato lo stream GA4 e riferito accesso alla dashboard Search Console dopo l'aggiunta del TXT. L'integrazione GA4 è predisposta ma disattivata. Google Business Profile è escluso.
 
 Il copy attuale richiede una revisione ampia secondo l'utente. Prima di riscriverlo vanno confermati messaggio principale, disponibilità del prodotto, output realmente consegnati e obiezioni dei due pubblici. Nessun risultato economico o quantitativo è stato dimostrato.
 
@@ -41,11 +41,11 @@ La landing deve parlare a chi cerca uno strumento o un pilot. Query come "consul
 5. Usare Controllo URL e Test URL pubblicato per home e `/pilot`: controllare accessibilità, canonical, rendering e assenza di `noindex`, poi richiedere l'indicizzazione.
 6. Monitorare indicizzazione e Performance, filtrando Italia/Italiano e separando le ricerche di marca dalle altre. Rivedere la mappa query usando impressioni, clic, CTR e query effettive.
 
-Stato: proprietà non creata, dominio non verificato, sitemap non inviata, indicizzazione non richiesta né confermata. Google decide tempi di scansione, indicizzazione e ranking; l'invio di sitemap o una richiesta non li garantisce.
+Stato riferito dall'utente: accesso alla dashboard dopo la procedura di verifica TXT. L'agente non ha ispezionato la proprietà. Sitemap non inviata, indicizzazione non richiesta né confermata. Google decide tempi di scansione, indicizzazione e ranking; l'invio di sitemap o una richiesta non li garantisce.
 
 ## Attivazione GA4 successiva
 
-Creare proprietà e stream web per `https://delir.it`. L'implementazione richiede l'ID di misurazione reale e una decisione sulla gestione privacy/consenso. Misurare almeno visualizzazioni delle pagine, clic verso demo/pilot e invii riusciti quando i moduli saranno attivi. Non inviare dati personali o contenuto libero dei moduli come eventi. Questa PR non carica script Google né aggiunge cookie.
+Lo stream web è creato. Il codice GA4 usa l'ID pubblico fornito dall'utente solo se vengono aperti i due gate privacy/analytics; nella configurazione attuale non carica script Google e non crea cookie analitici. Prima misurazione proposta: visualizzazioni delle pagine con consenso. Gli invii riusciti andranno aggiunti quando i moduli saranno attivi. Non inviare dati personali o contenuto libero come eventi. Checklist e fonti: [privacy e GA4](privacy-ga4-review-2026-10-11.md).
 
 ## Fonti e provenienza
 
