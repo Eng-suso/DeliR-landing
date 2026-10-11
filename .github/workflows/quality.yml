@@ -51,6 +51,7 @@ jobs:
           php -l public/api/pilot.php
           php -l server/ionos/pilot.php
           php -l server/ionos/config.example.php
+          php -l server/ionos/maintenance.php
           php server/ionos/tests.php --require-db
       - run: npm run build
       - name: Keep the tested build for deployment

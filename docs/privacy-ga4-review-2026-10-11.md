@@ -79,3 +79,9 @@ Il titolare ha confermato il contratto Hosting Plus recente. [IONOS](https://www
 Backend e database sono stati provati dal titolare con un solo dato fittizio, poi chiusi e puliti secondo la sua conferma. Frontend e analytics restano chiusi. La bozza ora descrive i cinque campi, finalità e basi proposte, conservazione scelta e HMAC pseudonimizzato per i limiti agli invii. Il gate di intake richiede anche l’informativa pronta.
 
 Per completare: termini/ruoli/paesi/backup dei servizi utilizzati; necessità e bilanciamento per i contatti aziendali; procedura operativa di revisione e cancellazione entro 12 mesi dall’ultimo contatto con gestione delle copie; gestione diritti; pulizia periodica contatori/log. Non è stata configurata una cancellazione automatica delle richieste. Le impostazioni GA4 e i relativi trasferimenti restano un’attività separata.
+
+## Procedura operativa predisposta
+
+[privacy-operations.md](privacy-operations.md) definisce revisione delle richieste senza seguito, ultimo contatto, copie email/database, diritti, incidenti e ripristini. Il database attuale non traccia ultimo contatto: niente cancellazione automatica basata soltanto sulla data di creazione. IONOS dichiara backup database giornalieri per 14 giorni; le condizioni della posta e la versione contrattuale effettiva restano da verificare. I link pubblici al contratto di trattamento provati restituiscono errore: non assumere il PDF storico come versione applicabile.
+
+Predisposto script CLI privato per scadenza contatori e log tecnici, con 52 controlli locali passati. Non installato/eseguito in produzione; SSH e cron da configurare, poiché il titolare ha confermato solo SFTP. Il periodo proposto per il log applicativo è sette giorni. Nessuna dichiarazione pubblica di manutenzione automatica o gate di raccolta è stata attivata.

@@ -77,3 +77,9 @@ Il check GitHub `quality` impone test con MariaDB 11.8 temporaneo: importazione,
 ## Prova riferita dal titolare
 
 L’11 ottobre 2026 il titolare ha confermato risposta accepted: true e una riga fittizia nella tabella pilot_applications dopo aver corretto il percorso del file privato. Ha confermato anche la successiva chiusura e pulizia. Non sono stati conservati payload o credenziali nel repository. La prova non sostituisce la verifica UI sul dominio reale né completa i requisiti privacy.
+
+## Manutenzione privata predisposta
+
+server/ionos/maintenance.php va copiato esclusivamente in /private/delir. Esecuzione CLI con --dry-run o --apply esplicito: rimuove contatori scaduti e diagnostica oltre sette giorni, senza leggere o cancellare richieste pilot. Procedura, scadenze manuali, gestione diritti, incidenti e ripristini in [privacy-operations.md](privacy-operations.md). Il titolare ha confermato accesso solo SFTP: SSH e cron lato server non sono ancora configurati. Il cron HTTP del pannello non esegue questo file privato.
+
+Validazione locale: sintassi PHP e 52 controlli passati, inclusi dry-run senza modifiche, scadenza/retention dei log, idempotenza ed errori CLI senza dati. La CI include prova MariaDB di contatori scaduti/attivi e conservazione di una richiesta fittizia; non eseguita localmente perché manca un database isolato. Non è stata eseguita manutenzione sul database di produzione.

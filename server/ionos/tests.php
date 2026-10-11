@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 require __DIR__ . '/pilot.php';
+require __DIR__ . '/maintenance.php';
 
 $checks = 0;
 function check(bool $condition, string $label): void {
@@ -64,6 +65,38 @@ foreach (['capture_disabled', 'private_config_invalid', 'private_library_missing
 foreach ([$configFile, $libraryFile, $logFile, $fixture . '/public/api/pilot.php'] as $file) if (is_file($file)) unlink($file);
 foreach (['/public/api', '/public', '/private/delir', '/private', ''] as $directory) rmdir($fixture . $directory);
 
+// Maintenance is private, dry-run is non-destructive, and the log lock is shared
+// with the intake writer. Fixtures contain no real correspondence or credentials.
+$maintenanceLog = sys_get_temp_dir() . '/delir-maintenance-' . bin2hex(random_bytes(8));
+$maintenanceNow = 1900000000;
+$recentLine = gmdate('c', $maintenanceNow - 60) . " capture_disabled\n";
+$oldLine = gmdate('c', $maintenanceNow - 7 * 86400) . " request_failed\n";
+$fixtureLog = $oldLine . $recentLine . "invalid line\n";
+file_put_contents($maintenanceLog, $fixtureLog);
+check(delir_cleanup_diagnostics($maintenanceLog, $maintenanceNow, false) === 2, 'maintenance dry-run count');
+check(file_get_contents($maintenanceLog) === $fixtureLog, 'maintenance dry-run preserves log');
+check(delir_cleanup_diagnostics($maintenanceLog, $maintenanceNow, true) === 2, 'maintenance expires old log');
+check(file_get_contents($maintenanceLog) === $recentLine, 'maintenance retains recent log');
+check(delir_cleanup_diagnostics($maintenanceLog, $maintenanceNow, true) === 0, 'maintenance repeat is idempotent');
+unlink($maintenanceLog);
+check(delir_cleanup_diagnostics($maintenanceLog, $maintenanceNow, true) === 0 && !file_exists($maintenanceLog), 'maintenance missing log stays absent');
+$maintenanceFixture = sys_get_temp_dir() . '/delir-maintenance-cli-' . bin2hex(random_bytes(8));
+mkdir($maintenanceFixture, 0700);
+copy(__DIR__ . '/maintenance.php', $maintenanceFixture . '/maintenance.php');
+file_put_contents($maintenanceFixture . '/config.php', "<?php return ['test_marker' => 'not-a-secret-test-marker'];");
+file_put_contents($maintenanceFixture . '/pilot.php', "<?php function delir_connect_pilot(array \$config): PDO { throw new RuntimeException('not-a-secret-test-marker'); }");
+foreach ([[] , ['--apply']] as $arguments) {
+    $process = proc_open(array_merge([PHP_BINARY, '-n', $maintenanceFixture . '/maintenance.php'], $arguments), [1 => ['pipe', 'w'], 2 => ['pipe', 'w']], $pipes);
+    if (!is_resource($process)) throw new RuntimeException('test process unavailable');
+    $out = stream_get_contents($pipes[1]); $err = stream_get_contents($pipes[2]);
+    fclose($pipes[1]); fclose($pipes[2]); $exitCode = proc_close($process);
+    check($exitCode === ($arguments ? 1 : 2), 'maintenance CLI failure exit code');
+    check($out === '' && !str_contains($err, 'not-a-secret-test-marker'), 'maintenance CLI no data disclosure');
+    check($arguments ? trim($err) === 'maintenance_failed' : str_contains($err, 'Usage:'), 'maintenance CLI safe error');
+}
+foreach (['maintenance.php', 'config.php', 'pilot.php'] as $file) unlink($maintenanceFixture . '/' . $file);
+rmdir($maintenanceFixture);
+
 $dsn = getenv('DELIR_TEST_DSN');
 if ($dsn) {
     // Only an isolated disposable test database. Never run against production.
@@ -91,6 +124,17 @@ if ($dsn) {
         check(false, 'insert failure must not accept');
     } catch (PDOException $error) { check((int) $pdo->query('SELECT COUNT(*) FROM pilot_rate_limits')->fetchColumn() === 0, 'failed save rolls quota back'); }
     $pdo->exec(file_get_contents(__DIR__ . '/schema.sql'));
+    check(delir_store_pilot($pdo, $data, '192.0.2.10', $config['rate_secret'], $clock)['status'] === 201, 'maintenance lead fixture');
+    $pdo->exec('DELETE FROM pilot_rate_limits');
+    $maintenanceSeed = $pdo->prepare('INSERT INTO pilot_rate_limits (rate_key, hits, expires_at) VALUES (?, 1, ?)');
+    $maintenanceSeed->execute([str_repeat('a', 64), $clock]);
+    $maintenanceSeed->execute([str_repeat('b', 64), $clock + 900]);
+    $leadCount = (int) $pdo->query('SELECT COUNT(*) FROM pilot_applications')->fetchColumn();
+    check(delir_cleanup_rates($pdo, $clock, false) === 1, 'maintenance counts expired rate');
+    check((int) $pdo->query('SELECT COUNT(*) FROM pilot_rate_limits')->fetchColumn() === 2, 'maintenance dry-run preserves rates');
+    check(delir_cleanup_rates($pdo, $clock, true) === 1, 'maintenance deletes only expired rate');
+    check((int) $pdo->query('SELECT COUNT(*) FROM pilot_rate_limits')->fetchColumn() === 1, 'maintenance preserves active rate');
+    check((int) $pdo->query('SELECT COUNT(*) FROM pilot_applications')->fetchColumn() === $leadCount, 'maintenance preserves leads');
     echo "MariaDB integration passed.\n";
 } elseif (in_array('--require-db', $argv, true)) {
     throw new RuntimeException('DELIR_TEST_DSN required');
