@@ -47,10 +47,10 @@ test('product chapters and buying questions remain accessible', async ({ page })
   await expect(dialog).toBeVisible();
   await expect(dialog.locator('video')).toHaveAttribute('controls', '');
   await dialog.getByRole('button', { name: 'Chiudi il video' }).click();
-  const faq = page.getByRole('button', { name: 'Quanto dura e quali output ricevo?' });
+  const faq = page.getByRole('button', { name: /Cosa succede se il cliente dimentica informazioni importanti o le fonti si contraddicono/ });
   await faq.click();
   await expect(faq).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.getByRole('region', { name: 'Quanto dura e quali output ricevo?' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Cosa succede se il cliente dimentica informazioni importanti o le fonti si contraddicono?' })).toBeVisible();
 });
 
 test('mobile navigation remains operable after deep scrolling', async ({ page, isMobile }) => {
