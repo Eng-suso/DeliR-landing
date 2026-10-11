@@ -22,7 +22,7 @@ Le 17 scene, inclusa la hero, restano disponibili. Ogni scena appartiene a un so
 
 ## Criteri nella sezione confronto
 
-Su indicazione dell’utente, i quattro benefici restano nella soluzione. La sezione successiva introduce i sei criteri proposti come supporto alla scelta del workflow, prima della matrice esistente. Ogni criterio ha headline, descrizione e link alla demo in IT/EN.
+Su indicazione dell’utente, i quattro benefici restano nella soluzione. La sezione successiva introduce i sei criteri proposti come supporto alla scelta del workflow, prima della matrice esistente. Ogni criterio ha un’etichetta sintetica, una breve descrizione e un link alla demo in IT/EN, evitando di ripetere le headline dei benefici.
 
 | Criterio | Destinazione |
 | --- | --- |
@@ -57,6 +57,18 @@ Il copy evita garanzie su ogni passaggio, sull’assenza futura di lacune o sull
 
 ## Bridge tra hero e pain
 
-La Subheadline V2 fornita dall’utente è inserita dopo la hero e prima del pain: inglese originale in EN e traduzione italiana in IT. Una sequenza statica e ordinata mostra documenti/interviste → evidenze → As-Is → To-Be → miglioramento continuo. La hero conserva headline, subheadline e CTA; il bridge non aggiunge promesse numeriche, media o tracker.
+Il bridge dopo la hero e prima del pain spiega in una frase come documenti, interviste, evidenze e decisioni restano nello stesso contesto. Dopo l’audit CRO e l’autorizzazione dell’utente, la V2 è stata accorciata per evitare di ripetere il pain e il beneficio già espressi nella hero. Una sequenza statica e ordinata mostra documenti/interviste → evidenze → As-Is → To-Be → miglioramento continuo. Il bridge non aggiunge promesse numeriche, media o tracker.
 
 Lint, typecheck e build passati. Controllo browser IT/EN su Chromium a 320, 768 e 1440 px e WebKit a 390 px: ordine hero/bridge/pain corretto, cinque fasi leggibili, assenza di overflow, axe A/AA senza violazioni rilevate e CTA demo funzionante da tastiera. Revisione visiva desktop e mobile completata. I controlli non costituiscono una certificazione WCAG o una misura dell’impatto sulle conversioni.
+
+## Correzioni dopo l’audit CRO
+
+Su autorizzazione dell’utente, la subheadline della hero è tradotta in italiano e la headline inglese è allineata alla stessa categoria e promessa. Il bridge spiega solo il meccanismo; i sei criteri mantengono nomi, descrizioni brevi e prove, senza ripetere sei headline di beneficio. I quattro benefici e tutte le scene restano disponibili.
+
+Il pilot descrive un esempio di perimetro sugli acquisti indiretti: fonti e partecipanti alla verifica, modello BPMN As-Is con evidenze e punti aperti, ipotesi To-Be, confronto degli scenari e consegna concordata. Attività, durata, formati, criteri di accettazione e importi restano da concordare prima della firma. La FAQ sugli output è coerente con l’offerta. La sezione fiducia rimanda al confronto nella demo anche dalla pagina pilot, conservando la lingua scelta. Non vengono aggiunti risultati di clienti o metriche di risparmio.
+
+La prima suite locale ha rilevato su Safari un disallineamento temporaneo dopo il reload: contenuto inglese con attributo `html lang` ancora italiano. L’attributo ora viene aggiornato prima della visualizzazione del contenuto; la persistenza della preferenza resta separata. Dopo la correzione, lint, typecheck e build passano e tutti i 20 test mirati su quattro browser passano. Nella suite precedente: 61 passati, un errore poi corretto e 18 esclusi dai filtri per browser.
+
+Ipotesi da validare: meno ripetizioni facilitano la comprensione del percorso e output più concreti aiutano a valutare il pilot. La metrica primaria sarà il numero di richieste qualificate rispetto ai visitatori idonei, quando la misurazione potrà essere attivata; i clic sulle CTA saranno un indicatore intermedio. Non vengono attivati tracker o raccolta dati e non si deduce un aumento delle conversioni dalle modifiche.
+
+Verifica finale della build corretta: dieci combinazioni IT/EN su Chromium a 320, 390, 768 e 1440 px e WebKit a 390 px. Controllati hero localizzata, quattro benefici, sei criteri, assenza di overflow e scansioni axe A/AA delle sezioni modificate. Il link dalla pagina pilot alla scena di confronto conserva la lingua in IT/EN su Chromium desktop e WebKit mobile. Revisione visiva di hero, criteri e pilot completata. Nessuna violazione automatica rilevata; non è un audit completo con tecnologie assistive.

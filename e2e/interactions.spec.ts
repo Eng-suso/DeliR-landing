@@ -33,7 +33,7 @@ test('hero makes the offer and an email enquiry available', async ({ page }) => 
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Valuta un pilot DeliR sul tuo incarico.');
   await expect(page.getByRole('form')).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'Firma e avvio' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Consegna al process owner' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Consegna al responsabile del processo' })).toBeVisible();
 });
 
 test('product chapters and buying questions remain accessible', async ({ page }) => {

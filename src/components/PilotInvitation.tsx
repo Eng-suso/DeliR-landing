@@ -4,25 +4,27 @@ import { projectContactHref, publicContactEmail } from '../lib/publicOffer';
 
 const copy = {
   it: {
-    eyebrow: 'Pilot a pagamento · per milestone', title: 'Un processo. Obiettivi concordati. Pagamenti per fasi.',
-    body: 'Porta un incarico attivo o in partenza. Definiamo insieme il perimetro, gli output, la durata e i criteri di accettazione. Il preventivo ripartisce il compenso tra firma e raggiungimento delle milestone.',
+    eyebrow: 'Pilot a pagamento · per milestone', title: 'Un processo. Output chiari. Pagamenti per fasi.',
+    body: 'Porta un incarico attivo o in partenza. Il perimetro proposto comprende un As-Is, le ipotesi To-Be e il confronto degli scenari. Attività, durata e criteri di accettazione si concordano prima della firma.',
+    example: 'Esempio di perimetro: acquisti indiretti',
     steps: [
-      ['Firma e avvio', 'Una prima quota alla firma, con perimetro, fonti, responsabilità e obiettivi concordati.'],
-      ['AS-IS e TO-BE', 'Quote collegate al raggiungimento degli obiettivi definiti per ricostruzione AS-IS e proposta TO-BE.'],
-      ['Consegna al process owner', 'Handover degli output concordati al process owner, secondo i criteri di accettazione del pilot.'],
+      ['Firma e avvio', 'Scegliamo un processo, concordiamo documenti, procedure o interviste disponibili e chi partecipa alla verifica. Prima quota alla firma, con obiettivi e responsabilità definiti.'],
+      ['AS-IS e TO-BE', 'Modello BPMN As-Is con fonti collegate e punti aperti; ipotesi To-Be e confronto degli scenari con parametri e assunzioni espliciti. Quote legate agli obiettivi concordati.'],
+      ['Consegna al responsabile del processo', 'Consegna dei modelli e del confronto concordati, con fonti, ipotesi e punti da verificare. Formati e criteri di accettazione definiti nel preventivo.'],
     ],
-    cta: 'Parliamo del tuo progetto', note: 'Nel primo messaggio bastano processo, obiettivo e tempistica. Nessun documento del cliente.',
+    cta: 'Parliamo del tuo progetto', note: 'Nel primo messaggio bastano processo, obiettivo e tempistica. Per avviare il pilot concordiamo le fonti e chi verifica il modello. Non inviare documenti del cliente nel primo messaggio.',
     quote: 'Importi, ripartizione e calendario vengono definiti nel preventivo prima della firma.',
   },
   en: {
-    eyebrow: 'Paid pilot · by milestone', title: 'One process. Agreed objectives. Payment in stages.',
-    body: 'Bring an active or upcoming engagement. Together we define scope, outputs, duration and acceptance criteria. The quote splits payment between signing and achieving milestones.',
+    eyebrow: 'Paid pilot · by milestone', title: 'One process. Clear outputs. Payment in stages.',
+    body: 'Bring an active or upcoming engagement. The proposed scope includes an As-Is, To-Be hypotheses and scenario comparison. Activities, duration and acceptance criteria are agreed before signing.',
+    example: 'Example scope: indirect procurement',
     steps: [
-      ['Signing and kickoff', 'An initial payment at signing, with agreed scope, sources, responsibilities and objectives.'],
-      ['AS-IS and TO-BE', 'Payments tied to agreed objectives for AS-IS reconstruction and the TO-BE proposal.'],
-      ['Process owner handover', 'Delivery of agreed outputs to the process owner against the pilot’s acceptance criteria.'],
+      ['Signing and kickoff', 'Choose one process, agree which documents, procedures or interviews are available and who takes part in the review. Initial payment at signing, with defined objectives and responsibilities.'],
+      ['AS-IS and TO-BE', 'An As-Is BPMN model with linked sources and open questions; To-Be hypotheses and scenario comparison with explicit parameters and assumptions. Payments tied to agreed objectives.'],
+      ['Process owner handover', 'Delivery of the agreed models and comparison, with sources, assumptions and points to review. Formats and acceptance criteria are defined in the quote.'],
     ],
-    cta: 'Discuss your project', note: 'Start with the process, objective and timing. No client documents in the first message.',
+    cta: 'Discuss your project', note: 'Start with the process, objective and timing. Before kickoff, agree the sources and who reviews the model. Do not send client documents in the first message.',
     quote: 'Amounts, payment split and schedule are set out in the quote before signing.',
   },
 };
@@ -35,7 +37,7 @@ export default function PilotInvitation() {
         <a href={projectContactHref(language)} className="btn-primary mt-6">{t.cta}<ArrowRight aria-hidden="true" className="size-4" /></a>
         <p className="mt-4 max-w-lg text-sm leading-6 text-slate-600">{t.note}</p><a className="mt-2 inline-flex min-h-11 items-center text-sm font-semibold text-brand-blue underline underline-offset-4" href={`mailto:${publicContactEmail}`}>{publicContactEmail}</a>
       </div>
-      <div data-reveal className="milestone-card rounded-3xl border border-slate-200 bg-brand-light p-6 sm:p-8"><ol className="divide-y divide-slate-300">{t.steps.map(([title, description], index) => <li key={title} className="grid grid-cols-[2rem_1fr] gap-3 py-5 first:pt-0"><span className="pt-1 font-mono text-xs text-brand-blue">0{index + 1}</span><div><h3 className="text-lg font-semibold text-brand-ink">{title}</h3><p className="mt-2 text-sm leading-6 text-slate-600">{description}</p></div></li>)}</ol><p className="border-t border-slate-300 pt-5 text-xs leading-5 text-slate-600">{t.quote}</p></div>
+      <div data-reveal className="milestone-card rounded-3xl border border-slate-200 bg-brand-light p-6 sm:p-8"><p className="mb-5 text-sm font-semibold text-brand-blue">{t.example}</p><ol className="divide-y divide-slate-300">{t.steps.map(([title, description], index) => <li key={title} className="grid grid-cols-[2rem_1fr] gap-3 py-5 first:pt-0"><span className="pt-1 font-mono text-xs text-brand-blue">0{index + 1}</span><div><h3 className="text-lg font-semibold text-brand-ink">{title}</h3><p className="mt-2 text-sm leading-6 text-slate-600">{description}</p></div></li>)}</ol><p className="border-t border-slate-300 pt-5 text-xs leading-5 text-slate-600">{t.quote}</p></div>
     </div>
   </section>;
 }

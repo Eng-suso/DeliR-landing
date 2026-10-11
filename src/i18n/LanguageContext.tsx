@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useLayoutEffect, useMemo, useState, type ReactNode } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export type Language = 'it' | 'en';
@@ -29,8 +29,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const requestedLanguage = new URLSearchParams(location.search).get('lang');
   const language = requestedLanguage === 'en' || requestedLanguage === 'it' ? requestedLanguage : storedLanguage;
 
-  useEffect(() => {
+  // Keep the document language aligned with translated content before it is painted.
+  useLayoutEffect(() => {
     document.documentElement.lang = language;
+  }, [language]);
+
+  useEffect(() => {
     try {
       window.localStorage.setItem(STORAGE_KEY, language);
     } catch {

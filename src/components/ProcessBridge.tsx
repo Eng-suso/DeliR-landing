@@ -5,13 +5,13 @@ const icons = [Files, FileCheck2, Workflow, GitCompareArrows, RefreshCw];
 const copy = {
   it: {
     label: 'Un contesto che resta con te',
-    body: 'Passi ancora settimane a ricostruire come lavorano davvero i clienti? DeliR mantiene documenti, interviste, evidenze e decisioni in un unico contesto di processo persistente, così puoi costruire un As-Is affidabile, confrontare scenari To-Be e raccomandare miglioramenti più rapidamente.',
+    body: 'Documenti, interviste, evidenze e decisioni restano nello stesso contesto, dall’As-Is al confronto degli scenari To-Be.',
     path: 'Dalla conoscenza alle decisioni',
     steps: ['Documenti e interviste', 'Evidenze', 'As-Is', 'To-Be', 'Miglioramento continuo'],
   },
   en: {
     label: 'Context that stays with you',
-    body: 'Still spending weeks reconstructing how clients really work? DeliR keeps documents, interviews, evidence, and decisions in one persistent process context, so you can build a trusted As-Is, compare To-Be scenarios, and recommend improvements faster.',
+    body: 'Documents, interviews, evidence and decisions stay in one context, from the As-Is to To-Be scenario comparison.',
     path: 'From knowledge to decisions',
     steps: ['Documents and interviews', 'Evidence', 'As-Is', 'To-Be', 'Continuous improvement'],
   },
