@@ -6,7 +6,7 @@ const stageIcons = [Files, ScanSearch, Workflow, ChartNoAxesCombined];
 const copy = {
   it: {
     eyebrow: 'Per te, consulente Operations',
-    title: 'Quanto tempo passi a ricostruire come lavora il cliente?',
+    title: 'Il problema non è mappare i processi. È ricostruire la realtà.',
     body: 'Ogni incarico riparte da qui: raccogliere informazioni, rincorrere dettagli mancanti, ricostruire il contesto, mappare l’As-Is e verificare le ipotesi. Poi arriva la parte più difficile: trasformare tutto questo in decisioni che il cliente possa sostenere.',
     chain: [
       ['01', 'Informazioni disperse', 'Documenti, interviste e appunti sono in strumenti diversi. Ritrovare una risposta significa cercare di nuovo.'],
@@ -18,7 +18,7 @@ const copy = {
   },
   en: {
     eyebrow: 'Dear Operations Consultant',
-    title: 'How much time do you spend rebuilding how a client really works?',
+    title: 'Process Mapping Isn’t the Problem, Reconstructing Reality Is',
     body: 'Every engagement starts with the same work. Collect information. Chase missing details. Rebuild context. Map the As-Is. Validate assumptions. Then the hard part begins: turning all that information into decisions your client can trust.',
     chain: [
       ['01', 'Scattered knowledge', 'Documents, interviews and notes live in different tools. Finding an answer means searching all over again.'],
