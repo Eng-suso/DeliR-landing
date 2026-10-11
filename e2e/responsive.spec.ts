@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-for (const path of ['/', '/pilot', '/waitlist']) {
+for (const path of ['/', '/pilot', '/waitlist', '/security-data', '/security-data?lang=en']) {
   test(`${path} has no horizontal overflow`, async ({ page }) => {
     await page.goto(path);
     const dimensions = await page.evaluate(() => ({

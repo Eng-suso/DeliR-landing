@@ -72,3 +72,7 @@ La prima suite locale ha rilevato su Safari un disallineamento temporaneo dopo i
 Ipotesi da validare: meno ripetizioni facilitano la comprensione del percorso e output più concreti aiutano a valutare il pilot. La metrica primaria sarà il numero di richieste qualificate rispetto ai visitatori idonei, quando la misurazione potrà essere attivata; i clic sulle CTA saranno un indicatore intermedio. Non vengono attivati tracker o raccolta dati e non si deduce un aumento delle conversioni dalle modifiche.
 
 Verifica finale della build corretta: dieci combinazioni IT/EN su Chromium a 320, 390, 768 e 1440 px e WebKit a 390 px. Controllati hero localizzata, quattro benefici, sei criteri, assenza di overflow e scansioni axe A/AA delle sezioni modificate. Il link dalla pagina pilot alla scena di confronto conserva la lingua in IT/EN su Chromium desktop e WebKit mobile. Revisione visiva di hero, criteri e pilot completata. Nessuna violazione automatica rilevata; non è un audit completo con tecnologie assistive.
+
+## Data section and dedicated page
+
+The current trust section now uses the user-supplied three-point copy immediately before the pilot: separate client workspaces, AI context and rules before real data. The demo proof block previously described above was removed from this section so it answers the data objection directly. Its details link, the data FAQ and footer lead to `/security-data`, translated in IT/EN. Evidence limits and validation for the new page are recorded in `docs/security-data-2026-10-11.md`.

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Minus, Plus } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
@@ -10,7 +11,7 @@ const copy = {
       ['Quanto dura e quali output ricevo?', 'Il perimetro proposto comprende un modello BPMN As-Is con fonti e punti aperti, ipotesi To-Be e confronto degli scenari con parametri e assunzioni espliciti. Durata, attività, formati e consegna al responsabile del processo dipendono dall’incarico e vengono definiti nel preventivo prima della firma.'],
       ['Posso partire senza event log?', 'Sì. La discovery può partire da interviste, documenti, procedure e conoscenza operativa. Concordiamo quali fonti utilizzare e quali informazioni devono essere verificate prima di confermare il modello.'],
       ['Cosa devo inviare per il primo contatto?', 'Bastano una descrizione del processo, l’obiettivo e la tempistica. Non inviare documenti riservati o dati del cliente nel primo messaggio. Le condizioni per utilizzare le fonti nell’incarico si verificano prima del pilot.'],
-      ['Come vengono gestiti i dati e l’AI?', 'DeliR è progettato con workspace separati tra clienti, separazione applicativa e database, autenticazione e accessi dedicati. I dati costruiscono il contesto per analisi e funzionalità AI. Le policy pubbliche su hosting, conservazione, cancellazione e uso dei dati da parte dei modelli AI sono in formalizzazione e saranno verificabili prima dei pilot.'],
+      ['Come vengono gestiti i dati e l’AI?', 'Prima di utilizzare dati reali concordiamo dove saranno gestiti, chi potrà accedervi, per quanto tempo resteranno disponibili e come verranno usati dalle funzionalità AI. Puoi parlare con noi dei requisiti del tuo cliente prima di condividere documenti.'],
       ['Le simulazioni sono risultati già ottenuti?', 'No. Il confronto AS-IS / TO-BE valuta scenari basati su parametri e assunzioni. I numeri nei video appartengono al caso dimostrativo. La proposta va verificata con il process owner; una simulazione non garantisce il risultato dell’implementazione.'],
       ['Chi conferma il modello e la raccomandazione?', 'La review resta umana. DeliR affianca al processo fonti, punti da discutere e proposte; il consulente e il process owner verificano le informazioni e prendono le decisioni.'],
     ],
@@ -22,7 +23,7 @@ const copy = {
       ['How long does it take and what do I receive?', 'The proposed scope includes an As-Is BPMN model with sources and open questions, To-Be hypotheses and scenario comparison with explicit parameters and assumptions. Duration, activities, formats and process owner handover depend on the engagement and are defined in the quote before signing.'],
       ['Can I start without event logs?', 'Yes. Discovery can start with interviews, documents, procedures and operational knowledge. We agree which sources to use and what needs verification before confirming the model.'],
       ['What should I send in the first enquiry?', 'Describe the process, objective and timing. Do not send confidential documents or client data in your first message. Conditions for using engagement sources are reviewed before the pilot.'],
-      ['How are data and AI handled?', 'DeliR is designed with separate client workspaces, application and database separation, authentication and dedicated access policies. Data builds the context for analysis and AI features. Public policies on hosting, retention, deletion and AI model data use are being formalized and will be available for verification before pilots.'],
+      ['How are data and AI handled?', 'Before using real data, we agree where it will be handled, who can access it, how long it will be retained and how AI features will use it. Discuss your client’s requirements with us before sharing documents.'],
       ['Are simulation numbers actual achieved results?', 'No. AS-IS / TO-BE comparison evaluates scenarios based on parameters and assumptions. Video numbers belong to the demo case. The proposal needs process owner review; simulation does not guarantee implementation outcomes.'],
       ['Who confirms the model and recommendation?', 'Review remains human. DeliR places sources, discussion points and proposals alongside the process; the consultant and process owner verify information and make decisions.'],
     ],
@@ -48,7 +49,7 @@ export default function Faq() {
                 </span>
               </button>
               <div id={`faq-panel-${index}`} role="region" aria-label={question} hidden={!open}>
-                <p className="max-w-3xl pb-6 text-sm leading-7 text-slate-600 sm:text-base">{answer}</p>
+                <p className="max-w-3xl pb-6 text-sm leading-7 text-slate-600 sm:text-base">{answer}{index === 4 ? <Link to={language === 'it' ? '/security-data' : '/security-data?lang=en'} className="mt-2 flex min-h-11 w-fit items-center font-semibold text-brand-blue underline underline-offset-4">{language === 'it' ? 'Sicurezza e dati: i dettagli' : 'Security & Data: the details'}</Link> : null}</p>
               </div>
             </div>;
           })}
