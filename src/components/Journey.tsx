@@ -6,8 +6,9 @@ import ClipExplorer from './ClipExplorer';
 
 const copy = {
   it: {
-    eyebrow: 'Il prodotto, passo per passo', title: 'Segui una decisione. Guarda le prove.',
-    intro: 'Dalle interviste al modello verificato, fino al confronto degli scenari. Esplora il passaggio che conta per il tuo incarico.',
+    eyebrow: 'La soluzione, passo per passo', title: 'Dalla conoscenza dispersa alla process intelligence.',
+    intro: 'DeliR collega documenti, interviste ed evidenze a un As-Is da verificare insieme al cliente. Progetta e simula scenari To-Be, confrontali con il processo attuale e conserva il contesto per il lavoro successivo.',
+    principle: 'Comprendi cosa succede. Valuta cosa potrebbe succedere. Continua a migliorare.',
     demo: 'Caso di acquisti indiretti · Azienda, persone e valori dimostrativi',
     modules: [
       { name: 'Workspace', title: 'Ritrova il contesto dell’incarico.', body: 'Fonti, decisioni aperte e avanzamento sono nello stesso progetto: puoi riprendere il lavoro senza ricostruire il contesto da zero.', output: 'Contesto e fonti raccolti nel progetto', initial: 'memoria' },
@@ -19,8 +20,9 @@ const copy = {
     nav: 'Viste del prodotto', result: 'Cosa valuti', action: 'Valuta il pilot sul tuo progetto',
   },
   en: {
-    eyebrow: 'The product, step by step', title: 'Follow a decision. Inspect the evidence.',
-    intro: 'From interviews to a reviewed model and scenario comparison. Explore the step that matters for your engagement.',
+    eyebrow: 'The solution, step by step', title: 'Turn scattered client knowledge into process intelligence.',
+    intro: 'DeliR connects documents, interviews and evidence to an As-Is you review with your client. Design and simulate To-Be scenarios, compare them with the current process, and keep the context for the work that follows.',
+    principle: 'Understand what happens. Test what could happen. Keep making it better.',
     demo: 'Indirect procurement demo · Fictional company, people and values',
     modules: [
       { name: 'Workspace', title: 'Keep the engagement context at hand.', body: 'Sources, open decisions and progress share one project so you can pick up the work without rebuilding its context.', output: 'Project context and collected sources', initial: 'memoria' },
@@ -65,7 +67,7 @@ export default function Journey() {
             <ClipExplorer clips={chapterClips[index]} name={module.name} initial={module.initial} />
           </div> : null}
         </article>)}
-        <div className="mt-7 flex justify-end"><a href="#pilot" className="btn-text">{t.action}<ArrowRight aria-hidden="true" className="size-4" /></a></div>
+        <div className="mt-7 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"><p className="max-w-2xl text-base font-medium leading-7 text-brand-ink">{t.principle}</p><a href="#pilot" className="btn-text">{t.action}<ArrowRight aria-hidden="true" className="size-4" /></a></div>
       </div>
     </section>
   );

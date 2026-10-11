@@ -5,28 +5,28 @@ const stageIcons = [Files, ScanSearch, Workflow, ChartNoAxesCombined];
 
 const copy = {
   it: {
-    eyebrow: 'Perché DeliR',
-    title: 'Una proposta che puoi spiegare, dall’inizio alla fine.',
-    body: 'Un diagramma descrive il flusso. Un incarico richiede anche le fonti che lo giustificano, le questioni ancora aperte e le ipotesi dietro ogni scelta. DeliR mette questi elementi nello stesso spazio di lavoro.',
+    eyebrow: 'Per te, consulente Operations',
+    title: 'Quanto tempo passi a ricostruire come lavora il cliente?',
+    body: 'Ogni incarico riparte da qui: raccogliere informazioni, rincorrere dettagli mancanti, ricostruire il contesto, mappare l’As-Is e verificare le ipotesi. Poi arriva la parte più difficile: trasformare tutto questo in decisioni che il cliente possa sostenere.',
     chain: [
-      ['01', 'Fonte', 'Interviste, documenti e dati dell’incarico'],
-      ['02', 'Review', 'Fatti da verificare e decisioni da prendere'],
-      ['03', 'Processo', 'Modello e criticità nel loro contesto'],
-      ['04', 'Scenario', 'Assunzioni e impatto della raccomandazione'],
+      ['01', 'Informazioni disperse', 'Documenti, interviste e appunti sono in strumenti diversi. Ritrovare una risposta significa cercare di nuovo.'],
+      ['02', 'Evidenze scollegate', 'Le prove restano nei documenti, separate dalle decisioni che dovrebbero sostenere.'],
+      ['03', 'Mappe da aggiornare', 'Il processo cambia, ma la mappa resta ferma. Tra progetti e persone, il contesto si perde.'],
+      ['04', 'Alternative difficili da confrontare', 'Devi raccomandare un cambiamento senza un confronto chiaro tra le diverse opzioni To-Be.'],
     ],
-    caption: 'Una traccia continua dall’input alla raccomandazione.',
+    caption: 'La competenza non ti manca. È il lavoro intorno alla tua competenza che ti rallenta: ogni ora spesa a ricostruire il contesto è un’ora sottratta al miglioramento del processo.',
   },
   en: {
-    eyebrow: 'Why DeliR',
-    title: 'A proposal you can explain from start to finish.',
-    body: 'A diagram describes the flow. An engagement also needs the sources behind it, unresolved questions, and assumptions behind each choice. DeliR brings these elements into one workspace.',
+    eyebrow: 'Dear Operations Consultant',
+    title: 'How much time do you spend rebuilding how a client really works?',
+    body: 'Every engagement starts with the same work. Collect information. Chase missing details. Rebuild context. Map the As-Is. Validate assumptions. Then the hard part begins: turning all that information into decisions your client can trust.',
     chain: [
-      ['01', 'Source', 'Interviews, documents, and engagement data'],
-      ['02', 'Review', 'Facts to verify and decisions to make'],
-      ['03', 'Process', 'Model and constraints in context'],
-      ['04', 'Scenario', 'Assumptions and recommendation impact'],
+      ['01', 'Scattered knowledge', 'Documents, interviews and notes live in different tools. Finding an answer means searching all over again.'],
+      ['02', 'Disconnected evidence', 'Evidence stays buried in documents, separated from the decisions it should support.'],
+      ['03', 'Outdated process maps', 'The process changes while the map stands still. Context gets lost between projects and people.'],
+      ['04', 'Hard-to-compare options', 'You need to recommend a change without a clear comparison of the different To-Be options.'],
     ],
-    caption: 'A continuous trace from input to recommendation.',
+    caption: 'You are not short on expertise. The work around your expertise slows you down. Every hour spent rebuilding context is an hour not spent improving the process.',
   },
 } as const;
 
@@ -55,12 +55,12 @@ export default function Problem() {
                   <span className="method-number font-mono text-xs text-blue-300">{number}</span>
                 </div>
                 <h3 className="mt-6 font-display text-[26px] font-semibold tracking-[-0.035em] text-white">{title}</h3>
-                <p className="mt-2 max-w-[15rem] text-[15px] leading-6 text-slate-300">{detail}</p>
+                <p className="mt-2 max-w-[18rem] text-[15px] leading-6 text-slate-300">{detail}</p>
               </div>;
             })}
           </div>
         </div>
-        <p className="mt-10 text-xs text-blue-300">{t.caption}</p>
+        <p className="mt-10 max-w-3xl text-base leading-7 text-blue-200 sm:text-lg sm:leading-8">{t.caption}</p>
       </div>
     </section>
   );
