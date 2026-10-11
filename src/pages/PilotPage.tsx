@@ -128,7 +128,7 @@ export default function PilotPage({ captureEnabled }: PilotPageProps) {
       </header>
 
       <main id="main-content" tabIndex={-1} className="section-shell grid max-w-[1440px] gap-12 pb-20 pt-12 sm:pt-16 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20 lg:pt-24">
-        <motion.section initial={reduceMotion ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.45 }} aria-labelledby="pilot-title" className="lg:sticky lg:top-12 lg:self-start">
+        <motion.section initial={false} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.45 }} aria-labelledby="pilot-title" className="lg:sticky lg:top-12 lg:self-start">
           <p className="landing-eyebrow"><span aria-hidden="true" className="h-px w-7 bg-brand-blue" />{t.eyebrow}</p>
           <h1 id="pilot-title" tabIndex={-1} className="mt-6 max-w-[14ch] text-balance font-display text-[clamp(2.8rem,4vw,4.8rem)] font-medium leading-[1.05] tracking-[-0.055em] text-brand-ink">{t.title}</h1>
           <p className="mt-7 max-w-[33rem] text-[17px] leading-8 text-slate-600">{t.intro}</p>
@@ -140,7 +140,7 @@ export default function PilotPage({ captureEnabled }: PilotPageProps) {
           </div>
         </motion.section>
 
-        <motion.section initial={reduceMotion ? false : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.45, delay: reduceMotion ? 0 : 0.08 }} id="application" tabIndex={-1} aria-labelledby="application-title" className="scroll-mt-6 rounded-3xl border border-slate-200 bg-white p-5 sm:p-8 lg:p-10">
+        <motion.section initial={false} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.45, delay: reduceMotion ? 0 : 0.08 }} id="application" tabIndex={-1} aria-labelledby="application-title" className="scroll-mt-6 rounded-3xl border border-slate-200 bg-white p-5 sm:p-8 lg:p-10">
           {status === 'success' ? (
             <div role="status" className="flex min-h-[520px] flex-col items-center justify-center text-center">
               <span className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-700"><ClipboardCheck aria-hidden="true" className="h-8 w-8" /></span>

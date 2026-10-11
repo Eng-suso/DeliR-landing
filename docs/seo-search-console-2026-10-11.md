@@ -2,6 +2,8 @@
 
 Data: 11 ottobre 2026. Dominio confermato: `https://delir.it`.
 
+Aggiornamento successivo: il limite del documento HTML vuoto è stato risolto nella build con prerender IT/EN e metadati condivisi. Sitemap ampliata alle quattro route indexable con alternati reciproci. Il testo sotto conserva il contesto iniziale; stato corrente, verifiche pubbliche 403/404 e piano del milione mensile sono in [SEO/AEO/GEO e crescita](seo-aeo-geo-growth-2026-10-11.md). Per la pubblicazione usare [frontend IONOS](ionos-frontend-publication.md). Indicizzazione e impostazioni Search Console restano da verificare dopo upload.
+
 ## Pubblico e obiettivo
 
 Pubblico confermato dall'utente: consulenti BPM/Operations e responsabili Operations delle PMI. Obiettivo attuale del sito: mostrare il percorso del prodotto e portare al contatto per il pilot. L'utente ha creato lo stream GA4 e riferito accesso alla dashboard Search Console dopo l'aggiunta del TXT. L'integrazione GA4 è predisposta ma disattivata. Google Business Profile è escluso.

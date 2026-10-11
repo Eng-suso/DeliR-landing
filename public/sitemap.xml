@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://delir.it/</loc></url>
-  <url><loc>https://delir.it/pilot</loc></url>
-  <url><loc>https://delir.it/?lang=en</loc></url>
-  <url><loc>https://delir.it/pilot?lang=en</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url><loc>https://delir.it/</loc><xhtml:link rel="alternate" hreflang="it" href="https://delir.it/" /><xhtml:link rel="alternate" hreflang="en" href="https://delir.it/?lang=en" /><xhtml:link rel="alternate" hreflang="x-default" href="https://delir.it/" /></url>
+  <url><loc>https://delir.it/?lang=en</loc><xhtml:link rel="alternate" hreflang="it" href="https://delir.it/" /><xhtml:link rel="alternate" hreflang="en" href="https://delir.it/?lang=en" /><xhtml:link rel="alternate" hreflang="x-default" href="https://delir.it/" /></url>
+  <url><loc>https://delir.it/pilot</loc><xhtml:link rel="alternate" hreflang="it" href="https://delir.it/pilot" /><xhtml:link rel="alternate" hreflang="en" href="https://delir.it/pilot?lang=en" /><xhtml:link rel="alternate" hreflang="x-default" href="https://delir.it/pilot" /></url>
+  <url><loc>https://delir.it/pilot?lang=en</loc><xhtml:link rel="alternate" hreflang="it" href="https://delir.it/pilot" /><xhtml:link rel="alternate" hreflang="en" href="https://delir.it/pilot?lang=en" /><xhtml:link rel="alternate" hreflang="x-default" href="https://delir.it/pilot" /></url>
+  <url><loc>https://delir.it/security-data</loc><xhtml:link rel="alternate" hreflang="it" href="https://delir.it/security-data" /><xhtml:link rel="alternate" hreflang="en" href="https://delir.it/security-data?lang=en" /><xhtml:link rel="alternate" hreflang="x-default" href="https://delir.it/security-data" /></url>
+  <url><loc>https://delir.it/security-data?lang=en</loc><xhtml:link rel="alternate" hreflang="it" href="https://delir.it/security-data" /><xhtml:link rel="alternate" hreflang="en" href="https://delir.it/security-data?lang=en" /><xhtml:link rel="alternate" hreflang="x-default" href="https://delir.it/security-data" /></url>
+  <url><loc>https://delir.it/comparison-sources</loc><xhtml:link rel="alternate" hreflang="it" href="https://delir.it/comparison-sources" /><xhtml:link rel="alternate" hreflang="en" href="https://delir.it/comparison-sources?lang=en" /><xhtml:link rel="alternate" hreflang="x-default" href="https://delir.it/comparison-sources" /></url>
+  <url><loc>https://delir.it/comparison-sources?lang=en</loc><xhtml:link rel="alternate" hreflang="it" href="https://delir.it/comparison-sources" /><xhtml:link rel="alternate" hreflang="en" href="https://delir.it/comparison-sources?lang=en" /><xhtml:link rel="alternate" hreflang="x-default" href="https://delir.it/comparison-sources" /></url>
 </urlset>

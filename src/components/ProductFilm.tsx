@@ -9,6 +9,7 @@ type Props = { clip: ProductClip; priority?: boolean; minimal?: boolean; narrati
 type ConnectionNavigator = Navigator & { connection?: { saveData?: boolean } };
 
 function ambientPlaybackAllowed() {
+  if (typeof window === 'undefined') return false;
   return window.matchMedia('(min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: no-preference)').matches
     && !(navigator as ConnectionNavigator).connection?.saveData;
 }

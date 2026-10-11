@@ -49,6 +49,7 @@ jobs:
           DELIR_TEST_PASSWORD: test-only-password
         run: |
           php -l public/api/pilot.php
+          php -l public/index.php
           php -l server/ionos/pilot.php
           php -l server/ionos/config.example.php
           php -l server/ionos/maintenance.php

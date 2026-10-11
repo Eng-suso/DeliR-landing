@@ -1,0 +1,5 @@
+/* Progressive fallback: never submit a client-only form as an HTTP GET. */
+#root form { display: none; }
+@layer base { #faq [id^="faq-panel-"][hidden] { display: block !important; } }
+body > noscript > p { padding: 1rem; background: #f2f8ff; color: #004580; }
+body > noscript a { text-decoration: underline; }
