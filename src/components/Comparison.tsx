@@ -1,8 +1,8 @@
-import { useRef, useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
 import { useFragment } from '../lib/useFragment';
-import { ArrowRight, ArrowUpRight, Check, Plus, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Check, X } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { comparisonProducts, comparisonRows, comparisonSources, type ComparisonRow } from '../lib/comparisonContent';
+import { comparisonProducts, comparisonRows, type ComparisonRow } from '../lib/comparisonContent';
 import { pilotCtaLabel, projectContactHref } from '../lib/publicOffer';
 import DifferentiatorGrid from './DifferentiatorGrid';
 
@@ -24,8 +24,6 @@ const copy = {
     reasonBody: 'Con DeliR puoi discutere il processo insieme alle fonti, ai punti aperti e al confronto AS-IS / TO-BE. Questo è il percorso mostrato nella demo.',
     secondary: 'Guarda il percorso completo',
     sources: 'Criteri e documentazione dei prodotti',
-    method: 'La matrice riporta i giudizi forniti dal team DeliR sul workflow consulenziale descritto in ogni riga. I video illustrano il percorso DeliR; i link ufficiali forniscono il contesto dei prodotti, senza costituire una verifica indipendente di ogni giudizio. ChatGPT/Claude: utilizzo standard di chat, progetti e artifact. Codice su misura, estensioni e integrazioni sono fuori ambito. Un No riguarda questo percorso, non ogni configurazione possibile. Piani e disponibilità possono variare.',
-    newTab: ' (si apre in una nuova scheda)',
   },
   en: {
     eyebrow: 'What matters in your engagement',
@@ -44,40 +42,25 @@ const copy = {
     reasonBody: 'With DeliR, discuss the process alongside its sources, open questions and AS-IS / TO-BE comparison. This is the workflow shown in the demo.',
     secondary: 'Watch the complete workflow',
     sources: 'Criteria and product documentation',
-    method: 'This matrix reports ratings supplied by the DeliR team for the consulting workflow defined in each row. Videos illustrate the DeliR workflow; official links provide product context rather than independent verification of every rating. ChatGPT/Claude: standard chat, projects and artifacts. Custom code, extensions and integrations are outside scope. No concerns this workflow, not every possible configuration. Plans and availability may vary.',
-    newTab: ' (opens in a new tab)',
   },
 } as const;
 
 export default function Comparison() {
   const { language } = useLanguage();
-  const sourcesRef = useRef<HTMLDetailsElement>(null);
-  const [sourcesOpen, setSourcesOpen] = useState(false);
   const fragment = useFragment();
-  const [dismissedFragment, setDismissedFragment] = useState<string | null>(null);
-  const showSources = sourcesOpen || (fragment.startsWith('comparison-evidence-') && fragment !== dismissedFragment);
   const t = copy[language];
-  function showEvidence(rowId: string) {
-    setDismissedFragment(null);
-    setSourcesOpen(true);
-    if (sourcesRef.current) sourcesRef.current.open = true;
-    requestAnimationFrame(() => {
-      const target = document.getElementById(`comparison-evidence-${rowId}`);
-      target?.focus({ preventScroll: true });
-      target?.scrollIntoView({ block: 'start', behavior: 'instant' });
-    });
-  }
+  const sourcesPath = `/comparison-sources${language === 'en' ? '?lang=en' : ''}`;
+  if (fragment.startsWith('comparison-evidence-')) return <Navigate replace to={`${sourcesPath}#${fragment}`} />;
   function statusLink(row: ComparisonRow, product?: typeof comparisonProducts[number]) {
     const status = product ? row.cells[product.id].status : 'yes';
     const name = product?.name ?? 'DeliR';
     const Icon = status === 'yes' ? Check : X;
-    return <a href={product ? `#comparison-evidence-${row.id}` : row.evidence}
-      onClick={product ? () => showEvidence(row.id) : undefined}
-      aria-label={`${name} · ${row.label[language]} · ${t[status]} · ${product ? t.cellSources : t.demoLabel}`}
-      className={`comparison-rating ${product ? (status === 'yes' ? 'comparison-rating--yes' : 'comparison-rating--no') : 'comparison-rating--delir'}`}>
-      <Icon aria-hidden="true" />
-      <span className="sr-only">{t[status]}</span>
-    </a>;
+    const label = `${name} · ${row.label[language]} · ${t[status]} · ${product ? t.cellSources : t.demoLabel}`;
+    const className = `comparison-rating ${product ? (status === 'yes' ? 'comparison-rating--yes' : 'comparison-rating--no') : 'comparison-rating--delir'}`;
+    const content = <><Icon aria-hidden="true" /><span className="sr-only">{t[status]}</span></>;
+    return product
+      ? <Link to={`${sourcesPath}#comparison-evidence-${row.id}`} aria-label={label} className={className}>{content}</Link>
+      : <a href={row.evidence} aria-label={label} className={className}>{content}</a>;
   }
 
   return (
@@ -115,17 +98,7 @@ export default function Comparison() {
           <div className="flex shrink-0 flex-col items-start gap-4"><a href={projectContactHref(language)} className="btn-primary whitespace-normal">{pilotCtaLabel[language]}<ArrowUpRight aria-hidden="true" className="size-4 shrink-0" /></a><a href="#caso" className="btn-text">{t.secondary}<ArrowRight aria-hidden="true" className="size-4" /></a></div>
         </div>
 
-        <details ref={sourcesRef} open={showSources} className="group mt-5 border-t border-slate-200">
-          <summary onClick={event => {
-            event.preventDefault();
-            setSourcesOpen(!showSources);
-            setDismissedFragment(showSources ? fragment : null);
-          }} className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 py-3 text-xs font-medium text-slate-600 hover:text-brand-blue [&::-webkit-details-marker]:hidden">{t.sources}<Plus aria-hidden="true" className="size-4 shrink-0 transition-transform group-open:rotate-45" /></summary>
-          {showSources ? <>
-          <p className="max-w-4xl text-xs leading-6 text-slate-600">{t.method}</p>
-          <div className="my-5 space-y-6">{comparisonRows.map(row => <div id={`comparison-evidence-${row.id}`} key={row.id} tabIndex={-1} className="scroll-mt-24 rounded-xl border border-slate-200 bg-white p-4 sm:p-5"><h3 className="text-sm font-semibold text-slate-800">{row.label[language]}</h3><p className="mt-2 max-w-4xl text-xs leading-6 text-slate-600">{row.definition[language]}</p><a href={row.evidence} className="mt-1 inline-flex min-h-11 items-center text-xs font-medium text-brand-blue underline underline-offset-4">DeliR · {t.demo}</a><dl className="mt-2 grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">{comparisonProducts.map(p => <div key={p.id}><dt className="text-xs font-semibold text-slate-800">{p.name} · {t[row.cells[p.id].status]}</dt><dd className="mt-1 text-xs leading-6">{row.cells[p.id].sources.map((id, index) => { const source = comparisonSources[id]; return <span key={id}>{index > 0 ? ' · ' : ''}<a href={source.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center text-brand-blue underline underline-offset-4">{source.label}<span className="sr-only">{t.newTab}</span></a></span>; })}</dd></div>)}</dl></div>)}</div>
-          </> : null}
-        </details>
+        <Link to={sourcesPath} className="mt-5 inline-flex min-h-11 items-center text-sm font-medium text-brand-blue underline underline-offset-4">{t.sources}<ArrowUpRight aria-hidden="true" className="ml-2 size-4" /></Link>
       </div>
     </section>
   );

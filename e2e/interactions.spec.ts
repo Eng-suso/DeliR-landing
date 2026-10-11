@@ -95,14 +95,15 @@ test('mobile menu closes with Escape and restores focus', async ({ page, isMobil
   await page.keyboard.press('Escape'); await expect(toggle).toHaveAttribute('aria-expanded', 'false'); await expect(toggle).toBeFocused();
 });
 
-test('shared evidence links open the source panel directly', async ({ page }) => {
+test('shared evidence links lead to the dedicated sources page', async ({ page }) => {
   await page.goto('/#comparison-evidence-review');
-  await page.locator('#comparison-evidence-review').waitFor();
+  await expect(page).toHaveURL(/\/comparison-sources#comparison-evidence-review$/);
   await expect(page.locator('#comparison-evidence-review')).toBeInViewport();
-  await expect(page.locator('#comparison-evidence-review').locator('xpath=ancestor::details')).toHaveAttribute('open', '');
-  await page.locator('#confronto summary').click();
-  await expect(page.locator('#confronto details')).not.toHaveAttribute('open', '');
-  await page.locator('#confronto a[href="#comparison-evidence-review"]:visible').first().click();
+  await expect(page.locator('#comparison-evidence-review')).toBeFocused();
+  await page.getByRole('link', { name: /Torna al confronto/ }).click();
+  await expect(page.locator('#confronto details')).toHaveCount(0);
+  await page.locator('#confronto a[href="/comparison-sources#comparison-evidence-review"]').first().click();
+  await expect(page).toHaveURL(/\/comparison-sources#comparison-evidence-review$/);
   await expect(page.locator('#comparison-evidence-review')).toBeInViewport();
 });
 

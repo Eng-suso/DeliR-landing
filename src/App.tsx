@@ -14,6 +14,7 @@ const WaitlistPage = lazy(() => import('./pages/WaitlistPage'));
 const PilotPage = lazy(() => import('./pages/PilotPage'));
 const PilotOverviewPage = lazy(() => import('./pages/PilotOverviewPage'));
 const SecurityDataPage = lazy(() => import('./pages/SecurityDataPage'));
+const ComparisonSourcesPage = lazy(() => import('./pages/ComparisonSourcesPage'));
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const EnterpriseReadinessPage = import.meta.env.DEV ? lazy(() => import('./pages/EnterpriseReadinessPage')) : null;
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
@@ -32,6 +33,7 @@ export default function App() {
             <Route path="/pilot" element={pilotCaptureReady ? <PilotPage captureEnabled /> : <PilotOverviewPage />} />
             <Route path="/waitlist" element={waitlistCaptureReady ? <WaitlistPage /> : <LeadCapturePendingPage kind="waitlist" />} />
             <Route path="/security-data" element={<SecurityDataPage />} />
+            <Route path="/comparison-sources" element={<ComparisonSourcesPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             {EnterpriseReadinessPage ? <Route path="/enterprise-readiness" element={<EnterpriseReadinessPage />} /> : null}
             {LandingV2Page ? <Route path="/v2" element={<LandingV2Page />} /> : null}
