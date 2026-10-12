@@ -1,8 +1,8 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import '../styles/flow-backdrop.css';
 
-// Diagonal ribbons from e6f11a1: move the containing layer instead of morphing
-// SVG paths every frame. Off-screen and hidden surfaces pause their animation.
+// The landing uses diffuse clouds; local dark surfaces retain their ribbons.
+// Move the containing layer, and pause off-screen, hidden or reduced-motion scenes.
 export default function FlowBackdrop({ dark = false, fixed = false }: { dark?: boolean; fixed?: boolean }) {
   const id = useId();
   const ref = useRef<HTMLDivElement>(null);
@@ -27,7 +27,7 @@ export default function FlowBackdrop({ dark = false, fixed = false }: { dark?: b
   const color = dark ? '#ffffff' : '#004580';
   return <div ref={ref} data-testid={fixed ? 'page-background' : 'dark-background'} data-running={running} aria-hidden="true" className={`flow-background ${fixed ? 'flow-background-fixed' : 'flow-background-local'} ${dark ? 'flow-background-dark' : ''}`}>
     <div className="flow-motion">
-      <svg focusable="false" viewBox="0 0 100 100" preserveAspectRatio="none">
+      {fixed ? <div className="cloud-field" /> : <svg focusable="false" viewBox="0 0 100 100" preserveAspectRatio="none">
         <defs>
           <linearGradient id={`${id}-1`} x1="100%" y1="0%" x2="0%" y2="100%"><stop stopColor={color} stopOpacity="0.06" /><stop offset="100%" stopColor={color} stopOpacity="0" /></linearGradient>
           <linearGradient id={`${id}-2`} x1="80%" y1="0%" x2="20%" y2="100%"><stop stopColor={color} stopOpacity="0.045" /><stop offset="100%" stopColor={color} stopOpacity="0" /></linearGradient>
@@ -42,7 +42,7 @@ export default function FlowBackdrop({ dark = false, fixed = false }: { dark?: b
           <path strokeWidth="0.12" opacity="0.13" d="M 110 -10 C 70 30, 50 80, 10 120" />
           <path strokeWidth="0.075" opacity="0.15" d="M 60 -20 C 60 30, 10 60, -20 80" />
         </g>
-      </svg>
+      </svg>}
     </div>
   </div>;
 }
