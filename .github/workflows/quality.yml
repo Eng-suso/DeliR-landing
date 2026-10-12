@@ -11,13 +11,6 @@ permissions:
 jobs:
   quality:
     runs-on: ubuntu-latest
-    # Public release settings. Intake remains closed until the live UI write is verified.
-    env:
-      VITE_PRIVACY_NOTICE_READY: 'true'
-      VITE_PRIVACY_NOTICE_URL: /privacy
-      VITE_PILOT_ENDPOINT: /api/pilot.php
-      VITE_LEAD_CAPTURE_READY: 'false'
-      VITE_ANALYTICS_READY: 'false'
     # Concurrency is per job: a production run waiting for approval must not block checks on newer commits.
     concurrency:
       group: quality-${{ github.ref }}
@@ -61,7 +54,15 @@ jobs:
           php -l server/ionos/config.example.php
           php -l server/ionos/maintenance.php
           php server/ionos/tests.php --require-db
-      - run: npm run build
+      - name: Build IONOS release with the final notice and closed intake
+        run: npm run build
+        # Build settings must not override isolated unit-test fixtures.
+        env:
+          VITE_PRIVACY_NOTICE_READY: 'true'
+          VITE_PRIVACY_NOTICE_URL: /privacy
+          VITE_PILOT_ENDPOINT: /api/pilot.php
+          VITE_LEAD_CAPTURE_READY: 'false'
+          VITE_ANALYTICS_READY: 'false'
       - name: Keep the tested build for deployment
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
