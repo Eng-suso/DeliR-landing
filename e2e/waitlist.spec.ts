@@ -1,14 +1,23 @@
 import { expect, test } from '@playwright/test';
 
-test('pilot previews a fillable form without transmitting data before activation', async ({ page }) => {
+test('pilot validates before sending and confirms only accepted submissions', async ({ page }) => {
   const requests: string[] = [];
+  let attempts = 0;
+  await page.route('**/api/pilot.php', async route => {
+    attempts++;
+    expect(route.request().method()).toBe('POST');
+    expect(route.request().postDataJSON()).toMatchObject({ email: 'demo@example.test', source: 'delir-pilot-application' });
+    await route.fulfill({ status: attempts === 1 ? 503 : 201, contentType: 'application/json', body: attempts === 1 ? '{"error":"unavailable"}' : '{"accepted":true}' });
+  });
   page.on('request', request => { if (request.method() === 'POST') requests.push(request.url()); });
   await page.goto('/');
   await page.locator('.premium-hero').getByRole('link', { name: 'Testa DeliR sul tuo progetto' }).click();
   await expect(page).toHaveURL(/\/pilot#application$/);
   await expect(page.locator('#application')).toBeInViewport();
   await expect(page.locator('#application')).toBeFocused();
-  await page.getByRole('button', { name: 'Verifica i dati' }).click();
+  const submit = page.locator('form button[type="submit"]');
+  const preview = await page.getByText('Anteprima del modulo', { exact: true }).isVisible();
+  await submit.click();
   await expect(page.getByLabel('Nome e cognome')).toBeFocused();
   await expect(page.getByText('Inserisci il tuo nome.', { exact: true })).toBeVisible();
   await page.getByLabel('Nome e cognome').fill('Demo User');
@@ -16,10 +25,19 @@ test('pilot previews a fillable form without transmitting data before activation
   await page.getByLabel('Tipo di attività').selectOption('independent');
   await page.getByLabel('Tempistica dell’incarico').selectOption('active');
   await page.getByLabel('Processo o problema da analizzare').fill('Review a fictional procurement approval process.');
-  await page.getByRole('button', { name: 'Verifica i dati' }).click();
-  await expect(page.getByText('I dati sono pronti, ma l’invio non è ancora disponibile. La richiesta non è stata trasmessa.')).toBeVisible();
-  await expect(page.getByText('Candidatura ricevuta.', { exact: true })).toHaveCount(0);
-  expect(requests).toEqual([]);
+  await submit.click();
+  if (preview) {
+    await expect(page.getByText('I dati sono pronti, ma l’invio non è ancora disponibile. La richiesta non è stata trasmessa.')).toBeVisible();
+    expect(requests).toEqual([]);
+  } else {
+    await expect(page.getByText('Non siamo riusciti a inviare la candidatura. Riprova.', { exact: true })).toBeVisible();
+    await expect(page.getByLabel('Nome e cognome')).toHaveValue('Demo User');
+    await expect(page.getByText('Candidatura ricevuta.', { exact: true })).toHaveCount(0);
+    await submit.click();
+    await expect(page.getByRole('heading', { name: 'Candidatura ricevuta.' })).toBeVisible();
+    expect(attempts).toBe(2);
+    expect(requests).toHaveLength(2);
+  }
 });
 
 test('waitlist does not collect data before privacy and delivery are ready', async ({ page }) => {

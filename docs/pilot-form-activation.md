@@ -1,6 +1,6 @@
 # Pilot intake — stato e attivazione
 
-**Stato corrente, 12 ottobre 2026:** informativa IT/EN predisposta per pubblicazione nell’assetto solo IONOS; il titolare ha confermato l’inoltro Gmail disattivato. La CI imposta il gate privacy pronto, ma mantiene invio e GA4 chiusi. Rimane da eseguire l’attivazione controllata e la prova completa browser → database sul dominio reale. Le note successive documentano anche versioni storiche; per privacy attuale vedere `pilot-privacy-release-review.md`.
+**Stato corrente, 12 ottobre 2026:** informativa IT/EN nell’assetto solo IONOS, inoltro Gmail disattivato secondo conferma del titolare. Su richiesta del titolare, la build abilita l’invio pilot a /api/pilot.php; GA4 e waitlist restano chiusi. Rimangono caricamento, enabled=true nel backend privato e prova completa browser → database sul dominio reale. Le note successive documentano anche versioni storiche; procedura attuale in `pilot-and-consent-activation-2026-10-12.md`.
 
 ## Percorso pronto
 

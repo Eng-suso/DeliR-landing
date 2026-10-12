@@ -13,7 +13,7 @@ test('critical production routes render', async ({ page }, testInfo) => {
   await page.goto('/pilot');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await expect(page.getByRole('form')).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Verifica i dati' })).toBeEnabled();
+  await expect(page.locator('form button[type="submit"]')).toBeEnabled();
   await page.goto('/security-data');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Sicurezza e dati');
   await page.reload();

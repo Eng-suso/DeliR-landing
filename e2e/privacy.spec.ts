@@ -17,6 +17,11 @@ test('IONOS privacy notice and preferences are accessible with analytics closed'
   await expect(dialog).toBeVisible();
   await expect(dialog.getByRole('button', { name: 'Accetta analytics' })).toBeDisabled();
   await expect(dialog.getByRole('button', { name: 'Rifiuta analytics' })).toBeFocused();
+  await dialog.getByRole('button', { name: 'Personalizza' }).click();
+  await expect(dialog.locator('#consent-necessary')).toBeChecked();
+  await expect(dialog.locator('#consent-necessary')).toBeDisabled();
+  await expect(dialog.locator('#consent-analytics')).not.toBeChecked();
+  await expect(dialog.locator('#consent-analytics')).toBeDisabled();
   expect((await new AxeBuilder({ page }).include('dialog').withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze()).violations).toEqual([]);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.keyboard.press('Escape');

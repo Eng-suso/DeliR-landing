@@ -1,5 +1,7 @@
 # Privacy e pilot — assetto IONOS del 12 ottobre 2026
 
+**Aggiornamento successivo:** il titolare ha richiesto di attivare il modulo. La build corrente imposta intake=true e /api/pilot.php; GA4 rimane false. Le precedenti indicazioni di build chiusa sono superate per il pilot. Sul server resta da abilitare il file privato e verificare la scrittura; vedere `pilot-and-consent-activation-2026-10-12.md`.
+
 Questa versione sostituisce la valutazione del precedente inoltro a Gmail. Il titolare ha scelto la gestione solo IONOS e confermato nel pannello la disattivazione dell’inoltro automatico. È evidenza riferita dal titolare, non accesso diretto dell’agente alla configurazione.
 
 ## Assetto definitivo dell’informativa
