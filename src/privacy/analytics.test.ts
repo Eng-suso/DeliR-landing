@@ -44,10 +44,11 @@ it('loads once, keeps ads denied, removes URL data and counts one page view per 
   trackPage('/security-data', 'it', true);
   trackPage('/comparison-sources', 'en', true);
   trackPage('/unknown/private-value', 'it', true);
-  const queue = Reflect.get(window, 'dataLayer') as unknown[][];
-  expect(queue[0]).toEqual(['consent', 'default', expect.objectContaining({ analytics_storage: 'denied', ad_user_data: 'denied' })]);
-  expect(queue[1]).toEqual(['consent', 'update', expect.objectContaining({ analytics_storage: 'granted', ad_storage: 'denied', ad_personalization: 'denied' })]);
-  expect(queue[3]).toEqual(['config', 'G-TEST', expect.objectContaining({ send_page_view: false, cookie_update: false, allow_google_signals: false, page_referrer: '' })]);
+  const queue = Reflect.get(window, 'dataLayer') as ArrayLike<unknown>[];
+  expect(queue.every(command => Object.prototype.toString.call(command) === '[object Arguments]')).toBe(true);
+  expect(Array.from(queue[0])).toEqual(['consent', 'default', expect.objectContaining({ analytics_storage: 'denied', ad_user_data: 'denied' })]);
+  expect(Array.from(queue[1])).toEqual(['consent', 'update', expect.objectContaining({ analytics_storage: 'granted', ad_storage: 'denied', ad_personalization: 'denied' })]);
+  expect(Array.from(queue[3])).toEqual(['config', 'G-TEST', expect.objectContaining({ send_page_view: false, cookie_update: false, allow_google_signals: false, page_referrer: '' })]);
   const events = queue.filter(item => item[0] === 'event');
   expect(events).toHaveLength(4);
   expect(events[1][2]).toMatchObject({ page_location: 'https://delir.it/pilot?lang=en', page_referrer: '' });
@@ -83,7 +84,7 @@ it('protects funnel events with consent and sends only allowlisted context', asy
   expect(trackPilotEvent('pilot_cta_clicked', 'en', 'hero')).toBe(true);
   expect(trackPilotEvent('generate_lead', 'it', 'private-free-text')).toBe(true);
   const events = (Reflect.get(window, 'dataLayer') as unknown[][]).filter(item => item[0] === 'event');
-  expect(events).toEqual([
+  expect(events.map(command => Array.from(command))).toEqual([
     ['event', 'pilot_cta_clicked', { send_to: 'G-TEST', language: 'en', form_name: 'pilot_application', section: 'hero', page_location: 'https://delir.it/?lang=en', page_referrer: '' }],
     ['event', 'generate_lead', { send_to: 'G-TEST', language: 'it', form_name: 'pilot_application', section: 'other', page_location: 'https://delir.it/pilot', page_referrer: '' }],
   ]);
