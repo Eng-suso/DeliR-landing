@@ -50,6 +50,7 @@ export default function Journey() {
   const { language } = useLanguage();
   const fragment = useFragment();
   const t = copy[language];
+  const activeIndex = Math.max(0, benefits.findIndex(benefit => fragment === benefit.id || benefit.clips.some(clip => fragment === `scene-${clip.id}`)));
 
   return (
     <section id="caso" className="premium-journey scroll-mt-24 border-y border-slate-200 bg-brand-light py-14 sm:py-20" aria-labelledby="journey-title">
@@ -61,15 +62,15 @@ export default function Journey() {
         <nav aria-label={t.nav} className="mt-8">
           <ol className="grid gap-2 min-[400px]:grid-cols-2 lg:grid-cols-5">
             {benefits.map((benefit, index) => {
-              const selected = fragment === benefit.id || benefit.clips.some(clip => fragment === `scene-${clip.id}`);
+              const selected = index === activeIndex;
               return <li key={benefit.id}><a href={`#${benefit.id}`} aria-current={selected ? 'location' : undefined} className={`product-index-link h-full ${selected ? '!border-brand-blue !bg-brand-blue !text-white' : ''}`}><span aria-hidden="true" className="font-mono text-xs">0{index + 1}</span><span>{t.modules[index].name}</span></a></li>;
             })}
           </ol>
         </nav>
-        <div className="mt-10 space-y-12 sm:mt-14 sm:space-y-16 lg:space-y-20">
+        <div className="mt-6 sm:mt-8">
           {benefits.map((benefit, index) => {
             const module = t.modules[index];
-            return <article id={benefit.id} aria-labelledby={`${benefit.id}-title`} data-product-module={module.name} data-product-benefit={index < 4 ? 'true' : undefined} key={benefit.id} className={`scroll-mt-24 ${index > 0 ? 'border-t border-slate-200 pt-10 sm:pt-14' : ''}`}>
+            return <article hidden={index !== activeIndex} id={benefit.id} aria-labelledby={`${benefit.id}-title`} data-product-module={module.name} data-product-benefit={index < 4 ? 'true' : undefined} key={benefit.id} className={`scroll-mt-24 `}>
               <div className="grid gap-7 lg:grid-cols-[0.37fr_0.63fr] lg:items-start lg:gap-9">
                 <div data-reveal className="journey-description min-w-0 lg:pt-6">
                   <span className="font-mono text-xs font-semibold uppercase tracking-wide text-brand-blue">0{index + 1} / {module.name}</span>
@@ -77,7 +78,7 @@ export default function Journey() {
                   <p className="mt-4 text-base leading-7 text-slate-600">{module.body}</p>
                   <div className="mt-6 border-l-2 border-brand-blue pl-4"><p className="text-xs font-semibold uppercase tracking-wide text-brand-blue">{t.result}</p><p className="mt-2 text-sm leading-6 text-slate-700">{module.output}</p></div>
                 </div>
-                <ClipExplorer clips={benefit.clips} name={module.name} initial={benefit.initial} />
+                {index === activeIndex ? <ClipExplorer clips={benefit.clips} name={module.name} initial={benefit.initial} /> : null}
               </div>
             </article>;
           })}

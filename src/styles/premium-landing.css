@@ -302,3 +302,34 @@
   .premium-faq [role='region'] { animation: none !important; }
   .landing-page [data-scroll-visual], .landing-page [data-reveal] { transform: none !important; }
 }
+
+/* A short introduction and a readable detail before the first mobile scroll. */
+@media (max-width: 639px) {
+  .landing-page .premium-hero { padding-top: 20px; padding-bottom: 24px; }
+  .premium-hero .hero-headline { font-size: clamp(1.6rem, 7.1vw, 2rem); line-height: 1.08; }
+  .premium-hero .product-film > p { min-height: 0; padding-top: 8px; font-size: 14px; line-height: 20px; }
+  .premium-journey .product-index-link { padding: 10px; min-height: 44px; }
+  .premium-journey .product-screen-stage { padding: 12px; }
+  .premium-journey .journey-description h3 { font-size: 24px; }
+  .product-film[data-clip="hero-loop"] > div:first-child { aspect-ratio: 4 / 3 !important; }
+  .product-film[data-clip="hero-loop"] > div:first-child > img,
+  .product-film[data-clip="hero-loop"] > div:first-child > video { position: absolute; width: 274.2857%; height: auto; max-width: none; left: -155.7143%; top: -49.5238%; }
+  .product-film[data-clip="evidenze-sul-processo"] > div:first-child { aspect-ratio: 380 / 650 !important; }
+  .product-film[data-clip="evidenze-sul-processo"] > div:first-child > img,
+  .product-film[data-clip="evidenze-sul-processo"] > div:first-child > video { position: absolute; width: 505.2632%; height: auto; max-width: none; left: -405.2632%; top: -16.9231%; }
+  .product-film[data-clip="lacuna-aperta"] > div:first-child { aspect-ratio: 900 / 500 !important; }
+  .product-film[data-clip="lacuna-aperta"] > div:first-child > img,
+  .product-film[data-clip="lacuna-aperta"] > div:first-child > video { position: absolute; width: 213.3333%; height: auto; max-width: none; left: -59.3333%; top: -52%; }
+  .product-film[data-clip="confronto"] > div:first-child { aspect-ratio: 480 / 500 !important; }
+  .product-film[data-clip="confronto"] > div:first-child > img,
+  .product-film[data-clip="confronto"] > div:first-child > video { position: absolute; width: 400%; height: auto; max-width: none; left: -298.3333%; top: -32%; }
+}
+
+@media (max-width: 639px) {
+  .product-film[data-clip="memoria"] > div:first-child { aspect-ratio: 880 / 465 !important; }
+  .product-film[data-clip="memoria"] > div:first-child > img,
+  .product-film[data-clip="memoria"] > div:first-child > video { position: absolute; width: 218.1818%; height: auto; max-width: none; left: -27.2727%; top: -52.6882%; }
+  .product-film[data-clip="review-to-be"] > div:first-child { aspect-ratio: 800 / 700 !important; }
+  .product-film[data-clip="review-to-be"] > div:first-child > img,
+  .product-film[data-clip="review-to-be"] > div:first-child > video { position: absolute; width: 240%; height: auto; max-width: none; left: -135%; top: -37.1429%; }
+}

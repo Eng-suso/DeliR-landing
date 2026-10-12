@@ -10,7 +10,7 @@ type ConnectionNavigator = Navigator & { connection?: { saveData?: boolean } };
 
 function ambientPlaybackAllowed() {
   if (typeof window === 'undefined') return false;
-  return window.matchMedia('(min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: no-preference)').matches
+  return window.matchMedia('(prefers-reduced-motion: no-preference)').matches
     && !(navigator as ConnectionNavigator).connection?.saveData;
 }
 
@@ -32,6 +32,8 @@ export default function ProductFilm({ clip, priority = false, minimal = false, n
   const [playbackTime, setPlaybackTime] = useState(0);
   const title = clip.title[language];
   const description = clip.description[language];
+  const mobileFocus = ['hero-loop', 'evidenze-sul-processo', 'lacuna-aperta', 'confronto', 'memoria', 'review-to-be'].includes(clip.id);
+  const posterSizes = `${mobileFocus ? '(max-width: 640px) 1920px, ' : ''}${priority ? heroPosterSizes : '(max-width: 640px) calc(100vw - 64px), (max-width: 1023px) calc(100vw - 96px), 640px'}`;
   const sentence = narration?.reduce((current, item) => item.start <= playbackTime ? item : current, narration[0]);
   // Frame a detail from the original recording; the dialog retains the full view.
   const mediaStyle = focusFrame ? {
@@ -43,11 +45,12 @@ export default function ProductFilm({ clip, priority = false, minimal = false, n
     : { play: 'Play', pause: 'Pause', expand: 'Open full video', close: 'Close video', silent: 'Silent video', error: 'Video unavailable. You can view the preview and description.' };
 
   useEffect(() => {
-    const media = window.matchMedia('(min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: no-preference)');
+    const media = window.matchMedia('(prefers-reduced-motion: no-preference)');
     const update = () => setAmbient(ambientPlaybackAllowed());
     const visibility = () => setPageActive(!document.hidden);
     media.addEventListener('change', update);
     document.addEventListener('visibilitychange', visibility);
+    visibility();
     return () => {
       media.removeEventListener('change', update);
       document.removeEventListener('visibilitychange', visibility);
@@ -66,7 +69,8 @@ export default function ProductFilm({ clip, priority = false, minimal = false, n
     return () => observer.disconnect();
   }, []);
 
-  // Mobile, reduced motion and Save-Data use a poster until the visitor opts in.
+  // Visible films autoplay on desktop and mobile; reduced motion and Save-Data
+  // retain a poster until the visitor opts in.
   // No video source exists outside the viewport, so off-screen clips are not fetched.
   const loadVideo = visible && (ambient || requested) && !failed;
   const shouldPlay = loadVideo && !paused && !dialogOpen && pageActive;
@@ -101,7 +105,7 @@ export default function ProductFilm({ clip, priority = false, minimal = false, n
   return (
     <figure id={priority ? 'hero-product-outcome' : `scene-${clip.id}`} className="product-film scroll-mt-24" data-clip={clip.id}>
       <div ref={frameRef} style={{ aspectRatio: focusFrame ? `${focusFrame.width} / ${focusFrame.height}` : `${clip.width} / ${clip.height}` }} className="relative isolate aspect-video overflow-hidden rounded-[14px] border border-slate-200 bg-white sm:rounded-[20px]">
-        <img src={clip.poster} srcSet={clip.posterSrcSet} sizes={focusFrame ? '(max-width: 640px) 1440px, 1920px' : priority ? heroPosterSizes : '(max-width: 640px) calc(100vw - 64px), (max-width: 1023px) calc(100vw - 96px), 640px'} alt={description} width={clip.width} height={clip.height} loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : undefined} decoding="async" style={mediaStyle} className={focusFrame ? 'absolute' : 'h-full w-full object-contain'} />
+        <img src={clip.poster} srcSet={clip.posterSrcSet} sizes={focusFrame ? '(max-width: 640px) 1440px, 1920px' : posterSizes} alt={description} width={clip.width} height={clip.height} loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : undefined} decoding="async" style={mediaStyle} className={focusFrame ? 'absolute' : 'h-full w-full object-contain'} />
         {loadVideo ? (
           <video ref={videoRef} aria-label={title} aria-describedby={`${id}-description`} autoPlay={shouldPlay} muted playsInline loop preload="none" poster={clip.poster}
             onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => { setFailed(true); setPlaying(false); }}
@@ -149,7 +153,7 @@ export default function ProductFilm({ clip, priority = false, minimal = false, n
           <h2 id={`${id}-dialog-title`} className="min-w-0 truncate text-base font-semibold text-brand-ink">{title}</h2>
           <button type="button" onClick={() => dialogRef.current?.close()} aria-label={text.close} className="film-control"><X aria-hidden="true" className="size-5" /></button>
         </div>
-        {dialogOpen ? <video aria-label={title} aria-describedby={`${id}-dialog-description`} controls muted playsInline preload="metadata" poster={clip.poster} className="mx-auto max-h-[calc(100dvh-210px)] w-full bg-slate-950">
+        {dialogOpen ? <video aria-label={title} aria-describedby={`${id}-dialog-description`} controls autoPlay muted playsInline preload="metadata" poster={clip.poster} className="mx-auto max-h-[calc(100dvh-210px)] w-full bg-slate-950">
           <source src={`/product-clips/${clip.id}.mp4`} type="video/mp4" />
           <source src={`/product-clips/${clip.id}.webm`} type="video/webm" />
           <track kind="captions" src={`/product-clips/${clip.id}.${language}.vtt`} srcLang={language} label={language === 'it' ? 'Descrizione italiana' : 'English description'} />

@@ -3,9 +3,13 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import { LanguageProvider } from '../i18n/LanguageContext';
 import PilotPage from './PilotPage';
+import { trackPilotEvent } from '../privacy/analytics';
+
+vi.mock('../privacy/analytics', () => ({ trackPilotEvent: vi.fn(() => true) }));
 
 vi.mock('../components/FragmentNavigation', () => ({ default: () => null }));
 beforeEach(() => {
+  vi.clearAllMocks();
   localStorage.clear();
   vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: true, addListener: vi.fn(), removeListener: vi.fn(), addEventListener: vi.fn(), removeEventListener: vi.fn() })));
 });
@@ -49,4 +53,21 @@ describe('pilot submission states', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Richiedi la valutazione del progetto' }));
     expect(await screen.findByRole('heading', { name: 'Candidatura ricevuta.' })).toBeVisible();
   });
+});
+
+it('tracks one form start and counts a lead only after server acceptance on retry', async () => {
+  vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(new Response(null, { status: 503 }))
+    .mockResolvedValueOnce(Response.json({ accepted: true }, { status: 201 }));
+  showForm(true);
+  fireEvent.click(screen.getByRole('button', { name: 'Richiedi la valutazione del progetto' }));
+  expect(trackPilotEvent).not.toHaveBeenCalled();
+  fillForm();
+  fireEvent.click(screen.getByRole('button', { name: 'Richiedi la valutazione del progetto' }));
+  await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('Riprova.'));
+  expect(vi.mocked(trackPilotEvent).mock.calls.map(([event]) => event)).toEqual(['pilot_form_started', 'pilot_submit_attempt', 'pilot_submit_failed']);
+  expect(screen.getByLabelText('Email di lavoro')).toHaveValue('demo@example.test');
+  fireEvent.click(screen.getByRole('button', { name: 'Richiedi la valutazione del progetto' }));
+  expect(await screen.findByRole('heading', { name: 'Candidatura ricevuta.' })).toBeVisible();
+  expect(vi.mocked(trackPilotEvent).mock.calls.map(([event]) => event)).toEqual(['pilot_form_started', 'pilot_submit_attempt', 'pilot_submit_failed', 'pilot_submit_attempt', 'generate_lead']);
+  expect(vi.mocked(trackPilotEvent).mock.calls.every(call => call.length === 2 && call[1] === 'it')).toBe(true);
 });

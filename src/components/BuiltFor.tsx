@@ -7,8 +7,8 @@ const copy = {
     eyebrow: 'Dati e AI', title: 'Il contesto del tuo cliente merita regole chiare.',
     intro: 'DeliR lavora con documenti, interviste e conoscenza interna dell’azienda. Per questo la gestione dei dati non è una nota a fondo pagina.',
     items: [
-      ['Clienti separati', 'Ogni incarico vive in un workspace distinto, con autenticazione e controlli di accesso dedicati.'],
-      ['AI con contesto controllato', 'I dati vengono utilizzati per comprendere i processi e supportare le funzionalità AI del progetto.'],
+      ['Clienti separati', 'La separazione degli incarichi è un principio progettuale. Isolamento, autenticazione e accessi si verificano nella configurazione del pilot prima dei dati reali.'],
+      ['AI con contesto controllato', 'Prima del pilot concordiamo quali fonti inviare ai provider AI e per quali funzioni, verificandone utilizzo e conservazione.'],
       ['Regole chiare prima del pilot', 'Prima di utilizzare dati reali definiamo hosting, conservazione, cancellazione, provider AI e accessi applicabili al progetto.'],
     ],
     promise: 'Non ti chiediamo di fidarti di una promessa generica. Ti diciamo come vengono gestiti i dati prima che tu li carichi.',
@@ -18,8 +18,8 @@ const copy = {
     eyebrow: 'Data and AI', title: 'Your client’s context deserves clear rules.',
     intro: 'DeliR works with documents, interviews and internal company knowledge. That makes data handling more than a footnote.',
     items: [
-      ['Separate client workspaces', 'Each engagement lives in a separate workspace, with authentication and dedicated access controls.'],
-      ['AI with controlled context', 'Data is used to understand processes and support the project’s AI features.'],
+      ['Separate client workspaces', 'Separate engagements are a design principle. Isolation, authentication and access are verified in the pilot configuration before using real data.'],
+      ['AI with controlled context', 'Before the pilot, we agree which sources are sent to AI providers and for which features, reviewing their use and retention.'],
       ['Clear rules before the pilot', 'Before using real data, we define hosting, retention, deletion, AI providers and project access.'],
     ],
     promise: 'We do not ask you to trust a generic promise. We explain how your data will be handled before you upload it.',

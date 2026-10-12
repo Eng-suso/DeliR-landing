@@ -75,3 +75,19 @@ it('withdrawal disables GA, clears its cookies and queue, and preserves technica
   expect(localStorage.getItem('delir-language')).toBe('en');
   expect(stopAnalytics()).toBe(false);
 });
+
+it('protects funnel events with consent and sends only allowlisted context', async () => {
+  const { startAnalytics, trackPilotEvent } = await import('./analytics');
+  expect(trackPilotEvent('pilot_form_started', 'it')).toBe(false);
+  saveConsent(true); startAnalytics(true);
+  expect(trackPilotEvent('pilot_cta_clicked', 'en', 'hero')).toBe(true);
+  expect(trackPilotEvent('generate_lead', 'it', 'private-free-text')).toBe(true);
+  const events = (Reflect.get(window, 'dataLayer') as unknown[][]).filter(item => item[0] === 'event');
+  expect(events).toEqual([
+    ['event', 'pilot_cta_clicked', { send_to: 'G-TEST', language: 'en', form_name: 'pilot_application', section: 'hero', page_location: 'https://delir.it/?lang=en', page_referrer: '' }],
+    ['event', 'generate_lead', { send_to: 'G-TEST', language: 'it', form_name: 'pilot_application', section: 'other', page_location: 'https://delir.it/pilot', page_referrer: '' }],
+  ]);
+  saveConsent(false);
+  expect(trackPilotEvent('generate_lead', 'it')).toBe(false);
+  expect(events).toHaveLength(2);
+});

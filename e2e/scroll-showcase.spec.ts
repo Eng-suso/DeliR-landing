@@ -12,6 +12,7 @@ test('landing remains usable from narrow phones through desktop', async ({ page 
   ] as const) {
     await page.setViewportSize({ width, height });
     await page.goto('/');
+  await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Vedi il prodotto' })).toBeVisible();
 
@@ -33,11 +34,12 @@ test('benefits are readable while scrolling and navigation reaches their real pr
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/');
+  await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
   await expect.poll(() => page.evaluate(() => document.documentElement.classList.contains('lenis'))).toBe(true);
 
   const labels = ['Evidenze', 'Lacune', 'Contesto', 'Decisioni', 'Scenari'];
   await expect(page.locator('[data-product-benefit="true"]')).toHaveCount(4);
-  await expect(page.locator('[data-product-module][hidden]')).toHaveCount(0);
+  await expect(page.locator('[data-product-module]:not([hidden])')).toHaveCount(1);
   let previousImage = '';
   for (let index = 0; index < labels.length; index += 1) {
     const chapter = page.locator('[data-product-module]').nth(index);
