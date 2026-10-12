@@ -2,7 +2,7 @@ import { analyticsAvailable, measurementId, readConsent } from './settings';
 
 declare global {
   interface Window {
-    dataLayer?: unknown[][];
+    dataLayer?: ArrayLike<unknown>[];
     gtag?: (...args: unknown[]) => void;
     [key: `ga-disable-${string}`]: boolean | undefined;
   }
@@ -18,7 +18,10 @@ export function startAnalytics(consented: boolean) {
   const target = analyticsWindow();
   target[`ga-disable-${measurementId}`] = false;
   target.dataLayer = [];
-  target.gtag = (...args) => { target.dataLayer?.push(args); };
+  // gtag.js recognises Arguments commands; plain arrays are ignored by its
+  // real consumer even though a queue-only test can inspect their contents.
+  // eslint-disable-next-line prefer-rest-params -- Required by the Google tag command protocol.
+  target.gtag = function gtag() { target.dataLayer?.push(arguments); };
   target.gtag('consent', 'default', denied);
   target.gtag('consent', 'update', { ...denied, analytics_storage: 'granted' });
   target.gtag('js', new Date());

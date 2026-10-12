@@ -56,7 +56,12 @@ test('Google loads only after acceptance and stops on withdrawal', async ({ page
   await page.getByRole('button', { name: 'Accetta', exact: true }).click();
   await expect(page.locator('#delir-ga4')).toHaveCount(1);
   await expect.poll(() => requests.length).toBe(1);
-  const queue = await page.evaluate(() => (window as Window & { dataLayer: unknown[][] }).dataLayer);
+  const wire = await page.evaluate(() => {
+    const commands = window.dataLayer ?? [];
+    return { types: commands.map(command => Object.prototype.toString.call(command)), queue: commands.map(command => Array.from(command)) };
+  });
+  expect(wire.types.every(type => type === '[object Arguments]')).toBe(true);
+  const queue = wire.queue;
   expect(JSON.stringify(queue)).not.toMatch(/never-send|private-fragment/);
   expect(queue.filter(row => row[0] === 'event' && row[1] === 'page_view')).toHaveLength(1);
   await page.getByRole('button', { name: 'Preferenze cookie' }).first().click();
