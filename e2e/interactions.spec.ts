@@ -109,7 +109,8 @@ test('shared evidence links lead to the dedicated sources page', async ({ page }
   await expect(page.locator('#comparison-evidence-review')).toBeInViewport();
   await expect(page.locator('#comparison-evidence-review')).toBeFocused();
   await page.getByRole('link', { name: /Torna al confronto/ }).click();
-  await expect(page.locator('#confronto details')).toHaveCount(0);
+  await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
+  await expect(page.locator('#confronto details')).toHaveCount(1);
   await page.locator('#confronto a[href="/comparison-sources#comparison-evidence-review"]').first().click();
   await expect(page).toHaveURL(/\/comparison-sources#comparison-evidence-review$/);
   await expect(page.locator('#comparison-evidence-review')).toBeInViewport();
