@@ -1,7 +1,7 @@
-import { ArrowDown, ArrowRight } from 'lucide-react';
+import { ArrowDown, ArrowRight, Check } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { productClips } from '../lib/productClips';
-import { pilotCtaLabel, pilotApplicationHref } from '../lib/publicOffer';
+import { pilotCtaLabel, pilotRiskReversals, pilotApplicationHref } from '../lib/publicOffer';
 import ProductFilm from './ProductFilm';
 
 const copy = {
@@ -45,9 +45,12 @@ export default function Hero() {
         <ProductFilm key={language} clip={productClips.hero} priority minimal narration={narration[language]} />
       </div>
       <p className="hero-description max-w-[36rem] text-pretty text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">{t.body}</p>
-      <div className="hero-actions flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
+      <div className="hero-actions">
+        <div className="flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
         <a href={pilotApplicationHref(language)} className="btn-primary whitespace-normal rounded-full px-7">{pilotCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4" /></a>
         <a href="#caso" className="btn-text min-h-11 justify-center text-brand-blue">{t.secondary}<ArrowDown aria-hidden="true" className="size-4" /></a>
+        </div>
+        <ul aria-label={language === 'it' ? 'Condizioni del pilot' : 'Pilot terms'} className="mt-5 grid gap-2">{pilotRiskReversals[language].map(item => <li key={item} className="inline-flex items-start gap-1.5 text-xs leading-5 text-slate-600"><Check aria-hidden="true" className="mt-0.5 size-3.5 shrink-0 text-brand-blue" />{item}</li>)}</ul>
       </div>
     </div>
   </section>;
