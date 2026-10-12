@@ -8,6 +8,10 @@
   --studio-aura: rgb(36 139 223 / 18%);
 }
 .landing-page { background: var(--studio-paper); }
+.landing-page #pilot-summary, .landing-page #process-context {
+  background: transparent;
+  border-color: transparent;
+}
 .landing-page > .flow-background-fixed {
   position: absolute;
   inset: 0 0 auto;
@@ -309,7 +313,6 @@
 .landing-page footer { background: var(--studio-deep-blue); border-color: rgb(255 255 255 / 10%); }
 
 @media (min-width: 1024px) {
-  .premium-method, .premium-final { margin-inline: 16px; border-radius: 36px; }
   .premium-journey .journey-description { position: sticky; top: 104px; align-self: start; }
 }
 @media (hover: hover) and (pointer: fine) {
