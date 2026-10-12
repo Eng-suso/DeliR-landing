@@ -84,7 +84,7 @@ export function trackPage(pathname: string, language: 'it' | 'en', consented: bo
 
 export type PilotEvent = 'pilot_cta_clicked' | 'pilot_form_started' | 'pilot_submit_attempt' | 'pilot_submit_failed' | 'generate_lead';
 const pilotEvents: readonly string[] = ['pilot_cta_clicked', 'pilot_form_started', 'pilot_submit_attempt', 'pilot_submit_failed', 'generate_lead'];
-const pilotSections: readonly string[] = ['hero', 'pilot-summary', 'caso', 'confronto', 'fiducia', 'pilot', 'final-cta', 'application', 'other'];
+const pilotSections: readonly string[] = ['hero', 'pilot-summary', 'caso', 'confronto', 'fiducia', 'pilot', 'early-access', 'navigation', 'application', 'other'];
 
 // Deliberately excludes fields, error messages, identifiers and arbitrary URLs.
 export function trackPilotEvent(event: PilotEvent, language: 'it' | 'en', section = 'application'): boolean {

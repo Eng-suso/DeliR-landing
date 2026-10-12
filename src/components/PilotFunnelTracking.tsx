@@ -11,7 +11,7 @@ export default function PilotFunnelTracking() {
       if (!(anchor instanceof HTMLAnchorElement)) return;
       const target = new URL(anchor.href);
       if (target.origin !== location.origin || target.pathname !== '/pilot') return;
-      trackPilotEvent('pilot_cta_clicked', language, anchor.closest('section')?.id || 'other');
+      trackPilotEvent('pilot_cta_clicked', language, anchor.closest('section')?.id || (anchor.closest('header') ? 'navigation' : 'other'));
     };
     document.addEventListener('click', onClick);
     return () => document.removeEventListener('click', onClick);
