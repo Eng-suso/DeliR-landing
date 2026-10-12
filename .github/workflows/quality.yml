@@ -62,7 +62,8 @@ jobs:
           VITE_PRIVACY_NOTICE_URL: /privacy
           VITE_PILOT_ENDPOINT: /api/pilot.php
           VITE_LEAD_CAPTURE_READY: 'true'
-          VITE_ANALYTICS_READY: 'false'
+          VITE_ANALYTICS_READY: 'true'
+          VITE_GA_MEASUREMENT_ID: G-6D2FN0HCDS
       - name: Keep the tested build for deployment
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
