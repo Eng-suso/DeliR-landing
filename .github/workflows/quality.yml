@@ -11,6 +11,13 @@ permissions:
 jobs:
   quality:
     runs-on: ubuntu-latest
+    # Public release settings. Intake remains closed until the live UI write is verified.
+    env:
+      VITE_PRIVACY_NOTICE_READY: 'true'
+      VITE_PRIVACY_NOTICE_URL: /privacy
+      VITE_PILOT_ENDPOINT: /api/pilot.php
+      VITE_LEAD_CAPTURE_READY: 'false'
+      VITE_ANALYTICS_READY: 'false'
     # Concurrency is per job: a production run waiting for approval must not block checks on newer commits.
     concurrency:
       group: quality-${{ github.ref }}

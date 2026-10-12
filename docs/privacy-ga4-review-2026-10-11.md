@@ -1,5 +1,7 @@
 # Privacy, consenso e GA4 — DeliR
 
+**Aggiornamento 12 ottobre 2026:** questa revisione documenta la preparazione storica. L’assetto corrente è solo IONOS, con inoltro Gmail disattivato secondo conferma del titolare e informativa IT/EN senza etichetta di bozza. GA4 rimane disattivato e richiede una revisione separata prima dell’attivazione. Il riferimento operativo attuale è `pilot-privacy-release-review.md`.
+
 ## Stato e perimetro
 
 Revisione dell’11 ottobre 2026. Il titolare è la persona fisica già indicata nel footer, confermata dall’utente; il contatto pubblico esistente è stato confermato per le richieste privacy. Nessuna azienda è dichiarata. La proprietà GA4 e lo stream web sono stati creati dall’utente. L’ID pubblico è riportato in `.env.example`; non è una credenziale. Nessun segreto, dato di cliente o registro di consensi individuali viene salvato nel repository.

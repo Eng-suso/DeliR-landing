@@ -8,6 +8,10 @@ Options -Indexes
   Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self'; img-src 'self' data: https://*.google-analytics.com; font-src 'self'; connect-src 'self' https://*.google-analytics.com https://www.googletagmanager.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
 </IfModule>
 RewriteEngine On
+# Keep the canonical HTTPS redirect already configured on IONOS.
+RewriteCond %{SERVER_PORT} !=443 [OR]
+RewriteCond %{HTTP_HOST} !^delir\.it$ [NC]
+RewriteRule ^ https://delir.it%{REQUEST_URI} [R=301,L]
 RewriteRule ^(pilot|security-data|comparison-sources|privacy|waitlist)/$ /$1 [R=301,L]
 
 # Root and application routes use pre-rendered HTML selected by language.

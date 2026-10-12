@@ -1,13 +1,16 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-test('privacy draft and preferences are accessible with analytics closed', async ({ page }) => {
+test('IONOS privacy notice and preferences are accessible with analytics closed', async ({ page }) => {
   const googleRequests: string[] = [];
   page.on('request', request => {
     if (/google-analytics|googletagmanager|doubleclick/.test(request.url())) googleRequests.push(request.url());
   });
   await page.goto('/privacy?private_test=must-not-be-transmitted');
   await expect(page.getByRole('heading', { level: 1, name: 'Privacy e cookie' })).toBeVisible();
+  await expect(page.locator('#email')).toContainText('non è configurato un inoltro automatico a Gmail');
+  await expect(page.locator('#retention')).toContainText('12 mesi');
+  await expect(page.locator('main')).not.toContainText('Bozza aggiornata');
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
   await page.getByRole('button', { name: 'Preferenze cookie' }).first().click();
   const dialog = page.getByRole('dialog');
@@ -23,6 +26,7 @@ test('privacy draft and preferences are accessible with analytics closed', async
   await expect(dialog).not.toBeVisible();
   await page.goto('/privacy?lang=en');
   await expect(page.getByRole('heading', { level: 1, name: 'Privacy and cookies' })).toBeVisible();
+  await expect(page.locator('#email')).toContainText('no automatic forwarding to Gmail');
   expect(googleRequests).toEqual([]);
 });
 

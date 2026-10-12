@@ -53,7 +53,7 @@ The form routes show an honest availability page until the readiness flag, notic
 
 ## Privacy and analytics
 
-`/privacy` contains an explicitly labelled draft. The footer opens native cookie preferences. GA4 remains off unless both `VITE_PRIVACY_NOTICE_READY=true` and `VITE_ANALYTICS_READY=true` are set with a valid public `VITE_GA_MEASUREMENT_ID`. Do not enable these flags until the notice is complete, provider terms and actual GA4 settings are checked, and the consent flows are validated in production. Forms have separate readiness gates and remain closed.
+`/privacy` contains the IT/EN notice for the IONOS-only configuration confirmed on 12 October 2026. The owner confirmed that Gmail forwarding is disabled. The footer opens native cookie preferences. The release config marks this notice ready, while intake and GA4 remain closed. Before enabling GA4, update the notice for Google processing, verify provider terms and actual property settings, and validate consent in production. A ready notice does not by itself open the form or activate analytics. See `docs/pilot-privacy-release-review.md` for the data flow and remaining live intake verification.
 
 See [privacy and GA4 review](docs/privacy-ga4-review-2026-10-11.md) for official sources, the processing inventory, retention proposals, technical tests and remaining release conditions. The tag uses Basic Consent Mode and loads only after an affirmative, valid stored analytics choice. Revocation clears the managed GA cookies and reloads the document to stop the loaded tag. Google Ads remains denied. This implementation does not itself establish GDPR compliance.
 

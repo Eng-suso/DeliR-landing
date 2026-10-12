@@ -14,7 +14,7 @@ const copy = {
     eyebrow: 'DeliR · accesso anticipato',
     pilotTitle: 'Le candidature al pilot non sono ancora aperte.',
     waitlistTitle: 'Le iscrizioni agli aggiornamenti non sono ancora aperte.',
-    body: 'Stiamo completando il canale di richiesta e l’informativa privacy. Nel frattempo puoi esplorare un caso dimostrativo costruito con schermate del prodotto.',
+    body: 'Questo canale di raccolta non è ancora attivo. Nel frattempo puoi esplorare un caso dimostrativo costruito con schermate del prodotto o scriverci tramite il contatto indicato sotto.',
     action: 'Esplora DeliR',
   },
   en: {
@@ -22,7 +22,7 @@ const copy = {
     eyebrow: 'DeliR · early access',
     pilotTitle: 'Pilot applications are not open yet.',
     waitlistTitle: 'Product update signups are not open yet.',
-    body: 'We are completing the request channel and privacy notice. Meanwhile, explore a demo case using real product screens.',
+    body: 'This collection channel is not active yet. Meanwhile, explore a demo case using real product screens or use the contact below to write to us.',
     action: 'Explore DeliR',
   },
 } as const;

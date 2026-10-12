@@ -1,5 +1,7 @@
 # Pilot intake — stato e attivazione
 
+**Stato corrente, 12 ottobre 2026:** informativa IT/EN predisposta per pubblicazione nell’assetto solo IONOS; il titolare ha confermato l’inoltro Gmail disattivato. La CI imposta il gate privacy pronto, ma mantiene invio e GA4 chiusi. Rimane da eseguire l’attivazione controllata e la prova completa browser → database sul dominio reale. Le note successive documentano anche versioni storiche; per privacy attuale vedere `pilot-privacy-release-review.md`.
+
 ## Percorso pronto
 
 Hero, confronto, pilot, chiusura e CTA del menu portano a `/pilot#application` (in EN `/pilot?lang=en#application`). La route mostra sempre il modulo, porta il focus alla sezione e conserva la lingua. Cinque campi: nome, email, tipo di attività, tempistica, descrizione del progetto. Non richiede telefono, upload o dati del cliente. Il tipo di attività distingue consulente indipendente, boutique, società di consulenza e Operations aziendali.
