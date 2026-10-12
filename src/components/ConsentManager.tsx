@@ -84,8 +84,8 @@ export default function ConsentManager() {
       <button type="button" onClick={() => choose(false)} aria-label={it ? 'Chiudi senza accettare analytics' : 'Close without accepting analytics'} className="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"><X className="h-5 w-5" aria-hidden="true" /></button>
     </div>
     <p id="consent-description" className="mt-2 text-sm leading-6 text-slate-600">{analyticsAvailable
-      ? (it ? 'Usiamo strumenti tecnici per ricordare lingua e preferenze. Google Analytics misura le visite solo se accetti. Chiudere equivale a rifiutare. Puoi cambiare scelta dal footer.' : 'We use necessary storage to remember language and preferences. Google Analytics measures visits only if you accept. Closing means rejecting. Change your choice in the footer.')
-      : (it ? 'Ricordiamo solo lingua e preferenze. Google Analytics è disattivato.' : 'We only remember language and preferences. Google Analytics is disabled.')}</p>
+      ? (it ? 'Usiamo strumenti tecnici per ricordare lingua e preferenze. Con il tuo consenso, i cookie analitici ci aiutano a capire come viene usato il sito e a migliorarlo. Chiudere equivale a rifiutare. Puoi cambiare scelta dal footer.' : 'We use necessary storage to remember language and preferences. With your consent, analytics cookies help us understand how the site is used and improve it. Closing means rejecting. Change your choice in the footer.')
+      : (it ? 'Cookie tecnici per lingua e preferenze. Cookie analitici disattivati.' : 'Necessary storage for language and preferences. Analytics cookies are disabled.')}</p>
     <Link to={it ? '/privacy' : '/privacy?lang=en'} onClick={() => setOpen(false)} className="inline-flex min-h-6 items-center text-sm text-brand-blue underline underline-offset-4">{it ? 'Privacy e cookie' : 'Privacy and cookies'}</Link>
     {details ? <div id="consent-categories" className="mt-2 divide-y divide-slate-200 border-y border-slate-200">
       <div id="consent-necessary" className="py-2">
@@ -97,10 +97,10 @@ export default function ConsentManager() {
         <span><span className="block font-semibold">{it ? 'Analytics · opzionali' : 'Analytics · optional'}</span><span className="block text-xs leading-5 text-slate-600">{analyticsAvailable ? (it ? 'Google Analytics 4 per misurare le visite. Puoi cambiare scelta dal footer.' : 'Google Analytics 4 to measure visits. Change your choice in the footer.') : (it ? 'Google Analytics 4 è attualmente disattivato.' : 'Google Analytics 4 is currently disabled.')}</span></span>
       </label>
     </div> : null}
-    <div className={`mt-2 grid gap-2 ${analyticsAvailable ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2'}`}>
-      <button ref={reject} type="button" className={actionClass} onClick={() => choose(false)}>{analyticsAvailable ? (it ? 'Rifiuta' : 'Reject') : (it ? 'Chiudi' : 'Close')}</button>
-      <button type="button" className={actionClass} hidden={!analyticsAvailable} onClick={() => choose(true)}>{it ? 'Accetta' : 'Accept'}</button>
-      {details ? <button type="button" className={`${actionClass} ${analyticsAvailable ? 'col-span-2 sm:col-span-1' : ''}`} onClick={() => choose(analyticsChoice)}>{it ? 'Salva preferenze' : 'Save preferences'}</button> : <button type="button" className={`${actionClass} ${analyticsAvailable ? 'col-span-2 sm:col-span-1' : ''}`} aria-expanded={false} aria-controls="consent-categories" onClick={() => setDetails(true)}>{it ? 'Gestisci preferenze' : 'Manage preferences'}</button>}
+    <div className={`mt-2 grid gap-2 grid-cols-2 sm:grid-cols-3`}>
+      <button ref={reject} type="button" className={actionClass} onClick={() => choose(false)}>{it ? 'Rifiuta' : 'Reject'}</button>
+      <button type="button" className={actionClass} disabled={!analyticsAvailable} onClick={() => choose(true)}>{it ? 'Accetta' : 'Accept'}</button>
+      {details ? <button type="button" className={`${actionClass} col-span-2 sm:col-span-1`} onClick={() => choose(analyticsChoice)}>{it ? 'Salva preferenze' : 'Save preferences'}</button> : <button type="button" className={`${actionClass} col-span-2 sm:col-span-1`} aria-expanded={false} aria-controls="consent-categories" onClick={() => setDetails(true)}>{it ? 'Gestisci preferenze' : 'Manage preferences'}</button>}
     </div>
   </dialog>;
 }

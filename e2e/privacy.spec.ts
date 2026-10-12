@@ -15,8 +15,8 @@ test('IONOS privacy notice and preferences are accessible with analytics closed'
   await page.getByRole('button', { name: 'Preferenze cookie' }).first().click();
   const dialog = page.getByRole('dialog');
   await expect(dialog).toBeVisible();
-  await expect(dialog.getByRole('button', { name: 'Accetta', exact: true })).toHaveCount(0);
-  await expect(dialog.getByRole('button', { name: 'Chiudi', exact: true })).toBeFocused();
+  await expect(dialog.getByRole('button', { name: 'Accetta', exact: true })).toBeDisabled();
+  await expect(dialog.getByRole('button', { name: 'Rifiuta', exact: true })).toBeFocused();
   await dialog.getByRole('button', { name: 'Gestisci preferenze' }).click();
   await expect(dialog.locator('#consent-necessary')).toContainText('Necessari — sempre attivi');
   await expect(dialog.locator('#consent-analytics')).not.toBeChecked();
@@ -42,7 +42,7 @@ test('a consent choice from another tab closes an already open dialog', async ({
   const other = await context.newPage();
   await other.goto('/privacy');
   await other.getByRole('button', { name: 'Preferenze cookie' }).first().click();
-  await other.getByRole('button', { name: 'Chiudi', exact: true }).click();
+  await other.getByRole('button', { name: 'Rifiuta', exact: true }).click();
   await expect(page.getByRole('dialog')).not.toBeVisible();
   await other.close();
 });

@@ -51,3 +51,5 @@ Cinque test del nuovo componente passati: assenza di avvio prima della scelta, p
 Il pannello usa titolo breve, testo essenziale e righe semplici per le categorie. Rimossi il marchio decorativo, il riepilogo ridondante della scelta e il checkbox non modificabile dei necessari.
 
 Ulteriore riduzione richiesta dal titolare: padding 12/16 px, categorie in righe compatte, azioni da 44 px. Con analytics disattivati il pannello aperto dal footer mostra solo Chiudi e Gestisci preferenze; non propone consensi a strumenti inattivi. Con analytics disponibili, Accetta/Rifiuta sono affiancati anche su mobile, con Gestisci preferenze sotto.
+
+Scelta finale del titolare: mantenere sempre le tre azioni Rifiuta, Accetta e Gestisci preferenze. Il testo breve descrive scopo e categoria; il nome Google Analytics 4 è nei dettagli e nell’informativa. Nella configurazione attuale il testo dichiara i cookie analitici disattivati e Accetta è disabilitato.
