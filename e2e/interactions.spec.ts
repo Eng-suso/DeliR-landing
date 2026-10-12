@@ -3,9 +3,12 @@ import { expect, test } from '@playwright/test';
 for (const language of ['it', 'en']) {
   test(`comparison criteria open their product evidence by keyboard (${language})`, async ({ page }) => {
     await page.goto(`/?lang=${language}#confronto`);
+    const disclosure = page.locator('#confronto details');
+    await disclosure.locator('summary').click();
     const criteria = page.locator('#confronto [data-differentiator]');
     await expect(criteria).toHaveCount(6);
     for (let index = 0; index < 6; index++) {
+      await disclosure.locator('summary').scrollIntoViewIfNeeded();
       const link = criteria.nth(index).getByRole('link');
       const target = await link.getAttribute('href');
       expect(target).toMatch(/^#(scene-|caso$)/);
@@ -22,9 +25,10 @@ for (const language of ['it', 'en']) {
 
 test('hero makes the offer and pilot application available', async ({ page }) => {
   await page.goto('/');
+  await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
   await page.locator('#hero-title').waitFor();
   const hero = page.locator('section[aria-labelledby="hero-title"]');
-  for (const term of ['Conosci perimetro e prezzo prima di iniziare', 'Paghi solo quando ogni milestone viene consegnata', 'Puoi fermarti in qualsiasi momento, senza impegni a lungo termine']) await expect(hero.getByText(term)).toBeVisible();
+  for (const term of ['Conosci perimetro e prezzo prima di iniziare', 'Paghi solo quando ogni milestone viene consegnata', 'Puoi fermarti in qualsiasi momento, senza impegni a lungo termine']) await expect(page.locator('#pilot').getByText(term)).toBeVisible();
   await expect(hero.getByRole('link', { name: 'Testa DeliR sul tuo progetto' })).toHaveAttribute('href', '/pilot#application');
   await hero.getByRole('link', { name: 'Vedi il prodotto' }).click();
   await expect(page).toHaveURL(/#caso$/);
@@ -37,6 +41,7 @@ test('hero makes the offer and pilot application available', async ({ page }) =>
 
 test('product chapters and buying questions remain accessible', async ({ page }) => {
   await page.goto('/');
+  await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
   await page.locator('#caso').scrollIntoViewIfNeeded();
   await expect(page.locator('[data-product-module]')).toHaveCount(5);
   const chapter = page.locator('#product-03');
@@ -54,7 +59,8 @@ test('product chapters and buying questions remain accessible', async ({ page })
 
 test('mobile navigation remains operable after deep scrolling', async ({ page, isMobile }) => {
   test.skip(!isMobile, 'Mobile navigation check');
-  await page.goto('/'); await page.locator('#faq').scrollIntoViewIfNeeded();
+  await page.goto('/');
+  await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible(); await page.locator('#faq').scrollIntoViewIfNeeded();
   const toggle = page.locator('button[aria-controls="mobile-navigation"]');
   await toggle.click(); await expect(toggle).toHaveAttribute('aria-expanded', 'true');
   await page.locator('#mobile-navigation').getByRole('link', { name: 'Pilot', exact: true }).click();
@@ -64,12 +70,14 @@ test('mobile navigation remains operable after deep scrolling', async ({ page, i
 test('landing has no runtime errors', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Runtime check runs once');
   const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
-  await page.goto('/'); await page.locator('#early-access').scrollIntoViewIfNeeded();
+  await page.goto('/');
+  await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible(); await page.locator('#early-access').scrollIntoViewIfNeeded();
   await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1); expect(errors).toEqual([]);
 });
 
 test('chapters and scenes support keyboard navigation and direct links', async ({ page }) => {
   await page.goto('/');
+  await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
   const decisionLink = page.getByRole('navigation', { name: 'Benefici DeliR' }).getByRole('link', { name: 'Decisioni', exact: true });
   await decisionLink.focus(); await decisionLink.press('Enter');
   await expect(page).toHaveURL(/#product-04$/);
@@ -89,6 +97,7 @@ test('chapters and scenes support keyboard navigation and direct links', async (
 test('mobile menu closes with Escape and restores focus', async ({ page, isMobile }) => {
   test.skip(!isMobile, 'Mobile keyboard check');
   await page.goto('/');
+  await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
   const toggle = page.getByRole('button', { name: 'Apri il menu' }); await toggle.click();
   await page.locator('#mobile-navigation').getByRole('link', { name: 'Il prodotto' }).focus();
   await page.keyboard.press('Escape'); await expect(toggle).toHaveAttribute('aria-expanded', 'false'); await expect(toggle).toBeFocused();
@@ -100,7 +109,8 @@ test('shared evidence links lead to the dedicated sources page', async ({ page }
   await expect(page.locator('#comparison-evidence-review')).toBeInViewport();
   await expect(page.locator('#comparison-evidence-review')).toBeFocused();
   await page.getByRole('link', { name: /Torna al confronto/ }).click();
-  await expect(page.locator('#confronto details')).toHaveCount(0);
+  await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
+  await expect(page.locator('#confronto details')).toHaveCount(1);
   await page.locator('#confronto a[href="/comparison-sources#comparison-evidence-review"]').first().click();
   await expect(page).toHaveURL(/\/comparison-sources#comparison-evidence-review$/);
   await expect(page.locator('#comparison-evidence-review')).toBeInViewport();
@@ -109,6 +119,7 @@ test('shared evidence links lead to the dedicated sources page', async ({ page }
 test('animated background can be paused with the keyboard and respects reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
+  await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
   const control = page.getByRole('button', { name: 'Ferma lo sfondo animato' });
   const ribbons = page.getByTestId('page-background').locator('.flow-motion');
   await expect(ribbons).toHaveCSS('animation-play-state', 'running');

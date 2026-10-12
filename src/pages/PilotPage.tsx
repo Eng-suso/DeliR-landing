@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState, type FormEvent } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type FormEvent } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle2, ClipboardCheck, LockKeyhole } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { Link } from 'react-router-dom';
@@ -16,6 +16,7 @@ import { pilotRiskReversals } from '../lib/publicOffer';
 import FragmentNavigation from '../components/FragmentNavigation';
 import { useFragment } from '../lib/useFragment';
 import '../styles/premium-landing.css';
+import { trackPilotEvent } from '../privacy/analytics';
 import { privacyNoticeUrl } from '../lib/leadCaptureReadiness';
 
 const emptyFields: PilotApplicationFields = { name: '', email: '', practice: '', timing: '', projectBrief: '' };
@@ -62,6 +63,7 @@ export default function PilotPage({ captureEnabled }: PilotPageProps) {
   const [fields, setFields] = useState<PilotApplicationFields>(emptyFields);
   const [errors, setErrors] = useState<PilotApplicationErrors>({});
   const [submitError, setSubmitError] = useState('');
+  const startedTracking = useRef(false);
   // Server HTML is inert; createRoot enables controls when it attaches handlers.
   const clientReady = typeof window !== 'undefined';
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
@@ -71,6 +73,7 @@ export default function PilotPage({ captureEnabled }: PilotPageProps) {
     const warnBeforeLeave = (event: BeforeUnloadEvent) => {
       if (!hasDraft) return;
       event.preventDefault();
+    if (status !== 'idle') return;
     };
     window.addEventListener('beforeunload', warnBeforeLeave);
     return () => window.removeEventListener('beforeunload', warnBeforeLeave);
@@ -81,6 +84,7 @@ export default function PilotPage({ captureEnabled }: PilotPageProps) {
   }, [fragment, status]);
 
   const updateField = <Field extends keyof PilotApplicationFields>(field: Field, value: PilotApplicationFields[Field]) => {
+    if (captureEnabled && !startedTracking.current) startedTracking.current = trackPilotEvent('pilot_form_started', language);
     setFields((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: undefined }));
     setSubmitError('');
@@ -95,6 +99,7 @@ export default function PilotPage({ captureEnabled }: PilotPageProps) {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (status !== 'idle') return;
     const nextErrors = validatePilotApplication(fields);
     setErrors(nextErrors);
     const firstInvalidField = (Object.keys(nextErrors) as Array<keyof PilotApplicationFields>)[0];
@@ -106,12 +111,15 @@ export default function PilotPage({ captureEnabled }: PilotPageProps) {
       setSubmitError(t.pendingError);
       return;
     }
+    trackPilotEvent('pilot_submit_attempt', language);
     setStatus('submitting');
     try {
       await submitPilotApplication(fields);
       setFields(emptyFields);
       setStatus('success');
+      trackPilotEvent('generate_lead', language);
     } catch {
+      trackPilotEvent('pilot_submit_failed', language);
       setStatus('idle');
       setSubmitError(t.errors.submission);
     }

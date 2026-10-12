@@ -10,7 +10,7 @@ const copy = {
   it: {
     eyebrow: 'Cosa conta nel tuo incarico',
     title: 'Scegli un percorso che puoi spiegare al cliente.',
-    intro: 'Sei criteri per mantenere collegate fonti, ipotesi e decisioni. Esplora il percorso nella demo, poi confronta gli strumenti rispetto al lavoro che devi consegnare.',
+    intro: 'Prima di confrontare gli strumenti, cerca tre cose: fonti verificabili, contesto che resta nel progetto e scenari da confrontare prima di raccomandare una modifica.',
     tableTitle: 'Confronta gli strumenti sul percorso consulenziale.',
     feature: 'Capacità nel lavoro del consulente', delir: 'Per il consulente',
     caption: 'Confronto delle capacità per l’analisi di processo',
@@ -28,7 +28,7 @@ const copy = {
   en: {
     eyebrow: 'What matters in your engagement',
     title: 'Choose a workflow you can explain to your client.',
-    intro: 'Six criteria for keeping sources, hypotheses and decisions connected. Explore the workflow in the demo, then compare tools against the work you need to deliver.',
+    intro: 'Before comparing tools, look for three things: evidence you can verify, context retained in the project, and scenarios you can compare before recommending a change.',
     tableTitle: 'Compare tools against the consulting workflow.',
     feature: 'Capabilities in a consultant’s work', delir: 'For consultants',
     caption: 'Process analysis capability comparison',
@@ -66,11 +66,11 @@ export default function Comparison() {
   return (
     <section id="confronto" className="premium-comparison scroll-mt-16 border-t border-slate-200 bg-white py-16 sm:py-20 lg:py-24" aria-labelledby="comparison-title">
       <div className="section-shell">
-        <p className="landing-eyebrow">{t.eyebrow}</p>
-        <h2 id="comparison-title" className="landing-title mt-5 max-w-[27ch]">{t.title}</h2>
-        <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600">{t.intro}</p>
+        <p data-reveal className="landing-eyebrow">{t.eyebrow}</p>
+        <h2 data-reveal id="comparison-title" className="landing-title mt-5 max-w-[27ch]">{t.title}</h2>
+        <p data-reveal data-reveal-delay={80} className="mt-5 max-w-2xl text-base leading-7 text-slate-600">{t.intro}</p>
 
-        <DifferentiatorGrid />
+        <details className="mt-6 border-y border-slate-200 py-2"><summary className="min-h-11 cursor-pointer py-3 font-semibold text-brand-blue">{language === 'it' ? 'Esplora i sei criteri nella demo' : 'Explore the six criteria in the demo'}</summary><DifferentiatorGrid /></details>
         <h3 className="mt-12 text-balance font-display text-2xl font-semibold leading-tight tracking-tight text-brand-ink sm:mt-16">{t.tableTitle}</h3>
 
         <div className="comparison-table mt-8">

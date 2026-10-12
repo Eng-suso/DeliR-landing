@@ -9,7 +9,7 @@ export default function ClipExplorer({ clips, name, initial }: { clips: readonly
   const active = clips.find(clip => `scene-${clip.id}` === fragment) ?? clips.find(clip => clip.id === initial) ?? clips[0];
 
   return (
-    <div className="min-w-0">
+    <div data-reveal data-reveal-delay={140} className="min-w-0">
       <div className="product-screen-stage premium-workbench" data-scroll-visual="product">
         <div className="mb-4 flex items-center justify-between gap-4">
           <span className="text-sm font-semibold text-brand-ink">{active.title[language]}</span>

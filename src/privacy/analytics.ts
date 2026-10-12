@@ -81,3 +81,20 @@ export function trackPage(pathname: string, language: 'it' | 'en', consented: bo
   analyticsWindow().gtag?.('event', 'page_view', context);
   previousPage = page;
 }
+
+export type PilotEvent = 'pilot_cta_clicked' | 'pilot_form_started' | 'pilot_submit_attempt' | 'pilot_submit_failed' | 'generate_lead';
+const pilotEvents: readonly string[] = ['pilot_cta_clicked', 'pilot_form_started', 'pilot_submit_attempt', 'pilot_submit_failed', 'generate_lead'];
+const pilotSections: readonly string[] = ['hero', 'pilot-summary', 'caso', 'confronto', 'fiducia', 'pilot', 'early-access', 'navigation', 'application', 'other'];
+
+// Deliberately excludes fields, error messages, identifiers and arbitrary URLs.
+export function trackPilotEvent(event: PilotEvent, language: 'it' | 'en', section = 'application'): boolean {
+  if (!analyticsAvailable || !started || !readConsent()?.analytics || !pilotEvents.includes(event)) return false;
+  analyticsWindow().gtag?.('event', event, {
+    send_to: measurementId, language: language === 'en' ? 'en' : 'it',
+    form_name: 'pilot_application',
+    section: pilotSections.includes(section) ? section : 'other',
+    page_location: `https://delir.it${event === 'pilot_cta_clicked' ? '/' : '/pilot'}${language === 'en' ? '?lang=en' : ''}`,
+    page_referrer: '',
+  });
+  return true;
+}

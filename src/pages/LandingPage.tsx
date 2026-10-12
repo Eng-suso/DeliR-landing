@@ -4,6 +4,8 @@ import PremiumBackground from '../components/PremiumBackground';
 import FragmentNavigation from '../components/FragmentNavigation';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
+import PilotSummary from '../components/PilotSummary';
+import PilotFunnelTracking from '../components/PilotFunnelTracking';
 import ProcessBridge from '../components/ProcessBridge';
 import Problem from '../components/Problem';
 import Journey from '../components/Journey';
@@ -18,15 +20,17 @@ import SmoothScroll from '../components/SmoothScroll';
 
 export default function LandingPage() {
   return (
-    <div className="landing-page relative min-h-screen bg-white">
+    <div data-client-ready={typeof window !== 'undefined' ? 'true' : 'false'} className="landing-page relative min-h-screen bg-white">
       <SkipLink />
       <PremiumBackground />
       <SmoothScroll />
       <ScrollExperience />
+      <PilotFunnelTracking />
       <FragmentNavigation />
       <Navbar />
       <main id="main-content" className="relative z-10">
         <Hero />
+        <PilotSummary />
         <ProcessBridge />
         <Problem />
         <Journey />

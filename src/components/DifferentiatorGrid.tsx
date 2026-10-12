@@ -42,11 +42,11 @@ export default function DifferentiatorGrid() {
   return <ol className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
     {proofLinks.map((proof, index) => {
       const item = t.items[index];
-      return <li key={proof.id} data-differentiator={proof.id} className="flex min-w-0 flex-col rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
-        <span aria-hidden="true" className="font-mono text-xs text-brand-blue">0{index + 1}</span>
+      return <li key={proof.id} data-differentiator={proof.id} className="flex min-w-0 flex-col border-b border-slate-200 py-3 sm:p-4">
+
         <h3 className="mt-2 font-display text-lg font-semibold leading-6 text-brand-ink">{item.name}</h3>
-        <p className="mt-2 text-base leading-6 text-slate-600">{item.body}</p>
-        <a href={proof.href} aria-label={`${t.action}: ${item.name}`} className="mt-auto inline-flex min-h-11 items-center gap-2 self-start pt-4 text-sm font-semibold text-brand-blue underline underline-offset-4 hover:text-brand-ink">{t.action}<ArrowUpRight aria-hidden="true" className="size-4 shrink-0" /></a>
+        <p className="mt-1 text-sm leading-6 text-slate-600">{item.body}</p>
+        <a href={proof.href} aria-label={`${t.action}: ${item.name}`} className="mt-auto inline-flex min-h-11 items-center gap-2 self-start pt-1 text-sm font-semibold text-brand-blue underline underline-offset-4 hover:text-brand-ink">{t.action}<ArrowUpRight aria-hidden="true" className="size-4 shrink-0" /></a>
       </li>;
     })}
   </ol>;
