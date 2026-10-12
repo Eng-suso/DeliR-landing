@@ -27,17 +27,17 @@ it('keeps tracking off before choice and gives accept and reject equal styling',
   showBanner();
   expect(startAnalytics).not.toHaveBeenCalled();
   expect(readConsent()).toBeNull();
-  const reject = screen.getByRole('button', { name: 'Rifiuta analytics' });
+  const reject = screen.getByRole('button', { name: 'Rifiuta' });
   expect(reject).toHaveFocus();
-  expect(reject.className).toBe(screen.getByRole('button', { name: 'Accetta analytics' }).className);
-  fireEvent.click(screen.getByRole('button', { name: 'Personalizza' }));
+  expect(reject.className).toBe(screen.getByRole('button', { name: 'Accetta' }).className);
+  fireEvent.click(screen.getByRole('button', { name: 'Gestisci preferenze' }));
   expect(screen.getByRole('checkbox', { name: /Analytics/ })).not.toBeChecked();
-  expect(screen.getByRole('checkbox', { name: /Memorie necessarie/ })).toBeDisabled();
+  expect(screen.getByText('Necessari — sempre attivi')).toBeVisible();
 });
 
 it('saves a refusal without starting analytics', () => {
   showBanner();
-  fireEvent.click(screen.getByRole('button', { name: 'Rifiuta analytics' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Rifiuta' }));
   expect(readConsent()?.analytics).toBe(false);
   expect(startAnalytics).not.toHaveBeenCalled();
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
@@ -45,19 +45,19 @@ it('saves a refusal without starting analytics', () => {
 
 it('starts only after an explicit acceptance', () => {
   showBanner();
-  fireEvent.click(screen.getByRole('button', { name: 'Accetta analytics' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Accetta' }));
   expect(readConsent()?.analytics).toBe(true);
   expect(startAnalytics).toHaveBeenCalledWith(true);
 });
 
 it('saves granular choices and allows withdrawal through footer preferences', () => {
   showBanner();
-  fireEvent.click(screen.getByRole('button', { name: 'Personalizza' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Gestisci preferenze' }));
   fireEvent.click(screen.getByRole('checkbox', { name: /Analytics/ }));
   fireEvent.click(screen.getByRole('button', { name: 'Salva preferenze' }));
   expect(readConsent()?.analytics).toBe(true);
   fireEvent(window, new Event('delir:cookie-preferences'));
-  fireEvent.click(screen.getByRole('button', { name: 'Personalizza' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Gestisci preferenze' }));
   expect(screen.getByRole('checkbox', { name: /Analytics/ })).toBeChecked();
   fireEvent.click(screen.getByRole('checkbox', { name: /Analytics/ }));
   fireEvent.click(screen.getByRole('button', { name: 'Salva preferenze' }));
