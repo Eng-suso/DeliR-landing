@@ -1,21 +1,21 @@
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { pilotCtaLabel, pilotApplicationHref } from '../lib/publicOffer';
+import { interestCtaLabel, productInterestHref } from '../lib/publicOffer';
 
 const copy = {
   it: {
-    eyebrow: 'Pronti quando lo sei tu',
-    title: 'Porta il tuo prossimo progetto per un cliente.',
-    intro: 'Raccontaci cosa vuoi comprendere, migliorare o decidere.',
-    body: 'Valuteremo il progetto insieme a te, definiremo un perimetro chiaro per il pilot e concorderemo output, milestone e prezzo prima che tu prenda un impegno.',
-    terms: 'Perimetro chiaro · Paghi per milestone · Puoi fermarti quando vuoi',
+    eyebrow: 'Dal prodotto al tuo lavoro',
+    title: 'Useresti DeliR nel tuo prossimo incarico?',
+    intro: 'Segnala il tuo interesse a provarlo.',
+    body: 'Lascia la tua email e indica il tipo di attività. Ti contatterò per la disponibilità di accesso. Puoi anche dirmi quando lo useresti.',
+    terms: 'Nessun acquisto · Nessun accesso immediato · Richiesta ritirabile',
   },
   en: {
-    eyebrow: 'Ready when you are',
-    title: 'Bring your next client project.',
-    intro: 'Tell us what you are trying to understand, improve, or decide.',
-    body: 'We will review the project with you, define a clear pilot scope, and agree deliverables, milestones, and price before you commit.',
-    terms: 'Clear scope · Pay by milestone · Stop anytime',
+    eyebrow: 'From the product to your work',
+    title: 'Would you use DeliR on your next engagement?',
+    intro: 'Tell us you would like to try it.',
+    body: 'Leave your email and practice type. I will contact you about access availability. You can also tell me when you would use it.',
+    terms: 'No purchase · No immediate access · Withdraw your request anytime',
   },
 };
 
@@ -27,7 +27,7 @@ export default function FinalCTA() {
     <h2 id="final-cta-title" className="mx-auto mt-5 max-w-3xl text-balance font-display text-[clamp(2rem,4vw,3.6rem)] font-semibold leading-tight tracking-[-0.04em]">{t.title}</h2>
     <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-300">{t.intro}</p>
     <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-300">{t.body}</p>
-    <a href={pilotApplicationHref(language)} className="btn-primary mt-7 whitespace-normal">{pilotCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4 shrink-0" /></a>
+    <a href={productInterestHref(language)} className="btn-primary mt-7 whitespace-normal">{interestCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4 shrink-0" /></a>
     <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-slate-300">{t.terms}</p>
   </div></section>;
 }

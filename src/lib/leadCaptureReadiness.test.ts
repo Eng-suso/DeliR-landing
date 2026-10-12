@@ -18,9 +18,19 @@ it.each([
   vi.stubEnv('VITE_PRIVACY_NOTICE_URL', privacy);
   vi.stubEnv('VITE_PILOT_ENDPOINT', pilot);
   vi.stubEnv('VITE_WAITLIST_ENDPOINT', waitlist);
+  vi.stubEnv('VITE_WAITLIST_READY', 'true');
   const result = await import('./leadCaptureReadiness');
   expect(result.pilotCaptureReady).toBe(expectedPilot);
   expect(result.waitlistCaptureReady).toBe(expectedWaitlist);
+});
+
+it('does not open product-interest intake using the pilot gate alone', async () => {
+  vi.stubEnv('VITE_PRIVACY_NOTICE_READY', 'true');
+  vi.stubEnv('VITE_LEAD_CAPTURE_READY', 'true');
+  vi.stubEnv('VITE_PRIVACY_NOTICE_URL', '/privacy');
+  vi.stubEnv('VITE_WAITLIST_ENDPOINT', '/api/waitlist.php');
+  vi.stubEnv('VITE_WAITLIST_READY', 'false');
+  expect((await import('./leadCaptureReadiness')).waitlistCaptureReady).toBe(false);
 });
 
 it('keeps intake closed when the notice is not ready despite endpoint and capture flags', async () => {

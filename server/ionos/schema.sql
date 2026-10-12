@@ -18,3 +18,16 @@ CREATE TABLE IF NOT EXISTS pilot_rate_limits (
     expires_at BIGINT UNSIGNED NOT NULL,
     INDEX rate_expiry (expires_at)
 ) ENGINE=InnoDB;
+
+-- Product-use requests. Email is unique; duplicates are not new consultants.
+CREATE TABLE IF NOT EXISTS product_interest (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(254) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+    practice ENUM('independent', 'consulting-team', 'in-house', 'other') NOT NULL,
+    timing ENUM('', 'active', 'next-90-days', 'exploring') NOT NULL DEFAULT '',
+    source VARCHAR(40) NOT NULL,
+    notice_version VARCHAR(40) NOT NULL,
+    created_at DATETIME NOT NULL,
+    UNIQUE KEY interest_email (email),
+    INDEX interest_created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

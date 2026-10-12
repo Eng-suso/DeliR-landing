@@ -15,25 +15,25 @@ for (const language of ['it', 'en'] as const) {
       await expect(page.locator('.hero-description')).toBeVisible();
       const geometry = await page.evaluate(() => {
         const box = (selector: string) => document.querySelector(selector)!.getBoundingClientRect();
-        const visual = box('.hero-visual'), description = box('.hero-description'), heading = box('.hero-heading');
-        return { visualTop: visual.top, visualBottom: visual.bottom, visualLeft: visual.left, descriptionTop: description.top, headingLeft: heading.left, overflow: document.documentElement.scrollWidth > innerWidth };
+        const visual = box('.hero-visual'), description = box('.hero-description'), heading = box('.hero-heading'), actions = box('.hero-actions');
+        return { visualTop: visual.top, visualBottom: visual.bottom, visualLeft: visual.left, descriptionTop: description.top, actionsTop: actions.top, actionsBottom: actions.bottom, headingLeft: heading.left, overflow: document.documentElement.scrollWidth > innerWidth };
       });
       expect(geometry.overflow).toBe(false);
       if (width < 1024) {
-        expect(geometry.visualTop).toBeLessThan(600);
-        expect(geometry.descriptionTop).toBeGreaterThanOrEqual(geometry.visualBottom);
+        expect(geometry.actionsTop).toBeLessThan(650);
+        expect(geometry.visualTop).toBeGreaterThanOrEqual(geometry.actionsBottom);
       } else expect(geometry.visualLeft).toBeGreaterThan(geometry.headingLeft);
     }
-    // Mobile DOM order follows the visible media controls and then the CTA.
+    // Mobile DOM order follows the visible CTA and then the media controls.
     await page.setViewportSize({ width: 390, height: 900 });
     const expand = page.locator('#hero-product-outcome').getByRole('button', { name: /Apri il video completo|Open full video/ });
     // WebKit's native Tab preference can omit links. DOM sequence must still
     // match the visual sequence, without positive tabindex overrides.
-    expect(await expand.evaluate(el => Boolean(el.compareDocumentPosition(document.querySelector('.hero-actions a')!) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
+    expect(await expand.evaluate(el => Boolean(el.compareDocumentPosition(document.querySelector('.hero-actions a')!) & Node.DOCUMENT_POSITION_PRECEDING))).toBe(true);
     if (browserName === 'chromium') {
-      await expand.focus();
+      await page.locator('.hero-actions a').last().focus();
       await page.keyboard.press('Tab');
-      await expect(page.locator('.hero-actions a').first()).toBeFocused();
+      await expect(page.locator('#hero-product-outcome').getByRole('button', { name: /Riproduci:|Pausa:|Play:|Pause:/ })).toBeFocused();
     }
   });
 }

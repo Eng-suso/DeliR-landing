@@ -8,7 +8,7 @@ for (const language of ['it', 'en']) {
       await page.locator('#hero-product-outcome img').waitFor();
       await page.evaluate(() => document.fonts.ready);
       const shape = await page.evaluate(() => ({
-        top: document.querySelector('#hero-product-outcome')!.getBoundingClientRect().top,
+        top: document.querySelector('.hero-actions a')!.getBoundingClientRect().top,
         height: document.documentElement.scrollHeight,
         overflow: document.documentElement.scrollWidth > innerWidth,
       }));
@@ -16,6 +16,7 @@ for (const language of ['it', 'en']) {
       expect(shape.height).toBeLessThan(13000);
       expect(shape.overflow).toBe(false);
       await expect(page.locator('#pilot-summary')).toBeVisible();
+      await expect(page.locator('#product-interest')).toBeVisible();
       await expect(page.locator('#confronto table th[scope="col"]')).toHaveCount(8);
       await expect(page.locator('[data-product-module]:not([hidden])')).toHaveCount(1);
       await page.goto(`/?lang=${language}#scene-confronto`);

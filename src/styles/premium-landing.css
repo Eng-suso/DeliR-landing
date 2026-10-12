@@ -63,7 +63,7 @@
 .hero-visual { position: relative; isolation: isolate; }
 .hero-layout {
   display: grid;
-  grid-template-areas: 'heading' 'visual' 'description' 'actions';
+  grid-template-areas: 'heading' 'description' 'actions' 'visual';
   gap: 20px;
   position: relative;
 }

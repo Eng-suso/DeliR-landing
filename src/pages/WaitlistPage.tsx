@@ -1,260 +1,111 @@
-import { useState, type FormEvent } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
-import { Sparkles, ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import DarkAnimatedBackground from '../components/DarkAnimatedBackground';
 import Footer from '../components/Footer';
 import LanguageSwitch from '../components/LanguageSwitch';
-import { useLanguage } from '../i18n/LanguageContext';
 import SkipLink from '../components/SkipLink';
-import {
-  submitWaitlist,
-  validateWaitlist,
-  type WaitlistErrors,
-  type WaitlistFields,
-} from '../lib/waitlist';
+import { useLanguage } from '../i18n/LanguageContext';
+import { submitWaitlist, validateWaitlist, type WaitlistErrors, type WaitlistFields } from '../lib/waitlist';
 import { privacyNoticeUrl } from '../lib/leadCaptureReadiness';
+import { conversationHref, interestCtaLabel, productInterestEmailHref, publicContactEmail } from '../lib/publicOffer';
+import { trackInterestEvent } from '../privacy/analytics';
+import '../styles/premium-landing.css';
 
-const emptyFields: WaitlistFields = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  role: '',
-};
+const emptyFields: WaitlistFields = { email: '', practice: '', timing: '' };
 
-export default function WaitlistPage() {
+export default function WaitlistPage({ captureEnabled }: { captureEnabled: boolean }) {
   const { language } = useLanguage();
-  const reduceMotion = useReducedMotion();
   const it = language === 'it';
   const [fields, setFields] = useState<WaitlistFields>(emptyFields);
   const [errors, setErrors] = useState<WaitlistErrors>({});
   const [submitError, setSubmitError] = useState('');
-  // Server HTML is inert; createRoot enables controls when it attaches handlers.
-  const clientReady = typeof window !== 'undefined';
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const busy = useRef(false);
+  const started = useRef(false);
+  const success = useRef<HTMLHeadingElement>(null);
+  const clientReady = typeof window !== 'undefined';
 
-  const updateField = (field: keyof WaitlistFields, value: string) => {
-    setFields((current) => ({ ...current, [field]: value }));
-    setErrors((current) => ({ ...current, [field]: undefined }));
+  useEffect(() => { if (status === 'success') success.current?.focus(); }, [status]);
+  function updateField(field: keyof WaitlistFields, value: string) {
+    setFields(current => ({ ...current, [field]: value }));
+    setErrors(current => ({ ...current, [field]: undefined }));
     setSubmitError('');
-  };
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  }
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!captureEnabled || busy.current) return;
     const nextErrors = validateWaitlist(fields);
     setErrors(nextErrors);
-    const firstInvalidField = (Object.keys(nextErrors) as Array<keyof WaitlistFields>)[0];
-    if (firstInvalidField) {
-      document.getElementById(firstInvalidField)?.focus();
-      return;
-    }
-
+    const firstInvalid = (Object.keys(nextErrors) as Array<keyof WaitlistFields>)[0];
+    if (firstInvalid) { document.getElementById(firstInvalid)?.focus(); return; }
+    busy.current = true;
     setStatus('submitting');
     setSubmitError('');
+    trackInterestEvent('interest_submit_attempt', language);
     try {
       await submitWaitlist(fields);
+      setFields(emptyFields);
       setStatus('success');
-    } catch (error) {
+      trackInterestEvent('interest_request_accepted', language);
+    } catch {
       setStatus('idle');
-      setSubmitError(
-        language === 'it'
-          ? 'Non siamo riusciti a completare la richiesta. Riprova.'
-          : error instanceof Error
-            ? error.message
-            : 'We could not complete your request. Please try again.',
-      );
-    }
+      setSubmitError(it ? 'La richiesta non è stata confermata. I dati sono rimasti nel modulo: riprova.' : 'Your request was not confirmed. Your details are still in the form: please try again.');
+      trackInterestEvent('interest_submit_failed', language);
+    } finally { busy.current = false; }
+  }
+  const errorText = {
+    email: it ? 'Inserisci un indirizzo email valido.' : 'Enter a valid email address.',
+    practice: it ? 'Seleziona il tuo tipo di attività.' : 'Select your practice type.',
+    timing: it ? 'Seleziona una delle tempistiche disponibili.' : 'Select one of the available timings.',
   };
-
-  return (
-    <div className="min-h-dvh bg-brand-navy flex flex-col items-center justify-between relative overflow-hidden">
-      <SkipLink />
-      <DarkAnimatedBackground />
-      
-      {/* Background Glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none -z-10"></div>
-      
-      <div className="w-full absolute top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex justify-between items-center gap-4">
-          <Link to="/" className="inline-flex items-center text-slate-400 hover:text-white transition-colors duration-300 font-medium">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            {it ? 'Torna a DeliR' : 'Return to DeliR'}
-          </Link>
-          <LanguageSwitch dark />
-        </div>
-      </div>
-      
-      <main id="main-content" className="flex-1 w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center pb-16 pt-32 sm:py-36 relative z-10">
-        <motion.div
-           initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ duration: reduceMotion ? 0 : 0.45 }}
-           className="text-center w-full"
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 text-sm font-medium mb-8 shadow-[0_0_15px_rgba(59,130,246,0.15)]">
-            <Sparkles className="w-4 h-4" />
-            <span>{it ? 'Aggiornamenti prodotto' : 'Product updates'}</span>
-          </div>
-          
-          <h1 className="text-[clamp(2.5rem,9vw,4.5rem)] font-display font-medium tracking-tighter text-white mb-6 leading-[1.05] text-balance">
-            {it ? 'Non hai ancora un incarico adatto?' : 'No suitable engagement yet?'}
-          </h1>
-          
-          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-12 font-light">
-            {it
-              ? 'Lascia i tuoi riferimenti per ricevere aggiornamenti sui pilot e sulla disponibilità del prodotto.'
-              : 'Leave your details to receive updates about pilots and product availability.'}
-          </p>
-
-          <div className="max-w-xl mx-auto w-full">
-            {status === 'success' ? (
-              <motion.div 
-               initial={reduceMotion ? false : { opacity: 0, scale: 0.95 }}
-               animate={{ opacity: 1, scale: 1 }}
-               transition={{ duration: reduceMotion ? 0 : 0.3 }}
-               className="py-10"
-              >
-                <div className="mx-auto w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mb-6 ring-1 ring-blue-500/30 shadow-[0_0_30px_rgba(59,130,246,0.3)]">
-                  <CheckCircle2 className="w-8 h-8 text-blue-400" />
-                </div>
-                <h3 className="text-2xl font-medium text-white mb-3 tracking-tight">{it ? 'Sei nella lista' : "You're on the list"}</h3>
-                <p className="text-slate-400 mb-8 max-w-sm mx-auto">
-                  {it ? 'Ti contatteremo quando ci saranno nuovi aggiornamenti.' : "We'll contact you when new updates are available."}
-                </p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFields(emptyFields);
-                    setErrors({});
-                    setStatus('idle');
-                  }}
-                  className="text-sm text-slate-400 hover:text-white transition-colors underline underline-offset-4"
-                >
-                  {it ? 'Registra un’altra email' : 'Register another email'}
-                </button>
-              </motion.div>
-            ) : (
-              <form method="post" onSubmit={handleSubmit} noValidate className="relative group text-left max-w-md mx-auto" aria-label={it ? 'Richiesta aggiornamenti prodotto' : 'Product updates request'}>
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-300"></div>
-                <div className="relative flex flex-col rounded-3xl border border-slate-700/50 bg-slate-900 p-6 shadow-2xl transition-colors">
-                  
-                  <div className="flex flex-col sm:flex-row gap-4 mb-4">
-                    <div className="w-full">
-                      <label htmlFor="firstName" className="block text-sm font-medium text-slate-400 mb-1 ml-1">{it ? 'Nome' : 'First Name'}</label>
-                      <input disabled={!clientReady}
-                        type="text"
-                        id="firstName"
-                        name="firstName"
-                        autoComplete="given-name"
-                        required
-                        value={fields.firstName}
-                        onChange={(e) => updateField('firstName', e.target.value)}
-                        aria-invalid={Boolean(errors.firstName)}
-                        aria-describedby={errors.firstName ? 'firstName-error' : undefined}
-                        className="min-h-12 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-base text-white outline-none transition-colors placeholder:text-slate-500 hover:border-slate-600 focus:border-brand-blue focus:ring-4 focus:ring-blue-500/20"
-                        placeholder="Jane…"
-                      />
-                      {errors.firstName && <p id="firstName-error" className="mt-1.5 ml-1 text-xs text-red-300">{it ? 'Inserisci il nome.' : errors.firstName}</p>}
-                    </div>
-                    <div className="w-full">
-                      <label htmlFor="lastName" className="block text-sm font-medium text-slate-400 mb-1 ml-1">{it ? 'Cognome' : 'Last Name'}</label>
-                      <input disabled={!clientReady}
-                        type="text"
-                        id="lastName"
-                        name="lastName"
-                        autoComplete="family-name"
-                        required
-                        value={fields.lastName}
-                        onChange={(e) => updateField('lastName', e.target.value)}
-                        aria-invalid={Boolean(errors.lastName)}
-                        aria-describedby={errors.lastName ? 'lastName-error' : undefined}
-                        className="min-h-12 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-base text-white outline-none transition-colors placeholder:text-slate-500 hover:border-slate-600 focus:border-brand-blue focus:ring-4 focus:ring-blue-500/20"
-                        placeholder="Doe…"
-                      />
-                      {errors.lastName && <p id="lastName-error" className="mt-1.5 ml-1 text-xs text-red-300">{it ? 'Inserisci il cognome.' : errors.lastName}</p>}
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                     <label htmlFor="email" className="block text-sm font-medium text-slate-400 mb-1 ml-1">{it ? 'Email di lavoro' : 'Work Email'}</label>
-                     <input disabled={!clientReady}
-                        type="email"
-                        id="email"
-                        name="email"
-                        inputMode="email"
-                        autoComplete="email"
-                        spellCheck={false}
-                        required
-                        value={fields.email}
-                        onChange={(e) => updateField('email', e.target.value)}
-                        aria-invalid={Boolean(errors.email)}
-                        aria-describedby={errors.email ? 'email-error' : undefined}
-                        className="min-h-12 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-base text-white outline-none transition-colors placeholder:text-slate-500 hover:border-slate-600 focus:border-brand-blue focus:ring-4 focus:ring-blue-500/20"
-                        placeholder="jane@company.com…"
-                      />
-                     {errors.email && <p id="email-error" className="mt-1.5 ml-1 text-xs text-red-300">{it ? (fields.email.includes('@') ? 'Inserisci un indirizzo email valido.' : 'Inserisci la tua email di lavoro.') : errors.email}</p>}
-                  </div>
-
-                  <div className="mb-6">
-                     <label htmlFor="role" className="block text-sm font-medium text-slate-400 mb-1 ml-1">{it ? 'Ruolo professionale' : 'Role / Job Title'}</label>
-                     <input disabled={!clientReady}
-                        type="text"
-                        id="role"
-                        name="role"
-                        autoComplete="organization-title"
-                        required
-                        value={fields.role}
-                        onChange={(e) => updateField('role', e.target.value)}
-                        aria-invalid={Boolean(errors.role)}
-                        aria-describedby={errors.role ? 'role-error' : undefined}
-                        className="min-h-12 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-base text-white outline-none transition-colors placeholder:text-slate-500 hover:border-slate-600 focus:border-brand-blue focus:ring-4 focus:ring-blue-500/20"
-                        placeholder={it ? 'Es. Consulente BPM…' : 'E.g. BPM consultant…'}
-                      />
-                     {errors.role && <p id="role-error" className="mt-1.5 ml-1 text-xs text-red-300">{it ? 'Inserisci il tuo ruolo.' : errors.role}</p>}
-                  </div>
-
-                  <p className="text-xs text-slate-300 mb-6 text-center">
-                    {it ? 'Invia solo dati professionali non riservati.' : 'Submit professional, non-confidential information only.'}
-                  </p>
-                  <p className="mb-6 text-center text-xs leading-5 text-slate-300">{it ? 'Leggi la ' : 'Read the '}<a href={privacyNoticeUrl} className="font-semibold text-white underline underline-offset-4">{it ? 'informativa privacy' : 'privacy notice'}</a>{it ? ' prima di inviare.' : ' before submitting.'}</p>
-
-                  {submitError && (
-                    <div role="alert" className="mb-5 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-center text-sm text-red-200">
-                      {submitError}
-                    </div>
-                  )}
-
-                  <button
-                    type="submit"
-                    disabled={!clientReady || status === 'submitting'}
-                    aria-busy={status === 'submitting'}
-                    className="btn-primary w-full"
-                  >
-                    {status === 'submitting' ? (
-                      <span className="flex items-center justify-center space-x-2">
-                        <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        <span>{it ? 'Invio…' : 'Processing…'}</span>
-                      </span>
-                    ) : (
-                      <>
-                        {it ? 'Ricevi gli aggiornamenti' : 'Request updates'}
-                        <ArrowRight className="w-4 h-4 ml-1" />
-                      </>
-                    )}
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
-        </motion.div>
-      </main>
-      
-      <div className="w-full relative z-10 mt-auto">
-         <Footer />
-      </div>
-    </div>
-  );
+  const locked = !clientReady || status === 'submitting';
+  return <div className="offer-page flex min-h-dvh flex-col bg-brand-light text-brand-ink">
+    <SkipLink />
+    <header className="border-b border-slate-200 bg-white"><div className="section-shell flex min-h-20 items-center justify-between gap-4">
+      <Link to={it ? '/' : '/?lang=en'} className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-blue"><ArrowLeft aria-hidden="true" className="size-4" />{it ? 'Torna a DeliR' : 'Back to DeliR'}</Link>
+      <LanguageSwitch />
+    </div></header>
+    <main id="main-content" tabIndex={-1} className="mx-auto w-full max-w-2xl flex-1 px-5 py-12 sm:px-8 sm:py-16">
+      <p className="landing-eyebrow">{it ? 'Per consulenti BPM e Operations' : 'For BPM and Operations consultants'}</p>
+      <h1 className="landing-title mt-4">{it ? 'Vuoi usare DeliR nel tuo lavoro?' : 'Want to use DeliR in your work?'}</h1>
+      <p className="mt-5 text-base leading-7 text-slate-600">{it ? 'Segnala il tuo interesse a provare il prodotto. Ti contatterò per la disponibilità di accesso. La richiesta non dà accesso immediato e non comporta acquisti o impegni.' : 'Tell me you would like to try the product. I will contact you about access availability. A request does not grant immediate access or commit you to a purchase.'}</p>
+      {status === 'success' ? <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8" aria-labelledby="interest-success">
+        <CheckCircle2 aria-hidden="true" className="size-8 text-brand-blue" />
+        <h2 id="interest-success" ref={success} tabIndex={-1} className="mt-4 text-2xl font-semibold">{it ? 'Richiesta ricevuta.' : 'Request received.'}</h2>
+        <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Ti contatterò per la disponibilità di accesso. Non è stata fissata una data e non hai sottoscritto un abbonamento.' : 'I will contact you about access availability. No date has been set and you have not subscribed to a paid plan.'}</p>
+        <p className="mt-5 text-sm leading-6 text-slate-600">{it ? 'Hai già un incarico in mente o vuoi chiarire un dubbio?' : 'Already have an engagement in mind or a question?'}</p>
+        <a href={conversationHref(language)} className="btn-secondary mt-3 whitespace-normal">{it ? 'Parliamone senza impegno' : 'Talk without obligation'}<ArrowRight aria-hidden="true" className="size-4" /></a>
+      </section> : captureEnabled ? <form method="post" noValidate onSubmit={handleSubmit} aria-label={it ? 'Richiesta di provare DeliR' : 'Request to try DeliR'} onFocusCapture={() => { if (!started.current) { started.current = true; trackInterestEvent('interest_form_started', language); } }} className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
+        <label htmlFor="email" className="block text-sm font-semibold">Email</label>
+        <input id="email" name="email" type="email" inputMode="email" autoComplete="email" spellCheck={false} required maxLength={254} disabled={locked} value={fields.email} onChange={event => updateField('email', event.target.value)} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'email-error' : undefined} className="control-enterprise mt-2 !text-base" placeholder={it ? 'nome@studio.it…' : 'you@practice.com…'} />
+        {errors.email ? <p id="email-error" className="mt-2 text-sm text-red-700">{errorText.email}</p> : null}
+        <label htmlFor="practice" className="mt-5 block text-sm font-semibold">{it ? 'Tipo di attività' : 'Practice type'}</label>
+        <select id="practice" name="practice" autoComplete="off" required disabled={locked} value={fields.practice} onChange={event => updateField('practice', event.target.value)} aria-invalid={Boolean(errors.practice)} aria-describedby={errors.practice ? 'practice-help practice-error' : 'practice-help'} className="control-enterprise mt-2 !text-base">
+          <option value="">{it ? 'Seleziona' : 'Select'}</option>
+          <option value="independent">{it ? 'Consulente indipendente' : 'Independent consultant'}</option>
+          <option value="consulting-team">{it ? 'Team o società di consulenza' : 'Consulting team or firm'}</option>
+          <option value="in-house">{it ? 'Operations aziendali' : 'In-house Operations'}</option>
+          <option value="other">{it ? 'Altro' : 'Other'}</option>
+        </select>
+        <p id="practice-help" className="mt-2 text-xs leading-5 text-slate-600">{it ? 'Serve a distinguere le richieste dei consulenti da altri utilizzi.' : 'Helps distinguish consultant requests from other use cases.'}</p>
+        {errors.practice ? <p id="practice-error" className="mt-2 text-sm text-red-700">{errorText.practice}</p> : null}
+        <label htmlFor="timing" className="mt-5 block text-sm font-semibold">{it ? 'Quando vorresti usarlo? · facoltativo' : 'When would you use it? · optional'}</label>
+        <select id="timing" name="timing" autoComplete="off" disabled={locked} value={fields.timing} onChange={event => updateField('timing', event.target.value)} aria-invalid={Boolean(errors.timing)} aria-describedby={errors.timing ? 'timing-error' : undefined} className="control-enterprise mt-2 !text-base">
+          <option value="">{it ? 'Preferisco non indicarlo' : 'Prefer not to say'}</option>
+          <option value="active">{it ? 'Su un incarico già attivo' : 'On an active engagement'}</option>
+          <option value="next-90-days">{it ? 'Su un incarico entro 90 giorni' : 'On an engagement within 90 days'}</option>
+          <option value="exploring">{it ? 'Sto esplorando, senza un incarico previsto' : 'Exploring, with no engagement planned'}</option>
+        </select>
+        {errors.timing ? <p id="timing-error" className="mt-2 text-sm text-red-700">{errorText.timing}</p> : null}
+        <p className="mt-5 text-xs leading-6 text-slate-600">{it ? 'Con l’invio chiedi di essere contattato per la disponibilità di DeliR. Puoi ritirare la richiesta scrivendo a ' : 'Submitting asks to be contacted about DeliR availability. Withdraw your request by emailing '}<a href={`mailto:${publicContactEmail}`} className="underline underline-offset-4">{publicContactEmail}</a>. {it ? 'Leggi l’' : 'Read the '}<a href={privacyNoticeUrl} className="font-semibold text-brand-blue underline underline-offset-4">{it ? 'informativa privacy' : 'privacy notice'}</a>.</p>
+        {submitError ? <p role="alert" className="mt-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm leading-6 text-red-800">{submitError}</p> : null}
+        <button type="submit" disabled={locked} aria-busy={status === 'submitting'} className="btn-primary mt-5 w-full whitespace-normal">{status === 'submitting' ? (it ? 'Invio in corso…' : 'Sending…') : interestCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4" /></button>
+      </form> : <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8" aria-labelledby="interest-pending">
+        <h2 id="interest-pending" className="text-xl font-semibold">{it ? 'Le richieste online non sono ancora aperte.' : 'Online requests are not open yet.'}</h2>
+        <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Puoi già scrivermi per chiedere di provare DeliR. Il link apre il tuo programma email; l’invio avviene lì.' : 'You can already email me to request a chance to try DeliR. The link opens your email app; send your message there.'}</p>
+        <a href={productInterestEmailHref(language)} className="btn-primary mt-5 whitespace-normal">{it ? 'Scrivimi per provare DeliR' : 'Email me to try DeliR'}<ArrowRight aria-hidden="true" className="size-4" /></a>
+      </section>}
+      <p className="mt-6 text-sm leading-6 text-slate-600">{it ? 'Preferisci prima parlarne? ' : 'Prefer a conversation first? '}<a href={conversationHref(language)} className="inline-flex min-h-11 items-center font-semibold text-brand-blue underline underline-offset-4">{it ? 'Scrivimi senza impegno' : 'Email me without obligation'}</a>.</p>
+    </main><Footer />
+  </div>;
 }

@@ -101,3 +101,20 @@ export function trackPilotEvent(event: PilotEvent, language: 'it' | 'en', sectio
   });
   return true;
 }
+
+export type InterestEvent = 'interest_cta_clicked' | 'interest_form_started' | 'interest_submit_attempt' | 'interest_submit_failed' | 'interest_request_accepted' | 'conversation_contact_clicked' | 'conversation_booking_clicked';
+const interestEvents: readonly string[] = ['interest_cta_clicked', 'interest_form_started', 'interest_submit_attempt', 'interest_submit_failed', 'interest_request_accepted', 'conversation_contact_clicked', 'conversation_booking_clicked'];
+const interestSections: readonly string[] = ['hero', 'navigation', 'product-interest', 'caso', 'confronto', 'conversation', 'early-access', 'application', 'other'];
+
+// Acceptance is a request signal. New unique consultants are counted in the
+// database; duplicates and mailto clicks must not be counted as new customers.
+export function trackInterestEvent(event: InterestEvent, language: 'it' | 'en', section = 'application'): boolean {
+  if (!analyticsAvailable || !started || !readConsent()?.analytics || !interestEvents.includes(event)) return false;
+  analyticsWindow().gtag?.('event', event, {
+    send_to: measurementId, language: language === 'en' ? 'en' : 'it', form_name: 'product_interest',
+    section: interestSections.includes(section) ? section : 'other',
+    page_location: `https://delir.it${['interest_cta_clicked', 'conversation_contact_clicked', 'conversation_booking_clicked'].includes(event) ? '/' : '/waitlist'}${language === 'en' ? '?lang=en' : ''}`,
+    page_referrer: '',
+  });
+  return true;
+}

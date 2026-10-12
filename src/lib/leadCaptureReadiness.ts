@@ -6,4 +6,5 @@ const validPrivacyNoticeUrl = (privacyNoticeUrl.startsWith('/') && !privacyNotic
 const enabled = privacyNoticeReady && import.meta.env.VITE_LEAD_CAPTURE_READY === 'true' && validPrivacyNoticeUrl;
 
 export const pilotCaptureReady = enabled && Boolean(import.meta.env.VITE_PILOT_ENDPOINT?.trim());
-export const waitlistCaptureReady = enabled && Boolean(import.meta.env.VITE_WAITLIST_ENDPOINT?.trim());
+export const waitlistCaptureReady = enabled && import.meta.env.VITE_WAITLIST_READY === 'true'
+  && Boolean(import.meta.env.VITE_WAITLIST_ENDPOINT?.trim());

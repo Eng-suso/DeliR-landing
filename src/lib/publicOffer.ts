@@ -30,3 +30,27 @@ export const pilotCtaLabel = {
 export function pilotApplicationHref(language: 'it' | 'en') {
   return `/pilot${language === 'en' ? '?lang=en' : ''}#application`;
 }
+
+export const interestCtaLabel = { it: 'Voglio provare DeliR', en: 'I want to try DeliR' } as const;
+export function productInterestHref(language: 'it' | 'en') {
+  return `/waitlist${language === 'en' ? '?lang=en' : ''}`;
+}
+export function conversationHref(language: 'it' | 'en') {
+  if (conversationBookingUrl) return conversationBookingUrl;
+  const subject = language === 'it' ? 'DeliR — confronto senza impegno' : 'DeliR — no-obligation conversation';
+  return `mailto:${publicContactEmail}?subject=${encodeURIComponent(subject)}`;
+}
+
+// A public event link only. Until supplied, the real email contact remains usable.
+export function validateConversationBookingUrl(value: string): string | null {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && ['calendly.com', 'www.calendly.com'].includes(url.hostname)
+      && !url.username && !url.password && !url.port && url.pathname !== '/' ? url.href : null;
+  } catch { return null; }
+}
+export const conversationBookingUrl = validateConversationBookingUrl(import.meta.env.VITE_CONVERSATION_BOOKING_URL?.trim() ?? '');
+export function productInterestEmailHref(language: 'it' | 'en') {
+  const subject = language === 'it' ? 'DeliR — vorrei provare il prodotto' : 'DeliR — I would like to try the product';
+  return `mailto:${publicContactEmail}?subject=${encodeURIComponent(subject)}`;
+}

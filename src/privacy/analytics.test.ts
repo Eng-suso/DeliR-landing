@@ -92,3 +92,18 @@ it('protects funnel events with consent and sends only allowlisted context', asy
   expect(trackPilotEvent('generate_lead', 'it')).toBe(false);
   expect(events).toHaveLength(2);
 });
+
+it('keeps product-use signals separate from received leads and completed meetings', async () => {
+  const { startAnalytics, trackInterestEvent } = await import('./analytics');
+  expect(trackInterestEvent('interest_request_accepted', 'it')).toBe(false);
+  saveConsent(true); startAnalytics(true);
+  trackInterestEvent('interest_request_accepted', 'it', 'unsafe-free-text');
+  trackInterestEvent('conversation_booking_clicked', 'en', 'conversation');
+  const queue = (Reflect.get(window, 'dataLayer') as ArrayLike<unknown>[]).filter(item => item[0] === 'event');
+  expect(queue.map(item => item[1])).toEqual(['interest_request_accepted', 'conversation_booking_clicked']);
+  expect(queue[0][2]).toMatchObject({ form_name: 'product_interest', section: 'other', page_location: 'https://delir.it/waitlist' });
+  expect(JSON.stringify(queue)).not.toContain('unsafe-free-text');
+  expect(JSON.stringify(queue)).not.toContain('calendly.com');
+  saveConsent(false);
+  expect(trackInterestEvent('interest_submit_attempt', 'it')).toBe(false);
+});

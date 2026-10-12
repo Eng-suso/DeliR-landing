@@ -3,7 +3,7 @@ import { useFragment } from '../lib/useFragment';
 import { ArrowRight, ArrowUpRight, Check, X } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { comparisonProducts, comparisonRows, type ComparisonRow } from '../lib/comparisonContent';
-import { pilotCtaLabel, pilotApplicationHref } from '../lib/publicOffer';
+import { interestCtaLabel, productInterestHref } from '../lib/publicOffer';
 import DifferentiatorGrid from './DifferentiatorGrid';
 
 const copy = {
@@ -95,7 +95,7 @@ export default function Comparison() {
 
         <div className="comparison-next mt-8 flex flex-col gap-6 rounded-2xl bg-brand-mist p-6 sm:p-7 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl"><h3 className="font-display text-xl font-semibold text-brand-ink">{t.reason}</h3><p className="mt-2 text-sm leading-6 text-slate-600">{t.reasonBody}</p></div>
-          <div className="flex shrink-0 flex-col items-start gap-4"><a href={pilotApplicationHref(language)} className="btn-primary whitespace-normal">{pilotCtaLabel[language]}<ArrowUpRight aria-hidden="true" className="size-4 shrink-0" /></a><a href="#caso" className="btn-text">{t.secondary}<ArrowRight aria-hidden="true" className="size-4" /></a></div>
+          <div className="flex shrink-0 flex-col items-start gap-4"><a href={productInterestHref(language)} className="btn-primary whitespace-normal">{interestCtaLabel[language]}<ArrowUpRight aria-hidden="true" className="size-4 shrink-0" /></a><a href="#caso" className="btn-text">{t.secondary}<ArrowRight aria-hidden="true" className="size-4" /></a></div>
         </div>
 
         <Link to={sourcesPath} className="mt-5 inline-flex min-h-11 items-center text-sm font-medium text-brand-blue underline underline-offset-4">{t.sources}<ArrowUpRight aria-hidden="true" className="ml-2 size-4" /></Link>
