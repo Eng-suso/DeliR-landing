@@ -4,7 +4,9 @@ Marketing site and lead capture (waitlist, pilot application) for DeliR.
 
 Latest delivery evidence: [GitHub readiness, 11 October 2026](docs/github-readiness-2026-10-11.md).
 
-Stack: React 19, TypeScript, Vite, Tailwind CSS 4, React Router. Hosted on Cloudflare Workers Static Assets.
+Current infrastructure decisions: [IONOS and delir.it](docs/infrastructure-decisions-2026-10-11.md). SEO audience, query hypotheses and Search Console activation: [SEO and Search Console](docs/seo-search-console-2026-10-11.md).
+
+Stack: React 19, TypeScript, Vite, Tailwind CSS 4, React Router. The production target is IONOS Hosting Plus at `https://delir.it`, with the domain connected to `/public`. The existing deployment tooling targets Cloudflare Workers Static Assets and has not yet been adapted to IONOS.
 
 ## Setup
 
@@ -49,11 +51,17 @@ A cross-origin endpoint must also be allowed in the `connect-src` directive of `
 
 The form routes show an honest availability page until the readiness flag, notice URL and corresponding endpoint are set. The form endpoints are not implemented in this repository. Never put a CRM token or private webhook in a `VITE_*` variable. Verify server-side validation, rate limiting, delivery and error handling before opening intake.
 
+## Privacy and analytics
+
+`/privacy` contains the IT/EN notice for the IONOS-only configuration confirmed on 12 October 2026. Gmail forwarding is disabled according to the owner. On the owner’s request, the release build now enables pilot submission to `/api/pilot.php`; the private IONOS backend must also be enabled and the real write verified after upload. GA4 and waitlist remain closed. The enterprise consent panel offers equal accept/reject actions, optional analytics off by default, granular preferences and withdrawal from the footer. Before enabling GA4, update the notice for Google processing, verify provider terms and actual property settings, and validate consent in production. See `docs/pilot-and-consent-activation-2026-10-12.md` for activation and rollback.
+
+See [privacy and GA4 review](docs/privacy-ga4-review-2026-10-11.md) for official sources, the processing inventory, retention proposals, technical tests and remaining release conditions. The tag uses Basic Consent Mode and loads only after an affirmative, valid stored analytics choice. Revocation clears the managed GA cookies and reloads the document to stop the loaded tag. Google Ads remains denied. This implementation does not itself establish GDPR compliance.
+
 ## Hosting
 
 - `wrangler.jsonc` serves `dist/` with `not_found_handling: "single-page-application"`, so deep links and refreshes on client routes return `index.html`.
 - `public/_headers` sets security headers (CSP, HSTS, framing, referrer, permissions) and long-lived caching for hashed files under `/assets/`. Update the CSP when adding third-party origins.
-- `public/robots.txt`, `public/sitemap.xml` and the `og:image` URL in `index.html` assume the production domain `https://delir.ai`.
+- `public/robots.txt`, `public/sitemap.xml`, canonical/hreflang links and Open Graph URLs use the confirmed production domain `https://delir.it`.
 - Screenshot imports stay PNG in `artifacts/`; `vite-imagetools` emits WebP at build time.
 
 ## Delivery pipeline

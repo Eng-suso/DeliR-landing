@@ -29,7 +29,7 @@ test('all seventeen supplied scenes have keyboard selectors and working media', 
   const ids = new Set(['hero-loop']);
   for (const chapter of await page.locator('[data-product-module]').all()) {
     const chapterId = await chapter.getAttribute('id');
-    await page.locator('nav[aria-label="Viste del prodotto"]').locator('a[href="#' + chapterId + '"]').click();
+    await page.locator('nav[aria-label="Benefici DeliR"]').locator('a[href="#' + chapterId + '"]').click();
     const selectors = chapter.getByRole('group').getByRole('link');
     for (const selector of await selectors.all()) {
       await selector.focus();
@@ -59,7 +59,7 @@ test('selected scene and fullscreen dialog remain accessible in English', async 
   await page.getByRole('button', { name: 'English', exact: true }).click();
   if (testInfo.project.name.includes('mobile')) await page.getByRole('button', { name: 'Close navigation menu' }).click();
   const chapter = page.locator('#product-05');
-  await page.getByRole('navigation', { name: 'Product views' }).getByRole('link', { name: 'Simulation & Delivery', exact: true }).click();
+  await page.getByRole('navigation', { name: 'DeliR benefits' }).getByRole('link', { name: 'Scenarios', exact: true }).click();
   const scene = chapter.getByRole('group').getByRole('link', { name: /Scenario comparison/ });
   await scene.click();
   await expect(scene).toHaveAttribute('aria-current', 'true');

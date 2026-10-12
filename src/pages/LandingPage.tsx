@@ -4,6 +4,7 @@ import PremiumBackground from '../components/PremiumBackground';
 import FragmentNavigation from '../components/FragmentNavigation';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
+import ProcessBridge from '../components/ProcessBridge';
 import Problem from '../components/Problem';
 import Journey from '../components/Journey';
 import Comparison from '../components/Comparison';
@@ -26,6 +27,7 @@ export default function LandingPage() {
       <Navbar />
       <main id="main-content" className="relative z-10">
         <Hero />
+        <ProcessBridge />
         <Problem />
         <Journey />
         <Comparison />

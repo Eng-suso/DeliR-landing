@@ -1,7 +1,7 @@
 export type PilotApplicationFields = {
   name: string;
   email: string;
-  practice: '' | 'independent' | 'boutique';
+  practice: '' | 'independent' | 'boutique' | 'consulting-firm' | 'in-house-operations';
   timing: '' | 'active' | 'next-90-days';
   projectBrief: string;
 };
@@ -13,10 +13,11 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 export function validatePilotApplication(fields: PilotApplicationFields): PilotApplicationErrors {
   const errors: PilotApplicationErrors = {};
   if (!fields.name.trim()) errors.name = 'required';
+  else if (fields.name.trim().length > 100) errors.name = 'long';
   if (!fields.email.trim()) errors.email = 'required';
-  else if (!emailPattern.test(fields.email.trim())) errors.email = 'invalid';
-  if (!fields.practice) errors.practice = 'required';
-  if (!fields.timing) errors.timing = 'required';
+  else if (fields.email.trim().length > 254 || (!/^[\x21-\x7e]+$/.test(fields.email.trim()) || !emailPattern.test(fields.email.trim()))) errors.email = 'invalid';
+  if (!['independent', 'boutique', 'consulting-firm', 'in-house-operations'].includes(fields.practice)) errors.practice = 'required';
+  if (!['active', 'next-90-days'].includes(fields.timing)) errors.timing = 'required';
 
   const briefLength = fields.projectBrief.trim().length;
   if (!briefLength) errors.projectBrief = 'required';
@@ -38,7 +39,9 @@ export async function submitPilotApplication(fields: PilotApplicationFields, sig
       projectBrief: fields.projectBrief.trim(),
       source: 'delir-pilot-application',
     }),
-    signal,
+    signal: signal ?? AbortSignal.timeout(15000),
   });
-  if (!response.ok) throw new Error('submission_failed');
+  if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) throw new Error('submission_failed');
+  const acknowledgement: unknown = await response.json();
+  if (!acknowledgement || typeof acknowledgement !== 'object' || !('accepted' in acknowledgement) || acknowledgement.accepted !== true) throw new Error('submission_failed');
 }

@@ -29,6 +29,8 @@ export default function WaitlistPage() {
   const [fields, setFields] = useState<WaitlistFields>(emptyFields);
   const [errors, setErrors] = useState<WaitlistErrors>({});
   const [submitError, setSubmitError] = useState('');
+  // Server HTML is inert; createRoot enables controls when it attaches handlers.
+  const clientReady = typeof window !== 'undefined';
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 
   const updateField = (field: keyof WaitlistFields, value: string) => {
@@ -132,14 +134,14 @@ export default function WaitlistPage() {
                 </button>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} noValidate className="relative group text-left max-w-md mx-auto" aria-label={it ? 'Richiesta aggiornamenti prodotto' : 'Product updates request'}>
+              <form method="post" onSubmit={handleSubmit} noValidate className="relative group text-left max-w-md mx-auto" aria-label={it ? 'Richiesta aggiornamenti prodotto' : 'Product updates request'}>
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-300"></div>
                 <div className="relative flex flex-col rounded-3xl border border-slate-700/50 bg-slate-900 p-6 shadow-2xl transition-colors">
                   
                   <div className="flex flex-col sm:flex-row gap-4 mb-4">
                     <div className="w-full">
                       <label htmlFor="firstName" className="block text-sm font-medium text-slate-400 mb-1 ml-1">{it ? 'Nome' : 'First Name'}</label>
-                      <input
+                      <input disabled={!clientReady}
                         type="text"
                         id="firstName"
                         name="firstName"
@@ -156,7 +158,7 @@ export default function WaitlistPage() {
                     </div>
                     <div className="w-full">
                       <label htmlFor="lastName" className="block text-sm font-medium text-slate-400 mb-1 ml-1">{it ? 'Cognome' : 'Last Name'}</label>
-                      <input
+                      <input disabled={!clientReady}
                         type="text"
                         id="lastName"
                         name="lastName"
@@ -175,7 +177,7 @@ export default function WaitlistPage() {
 
                   <div className="mb-4">
                      <label htmlFor="email" className="block text-sm font-medium text-slate-400 mb-1 ml-1">{it ? 'Email di lavoro' : 'Work Email'}</label>
-                     <input
+                     <input disabled={!clientReady}
                         type="email"
                         id="email"
                         name="email"
@@ -195,7 +197,7 @@ export default function WaitlistPage() {
 
                   <div className="mb-6">
                      <label htmlFor="role" className="block text-sm font-medium text-slate-400 mb-1 ml-1">{it ? 'Ruolo professionale' : 'Role / Job Title'}</label>
-                     <input
+                     <input disabled={!clientReady}
                         type="text"
                         id="role"
                         name="role"
@@ -224,7 +226,7 @@ export default function WaitlistPage() {
 
                   <button
                     type="submit"
-                    disabled={status === 'submitting'}
+                    disabled={!clientReady || status === 'submitting'}
                     aria-busy={status === 'submitting'}
                     className="btn-primary w-full"
                   >

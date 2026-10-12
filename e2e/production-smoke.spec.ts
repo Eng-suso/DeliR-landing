@@ -12,8 +12,13 @@ test('critical production routes render', async ({ page }, testInfo) => {
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
   await page.goto('/pilot');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  await expect(page.getByRole('form')).toHaveCount(0);
-  await expect(page.getByRole('link', { name: 'Parliamo del tuo progetto' })).toHaveAttribute('href', /^mailto:/);
+  await expect(page.getByRole('form')).toBeVisible();
+  await expect(page.locator('form button[type="submit"]')).toBeEnabled();
+  await page.goto('/security-data');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Sicurezza e dati');
+  await page.reload();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Sicurezza e dati');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://delir.it/security-data');
   await page.goto('/enterprise-readiness');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Pagina non trovata');
 });

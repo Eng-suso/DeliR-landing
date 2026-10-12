@@ -1,19 +1,38 @@
 import { expect, test } from '@playwright/test';
 
-test('hero makes the offer and an email enquiry available', async ({ page }) => {
+for (const language of ['it', 'en']) {
+  test(`comparison criteria open their product evidence by keyboard (${language})`, async ({ page }) => {
+    await page.goto(`/?lang=${language}#confronto`);
+    const criteria = page.locator('#confronto [data-differentiator]');
+    await expect(criteria).toHaveCount(6);
+    for (let index = 0; index < 6; index++) {
+      const link = criteria.nth(index).getByRole('link');
+      const target = await link.getAttribute('href');
+      expect(target).toMatch(/^#(scene-|caso$)/);
+      await link.focus();
+      await link.press('Enter');
+      await expect(page).toHaveURL(new RegExp(`${target}$`));
+      await expect(page.locator(target!)).toBeInViewport();
+      if (target!.startsWith('#scene-')) {
+        await expect(page.locator(`[href="${target}"][aria-current="true"]`)).toHaveCount(1);
+      }
+    }
+  });
+}
+
+test('hero makes the offer and pilot application available', async ({ page }) => {
   await page.goto('/');
   await page.locator('#hero-title').waitFor();
   const hero = page.locator('section[aria-labelledby="hero-title"]');
-  for (const term of ['Pilot a pagamento per milestone', 'Perimetro e criteri concordati', 'Primo contatto senza dati del cliente']) await expect(hero.getByText(term)).toBeVisible();
-  await expect(hero.getByRole('link', { name: 'Parliamo del tuo progetto' })).toHaveAttribute('href', /^mailto:delir\.team@gmail\.com\?subject=/);
+  for (const term of ['Conosci perimetro e prezzo prima di iniziare', 'Paghi solo quando ogni milestone viene consegnata', 'Puoi fermarti in qualsiasi momento, senza impegni a lungo termine']) await expect(hero.getByText(term)).toBeVisible();
+  await expect(hero.getByRole('link', { name: 'Testa DeliR sul tuo progetto' })).toHaveAttribute('href', '/pilot#application');
   await hero.getByRole('link', { name: 'Vedi il prodotto' }).click();
   await expect(page).toHaveURL(/#caso$/);
   await page.goto('/pilot');
   await page.getByRole('heading', { level: 1 }).waitFor();
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Valuta un pilot DeliR sul tuo incarico.');
-  await expect(page.getByRole('form')).toHaveCount(0);
-  await expect(page.getByRole('heading', { name: 'Firma e avvio' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Consegna al process owner' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Testa DeliR sul tuo progetto.');
+  await expect(page.getByRole('form')).toBeVisible();
+  await expect(page.getByLabel('Nome e cognome')).toBeEnabled();
 });
 
 test('product chapters and buying questions remain accessible', async ({ page }) => {
@@ -27,10 +46,10 @@ test('product chapters and buying questions remain accessible', async ({ page })
   await expect(dialog).toBeVisible();
   await expect(dialog.locator('video')).toHaveAttribute('controls', '');
   await dialog.getByRole('button', { name: 'Chiudi il video' }).click();
-  const faq = page.getByRole('button', { name: 'Quanto dura e quali output ricevo?' });
+  const faq = page.getByRole('button', { name: /Cosa succede se il cliente dimentica informazioni importanti o le fonti si contraddicono/ });
   await faq.click();
   await expect(faq).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.getByRole('region', { name: 'Quanto dura e quali output ricevo?' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Cosa succede se il cliente dimentica informazioni importanti o le fonti si contraddicono?' })).toBeVisible();
 });
 
 test('mobile navigation remains operable after deep scrolling', async ({ page, isMobile }) => {
@@ -51,14 +70,14 @@ test('landing has no runtime errors', async ({ page }, testInfo) => {
 
 test('chapters and scenes support keyboard navigation and direct links', async ({ page }) => {
   await page.goto('/');
-  const miningLink = page.getByRole('navigation', { name: 'Viste del prodotto' }).getByRole('link', { name: 'Process Mining', exact: true });
-  await miningLink.focus(); await miningLink.press('Enter');
+  const decisionLink = page.getByRole('navigation', { name: 'Benefici DeliR' }).getByRole('link', { name: 'Decisioni', exact: true });
+  await decisionLink.focus(); await decisionLink.press('Enter');
   await expect(page).toHaveURL(/#product-04$/);
   const chapter = page.locator('#product-04');
-  await expect(chapter.getByRole('heading', { name: 'Individua dove il flusso si ferma.' })).toBeInViewport();
+  await expect(chapter.getByRole('heading', { name: 'Spiega le modifiche che raccomandi.' })).toBeInViewport();
   const expand = chapter.getByRole('button', { name: /Apri il video completo/ });
   await expand.focus(); await expand.press('Enter');
-  const dialog = page.getByRole('dialog', { name: 'Heatmap e colli di bottiglia' });
+  const dialog = page.getByRole('dialog', { name: 'Review TO-BE' });
   await expect(dialog).toBeVisible(); await page.keyboard.press('Escape');
   await expect(dialog).not.toBeVisible(); await expect(expand).toBeFocused();
   await page.goto('/#scene-review-as-is');
@@ -75,14 +94,15 @@ test('mobile menu closes with Escape and restores focus', async ({ page, isMobil
   await page.keyboard.press('Escape'); await expect(toggle).toHaveAttribute('aria-expanded', 'false'); await expect(toggle).toBeFocused();
 });
 
-test('shared evidence links open the source panel directly', async ({ page }) => {
+test('shared evidence links lead to the dedicated sources page', async ({ page }) => {
   await page.goto('/#comparison-evidence-review');
-  await page.locator('#comparison-evidence-review').waitFor();
+  await expect(page).toHaveURL(/\/comparison-sources#comparison-evidence-review$/);
   await expect(page.locator('#comparison-evidence-review')).toBeInViewport();
-  await expect(page.locator('#comparison-evidence-review').locator('xpath=ancestor::details')).toHaveAttribute('open', '');
-  await page.locator('#confronto summary').click();
-  await expect(page.locator('#confronto details')).not.toHaveAttribute('open', '');
-  await page.locator('#confronto table a[href="#comparison-evidence-review"]').first().click();
+  await expect(page.locator('#comparison-evidence-review')).toBeFocused();
+  await page.getByRole('link', { name: /Torna al confronto/ }).click();
+  await expect(page.locator('#confronto details')).toHaveCount(0);
+  await page.locator('#confronto a[href="/comparison-sources#comparison-evidence-review"]').first().click();
+  await expect(page).toHaveURL(/\/comparison-sources#comparison-evidence-review$/);
   await expect(page.locator('#comparison-evidence-review')).toBeInViewport();
 });
 

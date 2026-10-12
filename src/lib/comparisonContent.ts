@@ -1,76 +1,85 @@
 type Localized = { it: string; en: string };
 export const comparisonSources = {
+  visio: { label: 'Microsoft · Visio process diagrams', href: 'https://support.microsoft.com/en-us/visio/process-diagrams-in-visio' },
+  bizagi: { label: 'Bizagi · Modeler', href: 'https://www.bizagi.com/en/platform/modeler' },
+  bizagiSimulation: { label: 'Bizagi · Simulation', href: 'https://help.bizagi.com/platform/en/simulation.htm' },
+  miro: { label: 'Miro · BPMN', href: 'https://miro.com/process-mapping/' },
   chatgpt: { label: 'ChatGPT · Files & analysis', href: 'https://help.openai.com/en/articles/8437071-data-analysis-with-chatgpt' },
   claude: { label: 'Claude · Projects', href: 'https://support.claude.com/en/articles/9517075-what-are-projects' },
-  artifacts: { label: 'Claude · Artifacts', href: 'https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them' },
-  celonis: { label: 'Celonis · Process Management', href: 'https://www.celonis.com/platform/process-management' },
-  celonisSimulation: { label: 'Celonis · Simulation', href: 'https://www.celonis.com/blog/simulation-analysis-in-process-mining-definition-applications-and-techniques' },
-  signavio: { label: 'SAP Signavio · Process Modeler', href: 'https://www.signavio.com/products/process-modeler/' },
-  signavioSimulation: { label: 'SAP Signavio · Simulation', href: 'https://www.signavio.com/video/signavio-tutorial-videos/sap-signavio-process-manager-simulations/' },
-  camunda: { label: 'Camunda · Web Modeler', href: 'https://docs.camunda.io/docs/components/modeler/web-modeler/' },
-  camundaReview: { label: 'Camunda · Review', href: 'https://docs.camunda.io/docs/components/modeler/web-modeler/process-applications/process-application-pipeline/' },
-  camundaCopilot: { label: 'Camunda · BPMN Copilot', href: 'https://docs.camunda.io/docs/components/early-access/alpha/bpmn-copilot/' },
-  camundaTest: { label: 'Camunda · Process testing', href: 'https://docs.camunda.io/docs/components/hub/workspace/modeler/validation/test-your-process/' },
-  processmind: { label: 'ProcessMind · Start with a process', href: 'https://processmind.com/resources/docs/getting-started/start-with-process' },
-  processmindReview: { label: 'ProcessMind · Documentation & reviews', href: 'https://processmind.com/platform/process-documentation' },
-  processmindSimulation: { label: 'ProcessMind · AI & simulation', href: 'https://processmind.com/platform/ai-driven-process-management' },
+  prime: { label: 'PRIME BPM · Platform', href: 'https://www.primebpm.com/us/business-process-management-software' },
+  lucidflow: { label: 'LucidFlow · FAQ', href: 'https://lucidflow.ai/faq' },
 } as const;
 export const comparisonProducts = [
-  { id: 'processmind', name: 'ProcessMind', category: { it: 'Mining e simulazione', en: 'Mining & simulation' } },
-  { id: 'celonis', name: 'Celonis', category: { it: 'Process intelligence', en: 'Process intelligence' } },
-  { id: 'signavio', name: 'SAP Signavio', category: { it: 'Process transformation', en: 'Process transformation' } },
-  { id: 'camunda', name: 'Camunda', category: { it: 'Web Modeler', en: 'Web Modeler' } },
-  { id: 'assistants', name: 'ChatGPT / Claude', category: { it: 'Chat e artifact standard', en: 'Standard chat & artifacts' } },
+  { id: 'visio', name: 'Visio' },
+  { id: 'bizagi', name: 'Bizagi' },
+  { id: 'miro', name: 'Miro' },
+  { id: 'assistants', name: 'ChatGPT / Claude' },
+  { id: 'prime', name: 'PRIME BPM' },
+  { id: 'lucidflow', name: 'LucidFlow' },
 ] as const;
 type ProductId = typeof comparisonProducts[number]['id'];
 type SourceId = keyof typeof comparisonSources;
-export type ComparisonStatus = 'yes' | 'partial' | 'no';
+export type ComparisonStatus = 'yes' | 'no';
 export type ComparisonCell = { status: ComparisonStatus; sources: SourceId[] };
 export type ComparisonRow = { id: string; label: Localized; definition: Localized; evidence: string; cells: Record<ProductId, ComparisonCell> };
-const cell = (status: ComparisonStatus, ...sources: SourceId[]): ComparisonCell => ({ status, sources });
-// Ratings supplied by the product owner on 2026-10-09, not independent test results.
-// Official documentation links provide product context, not proof of every rating.
+const ratings = (visio: ComparisonStatus, bizagi: ComparisonStatus, miro: ComparisonStatus, assistants: ComparisonStatus, prime: ComparisonStatus, lucidflow: ComparisonStatus): ComparisonRow['cells'] => ({
+  visio: { status: visio, sources: ['visio'] },
+  bizagi: { status: bizagi, sources: ['bizagi', 'bizagiSimulation'] },
+  miro: { status: miro, sources: ['miro'] },
+  assistants: { status: assistants, sources: ['chatgpt', 'claude'] },
+  prime: { status: prime, sources: ['prime'] },
+  lucidflow: { status: lucidflow, sources: ['lucidflow'] },
+});
+// Exact matrix supplied by the product owner on 2026-10-11.
+// Official links provide context, not independent verification of each rating.
 export const comparisonRows: ComparisonRow[] = [
   {
     id: 'bpmn',
-    label: { it: 'Costruire l’AS-IS da documenti e interviste', en: 'Build the AS-IS from documents and interviews' },
-    definition: { it: 'Ricostruire il processo attuale partendo da documenti e interviste, mantenendo il contesto necessario alla revisione del modello.', en: 'Reconstruct the current process from documents and interviews, retaining the context needed to review the model.' },
+    label: { it: 'Da documenti e interviste a un As-Is strutturato', en: 'From documents and interviews to a structured As-Is' },
+    definition: { it: 'Ricostruire il processo attuale dalle fonti, con un modello strutturato da sottoporre a review.', en: 'Reconstruct the current process from sources, with a structured model ready for review.' },
     evidence: '#scene-fonti-e-affermazioni',
-    cells: { processmind: cell('partial', 'processmind', 'processmindSimulation'), celonis: cell('no', 'celonis'), signavio: cell('partial', 'signavio'), camunda: cell('no', 'camunda', 'camundaCopilot'), assistants: cell('partial', 'chatgpt', 'claude') },
-  },
-  {
-    id: 'memory',
-    label: { it: 'Mantenere memoria del cliente e dell’incarico dall’apertura del progetto fino alla proposta finale', en: 'Retain client and engagement context from project kickoff to the final proposal' },
-    definition: { it: 'Conservare fonti, decisioni e contesto dell’incarico in un percorso continuo, dalla raccolta iniziale alla proposta finale.', en: 'Retain sources, decisions and engagement context in a continuous workflow from initial discovery to the final proposal.' },
-    evidence: '#scene-memoria',
-    cells: { processmind: cell('partial', 'processmindReview'), celonis: cell('partial', 'celonis'), signavio: cell('partial', 'signavio'), camunda: cell('no', 'camunda'), assistants: cell('partial', 'claude') },
+    cells: ratings('no', 'no', 'yes', 'no', 'yes', 'yes'),
   },
   {
     id: 'review',
-    label: { it: 'Trovare informazioni mancanti prima di approvare l’AS-IS', en: 'Find missing information before approving the AS-IS' },
-    definition: { it: 'Portare in review le informazioni mancanti nelle fonti prima di considerare il processo attuale pronto per l’approvazione.', en: 'Bring missing information in the sources into review before considering the current process ready for approval.' },
+    label: { it: 'Trova lacune e ambiguità prima di chiudere l’As-Is', en: 'Find gaps and ambiguities before finalising the As-Is' },
+    definition: { it: 'Evidenziare informazioni mancanti e punti ambigui prima di confermare il modello attuale.', en: 'Surface missing information and ambiguous points before confirming the current model.' },
     evidence: '#scene-lacuna-aperta',
-    cells: { processmind: cell('partial', 'processmindReview'), celonis: cell('no', 'celonis'), signavio: cell('partial', 'signavio'), camunda: cell('partial', 'camundaReview', 'camundaTest'), assistants: cell('partial', 'chatgpt', 'claude') },
+    cells: ratings('no', 'no', 'no', 'no', 'yes', 'yes'),
   },
   {
     id: 'evidence',
-    label: { it: 'Risalire da un’attività alla prova da cui deriva', en: 'Trace an activity back to its supporting evidence' },
-    definition: { it: 'Collegare un’attività modellata alla fonte documentale o all’intervista da cui è stata ricostruita, per poterla spiegare e verificare.', en: 'Link a modeled activity to the document or interview it was reconstructed from, so it can be explained and reviewed.' },
+    label: { it: 'Risalire da ogni attività alla fonte che la supporta', en: 'Trace each activity back to its supporting source' },
+    definition: { it: 'Collegare l’attività modellata alla fonte documentale o all’intervista che la supporta, per poterla verificare.', en: 'Link the modelled activity to its supporting document or interview so it can be reviewed.' },
     evidence: '#scene-evidenze-sul-processo',
-    cells: { processmind: cell('partial', 'processmindReview'), celonis: cell('no', 'celonis'), signavio: cell('partial', 'signavio'), camunda: cell('partial', 'camunda', 'camundaReview'), assistants: cell('no', 'chatgpt', 'claude') },
+    cells: ratings('no', 'no', 'no', 'no', 'no', 'no'),
+  },
+  {
+    id: 'memory',
+    label: { it: 'Memoria strutturata di fonti, decisioni e cambiamenti dell’incarico', en: 'Structured memory of engagement sources, decisions and changes' },
+    definition: { it: 'Mantenere fonti, decisioni e cambiamenti collegati nel contesto persistente dell’incarico.', en: 'Keep sources, decisions and changes connected in persistent engagement context.' },
+    evidence: '#scene-memoria',
+    cells: ratings('no', 'no', 'no', 'no', 'no', 'no'),
   },
   {
     id: 'scenarios',
-    label: { it: 'Simulare quantitativamente il TO-BE prima di implementarlo', en: 'Simulate the TO-BE quantitatively before implementation' },
-    definition: { it: 'Simulare il processo proposto con parametri operativi e confrontare i risultati prima dell’implementazione. Il criterio riguarda un simulatore di processo integrato, non calcoli o codice da costruire e validare separatamente.', en: 'Simulate the proposed process with operating parameters and compare results before implementation. This criterion concerns an integrated process simulator, rather than calculations or code to build and validate separately.' },
+    label: { it: 'Simulare quantitativamente alternative To-Be prima di implementarle', en: 'Quantitatively simulate To-Be alternatives before implementation' },
+    definition: { it: 'Confrontare alternative con parametri operativi e assunzioni espliciti, prima dell’implementazione. Il criterio riguarda il workflow di simulazione del prodotto, non codice su misura.', en: 'Compare alternatives using explicit operating parameters and assumptions before implementation. The criterion concerns the product’s simulation workflow, rather than custom code.' },
     evidence: '#scene-confronto',
-    cells: { processmind: cell('yes', 'processmindSimulation'), celonis: cell('yes', 'celonisSimulation'), signavio: cell('yes', 'signavioSimulation'), camunda: cell('no', 'camundaTest'), assistants: cell('no', 'chatgpt', 'artifacts') },
+    cells: ratings('no', 'yes', 'no', 'no', 'yes', 'yes'),
   },
   {
     id: 'redesign',
-    label: { it: 'Collegare evidenza → problema → modifica → processo migliorato', en: 'Connect evidence → problem → change → improved process' },
-    definition: { it: 'Seguire la motivazione del redesign dalla fonte iniziale al problema individuato, alla modifica proposta e al processo TO-BE.', en: 'Follow the rationale for redesign from the original source to the identified problem, proposed change and TO-BE process.' },
+    label: { it: 'Collegare evidenza → problema → modifica → To-Be mantenendo il perché', en: 'Connect evidence → problem → change → To-Be while retaining the rationale' },
+    definition: { it: 'Seguire il perché della proposta dalla fonte iniziale al problema, alla modifica e allo scenario To-Be.', en: 'Follow the proposal’s rationale from its original source to the problem, change and To-Be scenario.' },
     evidence: '#scene-ipotesi-to-be',
-    cells: { processmind: cell('partial', 'processmindReview', 'processmindSimulation'), celonis: cell('partial', 'celonis'), signavio: cell('partial', 'signavio'), camunda: cell('no', 'camunda'), assistants: cell('partial', 'chatgpt', 'claude') },
+    cells: ratings('no', 'no', 'no', 'no', 'no', 'no'),
+  },
+  {
+    id: 'workflow',
+    label: { it: 'BPMN come parte del workflow', en: 'BPMN as part of the workflow' },
+    definition: { it: 'Usare BPMN nel percorso di lavoro sul processo; disponibilità ed elementi supportati dipendono dal prodotto e dal piano.', en: 'Use BPMN within the process workflow; availability and supported elements depend on the product and plan.' },
+    evidence: '#scene-review-as-is',
+    cells: ratings('yes', 'yes', 'yes', 'no', 'yes', 'yes'),
   },
 ];

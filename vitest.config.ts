@@ -11,7 +11,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],
-      include: ['src/lib/**/*.ts'],
+      include: ['src/lib/**/*.ts', 'src/privacy/**/*.ts'],
       // Static comparison/media catalogs are validated through browser asset and link checks.
       exclude: ['src/lib/comparisonContent.ts', 'src/lib/productClips.ts', 'src/lib/heroMedia.ts'],
       thresholds: {
