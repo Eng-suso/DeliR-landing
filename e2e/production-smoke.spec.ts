@@ -7,7 +7,7 @@ test('critical production routes render', async ({ page }, testInfo) => {
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.goto('/waitlist');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Le iscrizioni agli aggiornamenti non sono ancora aperte.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'La lista d’attesa online non è ancora aperta.' })).toBeVisible();
   await expect(page.getByRole('form')).toHaveCount(0);
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
   await page.goto('/pilot');

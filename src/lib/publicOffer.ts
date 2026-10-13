@@ -8,7 +8,6 @@ export function projectContactHref(language: 'it' | 'en') {
   return `mailto:${publicContactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
-// Shared between the hero and pilot offer to keep public terms consistent.
 export const pilotRiskReversals = {
   it: [
     'Conosci perimetro e prezzo prima di iniziare',
@@ -29,4 +28,18 @@ export const pilotCtaLabel = {
 
 export function pilotApplicationHref(language: 'it' | 'en') {
   return `/pilot${language === 'en' ? '?lang=en' : ''}#application`;
+}
+
+export const interestCtaLabel = {
+  it: 'Entra nella lista d’attesa',
+  en: 'Join the waitlist',
+} as const;
+
+export function productInterestHref(language: 'it' | 'en') {
+  return `/waitlist${language === 'en' ? '?lang=en' : ''}`;
+}
+
+export function productInterestEmailHref(language: 'it' | 'en') {
+  const subject = language === 'it' ? 'DeliR — lista d’attesa' : 'DeliR — waitlist';
+  return `mailto:${publicContactEmail}?subject=${encodeURIComponent(subject)}`;
 }

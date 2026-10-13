@@ -4,6 +4,7 @@ import PremiumBackground from '../components/PremiumBackground';
 import FragmentNavigation from '../components/FragmentNavigation';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
+import ProductInterestSummary from '../components/ProductInterestSummary';
 import PilotSummary from '../components/PilotSummary';
 import PilotFunnelTracking from '../components/PilotFunnelTracking';
 import ProcessBridge from '../components/ProcessBridge';
@@ -30,10 +31,11 @@ export default function LandingPage() {
       <Navbar />
       <main id="main-content" className="relative z-10">
         <Hero />
-        <PilotSummary />
+        <ProductInterestSummary />
         <ProcessBridge />
         <Problem />
         <Journey />
+        <PilotSummary />
         <Comparison />
         <BuiltFor />
         <PilotInvitation />

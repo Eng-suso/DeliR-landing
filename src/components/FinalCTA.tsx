@@ -1,21 +1,25 @@
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { pilotCtaLabel, pilotApplicationHref } from '../lib/publicOffer';
+import { interestCtaLabel, pilotApplicationHref, productInterestHref } from '../lib/publicOffer';
 
 const copy = {
   it: {
-    eyebrow: 'Pronti quando lo sei tu',
-    title: 'Porta il tuo prossimo progetto per un cliente.',
-    intro: 'Raccontaci cosa vuoi comprendere, migliorare o decidere.',
-    body: 'Valuteremo il progetto insieme a te, definiremo un perimetro chiaro per il pilot e concorderemo output, milestone e prezzo prima che tu prenda un impegno.',
-    terms: 'Perimetro chiaro · Paghi per milestone · Puoi fermarti quando vuoi',
+    eyebrow: 'Scegli il prossimo passo',
+    title: 'Vuoi usare DeliR nel tuo prossimo incarico?',
+    intro: 'Entra nella lista d’attesa per l’early access.',
+    body: 'Ti contatterò quando potrò aprire l’accesso a nuovi utenti. Se invece hai già un processo o un progetto reale da portare avanti, puoi candidarlo subito per un pilot.',
+    pilotLead: 'Hai già un progetto reale?',
+    pilotAction: 'Avvia un pilot',
+    terms: 'Early access senza acquisto · Pilot separato e su progetto reale',
   },
   en: {
-    eyebrow: 'Ready when you are',
-    title: 'Bring your next client project.',
-    intro: 'Tell us what you are trying to understand, improve, or decide.',
-    body: 'We will review the project with you, define a clear pilot scope, and agree deliverables, milestones, and price before you commit.',
-    terms: 'Clear scope · Pay by milestone · Stop anytime',
+    eyebrow: 'Choose your next step',
+    title: 'Want to use DeliR on your next engagement?',
+    intro: 'Join the waitlist for early access.',
+    body: 'I will contact you when access can open to more users. If you already have a real process or project to work on, you can apply for a pilot now.',
+    pilotLead: 'Already have a real project?',
+    pilotAction: 'Start a pilot',
+    terms: 'Early access with no purchase · Pilot is separate and project-based',
   },
 };
 
@@ -27,7 +31,8 @@ export default function FinalCTA() {
     <h2 id="final-cta-title" className="mx-auto mt-5 max-w-3xl text-balance font-display text-[clamp(2rem,4vw,3.6rem)] font-semibold leading-tight tracking-[-0.04em]">{t.title}</h2>
     <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-300">{t.intro}</p>
     <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-300">{t.body}</p>
-    <a href={pilotApplicationHref(language)} className="btn-primary mt-7 whitespace-normal">{pilotCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4 shrink-0" /></a>
-    <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-slate-300">{t.terms}</p>
+    <a href={productInterestHref(language)} className="btn-primary mt-7 whitespace-normal">{interestCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4 shrink-0" /></a>
+    <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-slate-300">{t.pilotLead} <a data-pilot-section="early-access" href={pilotApplicationHref(language)} className="font-semibold text-white underline underline-offset-4">{t.pilotAction}</a>.</p>
+    <p className="mx-auto mt-3 max-w-xl text-xs leading-5 text-slate-400">{t.terms}</p>
   </div></section>;
 }

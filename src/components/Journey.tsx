@@ -3,6 +3,7 @@ import { useLanguage } from '../i18n/LanguageContext';
 import { productClips } from '../lib/productClips';
 import { useFragment } from '../lib/useFragment';
 import ClipExplorer from './ClipExplorer';
+import { interestCtaLabel, productInterestHref } from '../lib/publicOffer';
 
 // Keep scene deep links and give each recording one home in the story.
 const benefits = [
@@ -83,7 +84,7 @@ export default function Journey() {
             </article>;
           })}
         </div>
-        <div className="mt-10 flex flex-col gap-4 border-t border-slate-200 pt-8 lg:flex-row lg:items-center lg:justify-between"><p className="max-w-2xl text-base font-medium leading-7 text-brand-ink">{t.principle}</p><a href="#pilot" className="btn-text">{t.action}<ArrowRight aria-hidden="true" className="size-4" /></a></div>
+        <div className="mt-10 flex flex-col gap-4 border-t border-slate-200 pt-8 lg:flex-row lg:items-center lg:justify-between"><p className="max-w-2xl text-base font-medium leading-7 text-brand-ink">{t.principle}</p><a href={productInterestHref(language)} className="btn-primary whitespace-normal">{interestCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4" /></a></div>
       </div>
     </section>
   );

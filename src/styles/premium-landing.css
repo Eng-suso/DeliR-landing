@@ -63,7 +63,7 @@
 .hero-visual { position: relative; isolation: isolate; }
 .hero-layout {
   display: grid;
-  grid-template-areas: 'heading' 'visual' 'description' 'actions';
+  grid-template-areas: 'heading' 'description' 'actions' 'visual';
   gap: 20px;
   position: relative;
 }
@@ -336,9 +336,11 @@
     contain-intrinsic-block-size: auto 800px;
   }
   .landing-page .premium-journey { contain-intrinsic-block-size: auto 1100px; }
-  /* Safari touch hit testing can target the section instead of a rating link
-     after its details panel closes when this long card layout is skipped. */
-  .landing-page main > section.premium-comparison {
+  /* Keep touch targets materialized in Safari: skipped section layouts can
+     target the container instead of a comparison or conversion link. */
+  .landing-page main > section.premium-comparison,
+  .landing-page main > section#pilot-summary,
+  .landing-page main > section#conversation {
     content-visibility: visible;
     contain-intrinsic-block-size: none;
   }

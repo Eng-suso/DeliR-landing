@@ -43,6 +43,14 @@ function delir_cleanup_diagnostics(string $file, int $now, bool $apply): int
     } finally { fclose($handle); }
 }
 
+function delir_cleanup_interest(PDO $pdo, bool $apply): int
+{
+    if (!$apply) {
+        return (int) $pdo->query('SELECT COUNT(*) FROM product_interest WHERE created_at <= DATE_SUB(UTC_TIMESTAMP(), INTERVAL 12 MONTH)')->fetchColumn();
+    }
+    return $pdo->exec('DELETE FROM product_interest WHERE created_at <= DATE_SUB(UTC_TIMESTAMP(), INTERVAL 12 MONTH)');
+}
+
 if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') === __FILE__) {
     if (count($argv) !== 2 || !in_array($argv[1], ['--dry-run', '--apply'], true)) {
         fwrite(STDERR, "Usage: php maintenance.php --dry-run|--apply\n"); exit(2);
@@ -53,10 +61,17 @@ if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') === __FILE__) {
         $config = require __DIR__ . '/config.php';
         if (!is_array($config)) throw new RuntimeException('maintenance_failed');
         $now = time(); $apply = $argv[1] === '--apply';
-        $rates = delir_cleanup_rates(delir_connect_pilot($config), $now, $apply);
+        $pdo = delir_connect_pilot($config);
+        $rates = delir_cleanup_rates($pdo, $now, $apply);
+        // Existing pilot installations may not yet have the new table.
+        $interest = 0;
+        if ($pdo->query("SHOW TABLES LIKE 'product_interest'")->fetchColumn() !== false) {
+            $interest = delir_cleanup_interest($pdo, $apply);
+        }
         $logs = delir_cleanup_diagnostics(__DIR__ . '/diagnostic.log', $now, $apply);
-        // Counts only. No leads are selected, modified, exported or deleted.
-        echo json_encode(['mode' => $argv[1], 'expired_counters' => $rates, 'diagnostic_lines' => $logs], JSON_THROW_ON_ERROR) . "\n";
+        // Counts only. Pilot leads are untouched; product-interest retention
+        // removes only records whose stated twelve-month period has elapsed.
+        echo json_encode(['mode' => $argv[1], 'expired_counters' => $rates, 'diagnostic_lines' => $logs, 'expired_interest' => $interest], JSON_THROW_ON_ERROR) . "\n";
     } catch (Throwable $error) {
         fwrite(STDERR, "maintenance_failed\n"); exit(1);
     }

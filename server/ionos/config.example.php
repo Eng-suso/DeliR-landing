@@ -5,6 +5,7 @@ declare(strict_types=1);
 // Fill there, never in Git, VITE_*, a chat message or the public directory.
 return [
     'enabled' => false,
+    'waitlist_enabled' => false,
     'origins' => ['https://delir.it'],
     'db_host' => 'REPLACE_ON_SERVER',
     'db_port' => 3306,

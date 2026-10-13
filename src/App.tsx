@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LanguageProvider } from './i18n/LanguageContext';
 import ScrollToTop from './components/ScrollToTop';
-import LeadCapturePendingPage from './pages/LeadCapturePendingPage';
 import { pilotCaptureReady, waitlistCaptureReady } from './lib/leadCaptureReadiness';
 import SiteMetadata from './components/SiteMetadata';
 import LandingPage from './pages/LandingPage';
@@ -30,7 +29,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/pilot" element={<PilotPage captureEnabled={pilotCaptureReady} />} />
-            <Route path="/waitlist" element={waitlistCaptureReady ? <WaitlistPage /> : <LeadCapturePendingPage kind="waitlist" />} />
+            <Route path="/waitlist" element={<WaitlistPage captureEnabled={waitlistCaptureReady} />} />
             <Route path="/security-data" element={<SecurityDataPage />} />
             <Route path="/comparison-sources" element={<ComparisonSourcesPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />

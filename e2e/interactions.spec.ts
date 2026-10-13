@@ -23,13 +23,15 @@ for (const language of ['it', 'en']) {
   });
 }
 
-test('hero makes the offer and pilot application available', async ({ page }) => {
+test('hero prioritizes the waitlist while the paid pilot remains visible and available', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
   await page.locator('#hero-title').waitFor();
   const hero = page.locator('section[aria-labelledby="hero-title"]');
   for (const term of ['Conosci perimetro e prezzo prima di iniziare', 'Paghi solo quando ogni milestone viene consegnata', 'Puoi fermarti in qualsiasi momento, senza impegni a lungo termine']) await expect(page.locator('#pilot').getByText(term)).toBeVisible();
-  await expect(hero.getByRole('link', { name: 'Testa DeliR sul tuo progetto' })).toHaveAttribute('href', '/pilot#application');
+  await expect(hero.getByRole('link', { name: 'Entra nella lista d’attesa' })).toHaveAttribute('href', '/waitlist');
+  await expect(hero.getByRole('link', { name: 'Avvia un pilot' })).toHaveAttribute('href', '/pilot#application');
+  await expect(page.locator('#pilot-summary').getByRole('link', { name: 'Testa DeliR sul tuo progetto' })).toHaveAttribute('href', '/pilot#application');
   await hero.getByRole('link', { name: 'Vedi il prodotto' }).click();
   await expect(page).toHaveURL(/#caso$/);
   await page.goto('/pilot');

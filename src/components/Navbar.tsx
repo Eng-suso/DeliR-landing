@@ -1,18 +1,18 @@
 import { Menu, Pause, Play, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { pilotApplicationHref } from '../lib/publicOffer';
+import { interestCtaLabel, productInterestHref } from '../lib/publicOffer';
 import LanguageSwitch from './LanguageSwitch';
 import { useLanguage } from '../i18n/LanguageContext';
 
 const copy = {
   it: {
     links: [['Il prodotto', '#caso'], ['Confronto', '#confronto'], ['Dati e AI', '#fiducia'], ['Pilot', '#pilot']],
-    cta: 'Parliamone', open: 'Apri il menu', close: 'Chiudi il menu', nav: 'Navigazione principale',
+    cta: interestCtaLabel.it, open: 'Apri il menu', close: 'Chiudi il menu', nav: 'Navigazione principale',
   },
   en: {
     links: [['Product', '#caso'], ['Compare', '#confronto'], ['Data & AI', '#fiducia'], ['Pilot', '#pilot']],
-    cta: 'Talk to us', open: 'Open navigation menu', close: 'Close navigation menu', nav: 'Main navigation',
+    cta: interestCtaLabel.en, open: 'Open navigation menu', close: 'Close navigation menu', nav: 'Main navigation',
   },
 } as const;
 
@@ -56,8 +56,8 @@ export default function Navbar() {
               {backgroundPaused ? <Play aria-hidden="true" className="h-4 w-4" /> : <Pause aria-hidden="true" className="h-4 w-4" />}
             </button>
             <div className="hidden items-center gap-4 lg:flex">
-            <LanguageSwitch />
-            <a data-pilot-section="navigation" href={pilotApplicationHref(language)} className="btn-primary min-h-11 rounded-full px-5 py-2">{t.cta}</a>
+              <LanguageSwitch />
+              <a data-interest-section="navigation" href={productInterestHref(language)} className="btn-primary min-h-11 rounded-full px-5 py-2">{t.cta}</a>
             </div>
           </div>
           <button ref={menuButtonRef} type="button" onClick={() => setIsOpen((open) => !open)} aria-label={isOpen ? t.close : t.open} aria-expanded={isOpen} aria-controls="mobile-navigation" className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg text-brand-ink transition-colors hover:bg-slate-100 lg:hidden">
@@ -73,7 +73,7 @@ export default function Navbar() {
             </ul>
             <div className="flex items-center gap-4">
               <LanguageSwitch />
-              <a data-pilot-section="navigation" href={pilotApplicationHref(language)} onClick={() => setIsOpen(false)} className="btn-primary flex-1 rounded-lg">{t.cta}</a>
+              <a data-interest-section="navigation" href={productInterestHref(language)} onClick={() => setIsOpen(false)} className="btn-primary flex-1 rounded-lg">{t.cta}</a>
             </div>
           </div>
         ) : null}

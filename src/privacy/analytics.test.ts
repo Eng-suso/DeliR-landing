@@ -92,3 +92,18 @@ it('protects funnel events with consent and sends only allowlisted context', asy
   expect(trackPilotEvent('generate_lead', 'it')).toBe(false);
   expect(events).toHaveLength(2);
 });
+
+it('keeps waitlist signals separate from paid pilot leads', async () => {
+  const { startAnalytics, trackInterestEvent } = await import('./analytics');
+  expect(trackInterestEvent('interest_request_accepted', 'it')).toBe(false);
+  saveConsent(true); startAnalytics(true);
+  trackInterestEvent('interest_cta_clicked', 'en', 'hero');
+  trackInterestEvent('interest_request_accepted', 'it', 'unsafe-free-text');
+  const queue = (Reflect.get(window, 'dataLayer') as ArrayLike<unknown>[]).filter(item => item[0] === 'event');
+  expect(queue.map(item => item[1])).toEqual(['interest_cta_clicked', 'interest_request_accepted']);
+  expect(queue[0][2]).toMatchObject({ form_name: 'product_interest', section: 'hero', page_location: 'https://delir.it/?lang=en' });
+  expect(queue[1][2]).toMatchObject({ form_name: 'product_interest', section: 'other', page_location: 'https://delir.it/waitlist' });
+  expect(JSON.stringify(queue)).not.toContain('unsafe-free-text');
+  saveConsent(false);
+  expect(trackInterestEvent('interest_submit_attempt', 'it')).toBe(false);
+});
