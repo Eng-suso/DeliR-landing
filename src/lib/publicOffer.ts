@@ -31,7 +31,7 @@ export function pilotApplicationHref(language: 'it' | 'en') {
   return `/pilot${language === 'en' ? '?lang=en' : ''}#application`;
 }
 
-export const interestCtaLabel = { it: 'Voglio provare DeliR', en: 'I want to try DeliR' } as const;
+export const interestCtaLabel = { it: 'Entra nella lista d’attesa', en: 'Join the waitlist' } as const;
 export function productInterestHref(language: 'it' | 'en') {
   return `/waitlist${language === 'en' ? '?lang=en' : ''}`;
 }
@@ -51,6 +51,6 @@ export function validateConversationBookingUrl(value: string): string | null {
 }
 export const conversationBookingUrl = validateConversationBookingUrl(import.meta.env.VITE_CONVERSATION_BOOKING_URL?.trim() ?? '');
 export function productInterestEmailHref(language: 'it' | 'en') {
-  const subject = language === 'it' ? 'DeliR — vorrei provare il prodotto' : 'DeliR — I would like to try the product';
+  const subject = language === 'it' ? 'DeliR — lista d’attesa' : 'DeliR — waitlist';
   return `mailto:${publicContactEmail}?subject=${encodeURIComponent(subject)}`;
 }
