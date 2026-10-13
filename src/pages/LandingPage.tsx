@@ -6,7 +6,6 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import ProductInterestSummary from '../components/ProductInterestSummary';
 import PilotSummary from '../components/PilotSummary';
-import FounderConversation from '../components/FounderConversation';
 import PilotFunnelTracking from '../components/PilotFunnelTracking';
 import ProcessBridge from '../components/ProcessBridge';
 import Problem from '../components/Problem';
@@ -36,7 +35,6 @@ export default function LandingPage() {
         <ProcessBridge />
         <Problem />
         <Journey />
-        <FounderConversation />
         <PilotSummary />
         <Comparison />
         <BuiltFor />
