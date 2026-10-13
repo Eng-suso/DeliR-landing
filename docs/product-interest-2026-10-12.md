@@ -109,8 +109,27 @@ e [Calendly — privacy](https://calendly.com/legal/privacy-notice).
 
 ## Validazione
 
-TypeScript, lint, build e unit test con copertura: vedere il risultato aggiornato
-nella PR. I test PHP verificano validazione e guardie localmente; CI aggiunge una
-MariaDB usa e getta per transazioni, duplicati, quote, riepilogo e conservazione.
-Le prove browser dei percorsi attivi usano risposte simulate; non dimostrano
-un salvataggio su IONOS. Nessun dato reale viene inviato durante le verifiche.
+TypeScript, lint e build passati; 73 unit test passati, con copertura linee 98,6% e
+rami 95,4%. Audit npm: zero vulnerabilità rilevate. Browser visibile Chromium,
+Chrome mobile e Safari mobile: 63 verifiche dei percorsi principali passate, con
+18 esclusioni previste per controlli non applicabili al progetto browser.
+Nove verifiche della raccolta attiva sono passate su una build isolata
+dist-interest: invio simulato, HTML 200 rifiutato, retry, lingua, 320 px,
+accessibilità automatica del modulo e nessuna richiesta Calendly/Google prima
+del clic. Il pacchetto distribuibile resta distinto e mantiene il gate chiuso.
+
+I test PHP verificano 23 controlli di validazione e guardie localmente; il
+controllo CI MariaDB del primo commit è passato per transazioni, duplicati,
+quote, riepilogo e conservazione. La pipeline dell'ultimo commit resta la fonte
+per lo stato corrente dei controlli. Le prove browser attive usano risposte
+simulate; non dimostrano un salvataggio su IONOS. Nessun dato reale viene
+inviato durante le verifiche. L'ultima correzione rende esplicita la prenotazione,
+invece dell'email, nel link del modulo quando Calendly è configurato.
+
+Aggiornamento del 13 ottobre: la prima pipeline ha fallito soltanto nel passaggio
+CTA pilot → candidatura su Safari mobile. La correzione mantiene materializzati
+i link delle sezioni pilot-summary e conversation, evitando lo skip del layout
+nel touch hit testing. Il test attende anche la disponibilità del client e
+verifica che il punto centrale corrisponda al link prima di un clic reale.
+Tre ripetizioni locali Safari mobile sono passate dopo la correzione. Nessun
+clic forzato o allentamento della verifica di navigazione.

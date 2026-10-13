@@ -45,11 +45,15 @@ npx playwright install chromium webkit
 | `VITE_LEAD_CAPTURE_READY` | `false` | Set to `true` only after validating the intake service and publishing the privacy notice. |
 | `VITE_PRIVACY_NOTICE_URL` | empty | Absolute HTTPS or same-origin path to the published notice. |
 | `VITE_WAITLIST_ENDPOINT` | empty | Public route to a server-side waitlist handler. |
+| `VITE_WAITLIST_READY` | `false` | Independent switch for product-use requests; the pilot gate alone does not open it. |
+| `VITE_CONVERSATION_BOOKING_URL` | empty | Optional public HTTPS Calendly event link; empty or invalid values retain the email contact. |
 | `VITE_PILOT_ENDPOINT` | empty | Public route to a server-side pilot handler. |
 
 A cross-origin endpoint must also be allowed in the `connect-src` directive of `public/_headers`, otherwise the CSP blocks submissions.
 
-The form routes show an honest availability page until the readiness flag, notice URL and corresponding endpoint are set. The form endpoints are not implemented in this repository. Never put a CRM token or private webhook in a `VITE_*` variable. Verify server-side validation, rate limiting, delivery and error handling before opening intake.
+The product-interest route shows an honest availability page and usable email contact until its independent switch, notice URL and endpoint are set. The pilot retains its existing preview/active behavior. The IONOS PHP libraries, public entrypoints and schema live in `server/ionos` and `public/api`; they require private server installation and are not executed by Vite or Cloudflare Static Assets. Never put a CRM token or private webhook in a `VITE_*` variable. Verify server-side validation, rate limiting, persistence and error handling before opening intake.
+
+Product-use requests qualify consultant interest with email, practice type and optional timing. They are distinct from paid-pilot applications and founder conversations. See [product interest, setup and measurement](docs/product-interest-2026-10-12.md) for aggregate counts, duplicates, the Calendly link and IONOS activation.
 
 ## Privacy and analytics
 

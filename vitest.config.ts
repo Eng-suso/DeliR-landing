@@ -6,7 +6,7 @@ export default defineConfig({
   test: {
     maxWorkers: 2,
     environment: 'jsdom',
-    exclude: ['e2e/**', 'node_modules/**', 'dist/**'],
+    exclude: ['e2e/**', 'node_modules/**', 'dist/**', 'dist-interest/**'],
     setupFiles: ['./src/test/setup.ts'],
     coverage: {
       provider: 'v8',

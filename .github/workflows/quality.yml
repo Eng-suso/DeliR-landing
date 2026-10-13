@@ -78,6 +78,21 @@ jobs:
           retention-days: 7
       - run: npx playwright install --with-deps chromium webkit
       - run: npm run test:e2e
+      - name: Build isolated product-interest and Calendly fixtures
+        run: npx vite build --configLoader runner --outDir dist-interest
+        env:
+          VITE_PRIVACY_NOTICE_READY: 'true'
+          VITE_PRIVACY_NOTICE_URL: /privacy
+          VITE_LEAD_CAPTURE_READY: 'true'
+          VITE_WAITLIST_READY: 'true'
+          VITE_WAITLIST_ENDPOINT: /api/waitlist.php
+          VITE_ANALYTICS_READY: 'false'
+          VITE_CONVERSATION_BOOKING_URL: https://calendly.com/example/intro
+      - name: Verify the enabled product-interest flow with simulated responses
+        run: npx playwright test e2e/product-interest.spec.ts --project=chromium --project=mobile-chrome --project=mobile-safari
+        env:
+          PLAYWRIGHT_INTEREST_FIXTURE: 'true'
+          PLAYWRIGHT_BASE_URL: http://127.0.0.1:4181
       - run: npm run test:lighthouse
       - run: npm run test:lighthouse:mobile
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

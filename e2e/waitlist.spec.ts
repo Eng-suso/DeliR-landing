@@ -11,7 +11,14 @@ test('pilot validates before sending and confirms only accepted submissions', as
   });
   page.on('request', request => { if (request.method() === 'POST') requests.push(request.url()); });
   await page.goto('/');
-  await page.locator('#pilot-summary').getByRole('link', { name: 'Testa DeliR sul tuo progetto' }).click();
+  await expect(page.locator('.landing-page')).toHaveAttribute('data-client-ready', 'true');
+  const pilotLink = page.locator('#pilot-summary').getByRole('link', { name: 'Testa DeliR sul tuo progetto' });
+  await pilotLink.scrollIntoViewIfNeeded();
+  await expect.poll(() => pilotLink.evaluate(link => {
+    const box = link.getBoundingClientRect();
+    return document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2)?.closest('a') === link;
+  })).toBe(true);
+  await pilotLink.click();
   await expect(page).toHaveURL(/\/pilot#application$/);
   await expect(page.locator('#application')).toBeInViewport();
   await expect(page.locator('#application')).toBeFocused();

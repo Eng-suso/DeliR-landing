@@ -7,7 +7,7 @@ import SkipLink from '../components/SkipLink';
 import { useLanguage } from '../i18n/LanguageContext';
 import { submitWaitlist, validateWaitlist, type WaitlistErrors, type WaitlistFields } from '../lib/waitlist';
 import { privacyNoticeUrl } from '../lib/leadCaptureReadiness';
-import { conversationHref, interestCtaLabel, productInterestEmailHref, publicContactEmail } from '../lib/publicOffer';
+import { conversationBookingUrl, conversationHref, interestCtaLabel, productInterestEmailHref, publicContactEmail } from '../lib/publicOffer';
 import { trackInterestEvent } from '../privacy/analytics';
 import '../styles/premium-landing.css';
 
@@ -105,7 +105,7 @@ export default function WaitlistPage({ captureEnabled }: { captureEnabled: boole
         <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Puoi già scrivermi per chiedere di provare DeliR. Il link apre il tuo programma email; l’invio avviene lì.' : 'You can already email me to request a chance to try DeliR. The link opens your email app; send your message there.'}</p>
         <a href={productInterestEmailHref(language)} className="btn-primary mt-5 whitespace-normal">{it ? 'Scrivimi per provare DeliR' : 'Email me to try DeliR'}<ArrowRight aria-hidden="true" className="size-4" /></a>
       </section>}
-      <p className="mt-6 text-sm leading-6 text-slate-600">{it ? 'Preferisci prima parlarne? ' : 'Prefer a conversation first? '}<a href={conversationHref(language)} className="inline-flex min-h-11 items-center font-semibold text-brand-blue underline underline-offset-4">{it ? 'Scrivimi senza impegno' : 'Email me without obligation'}</a>.</p>
+      <p className="mt-6 text-sm leading-6 text-slate-600">{it ? 'Preferisci prima parlarne? ' : 'Prefer a conversation first? '}<a href={conversationHref(language)} className="inline-flex min-h-11 items-center font-semibold text-brand-blue underline underline-offset-4">{conversationBookingUrl ? (it ? 'Prenota un confronto senza impegno' : 'Book a no-obligation conversation') : (it ? 'Scrivimi senza impegno' : 'Email me without obligation')}</a>.</p>
     </main><Footer />
   </div>;
 }
