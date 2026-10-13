@@ -51,6 +51,8 @@ def connect():
         raise ReleaseError('Invalid SFTP port')
     transport = paramiko.Transport((host, port))
     try:
+        # Pin the key type documented by IONOS, as well as its fingerprint.
+        transport.get_security_options().key_types = ('ssh-ed25519',)
         transport.start_client(timeout=30)
         if fingerprint(transport.get_remote_server_key().asbytes()) != expected:
             raise ReleaseError('SFTP server fingerprint mismatch; password was not sent')

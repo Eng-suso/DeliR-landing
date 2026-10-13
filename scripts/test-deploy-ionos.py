@@ -129,6 +129,7 @@ class DeploymentTests(unittest.TestCase):
         class Transport:
             authenticated = False
             def __init__(self, target): pass
+            def get_security_options(self): return types.SimpleNamespace(key_types=())
             def start_client(self, timeout): pass
             def get_remote_server_key(self): return types.SimpleNamespace(asbytes=lambda: b'unexpected server key')
             def auth_password(self, *args, **kwargs): Transport.authenticated = True

@@ -143,6 +143,7 @@ jobs:
         if: steps.current.outputs.publish == 'true'
         run: |
           python3 -m venv "$RUNNER_TEMP/ionos-deploy-venv"
+          "$RUNNER_TEMP/ionos-deploy-venv/bin/python" -m pip install --upgrade 'pip==26.2.1'
           "$RUNNER_TEMP/ionos-deploy-venv/bin/python" -m pip install 'paramiko==5.0.0'
       - name: Publish the tested frontend and verify delir.it
         if: steps.current.outputs.publish == 'true'

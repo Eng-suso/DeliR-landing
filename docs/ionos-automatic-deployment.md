@@ -16,7 +16,7 @@ Ogni push a `main`, compreso quello generato dal merge di una PR, esegue `qualit
 
 Non inserire questi valori in chat, nel codice, in file `.env` versionati o nei log.
 
-Per l'impronta: leggere quella della chiave del server nella connessione già verificata di FileZilla/WinSCP. In alternativa, da un PC che ha già connesso quel server con OpenSSH, `ssh-keygen -lf "$HOME/.ssh/known_hosts"` mostra le impronte memorizzate: scegliere quella dello stesso host SFTP. Il deploy confronta l'impronta **prima** di inviare la password. Se il server presenta una chiave diversa, correggere il pin soltanto dopo aver verificato il cambiamento con IONOS; non disabilitare la verifica.
+Il deploy usa la chiave ED25519. [IONOS pubblica le impronte del Webhosting](https://www.ionos.de/hilfe/hosting/ssh-zugaenge-einrichten-und-verwalten/uebersicht-der-ssh-fingerabdruecke-im-ionos-webhosting/): il valore ED25519 verificato il 13 ottobre 2026 è `SHA256:1gx2w8Rtv3wCgi7Jh8myf/KVd72cRQbow03UP8P095Q`. È una chiave pubblica del provider, non un segreto o la password dell'account; si può copiare questo valore nel Secret dedicato. In alternativa, confrontare l'impronta ED25519 della connessione già verificata di FileZilla/WinSCP con la fonte IONOS. Il deploy confronta l'impronta **prima** di inviare la password. Se il server presenta una chiave diversa, correggere il pin soltanto dopo aver verificato il cambiamento con IONOS; non disabilitare la verifica.
 
 3. Nella scheda [**Variables**](https://github.com/Eng-suso/DeliR-landing/settings/variables/actions), creare:
 
