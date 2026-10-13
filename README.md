@@ -6,7 +6,7 @@ Latest delivery evidence: [GitHub readiness, 11 October 2026](docs/github-readin
 
 Current infrastructure decisions: [IONOS and delir.it](docs/infrastructure-decisions-2026-10-11.md). SEO audience, query hypotheses and Search Console activation: [SEO and Search Console](docs/seo-search-console-2026-10-11.md).
 
-Stack: React 19, TypeScript, Vite, Tailwind CSS 4, React Router. The production target is IONOS Hosting Plus at `https://delir.it`, with the domain connected to `/public`. The existing deployment tooling targets Cloudflare Workers Static Assets and has not yet been adapted to IONOS.
+Stack: React 19, TypeScript, Vite, Tailwind CSS 4, React Router. The production target is IONOS Hosting Plus at `https://delir.it`, with the domain connected to `/public`. [Automatic IONOS deployment](docs/ionos-automatic-deployment.md) publishes the verified build after successful main quality checks once its SFTP Secrets and variables are configured. Cloudflare jobs remain separately opt-in.
 
 ## Setup
 
@@ -72,6 +72,7 @@ See [privacy and GA4 review](docs/privacy-ga4-review-2026-10-11.md) for official
 `.github/workflows/quality.yml`:
 
 1. **quality** (every PR and push to `main`): full dependency audit including development tooling, typecheck, lint, unit tests, build, Playwright, Lighthouse desktop and mobile. The tested `dist/` is kept as an artifact and is what gets deployed.
+   **deploy-ionos** (successful `main` push, `ENABLE_IONOS_DEPLOYMENTS=true`): downloads that same artifact, validates the SFTP server fingerprint, publishes the frontend and verifies delir.it. [One-time configuration, isolation and rollback](docs/ionos-automatic-deployment.md).
 2. **preview** (same-repo PRs, opt-in): set repository variable `ENABLE_CLOUDFLARE_PREVIEWS=true` to enable `wrangler versions upload`; its preview URL is in the job summary. Both Cloudflare secrets are required; otherwise this job skips the upload.
 3. **deploy-staging** (push to `main`, opt-in): set repository variable `ENABLE_CLOUDFLARE_DEPLOYMENTS=true` to deploy `delir-landing-staging`.
 4. **deploy-production** (after staging): deploys `delir-landing`. Add required reviewers to the `production` environment in GitHub to approve each release manually.
