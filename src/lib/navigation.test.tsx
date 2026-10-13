@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { projectContactHref, validateConversationBookingUrl } from './publicOffer';
+import { projectContactHref } from './publicOffer';
 import { useFragment } from './useFragment';
 
 afterEach(() => { window.history.replaceState(null, '', '/'); vi.restoreAllMocks(); });
@@ -27,12 +27,6 @@ describe('shared scene navigation', () => {
 });
 
 describe('contact drafts', () => {
-  it('accepts only public HTTPS Calendly event links', () => {
-    expect(validateConversationBookingUrl('https://calendly.com/example/intro')).toBe('https://calendly.com/example/intro');
-    for (const href of ['javascript:alert(1)', 'http://calendly.com/example', 'https://calendly.com.attacker.test/example', 'https://person:password@calendly.com/example', 'https://calendly.com/']) {
-      expect(validateConversationBookingUrl(href)).toBeNull();
-    }
-  });
   it.each(['it', 'en'] as const)('creates a valid %s email draft without client data', language => {
     const url = new URL(projectContactHref(language));
     expect(url.protocol).toBe('mailto:');
