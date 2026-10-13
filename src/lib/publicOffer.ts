@@ -8,7 +8,6 @@ export function projectContactHref(language: 'it' | 'en') {
   return `mailto:${publicContactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
-// Shared between the hero and pilot offer to keep public terms consistent.
 export const pilotRiskReversals = {
   it: [
     'Conosci perimetro e prezzo prima di iniziare',
@@ -31,25 +30,15 @@ export function pilotApplicationHref(language: 'it' | 'en') {
   return `/pilot${language === 'en' ? '?lang=en' : ''}#application`;
 }
 
-export const interestCtaLabel = { it: 'Entra nella lista d’attesa', en: 'Join the waitlist' } as const;
+export const interestCtaLabel = {
+  it: 'Entra nella lista d’attesa',
+  en: 'Join the waitlist',
+} as const;
+
 export function productInterestHref(language: 'it' | 'en') {
   return `/waitlist${language === 'en' ? '?lang=en' : ''}`;
 }
-export function conversationHref(language: 'it' | 'en') {
-  if (conversationBookingUrl) return conversationBookingUrl;
-  const subject = language === 'it' ? 'DeliR — confronto senza impegno' : 'DeliR — no-obligation conversation';
-  return `mailto:${publicContactEmail}?subject=${encodeURIComponent(subject)}`;
-}
 
-// A public event link only. Until supplied, the real email contact remains usable.
-export function validateConversationBookingUrl(value: string): string | null {
-  try {
-    const url = new URL(value);
-    return url.protocol === 'https:' && ['calendly.com', 'www.calendly.com'].includes(url.hostname)
-      && !url.username && !url.password && !url.port && url.pathname !== '/' ? url.href : null;
-  } catch { return null; }
-}
-export const conversationBookingUrl = validateConversationBookingUrl(import.meta.env.VITE_CONVERSATION_BOOKING_URL?.trim() ?? '');
 export function productInterestEmailHref(language: 'it' | 'en') {
   const subject = language === 'it' ? 'DeliR — lista d’attesa' : 'DeliR — waitlist';
   return `mailto:${publicContactEmail}?subject=${encodeURIComponent(subject)}`;
