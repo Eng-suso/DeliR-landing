@@ -7,11 +7,11 @@ import { useLanguage } from '../i18n/LanguageContext';
 
 const copy = {
   it: {
-    links: [['Il prodotto', '#caso'], ['Parliamone', '#conversation'], ['Dati e AI', '#fiducia'], ['Pilot', '#pilot']],
+    links: [['Il prodotto', '#caso'], ['Confronto', '#confronto'], ['Dati e AI', '#fiducia'], ['Pilot', '#pilot']],
     cta: interestCtaLabel.it, open: 'Apri il menu', close: 'Chiudi il menu', nav: 'Navigazione principale',
   },
   en: {
-    links: [['Product', '#caso'], ['Talk to me', '#conversation'], ['Data & AI', '#fiducia'], ['Pilot', '#pilot']],
+    links: [['Product', '#caso'], ['Compare', '#confronto'], ['Data & AI', '#fiducia'], ['Pilot', '#pilot']],
     cta: interestCtaLabel.en, open: 'Open navigation menu', close: 'Close navigation menu', nav: 'Main navigation',
   },
 } as const;
@@ -56,8 +56,8 @@ export default function Navbar() {
               {backgroundPaused ? <Play aria-hidden="true" className="h-4 w-4" /> : <Pause aria-hidden="true" className="h-4 w-4" />}
             </button>
             <div className="hidden items-center gap-4 lg:flex">
-            <LanguageSwitch />
-            <a data-interest-section="navigation" href={productInterestHref(language)} className="btn-primary min-h-11 rounded-full px-5 py-2">{t.cta}</a>
+              <LanguageSwitch />
+              <a data-interest-section="navigation" href={productInterestHref(language)} className="btn-primary min-h-11 rounded-full px-5 py-2">{t.cta}</a>
             </div>
           </div>
           <button ref={menuButtonRef} type="button" onClick={() => setIsOpen((open) => !open)} aria-label={isOpen ? t.close : t.open} aria-expanded={isOpen} aria-controls="mobile-navigation" className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg text-brand-ink transition-colors hover:bg-slate-100 lg:hidden">
