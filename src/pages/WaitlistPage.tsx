@@ -7,7 +7,7 @@ import SkipLink from '../components/SkipLink';
 import { useLanguage } from '../i18n/LanguageContext';
 import { submitWaitlist, validateWaitlist, type WaitlistErrors, type WaitlistFields } from '../lib/waitlist';
 import { privacyNoticeUrl } from '../lib/leadCaptureReadiness';
-import { conversationBookingUrl, conversationHref, interestCtaLabel, productInterestEmailHref, publicContactEmail } from '../lib/publicOffer';
+import { interestCtaLabel, pilotApplicationHref, productInterestEmailHref, publicContactEmail } from '../lib/publicOffer';
 import { trackInterestEvent } from '../privacy/analytics';
 import '../styles/premium-landing.css';
 
@@ -49,7 +49,7 @@ export default function WaitlistPage({ captureEnabled }: { captureEnabled: boole
       trackInterestEvent('interest_request_accepted', language);
     } catch {
       setStatus('idle');
-      setSubmitError(it ? 'La richiesta non è stata confermata. I dati sono rimasti nel modulo: riprova.' : 'Your request was not confirmed. Your details are still in the form: please try again.');
+      setSubmitError(it ? 'L’iscrizione non è stata confermata. I dati sono rimasti nel modulo: riprova.' : 'Your signup was not confirmed. Your details are still in the form: please try again.');
       trackInterestEvent('interest_submit_failed', language);
     } finally { busy.current = false; }
   }
@@ -66,16 +66,16 @@ export default function WaitlistPage({ captureEnabled }: { captureEnabled: boole
       <LanguageSwitch />
     </div></header>
     <main id="main-content" tabIndex={-1} className="mx-auto w-full max-w-2xl flex-1 px-5 py-12 sm:px-8 sm:py-16">
-      <p className="landing-eyebrow">{it ? 'Per consulenti BPM e Operations' : 'For BPM and Operations consultants'}</p>
-      <h1 className="landing-title mt-4">{it ? 'Vuoi usare DeliR nel tuo lavoro?' : 'Want to use DeliR in your work?'}</h1>
-      <p className="mt-5 text-base leading-7 text-slate-600">{it ? 'Segnala il tuo interesse a provare il prodotto. Ti contatterò per la disponibilità di accesso. La richiesta non dà accesso immediato e non comporta acquisti o impegni.' : 'Tell me you would like to try the product. I will contact you about access availability. A request does not grant immediate access or commit you to a purchase.'}</p>
+      <p className="landing-eyebrow">Early access</p>
+      <h1 className="landing-title mt-4">{it ? 'Entra nella lista d’attesa di DeliR.' : 'Join the DeliR waitlist.'}</h1>
+      <p className="mt-5 text-base leading-7 text-slate-600">{it ? 'Lascia la tua email e indicaci come lavori. Ti contatterò quando potrò aprire l’accesso a nuovi utenti. Se hai già un progetto reale, non devi aspettare: puoi candidarlo per un pilot.' : 'Leave your email and tell us how you work. I will contact you when access can open to more users. If you already have a real project, you do not need to wait: you can apply for a pilot.'}</p>
       {status === 'success' ? <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8" aria-labelledby="interest-success">
         <CheckCircle2 aria-hidden="true" className="size-8 text-brand-blue" />
-        <h2 id="interest-success" ref={success} tabIndex={-1} className="mt-4 text-2xl font-semibold">{it ? 'Richiesta ricevuta.' : 'Request received.'}</h2>
-        <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Ti contatterò per la disponibilità di accesso. Non è stata fissata una data e non hai sottoscritto un abbonamento.' : 'I will contact you about access availability. No date has been set and you have not subscribed to a paid plan.'}</p>
-        <p className="mt-5 text-sm leading-6 text-slate-600">{it ? 'Hai già un incarico in mente o vuoi chiarire un dubbio?' : 'Already have an engagement in mind or a question?'}</p>
-        <a href={conversationHref(language)} className="btn-secondary mt-3 whitespace-normal">{it ? 'Parliamone senza impegno' : 'Talk without obligation'}<ArrowRight aria-hidden="true" className="size-4" /></a>
-      </section> : captureEnabled ? <form method="post" noValidate onSubmit={handleSubmit} aria-label={it ? 'Richiesta di provare DeliR' : 'Request to try DeliR'} onFocusCapture={() => { if (!started.current) { started.current = true; trackInterestEvent('interest_form_started', language); } }} className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
+        <h2 id="interest-success" ref={success} tabIndex={-1} className="mt-4 text-2xl font-semibold">{it ? 'Sei nella lista d’attesa.' : 'You’re on the waitlist.'}</h2>
+        <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Ti contatterò quando potrò aprire l’accesso a nuovi utenti. Non hai sottoscritto un abbonamento e non è stata promessa una data di accesso.' : 'I will contact you when access can open to more users. You have not subscribed to a paid plan and no access date has been promised.'}</p>
+        <p className="mt-5 text-sm leading-6 text-slate-600">{it ? 'Hai già un progetto o un processo reale su cui vuoi lavorare?' : 'Already have a real project or process you want to work on?'}</p>
+        <a data-pilot-section="waitlist-success" href={pilotApplicationHref(language)} className="btn-secondary mt-3 whitespace-normal">{it ? 'Avvia un pilot' : 'Start a pilot'}<ArrowRight aria-hidden="true" className="size-4" /></a>
+      </section> : captureEnabled ? <form method="post" noValidate onSubmit={handleSubmit} aria-label={it ? 'Iscrizione alla lista d’attesa DeliR' : 'DeliR waitlist signup'} onFocusCapture={() => { if (!started.current) { started.current = true; trackInterestEvent('interest_form_started', language); } }} className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
         <label htmlFor="email" className="block text-sm font-semibold">Email</label>
         <input id="email" name="email" type="email" inputMode="email" autoComplete="email" spellCheck={false} required maxLength={254} disabled={locked} value={fields.email} onChange={event => updateField('email', event.target.value)} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'email-error' : undefined} className="control-enterprise mt-2 !text-base" placeholder={it ? 'nome@studio.it…' : 'you@practice.com…'} />
         {errors.email ? <p id="email-error" className="mt-2 text-sm text-red-700">{errorText.email}</p> : null}
@@ -87,9 +87,9 @@ export default function WaitlistPage({ captureEnabled }: { captureEnabled: boole
           <option value="in-house">{it ? 'Operations aziendali' : 'In-house Operations'}</option>
           <option value="other">{it ? 'Altro' : 'Other'}</option>
         </select>
-        <p id="practice-help" className="mt-2 text-xs leading-5 text-slate-600">{it ? 'Serve a distinguere le richieste dei consulenti da altri utilizzi.' : 'Helps distinguish consultant requests from other use cases.'}</p>
+        <p id="practice-help" className="mt-2 text-xs leading-5 text-slate-600">{it ? 'Serve a capire chi vuole usare DeliR e in quale contesto.' : 'Helps us understand who wants to use DeliR and in what context.'}</p>
         {errors.practice ? <p id="practice-error" className="mt-2 text-sm text-red-700">{errorText.practice}</p> : null}
-        <label htmlFor="timing" className="mt-5 block text-sm font-semibold">{it ? 'Quando vorresti usarlo? · facoltativo' : 'When would you use it? · optional'}</label>
+        <label htmlFor="timing" className="mt-5 block text-sm font-semibold">{it ? 'Quando pensi che lo useresti? · facoltativo' : 'When do you think you would use it? · optional'}</label>
         <select id="timing" name="timing" autoComplete="off" disabled={locked} value={fields.timing} onChange={event => updateField('timing', event.target.value)} aria-invalid={Boolean(errors.timing)} aria-describedby={errors.timing ? 'timing-error' : undefined} className="control-enterprise mt-2 !text-base">
           <option value="">{it ? 'Preferisco non indicarlo' : 'Prefer not to say'}</option>
           <option value="active">{it ? 'Su un incarico già attivo' : 'On an active engagement'}</option>
@@ -97,15 +97,19 @@ export default function WaitlistPage({ captureEnabled }: { captureEnabled: boole
           <option value="exploring">{it ? 'Sto esplorando, senza un incarico previsto' : 'Exploring, with no engagement planned'}</option>
         </select>
         {errors.timing ? <p id="timing-error" className="mt-2 text-sm text-red-700">{errorText.timing}</p> : null}
-        <p className="mt-5 text-xs leading-6 text-slate-600">{it ? 'Con l’invio chiedi di essere contattato per la disponibilità di DeliR. Puoi ritirare la richiesta scrivendo a ' : 'Submitting asks to be contacted about DeliR availability. Withdraw your request by emailing '}<a href={`mailto:${publicContactEmail}`} className="underline underline-offset-4">{publicContactEmail}</a>. {it ? 'Leggi l’' : 'Read the '}<a href={privacyNoticeUrl} className="font-semibold text-brand-blue underline underline-offset-4">{it ? 'informativa privacy' : 'privacy notice'}</a>.</p>
+        <p className="mt-5 text-xs leading-6 text-slate-600">{it ? 'Con l’invio chiedi di essere contattato sulla disponibilità di accesso a DeliR. Puoi ritirare la richiesta scrivendo a ' : 'Submitting asks to be contacted about DeliR access availability. Withdraw your request by emailing '}<a href={`mailto:${publicContactEmail}`} className="underline underline-offset-4">{publicContactEmail}</a>. {it ? 'Leggi l’' : 'Read the '}<a href={privacyNoticeUrl} className="font-semibold text-brand-blue underline underline-offset-4">{it ? 'informativa privacy' : 'privacy notice'}</a>.</p>
         {submitError ? <p role="alert" className="mt-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm leading-6 text-red-800">{submitError}</p> : null}
-        <button type="submit" disabled={locked} aria-busy={status === 'submitting'} className="btn-primary mt-5 w-full whitespace-normal">{status === 'submitting' ? (it ? 'Invio in corso…' : 'Sending…') : interestCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4" /></button>
+        <button type="submit" disabled={locked} aria-busy={status === 'submitting'} className="btn-primary mt-5 w-full whitespace-normal">{status === 'submitting' ? (it ? 'Iscrizione in corso…' : 'Joining…') : interestCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4" /></button>
       </form> : <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8" aria-labelledby="interest-pending">
-        <h2 id="interest-pending" className="text-xl font-semibold">{it ? 'Le richieste online non sono ancora aperte.' : 'Online requests are not open yet.'}</h2>
-        <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Puoi già scrivermi per chiedere di provare DeliR. Il link apre il tuo programma email; l’invio avviene lì.' : 'You can already email me to request a chance to try DeliR. The link opens your email app; send your message there.'}</p>
-        <a href={productInterestEmailHref(language)} className="btn-primary mt-5 whitespace-normal">{it ? 'Scrivimi per provare DeliR' : 'Email me to try DeliR'}<ArrowRight aria-hidden="true" className="size-4" /></a>
+        <h2 id="interest-pending" className="text-xl font-semibold">{it ? 'La lista d’attesa online non è ancora aperta.' : 'The online waitlist is not open yet.'}</h2>
+        <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Puoi già scrivermi per chiedere di essere aggiunto. Il link apre il tuo programma email; l’invio avviene lì.' : 'You can already email me to ask to be added. The link opens your email app; send your message there.'}</p>
+        <a href={productInterestEmailHref(language)} className="btn-primary mt-5 whitespace-normal">{it ? 'Scrivimi per entrare nella lista d’attesa' : 'Email me to join the waitlist'}<ArrowRight aria-hidden="true" className="size-4" /></a>
       </section>}
-      <p className="mt-6 text-sm leading-6 text-slate-600">{it ? 'Preferisci prima parlarne? ' : 'Prefer a conversation first? '}<a href={conversationHref(language)} className="inline-flex min-h-11 items-center font-semibold text-brand-blue underline underline-offset-4">{conversationBookingUrl ? (it ? 'Prenota un confronto senza impegno' : 'Book a no-obligation conversation') : (it ? 'Scrivimi senza impegno' : 'Email me without obligation')}</a>.</p>
+      <div className="mt-8 border-t border-slate-200 pt-6">
+        <p className="text-sm font-semibold text-brand-ink">{it ? 'Hai già un progetto reale?' : 'Already have a real project?'}</p>
+        <p className="mt-1 text-sm leading-6 text-slate-600">{it ? 'Il pilot è un percorso separato: partiamo dal tuo processo, definiamo perimetro e milestone e valutiamo se DeliR è adatto al caso.' : 'The pilot is a separate path: we start from your process, define scope and milestones, and assess whether DeliR fits the case.'}</p>
+        <a data-pilot-section="waitlist" href={pilotApplicationHref(language)} className="mt-3 inline-flex min-h-11 items-center font-semibold text-brand-blue underline underline-offset-4">{it ? 'Valuta un pilot' : 'Explore a pilot'}<ArrowRight aria-hidden="true" className="ml-2 size-4" /></a>
+      </div>
     </main><Footer />
   </div>;
 }
