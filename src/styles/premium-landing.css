@@ -380,9 +380,6 @@
   .premium-journey .product-index-link { padding: 10px; min-height: 44px; }
   .premium-journey .product-screen-stage { padding: 12px; }
   .premium-journey .journey-description h3 { font-size: 24px; }
-  .product-film[data-clip="hero-loop"] > div:first-child { aspect-ratio: 4 / 3 !important; }
-  .product-film[data-clip="hero-loop"] > div:first-child > img,
-  .product-film[data-clip="hero-loop"] > div:first-child > video { position: absolute; width: 274.2857%; height: auto; max-width: none; left: -155.7143%; top: -49.5238%; }
   .product-film[data-clip="evidenze-sul-processo"] > div:first-child { aspect-ratio: 380 / 650 !important; }
   .product-film[data-clip="evidenze-sul-processo"] > div:first-child > img,
   .product-film[data-clip="evidenze-sul-processo"] > div:first-child > video { position: absolute; width: 505.2632%; height: auto; max-width: none; left: -405.2632%; top: -16.9231%; }

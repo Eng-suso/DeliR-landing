@@ -32,7 +32,14 @@ export default function ProductFilm({ clip, priority = false, minimal = false, n
   const [playbackTime, setPlaybackTime] = useState(0);
   const title = clip.title[language];
   const description = clip.description[language];
-  const mobileFocus = ['hero-loop', 'evidenze-sul-processo', 'lacuna-aperta', 'confronto', 'memoria', 'review-to-be'].includes(clip.id);
+  const localizedMedia = clip.localizedMedia?.[language];
+  const poster = localizedMedia?.poster ?? clip.poster;
+  const posterSrcSet = localizedMedia?.posterSrcSet ?? clip.posterSrcSet;
+  const mp4 = localizedMedia?.mp4 ?? `/product-clips/${clip.id}.mp4`;
+  // Localized hero recordings are supplied as MP4. Do not fall back to the old-language WebM.
+  const webm = localizedMedia ? undefined : `/product-clips/${clip.id}.webm`;
+  const captions = localizedMedia?.captions ?? `/product-clips/${clip.id}.${language}.vtt`;
+  const mobileFocus = ['evidenze-sul-processo', 'lacuna-aperta', 'confronto', 'memoria', 'review-to-be'].includes(clip.id);
   const posterSizes = `${mobileFocus ? '(max-width: 640px) 1920px, ' : ''}${priority ? heroPosterSizes : '(max-width: 640px) calc(100vw - 64px), (max-width: 1023px) calc(100vw - 96px), 640px'}`;
   const sentence = narration?.reduce((current, item) => item.start <= playbackTime ? item : current, narration[0]);
   // Frame a detail from the original recording; the dialog retains the full view.
@@ -105,17 +112,17 @@ export default function ProductFilm({ clip, priority = false, minimal = false, n
   return (
     <figure id={priority ? 'hero-product-outcome' : `scene-${clip.id}`} className="product-film scroll-mt-24" data-clip={clip.id}>
       <div ref={frameRef} style={{ aspectRatio: focusFrame ? `${focusFrame.width} / ${focusFrame.height}` : `${clip.width} / ${clip.height}` }} className="relative isolate aspect-video overflow-hidden rounded-[14px] border border-slate-200 bg-white sm:rounded-[20px]">
-        <img src={clip.poster} srcSet={clip.posterSrcSet} sizes={focusFrame ? '(max-width: 640px) 1440px, 1920px' : posterSizes} alt={description} width={clip.width} height={clip.height} loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : undefined} decoding="async" style={mediaStyle} className={focusFrame ? 'absolute' : 'h-full w-full object-contain'} />
+        <img src={poster} srcSet={posterSrcSet} sizes={focusFrame ? '(max-width: 640px) 1440px, 1920px' : posterSizes} alt={description} width={clip.width} height={clip.height} loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : undefined} decoding="async" style={mediaStyle} className={focusFrame ? 'absolute' : 'h-full w-full object-contain'} />
         {loadVideo ? (
-          <video ref={videoRef} aria-label={title} aria-describedby={`${id}-description`} autoPlay={shouldPlay} muted playsInline loop preload="none" poster={clip.poster}
+          <video ref={videoRef} aria-label={title} aria-describedby={`${id}-description`} autoPlay={shouldPlay} muted playsInline loop preload="none" poster={poster}
             onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => { setFailed(true); setPlaying(false); }}
             onTimeUpdate={narration ? event => setPlaybackTime(event.currentTarget.currentTime) : undefined}
             onSeeking={narration ? event => setPlaybackTime(event.currentTarget.currentTime) : undefined}
             onSeeked={narration ? event => setPlaybackTime(event.currentTarget.currentTime) : undefined}
             style={mediaStyle} className={focusFrame ? 'absolute' : 'absolute inset-0 h-full w-full object-contain'}>
-            <source src={`/product-clips/${clip.id}.mp4`} type="video/mp4" />
-            <source src={`/product-clips/${clip.id}.webm`} type="video/webm" />
-            <track kind="captions" src={`/product-clips/${clip.id}.${language}.vtt`} srcLang={language} label={language === 'it' ? 'Descrizione italiana' : 'English description'} />
+            <source src={mp4} type="video/mp4" />
+            {webm ? <source src={webm} type="video/webm" /> : null}
+            <track kind="captions" src={captions} srcLang={language} label={language === 'it' ? 'Descrizione italiana' : 'English description'} />
           </video>
         ) : null}
         {minimal ? <div className="absolute bottom-3 right-3 z-10 flex gap-2">
@@ -153,10 +160,10 @@ export default function ProductFilm({ clip, priority = false, minimal = false, n
           <h2 id={`${id}-dialog-title`} className="min-w-0 truncate text-base font-semibold text-brand-ink">{title}</h2>
           <button type="button" onClick={() => dialogRef.current?.close()} aria-label={text.close} className="film-control"><X aria-hidden="true" className="size-5" /></button>
         </div>
-        {dialogOpen ? <video aria-label={title} aria-describedby={`${id}-dialog-description`} controls autoPlay muted playsInline preload="metadata" poster={clip.poster} className="mx-auto max-h-[calc(100dvh-210px)] w-full bg-slate-950">
-          <source src={`/product-clips/${clip.id}.mp4`} type="video/mp4" />
-          <source src={`/product-clips/${clip.id}.webm`} type="video/webm" />
-          <track kind="captions" src={`/product-clips/${clip.id}.${language}.vtt`} srcLang={language} label={language === 'it' ? 'Descrizione italiana' : 'English description'} />
+        {dialogOpen ? <video aria-label={title} aria-describedby={`${id}-dialog-description`} controls autoPlay muted playsInline preload="metadata" poster={poster} className="mx-auto max-h-[calc(100dvh-210px)] w-full bg-slate-950">
+          <source src={mp4} type="video/mp4" />
+          {webm ? <source src={webm} type="video/webm" /> : null}
+          <track kind="captions" src={captions} srcLang={language} label={language === 'it' ? 'Descrizione italiana' : 'English description'} />
         </video> : null}
         <p id={`${id}-dialog-description`} className="px-4 py-4 text-sm leading-6 text-slate-600">{description}</p>
       </dialog>
