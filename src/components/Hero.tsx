@@ -26,15 +26,17 @@ const copy = {
 const narration = {
   it: [
     { start: 0, text: 'Dalle informazioni del cliente a un processo chiaro.' },
-    { start: 4, text: 'Verifica il modello, insieme alle sue fonti.' },
-    { start: 8, text: 'Porta in review ciò che va chiarito.' },
-    { start: 12, text: 'Arriva dal cliente con una proposta che puoi spiegare.' },
+    { start: 5, text: 'Verifica il modello, insieme alle sue fonti.' },
+    { start: 10, text: 'Simula l’As-Is e individua il collo di bottiglia.' },
+    { start: 15, text: 'Confronta gli scenari To-Be del caso dimostrativo.' },
+    { start: 20, text: 'Condividi il processo con il cliente.' },
   ],
   en: [
     { start: 0, text: 'From client information to a clear process.' },
-    { start: 4, text: 'Review the model alongside its sources.' },
-    { start: 8, text: 'Bring open questions into the review.' },
-    { start: 12, text: 'Bring your client a proposal you can explain.' },
+    { start: 5, text: 'Review the model alongside its sources.' },
+    { start: 10, text: 'Simulate the As-Is and identify the bottleneck.' },
+    { start: 15, text: 'Compare the To-Be scenarios in the demo case.' },
+    { start: 20, text: 'Share the process with the client.' },
   ],
 };
 

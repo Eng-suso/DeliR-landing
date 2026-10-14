@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { pageMetadata } from '../lib/siteMetadata';
 import { structuredData } from '../lib/structuredData';
 import { preload } from 'react-dom';
-import { heroPoster, heroPosterSizes, heroPosterSrcSet } from '../lib/heroMedia';
+import { heroMedia, heroPosterSizes } from '../lib/heroMedia';
 import { useLocation } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext';
 
@@ -11,7 +11,8 @@ export default function SiteMetadata() {
   const { pathname } = useLocation();
   const { language } = useLanguage();
   useEffect(() => {
-    if (pathname === '/') preload(heroPoster, { as: 'image', imageSrcSet: heroPosterSrcSet, imageSizes: heroPosterSizes, fetchPriority: 'high' });
+    const hero = heroMedia[language];
+    if (pathname === '/') preload(hero.poster, { as: 'image', imageSrcSet: hero.posterSrcSet, imageSizes: heroPosterSizes, fetchPriority: 'high' });
     const { title, description, robots, canonical } = pageMetadata(pathname, language);
     document.title = title;
     const setMeta = (attribute: 'name' | 'property', name: string, content: string) => {

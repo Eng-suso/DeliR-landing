@@ -1,4 +1,4 @@
-import { heroPoster as hero, heroPosterSrcSet as heroSrcSet } from './heroMedia';
+import { heroMedia, heroPoster as hero, heroPosterSrcSet as heroSrcSet } from './heroMedia';
 import sources from '../../artifacts/landing-media/images/fonti-e-affermazioni.jpg';
 import chat from '../../artifacts/landing-media/images/chat-discovery.jpg';
 import gap from '../../artifacts/landing-media/images/lacuna-aperta.jpg';
@@ -43,6 +43,7 @@ export type ProductClip = {
   height: number;
   title: Localized;
   description: Localized;
+  localizedMedia?: Record<'it' | 'en', { poster: string; posterSrcSet: string; mp4: string; captions: string }>;
 };
 
 const posterSets: Record<string, string> = {
@@ -72,9 +73,9 @@ function clip(id: string, poster: string, duration: number, title: Localized, de
 // The uploaded recordings identify the people and company as fictional demo data.
 // Descriptions are text alternatives for the silent recordings, not outcome claims.
 export const productClips = {
-  hero: clip('hero-loop', hero, 16,
+  hero: { ...clip('hero-loop', hero, 25,
     { it: 'DeliR in azione', en: 'DeliR in action' },
-    { it: 'Nel caso dimostrativo, il modello BPMN e la review lavorano nello stesso contesto: un’attività viene selezionata e discussa accanto al processo.', en: 'In the demo case, the BPMN model and review share one context: an activity is selected and discussed alongside the process.' }),
+    { it: 'Il caso dimostrativo segue le fonti del cliente, il modello BPMN e le evidenze delle attività, la simulazione AS-IS, il confronto TO-BE e la condivisione del processo con il cliente. I valori mostrati sono simulati.', en: 'The demo follows client sources, the BPMN model and activity evidence, AS-IS simulation, TO-BE comparison and sharing the process with the client. The values shown are simulated.' }), localizedMedia: heroMedia },
   sources: clip('fonti-e-affermazioni', sources, 12.7,
     { it: 'Fonti e affermazioni', en: 'Sources and statements' },
     { it: 'Il progetto raccoglie le fonti dell’incarico. La registrazione apre le interviste e le informazioni da cui ricostruire il processo.', en: 'The project gathers engagement sources. The recording opens interviews and information used to reconstruct the process.' }),
