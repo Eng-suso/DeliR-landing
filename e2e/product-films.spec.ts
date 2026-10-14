@@ -206,8 +206,8 @@ test('direct English entry and language switch select localized posters and full
   const hero = page.locator('#hero-product-outcome');
   for (const language of ['en', 'it'] as const) {
     const title = language === 'it' ? 'DeliR in azione' : 'DeliR in action';
-    await hero.scrollIntoViewIfNeeded();
     await expect(hero.locator('img')).toHaveAttribute('src', new RegExp(`hero-loop-v2\\.${language}`));
+    await hero.scrollIntoViewIfNeeded();
     // The new recordings already frame each scene; retain the entire image on mobile.
     const framing = await hero.locator('img').evaluate(image => {
       const frame = image.parentElement!.getBoundingClientRect();
