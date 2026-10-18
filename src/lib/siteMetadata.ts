@@ -21,7 +21,7 @@ export const metadataCopy = {
 
 export const siteRoutes = ['/', '/pilot', '/security-data', '/comparison-sources', '/privacy', '/waitlist', '/v2'] as const;
 export function pageMetadata(pathname: string, language: 'it' | 'en') {
-  if (pathname === '/v2') return { title: language === 'it' ? 'DeliR — Anteprima struttura V2' : 'DeliR — V2 framework preview', description: metadataCopy[language].home[1], key: 'preview', robots: 'noindex, follow', canonical: `https://delir.it/v2${language === 'en' ? '?lang=en' : ''}` };
+  if (pathname === '/v2') return { title: language === 'it' ? 'DeliR — Anteprima ibrida V1 + V2' : 'DeliR — V1 + V2 hybrid preview', description: metadataCopy[language].home[1], key: 'preview', robots: 'noindex, follow', canonical: `https://delir.it/v2${language === 'en' ? '?lang=en' : ''}` };
   const key = pathname === '/' ? 'home' : pathname === '/pilot' ? 'pilot' : pathname === '/waitlist' ? 'waitlist' : pathname === '/privacy' ? 'privacy' : pathname === '/security-data' ? 'security' : pathname === '/comparison-sources' ? 'comparison' : 'missing';
   const [title, description] = metadataCopy[language][key];
   return { title, description, key, robots: key === 'missing' || key === 'waitlist' || key === 'privacy' ? 'noindex, follow' : 'index, follow', canonical: `https://delir.it${pathname}${language === 'en' ? '?lang=en' : ''}` };

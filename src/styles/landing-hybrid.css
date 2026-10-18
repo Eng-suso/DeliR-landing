@@ -1,0 +1,38 @@
+/* V1 identity and media, with an explicit reading path from the V2 exploration. */
+.landing-hybrid .v2-preview-bar { border-bottom: 1px solid var(--color-brand-border); background: var(--color-brand-mist); color: var(--color-brand-ink); }
+.landing-page.landing-hybrid main > section:not(:first-child) { content-visibility: visible; contain-intrinsic-block-size: none; }
+.landing-hybrid .premium-hero { padding-top: clamp(32px, 4vw, 64px); }
+.hybrid-hero-benefits { display: grid; gap: 10px; margin-top: 16px; font-size: 16px; line-height: 1.5; }
+.hybrid-hero-benefits li { display: flex; align-items: flex-start; gap: 10px; }
+.hybrid-hero-benefits svg { margin-top: 3px; }
+.hybrid-benefit-list { margin-top: 40px; }
+.landing-hybrid .hybrid-journey .landing-title { max-width: 28ch; }
+.hybrid-benefit { display: grid; align-items: center; gap: 24px; padding-block: 32px; }
+.hybrid-benefit + .hybrid-benefit { border-top: 1px solid var(--color-brand-border); }
+.hybrid-benefit-copy { max-width: 60ch; }
+.hybrid-more, .hybrid-comparison { border-block: 1px solid var(--color-brand-border); }
+.hybrid-more > summary, .hybrid-comparison > summary { min-height: 64px; padding-block: 18px; color: var(--color-brand-blue); font-size: 17px; font-weight: 600; line-height: 1.6; cursor: pointer; }
+.hybrid-more > summary:hover, .hybrid-comparison > summary:hover { color: var(--color-brand-blue-hover); }
+.hybrid-extra-grid { display: grid; gap: 32px; padding-block: 16px 32px; }
+.hybrid-extra-benefit { display: grid; align-content: start; gap: 24px; min-width: 0; }
+.landing-hybrid .hybrid-comparison .section-shell { padding-inline: 0; }
+.landing-hybrid .hybrid-comparison .premium-comparison { padding-top: 24px; border: 0; background: transparent; }
+.landing-hybrid .hybrid-comparison .comparison-next { display: none; }
+.landing-hybrid .hybrid-journey .product-screen-stage { padding: 16px; }
+@media (min-width: 1024px) {
+  .hybrid-benefit { grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: clamp(32px, 4vw, 64px); padding-block: 48px; }
+  .hybrid-benefit:nth-child(even) { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
+  .hybrid-benefit:nth-child(even) > :first-child { grid-column: 2; grid-row: 1; }
+  .hybrid-benefit:nth-child(even) > .hybrid-benefit-copy { grid-column: 1; grid-row: 1; }
+  .hybrid-extra-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hybrid-benefit > :first-child { width: min(100%, 720px); margin-inline: auto; }
+}
+@media (max-width: 767px) {
+  .landing-hybrid .hero-headline { font-size: 32px; line-height: 1.08; }
+  .landing-hybrid .hero-description { font-size: 16px; line-height: 1.6; }
+  .hybrid-hero-benefits { gap: 8px; }
+  .landing-hybrid .hybrid-benefit { gap: 20px; }
+  .landing-hybrid .hybrid-benefit-copy h3 { font-size: 28px; }
+}

@@ -1,41 +1,54 @@
 import { useSearchParams } from 'react-router-dom';
-import '../styles/landing-v2.css';
+import '../styles/premium-landing.css';
+import '../styles/landing-hybrid.css';
+import { comparisonCopy } from '../content/landingCopy';
+import { useLanguage } from '../i18n/LanguageContext';
 import SkipLink from '../components/SkipLink';
+import PremiumBackground from '../components/PremiumBackground';
+import SmoothScroll from '../components/SmoothScroll';
+import ScrollExperience from '../components/ScrollExperience';
 import FragmentNavigation from '../components/FragmentNavigation';
+import Navbar from '../components/Navbar';
+import Hero from '../components/Hero';
+import ProcessBridge from '../components/ProcessBridge';
+import Problem from '../components/Problem';
+import Comparison from '../components/Comparison';
+import BuiltFor from '../components/BuiltFor';
+import PilotInvitation from '../components/PilotInvitation';
 import Faq from '../components/Faq';
-import NavbarV2 from '../components/v2/NavbarV2';
-import HeroV2 from '../components/v2/HeroV2';
-import ProblemV2 from '../components/v2/ProblemV2';
+import FinalCTA from '../components/FinalCTA';
+import Footer from '../components/Footer';
 import PreviewToolbarV2 from '../components/v2/PreviewToolbarV2';
-import ActionV2 from '../components/v2/ActionV2';
-import { FinalCTAV2, FooterV2 } from '../components/v2/ClosingV2';
-import { BenefitsV2, ComparisonV2, ContextStripV2, HowItWorksV2, ProofV2 } from '../components/v2/StorySectionsV2';
+import HybridJourney from '../components/v2/HybridJourney';
+import HybridVideoPlan from '../components/v2/HybridVideoPlan';
 
-// Desktop and mobile intentionally compose some sections differently, as in Figma.
 export default function LandingV2Page() {
   const [params] = useSearchParams();
+  const { language } = useLanguage();
   const studio = params.get('studio') === '1';
-  return <div className={`landing-v2 min-h-dvh font-sans ${studio ? 'v2-studio' : ''}`}>
+  return <div data-client-ready={typeof window !== 'undefined' ? 'true' : 'false'} className="landing-page landing-hybrid relative min-h-dvh">
     <SkipLink />
+    <PremiumBackground />
+    <SmoothScroll />
+    <ScrollExperience />
     <FragmentNavigation />
-    <PreviewToolbarV2 studio={studio} />
-    <NavbarV2 />
-    <main id="main-content">
-      <HeroV2 studio={studio} />
-      <ContextStripV2 />
-      <ProblemV2 studio={studio} />
-      <ProofV2 variant="as-is" studio={studio} />
-      <BenefitsV2 studio={studio} />
-      <ProofV2 variant="decision" studio={studio} />
-      <ComparisonV2 />
-      <HowItWorksV2 />
-      <div className="v2-mobile-proof-strip"><ContextStripV2 compact /></div>
-      <div className="v2-faq">
-        <Faq />
-        <div className="section-shell v2-faq-action"><ActionV2 /></div>
-      </div>
-      <FinalCTAV2 />
+    <div className="relative z-10"><PreviewToolbarV2 studio={studio} /></div>
+    <Navbar />
+    <main id="main-content" className="relative z-10">
+      <Hero compact />
+      {studio ? <HybridVideoPlan /> : null}
+      <ProcessBridge />
+      <Problem />
+      <HybridJourney />
+      <BuiltFor />
+      <details className="hybrid-comparison section-shell">
+        <summary>{comparisonCopy[language].tableTitle}</summary>
+        <Comparison />
+      </details>
+      <PilotInvitation />
+      <Faq />
+      <FinalCTA />
     </main>
-    <FooterV2 />
+    <Footer />
   </div>;
 }

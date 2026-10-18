@@ -1,5 +1,7 @@
 # Allineamento responsive al Figma B2B V2
 
+> Registro dell’esplorazione Figma precedente. `/v2` mostra ora la versione ibrida descritta in `docs/landing-hybrid.md`. Le misure e i test di questa nota appartengono alla precedente composizione, non alla nuova anteprima.
+
 18 ottobre 2026. Anteprima `/v2`, PR #20.
 
 ## Riferimenti e misure disponibili

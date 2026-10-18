@@ -16,7 +16,7 @@ const ComparisonSourcesPage = lazy(() => import('./pages/ComparisonSourcesPage')
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const EnterpriseReadinessPage = import.meta.env.DEV ? lazy(() => import('./pages/EnterpriseReadinessPage')) : null;
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
-// Reviewable V2 framework; separate from the current homepage and marked noindex.
+// Reviewable V1/V2 hybrid; separate from the current homepage and marked noindex.
 const LandingV2Page = lazy(() => import('./pages/LandingV2Page'));
 
 export default function App() {

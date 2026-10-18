@@ -1,5 +1,7 @@
 # DeliR — struttura Figma V2 e produzione video
 
+> Esplorazione precedente, conservata come riferimento per export futuri. La composizione attiva di `/v2` è ora l’ibrido V1 + V2 descritto in `docs/landing-hybrid.md`; il suo piano riutilizza le demo disponibili e non richiede sette nuovi video. I percorsi e i risultati riportati sotto descrivono la revisione Figma precedente.
+
 Riferimento: [ThrillX, B2B / General Landing Page V2](https://www.figma.com/design/Rf0YJB4UQpWiOsuhuMFesX/Public-Landing-Page---ThrillX?node-id=0-1).
 
 ## Aprire e confrontare

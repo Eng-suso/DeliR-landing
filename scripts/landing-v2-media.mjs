@@ -42,5 +42,5 @@ if (errors.length) {
   errors.forEach(error => console.error(error));
   process.exitCode = 1;
 } else {
-  console.log(`V2 media: ${manifest.slots.filter(slot => slot.status === 'ready').length}/${manifest.slots.length} ready; planned slots use existing stills and request no video files.`);
+  console.log(`Optional V2 exports: ${manifest.slots.filter(slot => slot.status === 'ready').length}/${manifest.slots.length} ready; the hybrid preview reuses existing product clips and does not require planned exports.`);
 }
