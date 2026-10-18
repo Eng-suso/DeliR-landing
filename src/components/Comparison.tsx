@@ -1,3 +1,4 @@
+import { comparisonCopy as copy } from '../content/landingCopy';
 import { Link, Navigate } from 'react-router-dom';
 import { useFragment } from '../lib/useFragment';
 import { ArrowRight, ArrowUpRight, Check, X } from 'lucide-react';
@@ -6,44 +7,7 @@ import { comparisonProducts, comparisonRows, type ComparisonRow } from '../lib/c
 import { interestCtaLabel, productInterestHref } from '../lib/publicOffer';
 import DifferentiatorGrid from './DifferentiatorGrid';
 
-const copy = {
-  it: {
-    eyebrow: 'Cosa conta nel tuo incarico',
-    title: 'Scegli un percorso che puoi spiegare al cliente.',
-    intro: 'Prima di confrontare gli strumenti, cerca tre cose: fonti verificabili, contesto che resta nel progetto e scenari da confrontare prima di raccomandare una modifica.',
-    tableTitle: 'Confronta gli strumenti sul percorso consulenziale.',
-    feature: 'Capacità nel lavoro del consulente', delir: 'Per il consulente',
-    caption: 'Confronto delle capacità per l’analisi di processo',
-    demo: 'Demo',
-    demoLabel: 'Mostrato nella demo DeliR. Guarda il video',
-    cellSources: 'Consulta il criterio e la documentazione di riferimento',
-    yes: 'Sì', no: 'No',
-    legend: '✓ Sì: copre il percorso descritto · ✗ No: fuori dal percorso confrontato.',
-    proof: 'Valutazione DeliR del percorso consulenziale; non è un test comparativo negli account dei competitor.',
-    reason: 'Porta al cliente il modello e le prove dietro la proposta.',
-    reasonBody: 'Con DeliR puoi discutere il processo insieme alle fonti, ai punti aperti e al confronto AS-IS / TO-BE. Questo è il percorso mostrato nella demo.',
-    secondary: 'Guarda il percorso completo',
-    sources: 'Criteri e documentazione dei prodotti',
-  },
-  en: {
-    eyebrow: 'What matters in your engagement',
-    title: 'Choose a workflow you can explain to your client.',
-    intro: 'Before comparing tools, look for three things: evidence you can verify, context retained in the project, and scenarios you can compare before recommending a change.',
-    tableTitle: 'Compare tools against the consulting workflow.',
-    feature: 'Capabilities in a consultant’s work', delir: 'For consultants',
-    caption: 'Process analysis capability comparison',
-    demo: 'Demo',
-    demoLabel: 'Shown in the DeliR demo. Watch the video',
-    cellSources: 'Read the criterion and reference documentation',
-    yes: 'Yes', no: 'No',
-    legend: '✓ Yes: covers the described workflow · ✗ No: outside the compared workflow.',
-    proof: 'DeliR’s assessment of the consulting workflow; not a comparative test in competitor accounts.',
-    reason: 'Bring the model and the evidence behind your proposal to the client.',
-    reasonBody: 'With DeliR, discuss the process alongside its sources, open questions and AS-IS / TO-BE comparison. This is the workflow shown in the demo.',
-    secondary: 'Watch the complete workflow',
-    sources: 'Criteria and product documentation',
-  },
-} as const;
+
 
 export default function Comparison() {
   const { language } = useLanguage();

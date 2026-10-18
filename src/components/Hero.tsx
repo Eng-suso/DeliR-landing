@@ -1,27 +1,11 @@
+import { heroCopy as copy } from '../content/landingCopy';
 import { ArrowDown, ArrowRight, Check } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { productClips } from '../lib/productClips';
 import { interestCtaLabel, pilotApplicationHref, productInterestHref } from '../lib/publicOffer';
 import ProductFilm from './ProductFilm';
 
-const copy = {
-  it: {
-    eyebrow: 'Per consulenti BPM e Operations', first: 'Software di Process Intelligence', second: 'per Operations efficienti ed efficaci.',
-    body: 'Smetti di passare settimane a ricostruire come lavora davvero il tuo cliente. DeliR trasforma la conoscenza dispersa in un As-Is verificato, confronta scenari To-Be e migliora continuamente i processi, così puoi fornire raccomandazioni migliori più rapidamente.',
-    secondary: 'Vedi il prodotto',
-    pilotLead: 'Hai già un progetto reale?',
-    pilotAction: 'Avvia un pilot',
-    waitlistNote: 'Early access per consulenti e team Operations. Nessun acquisto richiesto.',
-  },
-  en: {
-    eyebrow: 'For BPM and Operations consultants', first: 'Process Intelligence Software', second: 'for Efficient and Effective Operations.',
-    body: 'Stop spending weeks reconstructing how your client really works. DeliR turns scattered knowledge into a verified As-Is, compares To-Be scenarios, and continuously improves processes so you deliver better recommendations faster.',
-    secondary: 'See the product',
-    pilotLead: 'Already have a real project?',
-    pilotAction: 'Start a pilot',
-    waitlistNote: 'Early access for consultants and Operations teams. No purchase required.',
-  },
-};
+
 
 const narration = {
   it: [

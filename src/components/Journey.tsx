@@ -1,3 +1,4 @@
+import { journeyCopy as copy } from '../content/landingCopy';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { productClips } from '../lib/productClips';
@@ -14,38 +15,7 @@ const benefits = [
   { id: 'product-05', initial: 'confronto', clips: [productClips.comparison, productClips.simulationAsIs, productClips.simulationToBe, productClips.heatmap, productClips.eventLog] },
 ];
 
-const copy = {
-  it: {
-    eyebrow: 'La soluzione, nel tuo lavoro',
-    title: 'Dalla conoscenza dispersa a raccomandazioni che puoi spiegare.',
-    intro: 'DeliR mantiene nello stesso contesto le fonti, l’As-Is da verificare con il cliente e le ipotesi To-Be. Guarda come questo ti aiuta, dall’intervista alla raccomandazione.',
-    demo: 'Caso di acquisti indiretti · Azienda, persone e valori dimostrativi',
-    modules: [
-      { name: 'Evidenze', title: 'Risali alle fonti dietro il processo.', body: 'Apri un’attività BPMN insieme alle evidenze che ne conservano il contesto. Puoi discutere con il cliente da dove viene il modello e cosa resta da verificare.', output: 'Modello, fonti e review nello stesso contesto' },
-      { name: 'Lacune', title: 'Scopri cosa le interviste lasciano aperto.', body: 'Una soglia non dichiarata o un passaggio ambiguo resta una domanda da chiarire. Porta le lacune in review prima che diventino assunzioni nel tuo As-Is.', output: 'Informazioni mancanti rese visibili nel discovery' },
-      { name: 'Contesto', title: 'Riprendi l’incarico senza ripartire da zero.', body: 'Obiettivo, fonti, decisioni e avanzamento restano nel progetto. Quando torni sul cliente, ritrovi il contesto del lavoro e i punti ancora aperti.', output: 'Contesto dell’incarico conservato nel progetto' },
-      { name: 'Decisioni', title: 'Spiega le modifiche che raccomandi.', body: 'Esamina le proposte To-Be sul processo, insieme ai punti da verificare. Discuti le ragioni del cambiamento mantenendo distinte le ipotesi dalle decisioni confermate.', output: 'Proposte di modifica e review sul processo' },
-      { name: 'Scenari', title: 'Confronta le opzioni prima di proporre il cambiamento.', body: 'Simula l’As-Is e le ipotesi To-Be. Leggi gli indicatori insieme ai parametri e alle assunzioni: il confronto sostiene la discussione, senza trasformare una simulazione in una promessa di risultato.', output: 'Scenari confrontati con le loro assunzioni' },
-    ],
-    nav: 'Benefici DeliR', result: 'Cosa ti porti nel lavoro', action: 'Valuta il pilot sul tuo progetto',
-    principle: 'Comprendi cosa succede. Valuta cosa potrebbe succedere. Continua a migliorare.',
-  },
-  en: {
-    eyebrow: 'The solution, in your work',
-    title: 'Turn scattered knowledge into recommendations you can explain.',
-    intro: 'DeliR keeps sources, the As-Is you review with your client, and To-Be hypotheses in one context. See how that supports your work, from interview to recommendation.',
-    demo: 'Indirect procurement demo · Fictional company, people and values',
-    modules: [
-      { name: 'Evidence', title: 'Trace your process back to its sources.', body: 'Open a BPMN activity alongside the evidence that retains its context. Discuss with your client where the model comes from and what still needs verification.', output: 'Model, sources and review in one context' },
-      { name: 'Gaps', title: 'Find what process interviews leave unresolved.', body: 'An unstated threshold or an ambiguous handoff stays a question to resolve. Bring gaps into review before they become assumptions in your As-Is.', output: 'Missing information made visible during discovery' },
-      { name: 'Context', title: 'Pick up the engagement without starting over.', body: 'Goals, sources, decisions and progress stay in the project. When you return to the client, find the context of your work and the questions still open.', output: 'Engagement context retained in the project' },
-      { name: 'Decisions', title: 'Explain the changes you recommend.', body: 'Inspect To-Be proposals on the process alongside points that need verification. Discuss the reasons for change while keeping hypotheses separate from confirmed decisions.', output: 'Proposed changes and review on the process' },
-      { name: 'Scenarios', title: 'Compare options before recommending a change.', body: 'Simulate the As-Is and To-Be hypotheses. Read indicators alongside parameters and assumptions: the comparison supports the discussion without turning a simulation into a promise of results.', output: 'Scenarios compared alongside their assumptions' },
-    ],
-    nav: 'DeliR benefits', result: 'What you take into your work', action: 'Explore a pilot for your project',
-    principle: 'Understand what happens. Test what could happen. Keep making it better.',
-  },
-};
+
 
 export default function Journey() {
   const { language } = useLanguage();

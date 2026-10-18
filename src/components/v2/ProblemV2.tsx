@@ -1,34 +1,14 @@
+import { problemCopy } from '../../content/landingCopy';
 import { useLanguage } from '../../i18n/LanguageContext';
-import Band from '../kit/Band';
-import Eyebrow from '../kit/Eyebrow';
-import SplitHeading from '../kit/SplitHeading';
+import VideoSlotV2 from './VideoSlotV2';
 
-const copy = {
-  it: {
-    eyebrow: 'Il costo della frammentazione',
-    lead: 'Il cliente vede un unico incarico.',
-    rest: 'Tu devi ricomporlo ogni volta, tra interviste, procedure, fogli di calcolo, modelli e simulazioni che vivono in strumenti diversi.',
-  },
-  en: {
-    eyebrow: 'The cost of fragmentation',
-    lead: 'The client sees one engagement.',
-    rest: 'You rebuild it every time, across interviews, procedures, spreadsheets, models and simulations that live in separate tools.',
-  },
-} as const;
-
-export default function ProblemV2() {
+export default function ProblemV2({ studio = false }: { studio?: boolean }) {
   const { language } = useLanguage();
-  const t = copy[language];
-  return (
-    <Band tone="navy" id="piattaforma" labelledBy="problem-v2-title">
-      <Eyebrow tone="dark">{t.eyebrow}</Eyebrow>
-      <SplitHeading
-        id="problem-v2-title"
-        tone="dark"
-        lead={t.lead}
-        rest={t.rest}
-        className="mt-6 max-w-[52rem] text-pretty text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.2]"
-      />
-    </Band>
-  );
+  const t = problemCopy[language];
+  return <section id="piattaforma" aria-labelledby="problem-v2-title" className="v2-section">
+    <div className="section-shell v2-split">
+      <div className="min-w-0"><p className="landing-eyebrow">{t.eyebrow}</p><h2 id="problem-v2-title" className="v2-title mt-5">{t.title}</h2><p className="v2-body mt-5">{t.body}</p></div>
+      <VideoSlotV2 id="problem" studio={studio} />
+    </div>
+  </section>;
 }

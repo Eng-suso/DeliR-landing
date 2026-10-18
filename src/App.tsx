@@ -16,8 +16,8 @@ const ComparisonSourcesPage = lazy(() => import('./pages/ComparisonSourcesPage')
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const EnterpriseReadinessPage = import.meta.env.DEV ? lazy(() => import('./pages/EnterpriseReadinessPage')) : null;
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
-// Dev-only preview of the v2 direction; eliminated from production builds.
-const LandingV2Page = import.meta.env.DEV ? lazy(() => import('./pages/LandingV2Page')) : null;
+// Reviewable V2 framework; separate from the current homepage and marked noindex.
+const LandingV2Page = lazy(() => import('./pages/LandingV2Page'));
 
 export default function App() {
   return (
@@ -34,7 +34,7 @@ export default function App() {
             <Route path="/comparison-sources" element={<ComparisonSourcesPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             {EnterpriseReadinessPage ? <Route path="/enterprise-readiness" element={<EnterpriseReadinessPage />} /> : null}
-            {LandingV2Page ? <Route path="/v2" element={<LandingV2Page />} /> : null}
+            <Route path="/v2" element={<LandingV2Page />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>

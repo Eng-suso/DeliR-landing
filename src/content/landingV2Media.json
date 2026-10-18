@@ -1,0 +1,209 @@
+{
+  "version": 1,
+  "basePath": "/landing-v2/media",
+  "slots": [
+    {
+      "id": "hero",
+      "referenceClip": "hero",
+      "status": "planned",
+      "seconds": {
+        "min": 20,
+        "max": 25
+      },
+      "desktop": {
+        "width": 1600,
+        "height": 1000
+      },
+      "mobile": {
+        "width": 1200,
+        "height": 900
+      },
+      "shots": {
+        "it": [
+          "Apri il progetto dimostrativo e mostra il processo.",
+          "Seleziona un’attività e apri la sua fonte.",
+          "Passa al confronto As-Is / To-Be e chiudi sul risultato."
+        ],
+        "en": [
+          "Open the demo project and show its process.",
+          "Select an activity and open its source.",
+          "Move to the As-Is / To-Be comparison and end on the result."
+        ]
+      }
+    },
+    {
+      "id": "problem",
+      "referenceClip": "sources",
+      "status": "planned",
+      "seconds": {
+        "min": 10,
+        "max": 15
+      },
+      "desktop": {
+        "width": 1600,
+        "height": 1000
+      },
+      "mobile": {
+        "width": 1200,
+        "height": 900
+      },
+      "shots": {
+        "it": [
+          "Mostra documenti e interviste dello stesso caso.",
+          "Apri due fonti sul medesimo passaggio.",
+          "Chiudi sul punto da ricostruire, senza inventare un risultato."
+        ],
+        "en": [
+          "Show documents and interviews from the same case.",
+          "Open two sources about the same handoff.",
+          "End on the question to resolve, without inventing an outcome."
+        ]
+      }
+    },
+    {
+      "id": "proof-as-is",
+      "referenceClip": "review",
+      "status": "planned",
+      "seconds": {
+        "min": 15,
+        "max": 20
+      },
+      "desktop": {
+        "width": 1600,
+        "height": 1000
+      },
+      "mobile": {
+        "width": 1200,
+        "height": 900
+      },
+      "shots": {
+        "it": [
+          "Apri il modello As-Is del caso dimostrativo.",
+          "Seleziona un’attività e affianca l’evidenza.",
+          "Mostra un punto ancora da verificare in review."
+        ],
+        "en": [
+          "Open the demo As-Is model.",
+          "Select an activity and show its evidence.",
+          "Show a point still requiring review."
+        ]
+      }
+    },
+    {
+      "id": "benefit-evidence",
+      "referenceClip": "evidence",
+      "status": "planned",
+      "seconds": {
+        "min": 10,
+        "max": 15
+      },
+      "desktop": {
+        "width": 1600,
+        "height": 1000
+      },
+      "mobile": {
+        "width": 1200,
+        "height": 900
+      },
+      "shots": {
+        "it": [
+          "Seleziona una sola attività sul BPMN.",
+          "Apri il pannello evidenze e la fonte corrispondente.",
+          "Mantieni leggibile il collegamento tra fonte e attività."
+        ],
+        "en": [
+          "Select one BPMN activity.",
+          "Open its evidence panel and supporting source.",
+          "Keep the source-to-activity connection readable."
+        ]
+      }
+    },
+    {
+      "id": "benefit-gaps",
+      "referenceClip": "gap",
+      "status": "planned",
+      "seconds": {
+        "min": 10,
+        "max": 15
+      },
+      "desktop": {
+        "width": 1600,
+        "height": 1000
+      },
+      "mobile": {
+        "width": 1200,
+        "height": 900
+      },
+      "shots": {
+        "it": [
+          "Apri la lacuna del caso dimostrativo.",
+          "Mostra la soglia o il passaggio non dichiarato.",
+          "Porta la domanda nella review senza confermarla come fatto."
+        ],
+        "en": [
+          "Open the gap in the demo case.",
+          "Show the missing threshold or handoff.",
+          "Bring the question into review without confirming it as fact."
+        ]
+      }
+    },
+    {
+      "id": "benefit-scenarios",
+      "referenceClip": "comparison",
+      "status": "planned",
+      "seconds": {
+        "min": 15,
+        "max": 20
+      },
+      "desktop": {
+        "width": 1600,
+        "height": 1000
+      },
+      "mobile": {
+        "width": 1200,
+        "height": 900
+      },
+      "shots": {
+        "it": [
+          "Mostra l’As-Is e un’ipotesi To-Be dello stesso processo.",
+          "Apri parametri e assunzioni della simulazione.",
+          "Confronta gli indicatori mantenendo visibile che sono dati demo."
+        ],
+        "en": [
+          "Show the As-Is and one To-Be hypothesis for the same process.",
+          "Open simulation parameters and assumptions.",
+          "Compare indicators while keeping the demo-data label visible."
+        ]
+      }
+    },
+    {
+      "id": "proof-decision",
+      "referenceClip": "reviewToBe",
+      "status": "planned",
+      "seconds": {
+        "min": 15,
+        "max": 20
+      },
+      "desktop": {
+        "width": 1600,
+        "height": 1000
+      },
+      "mobile": {
+        "width": 1200,
+        "height": 900
+      },
+      "shots": {
+        "it": [
+          "Apri una proposta di modifica sul processo.",
+          "Mostra motivazione, evidenze e punto ancora da verificare.",
+          "Chiudi sulla review della proposta."
+        ],
+        "en": [
+          "Open a proposed process change.",
+          "Show its rationale, evidence and open question.",
+          "End on the proposal review."
+        ]
+      }
+    }
+  ]
+}
