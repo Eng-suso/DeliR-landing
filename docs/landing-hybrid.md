@@ -1,6 +1,6 @@
 # DeliR — anteprima ibrida V1 + V2
 
-18 ottobre 2026. Evoluzione della PR #20 dopo il confronto fra la landing attuale e il framework Figma.
+18–19 ottobre 2026. Evoluzione della PR #20 dopo il confronto fra la landing attuale e il framework Figma.
 
 ## Aprire
 
@@ -14,6 +14,8 @@ La promozione alla home è una decisione successiva. Questa revisione aggiorna l
 
 V1 fornisce colori, Hanken Grotesk, superfici, navigazione, demo, spiegazione del problema, Dati e AI, condizioni del pilot, FAQ e footer. Dalla V2 riprendiamo i tre benefici immediatamente leggibili e le sezioni con visual alternati su desktop e prima del testo sotto 1024px.
 
+L’ibrido usa lo stesso sfondo come superficie statica e scorrimento nativo: non monta i controller di movimento e reveal della V1. Il relativo comando di pausa è omesso perché lo sfondo non è animato. La V1 mantiene effetti e controlli precedenti.
+
 La hero conserva il titolo e la prima frase del messaggio esistente, seguiti da tre output già presenti nel catalogo. L’opzione `compact` del componente Hero è usata solo nell’anteprima: la home continua a mostrare il paragrafo completo.
 
 I tre benefici visibili sono evidenze, lacune e scenari. Le scene aggiuntive restano nei rispettivi explorer. Contesto e decisioni sono in un approfondimento nativo `details`; gli indirizzi delle scene aprono automaticamente l’approfondimento. Il confronto completo è anch’esso espandibile e mantiene fonti e collegamenti alle demo. I due riepiloghi early access/pilot non sono ripetuti nell’anteprima. C’è una sola CTA dopo i benefici, oltre a navigazione, hero, pilot e chiusura.
@@ -24,7 +26,7 @@ La sezione Dati e AI rimane nel percorso principale. Le condizioni commerciali d
 
 Nessuna nuova registrazione obbligatoria. La hero e i tre benefici usano quattro demo esistenti, con altre scene consultabili. La hero dispone di registrazioni IT/EN; gli altri filmati conservano la UI originale, mentre testi, descrizioni e controlli sono localizzati.
 
-I player esistenti caricano le sorgenti quando entrano nel viewport, rispettano riduzione del movimento e risparmio dati, offrono pausa e dialogo con controlli nativi. Gli approfondimenti chiusi non avviano i video. Non vengono richiesti asset pianificati sotto `/landing-v2/media/`.
+Nell’ibrido i player caricano il video solo dopo un’azione esplicita, anche senza riduzione del movimento; il poster resta visibile prima del play. Offrono pausa e dialogo con controlli nativi. La V1 mantiene il comportamento precedente. Gli approfondimenti chiusi non avviano i video. Non vengono richiesti asset pianificati sotto `/landing-v2/media/`. Il layout fuori schermo usa il rendering differito già presente nella V1; i controlli geometrici materializzano le sezioni scorrendole prima delle misure.
 
 Il registro a sette slot e il suo validatore restano infrastruttura opzionale per nuovi export. La guida `landing-v2-video-guide.md` e il registro `landing-v2-figma-alignment.md` descrivono la precedente esplorazione Figma; non rappresentano più la composizione attiva di `/v2`.
 
@@ -47,3 +49,6 @@ I risultati di conversione non sono ancora misurati. I controlli automatici non 
 - Playwright: 19 test distinti superati in Chromium e Safari mobile; scansione axe duplicata su Safari saltata intenzionalmente. Coperti i sette viewport, tre benefici, ordine dei media, deep link, piano IT/EN e sorgenti video reali, menu/Escape, dialogo video, FAQ, regressioni home e prerender. La cattura a pagina intera superava il limite immagini di WebKit: il caso responsive è stato ripetuto con screenshot del viewport e del singolo beneficio, passando in entrambi i browser.
 - Axe con piano, approfondimenti e confronto aperti a 375/1440px: nessuna violazione automatica nei criteri A/AA controllati.
 - Screenshot in `test-results/`; nessuna richiesta a export opzionali mancanti. I video si basano sul materiale già presente, con gli stessi limiti di leggibilità del montaggio originale.
+- Ottimizzazione del 19 ottobre: video su richiesta, caricamento esplicito del poster quando il riquadro entra in vista (anche con i ritagli mobile Safari), sfondo statico e scorrimento nativo nell’ibrido. La misura Lighthouse mobile finale dà performance 91, accessibilità 100 e best practices 100, LCP 2,85s e CLS 0. Tutti i budget configurati passano. L’indicizzabilità è esclusa perché l’anteprima è intenzionalmente noindex. Sono dati lab locali di una misurazione, non Core Web Vitals sul campo; ripetere se cambiano filmati o servizi attivati.
+- La prima misura dell’ibrido con autoplay e rendering completo dava performance 54 e circa 3,7MB trasferiti. Il passaggio ai video su richiesta ha portato il trasferimento iniziale a circa 222KB; la rimozione dei controller di movimento ha chiuso il controllo prestazioni. La V1 conserva autoplay e controller originali.
+- Nell’ultima misura il Total Blocking Time è 175ms, rispetto ai circa 3.870ms della prima revisione. Il confronto resta diagnostica lab locale, non una garanzia sulle prestazioni dei dispositivi reali.

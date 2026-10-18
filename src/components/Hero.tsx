@@ -48,7 +48,7 @@ export default function Hero({ compact = false }: { compact?: boolean }) {
         <p className="mt-2 text-sm leading-6 text-slate-600">{t.pilotLead} <a data-pilot-section="hero" href={pilotApplicationHref(language)} className="font-semibold text-brand-blue underline underline-offset-4">{t.pilotAction}</a>.</p>
       </div>
       <div className="hero-visual min-w-0" data-scroll-visual="hero">
-        <ProductFilm key={language} clip={productClips.hero} priority minimal narration={narration[language]} />
+        <ProductFilm key={language} clip={productClips.hero} priority minimal autoPlay={!compact} narration={narration[language]} />
       </div>
     </div>
   </section>;

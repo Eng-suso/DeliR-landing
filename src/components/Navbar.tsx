@@ -16,7 +16,7 @@ const copy = {
   },
 } as const;
 
-export default function Navbar() {
+export default function Navbar({ motionControl = true }: { motionControl?: boolean }) {
   const { language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [backgroundPaused, setBackgroundPaused] = useState(false);
@@ -24,9 +24,10 @@ export default function Navbar() {
   const t = copy[language];
 
   useEffect(() => {
+    if (!motionControl) return;
     document.documentElement.dataset.backgroundPaused = String(backgroundPaused);
     return () => { delete document.documentElement.dataset.backgroundPaused; };
-  }, [backgroundPaused]);
+  }, [backgroundPaused, motionControl]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -52,9 +53,11 @@ export default function Navbar() {
             ))}
           </ul>
           <div className="ml-auto flex items-center gap-2 lg:ml-0 lg:gap-4">
+            {motionControl ? (
             <button type="button" onClick={() => setBackgroundPaused((paused) => !paused)} aria-pressed={backgroundPaused} aria-label={language === 'it' ? 'Ferma lo sfondo animato' : 'Pause the animated background'} title={language === 'it' ? (backgroundPaused ? 'Riprendi lo sfondo' : 'Ferma lo sfondo') : (backgroundPaused ? 'Resume the background' : 'Pause the background')} className="background-motion-control inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-brand-blue/15 text-brand-blue transition-colors hover:bg-brand-blue/5">
               {backgroundPaused ? <Play aria-hidden="true" className="h-4 w-4" /> : <Pause aria-hidden="true" className="h-4 w-4" />}
             </button>
+            ) : null}
             <div className="hidden items-center gap-4 lg:flex">
               <LanguageSwitch />
               <a data-interest-section="navigation" href={productInterestHref(language)} className="btn-primary min-h-11 rounded-full px-5 py-2">{t.cta}</a>
@@ -78,7 +81,7 @@ export default function Navbar() {
           </div>
         ) : null}
       </nav>
-      <div aria-hidden="true" data-scroll-progress className="scroll-progress" />
+      {motionControl ? <div aria-hidden="true" data-scroll-progress className="scroll-progress" /> : null}
     </header>
   );
 }

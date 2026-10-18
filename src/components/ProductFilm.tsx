@@ -5,7 +5,7 @@ import { useLanguage } from '../i18n/LanguageContext';
 import type { ProductClip } from '../lib/productClips';
 import { heroPosterSizes } from '../lib/heroMedia';
 
-type Props = { clip: ProductClip; priority?: boolean; minimal?: boolean; narration?: readonly { start: number; text: string }[]; focusFrame?: { x: number; y: number; width: number; height: number } };
+type Props = { clip: ProductClip; priority?: boolean; minimal?: boolean; autoPlay?: boolean; narration?: readonly { start: number; text: string }[]; focusFrame?: { x: number; y: number; width: number; height: number } };
 type ConnectionNavigator = Navigator & { connection?: { saveData?: boolean } };
 
 function ambientPlaybackAllowed() {
@@ -14,7 +14,7 @@ function ambientPlaybackAllowed() {
     && !(navigator as ConnectionNavigator).connection?.saveData;
 }
 
-export default function ProductFilm({ clip, priority = false, minimal = false, narration, focusFrame }: Props) {
+export default function ProductFilm({ clip, priority = false, minimal = false, autoPlay = true, narration, focusFrame }: Props) {
   const { language } = useLanguage();
   const id = useId();
   const frameRef = useRef<HTMLDivElement>(null);
@@ -22,7 +22,7 @@ export default function ProductFilm({ clip, priority = false, minimal = false, n
   const dialogRef = useRef<HTMLDialogElement>(null);
   const expandRef = useRef<HTMLButtonElement>(null);
   const [visible, setVisible] = useState(false);
-  const [ambient, setAmbient] = useState(ambientPlaybackAllowed);
+  const [ambient, setAmbient] = useState(() => autoPlay && ambientPlaybackAllowed());
   const [pageActive, setPageActive] = useState(true);
   const [requested, setRequested] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -53,16 +53,17 @@ export default function ProductFilm({ clip, priority = false, minimal = false, n
 
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: no-preference)');
-    const update = () => setAmbient(ambientPlaybackAllowed());
+    const update = () => setAmbient(autoPlay && ambientPlaybackAllowed());
     const visibility = () => setPageActive(!document.hidden);
     media.addEventListener('change', update);
     document.addEventListener('visibilitychange', visibility);
+    update();
     visibility();
     return () => {
       media.removeEventListener('change', update);
       document.removeEventListener('visibilitychange', visibility);
     };
-  }, []);
+  }, [autoPlay]);
 
   useEffect(() => {
     const frame = frameRef.current;
@@ -76,8 +77,8 @@ export default function ProductFilm({ clip, priority = false, minimal = false, n
     return () => observer.disconnect();
   }, []);
 
-  // Visible films autoplay on desktop and mobile; reduced motion and Save-Data
-  // retain a poster until the visitor opts in.
+  // V1 autoplays visible films; the hybrid disables ambient playback.
+  // Reduced motion and Save-Data also retain a poster until the visitor opts in.
   // No video source exists outside the viewport, so off-screen clips are not fetched.
   const loadVideo = visible && (ambient || requested) && !failed;
   const shouldPlay = loadVideo && !paused && !dialogOpen && pageActive;
@@ -112,7 +113,7 @@ export default function ProductFilm({ clip, priority = false, minimal = false, n
   return (
     <figure id={priority ? 'hero-product-outcome' : `scene-${clip.id}`} className="product-film scroll-mt-24" data-clip={clip.id}>
       <div ref={frameRef} style={{ aspectRatio: focusFrame ? `${focusFrame.width} / ${focusFrame.height}` : `${clip.width} / ${clip.height}` }} className="relative isolate aspect-video overflow-hidden rounded-[14px] border border-slate-200 bg-white sm:rounded-[20px]">
-        <img src={poster} srcSet={posterSrcSet} sizes={focusFrame ? '(max-width: 640px) 1440px, 1920px' : posterSizes} alt={description} width={clip.width} height={clip.height} loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : undefined} decoding="async" style={mediaStyle} className={focusFrame ? 'absolute' : 'h-full w-full object-contain'} />
+        <img src={poster} srcSet={posterSrcSet} sizes={focusFrame ? '(max-width: 640px) 1440px, 1920px' : posterSizes} alt={description} width={clip.width} height={clip.height} loading={priority || (!autoPlay && visible) ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : undefined} decoding="async" style={mediaStyle} className={focusFrame ? 'absolute' : 'h-full w-full object-contain'} />
         {loadVideo ? (
           <video ref={videoRef} aria-label={title} aria-describedby={`${id}-description`} autoPlay={shouldPlay} muted playsInline loop preload="none" poster={poster}
             onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => { setFailed(true); setPlaying(false); }}

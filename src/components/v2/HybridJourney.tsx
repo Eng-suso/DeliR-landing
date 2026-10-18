@@ -11,7 +11,7 @@ export default function HybridJourney() {
   function benefitContent(benefit: typeof hybridBenefits[number]) {
     const module = t.modules[benefit.module];
     return <>
-      <ClipExplorer clips={benefit.clips} name={module.name} initial={benefit.initial} />
+      <ClipExplorer clips={benefit.clips} name={module.name} initial={benefit.initial} autoPlay={false} />
       <div className="hybrid-benefit-copy min-w-0">
         <p className="landing-eyebrow">{module.name}</p>
         <h3 id={`${benefit.id}-title`} className="mt-4 text-balance font-display text-3xl font-semibold leading-tight tracking-tight text-brand-ink">{module.title}</h3>

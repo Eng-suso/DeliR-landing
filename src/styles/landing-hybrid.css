@@ -1,6 +1,5 @@
 /* V1 identity and media, with an explicit reading path from the V2 exploration. */
 .landing-hybrid .v2-preview-bar { border-bottom: 1px solid var(--color-brand-border); background: var(--color-brand-mist); color: var(--color-brand-ink); }
-.landing-page.landing-hybrid main > section:not(:first-child) { content-visibility: visible; contain-intrinsic-block-size: none; }
 .landing-hybrid .premium-hero { padding-top: clamp(32px, 4vw, 64px); }
 .hybrid-hero-benefits { display: grid; gap: 10px; margin-top: 16px; font-size: 16px; line-height: 1.5; }
 .hybrid-hero-benefits li { display: flex; align-items: flex-start; gap: 10px; }

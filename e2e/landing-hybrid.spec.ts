@@ -7,7 +7,7 @@ test('hybrid exposes three benefits, V1 trust and existing demos across devices'
   page.on('pageerror', error => errors.push(error.message));
   page.on('request', request => { if (request.url().includes('/landing-v2/media/')) missingAssets.push(request.url()); });
   await page.goto('/v2');
-  await expect(page.locator('.landing-hybrid[data-client-ready="true"]')).toBeVisible();
+  await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator('.hybrid-hero-benefits li')).toHaveCount(3);
   await expect(page.locator('.hero-description > p')).toHaveText('Smetti di passare settimane a ricostruire come lavora davvero il tuo cliente.');
@@ -23,27 +23,39 @@ test('hybrid exposes three benefits, V1 trust and existing demos across devices'
     await page.setViewportSize({ width, height: 900 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
     for (const [index, benefit] of (await page.locator('.hybrid-benefit').all()).entries()) {
+      await benefit.scrollIntoViewIfNeeded();
       await expect(benefit).toBeVisible();
-      const media = await benefit.locator('.product-screen-stage').boundingBox();
-      const copy = await benefit.locator('.hybrid-benefit-copy').boundingBox();
-      if (width < 1024) expect(media!.y + media!.height).toBeLessThanOrEqual(copy!.y);
-      else if (index === 1) expect(media!.x).toBeGreaterThan(copy!.x);
-      else expect(media!.x).toBeLessThan(copy!.x);
+      // Read both boxes together: scroll anchoring can move a deferred section
+      // between two separate browser round trips while resizing.
+      const layout = await benefit.evaluate(element => {
+        const media = element.querySelector('.product-screen-stage')!.getBoundingClientRect();
+        const copy = element.querySelector('.hybrid-benefit-copy')!.getBoundingClientRect();
+        return { mediaBottom: media.bottom, mediaX: media.x, copyTop: copy.top, copyX: copy.x };
+      });
+      if (width < 1024) expect(layout.mediaBottom).toBeLessThanOrEqual(layout.copyTop);
+      else if (index === 1) expect(layout.mediaX).toBeGreaterThan(layout.copyX);
+      else expect(layout.mediaX).toBeLessThan(layout.copyX);
     }
-    const actions = await page.locator('.hero-actions').boundingBox();
-    const visual = await page.locator('.hero-visual').boundingBox();
-    if (width < 1024) expect(actions!.y + actions!.height).toBeLessThanOrEqual(visual!.y);
+    await page.locator('#hero').scrollIntoViewIfNeeded();
+    const hero = await page.locator('#hero').evaluate(element => ({
+      actionBottom: element.querySelector('.hero-actions')!.getBoundingClientRect().bottom,
+      visualTop: element.querySelector('.hero-visual')!.getBoundingClientRect().top,
+    }));
+    if (width < 1024) expect(hero.actionBottom).toBeLessThanOrEqual(hero.visualTop);
     if ([375, 834, 1440].includes(width)) {
       // A full-page capture exceeds WebKit's image limit at the iPhone scale.
       await page.evaluate(() => window.scrollTo(0, 0));
       await page.screenshot({ path: testInfo.outputPath(`hybrid-${width}.png`) });
-      const firstBenefit = page.locator('#product-03');
-      await firstBenefit.scrollIntoViewIfNeeded();
-      await expect.poll(() => firstBenefit.locator('img').first().evaluate(img => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
-      await firstBenefit.screenshot({ path: testInfo.outputPath(`hybrid-benefit-${width}.png`) });
-      await page.evaluate(() => window.scrollTo(0, 0));
     }
   }
+  // Follow the real product anchor before checking the lazy mobile poster.
+  // Cropped images inside a skipped section cannot be scroll targets in WebKit.
+  await page.setViewportSize({ width: 375, height: 900 });
+  await page.locator('.hero-actions a[href="#caso"]').click();
+  const firstBenefit = page.locator('#product-03');
+  await firstBenefit.locator('.product-screen-stage').scrollIntoViewIfNeeded();
+  await expect.poll(() => firstBenefit.locator('img').first().evaluate(img => (img as HTMLImageElement).naturalWidth), { timeout: 15_000 }).toBeGreaterThan(0);
+  await firstBenefit.screenshot({ path: testInfo.outputPath('hybrid-benefit-375.png') });
   expect(errors).toEqual([]);
   expect(missingAssets).toEqual([]);
   const prerender = await page.request.get('/seo/v2.it.html');
@@ -68,8 +80,9 @@ test('supporting scenes and comparison remain deep linkable', async ({ page }) =
   await expect(page.locator('#scene-lacuna-aperta')).toBeVisible();
 });
 
-test('video plan uses available recordings and preserves language', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
+test('video plan uses available recordings and preserves language', async ({ page }, testInfo) => {
+  const mobile = testInfo.project.name === 'mobile-safari';
+  await page.setViewportSize({ width: mobile ? 375 : 1440, height: 900 });
   await page.goto('/v2');
   await page.getByRole('link', { name: 'Mostra piano video' }).click();
   await expect(page).toHaveURL(/studio=1/);
@@ -80,16 +93,20 @@ test('video plan uses available recordings and preserves language', async ({ pag
     expect(response.ok()).toBe(true);
     expect(response.headers()['content-type']).toContain('video/');
   }
+  const menu = page.locator('button[aria-controls="mobile-navigation"]');
+  if (mobile) await menu.click();
   await page.getByRole('button', { name: 'English', exact: true }).filter({ visible: true }).click();
   await expect(page).toHaveURL(/studio=1/);
   await expect(page).toHaveURL(/lang=en/);
   await expect(page.locator('#video-plan-title')).toHaveText('The demos are already available.');
+  if (mobile) await menu.click();
   await page.getByRole('link', { name: 'Hide video plan' }).click();
   await expect(page).toHaveURL(/lang=en/);
   await expect(page.locator('#piano-video')).toHaveCount(0);
 });
 
 test('keyboard opens menus, supporting content, full demo and FAQ', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto('/v2');
   const skip = page.locator('a[href="#main-content"]');
@@ -101,11 +118,16 @@ test('keyboard opens menus, supporting content, full demo and FAQ', async ({ pag
   await page.keyboard.press('Escape');
   await expect(toggle).toBeFocused();
   await expect(toggle).toHaveAttribute('aria-expanded', 'false');
-  const expand = page.locator('#hero-product-outcome').getByRole('button', { name: 'Apri il video completo: DeliR in azione' });
+  const film = page.locator('#hero-product-outcome');
+  await film.scrollIntoViewIfNeeded();
+  await expect(film.locator('video')).toHaveCount(0);
+  await film.getByRole('button', { name: 'Riproduci: DeliR in azione' }).click();
+  await expect.poll(() => film.locator(':scope > div > video').evaluate(video => (video as HTMLVideoElement).readyState), { timeout: 15_000 }).toBeGreaterThanOrEqual(2);
+  const expand = film.getByRole('button', { name: 'Apri il video completo: DeliR in azione' });
   await expand.focus(); await page.keyboard.press('Enter');
   const dialog = page.getByRole('dialog', { name: 'DeliR in azione' });
   await expect(dialog).toBeVisible();
-  await expect.poll(() => dialog.locator('video').evaluate(video => (video as HTMLVideoElement).readyState)).toBeGreaterThanOrEqual(2);
+  await expect.poll(() => dialog.locator('video').evaluate(video => (video as HTMLVideoElement).readyState), { timeout: 15_000 }).toBeGreaterThanOrEqual(2);
   await page.keyboard.press('Escape');
   await expect(dialog).not.toBeVisible();
   await expect(expand).toBeFocused();

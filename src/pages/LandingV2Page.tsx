@@ -1,12 +1,10 @@
 import { useSearchParams } from 'react-router-dom';
 import '../styles/premium-landing.css';
+import '../styles/flow-backdrop.css';
 import '../styles/landing-hybrid.css';
 import { comparisonCopy } from '../content/landingCopy';
 import { useLanguage } from '../i18n/LanguageContext';
 import SkipLink from '../components/SkipLink';
-import PremiumBackground from '../components/PremiumBackground';
-import SmoothScroll from '../components/SmoothScroll';
-import ScrollExperience from '../components/ScrollExperience';
 import FragmentNavigation from '../components/FragmentNavigation';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
@@ -28,12 +26,10 @@ export default function LandingV2Page() {
   const studio = params.get('studio') === '1';
   return <div data-client-ready={typeof window !== 'undefined' ? 'true' : 'false'} className="landing-page landing-hybrid relative min-h-dvh">
     <SkipLink />
-    <PremiumBackground />
-    <SmoothScroll />
-    <ScrollExperience />
+    <div aria-hidden="true" className="flow-background flow-background-fixed"><div className="cloud-field" /></div>
     <FragmentNavigation />
     <div className="relative z-10"><PreviewToolbarV2 studio={studio} /></div>
-    <Navbar />
+    <Navbar motionControl={false} />
     <main id="main-content" className="relative z-10">
       <Hero compact />
       {studio ? <HybridVideoPlan /> : null}
