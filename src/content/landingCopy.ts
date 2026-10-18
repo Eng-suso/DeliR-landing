@@ -148,3 +148,24 @@ export const pilotCopy = {
     note: 'Bring the project, the objective, and the expected timing.',
   },
 };
+
+export const finalCtaCopy = {
+  it: {
+    eyebrow: 'Scegli il prossimo passo',
+    title: 'Vuoi usare DeliR nel tuo prossimo incarico?',
+    intro: 'Entra nella lista d’attesa per l’early access.',
+    body: 'Ti contatterò quando potrò aprire l’accesso a nuovi utenti. Se invece hai già un processo o un progetto reale da portare avanti, puoi candidarlo subito per un pilot.',
+    pilotLead: 'Hai già un progetto reale?',
+    pilotAction: 'Avvia un pilot',
+    terms: 'Early access senza acquisto · Pilot separato e su progetto reale',
+  },
+  en: {
+    eyebrow: 'Choose your next step',
+    title: 'Want to use DeliR on your next engagement?',
+    intro: 'Join the waitlist for early access.',
+    body: 'I will contact you when access can open to more users. If you already have a real process or project to work on, you can apply for a pilot now.',
+    pilotLead: 'Already have a real project?',
+    pilotAction: 'Start a pilot',
+    terms: 'Early access with no purchase · Pilot is separate and project-based',
+  },
+};

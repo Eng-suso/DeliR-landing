@@ -1,24 +1,29 @@
-import { ArrowDown, ArrowRight, Check } from 'lucide-react';
-import { heroCopy } from '../../content/landingCopy';
+import { ArrowDown, Check } from 'lucide-react';
+import { heroCopy, journeyCopy } from '../../content/landingCopy';
 import { useLanguage } from '../../i18n/LanguageContext';
-import { interestCtaLabel, pilotApplicationHref, productInterestHref } from '../../lib/publicOffer';
+import { pilotApplicationHref } from '../../lib/publicOffer';
+import ActionV2 from './ActionV2';
 import VideoSlotV2 from './VideoSlotV2';
 
 export default function HeroV2({ studio = false }: { studio?: boolean }) {
   const { language } = useLanguage();
   const t = heroCopy[language];
+  const benefits = [0, 1, 4].map(index => journeyCopy[language].modules[index].output);
   return <section id="hero" aria-labelledby="hero-v2-title" className="v2-hero v2-section">
-    <div className="section-shell v2-split">
-      <div className="min-w-0">
+    <div className="section-shell v2-split v2-hero-layout">
+      <div className="v2-hero-copy min-w-0">
         <p className="landing-eyebrow !text-blue-200">{t.eyebrow}</p>
-        <h1 id="hero-v2-title" className="v2-title mt-5">{t.first}<span className="mt-2 block text-blue-200">{t.second}</span></h1>
-        <p className="v2-body mt-6">{t.body}</p>
-        <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <a href={productInterestHref(language)} className="btn-primary whitespace-normal">{interestCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4 shrink-0" /></a>
-          <a href="#caso" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg px-3 text-sm font-semibold text-white underline underline-offset-4 hover:bg-white/10">{t.secondary}<ArrowDown aria-hidden="true" className="size-4" /></a>
+        <h1 id="hero-v2-title" className="v2-title mt-5">{t.first}</h1>
+        <p className="v2-hero-outcome mt-3">{t.second}</p>
+        <ul className="v2-hero-benefits" aria-label={language === 'it' ? 'Benefici DeliR' : 'DeliR benefits'}>
+          {benefits.map(benefit => <li key={benefit}><span className="v2-benefit-check"><Check aria-hidden="true" className="size-4" /></span><span>{benefit}</span></li>)}
+        </ul>
+        <ActionV2 />
+        <p className="v2-hero-friction">{t.waitlistNote}</p>
+        <div className="v2-hero-secondary">
+          <a href="#caso">{t.secondary}<ArrowDown aria-hidden="true" className="size-4" /></a>
+          <span>{t.pilotLead} <a href={pilotApplicationHref(language)}>{t.pilotAction}</a>.</span>
         </div>
-        <p className="mt-5 flex items-start gap-2 text-xs leading-6 text-slate-300"><Check aria-hidden="true" className="mt-1 size-4 shrink-0" />{t.waitlistNote}</p>
-        <p className="mt-2 text-sm leading-7 text-slate-300">{t.pilotLead} <a href={pilotApplicationHref(language)} className="inline-flex min-h-11 items-center font-semibold text-white underline underline-offset-4">{t.pilotAction}</a>.</p>
       </div>
       <VideoSlotV2 id="hero" studio={studio} priority />
     </div>

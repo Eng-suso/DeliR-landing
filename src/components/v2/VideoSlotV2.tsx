@@ -23,7 +23,7 @@ export default function VideoSlotV2({ id, studio = false, priority = false }: { 
   const fallbackPoster = localized?.poster ?? reference.poster;
   const fallbackSrcSet = localized?.posterSrcSet ?? reference.posterSrcSet;
   const mobile = useSyncExternalStore(subscribe, getMobileSnapshot, getServerSnapshot);
-  const device = mobile ? 'mobile' : 'desktop';
+  const device = mobile && slot.devices.includes('mobile') ? 'mobile' : 'desktop';
   const ready = slot.status === 'ready';
   const [requested, setRequested] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -41,9 +41,9 @@ export default function VideoSlotV2({ id, studio = false, priority = false }: { 
     <figure aria-labelledby={`${labelId}-caption`}>
       <div className="v2-media-frame">
         <picture>
-          {ready ? <source media={mobileQuery} srcSet={videoAssetPath(slot, 'mobile', language, 'webp')} /> : null}
+          {ready && slot.devices.includes('mobile') ? <source media={mobileQuery} srcSet={videoAssetPath(slot, 'mobile', language, 'webp')} /> : null}
           <img src={ready ? videoAssetPath(slot, 'desktop', language, 'webp') : fallbackPoster}
-            srcSet={ready ? undefined : fallbackSrcSet} sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1023px) 90vw, 640px"
+            srcSet={ready ? undefined : fallbackSrcSet} sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1023px) 90vw, 637px"
             alt={reference.description[language]} width={slot.desktop.width} height={slot.desktop.height}
             loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : undefined} decoding="async" />
         </picture>
@@ -66,7 +66,7 @@ export default function VideoSlotV2({ id, studio = false, priority = false }: { 
     {studio ? <details className="v2-shot-card mt-3" open>
       <summary className="flex min-h-12 cursor-pointer items-center gap-2 font-semibold"><Clapperboard aria-hidden="true" className="size-4 shrink-0" /><span>{slot.id} · {slot.seconds.min}–{slot.seconds.max}s · {ready ? (it ? 'Pronto' : 'Ready') : (it ? 'Da registrare' : 'To record')}</span></summary>
       <div className="pb-4">
-        <p className="text-sm leading-6">Desktop {slot.desktop.width} × {slot.desktop.height} (16:10) · Mobile {slot.mobile.width} × {slot.mobile.height} (4:3)</p>
+        <p className="text-sm leading-6">Desktop {slot.desktop.width} × {slot.desktop.height}{slot.devices.includes('mobile') ? ` · Mobile ${slot.mobile.width} × ${slot.mobile.height}` : ` · ${it ? 'Solo desktop nel layout Figma' : 'Desktop only in the Figma layout'}`}</p>
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm leading-6">{slot.shots[language].map(shot => <li key={shot}>{shot}</li>)}</ol>
         <p className="mt-4 text-xs font-semibold">{it ? 'File per questa visualizzazione' : 'Files for this viewport'}</p>
         <ul className="mt-2 space-y-1 text-xs leading-5">{(['mp4', 'webm', 'webp', 'vtt'] as const).map(ext => <li key={ext}><code className="break-all">{videoAssetPath(slot, device, language, ext)}</code></li>)}</ul>

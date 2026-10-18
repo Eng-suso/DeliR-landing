@@ -11,12 +11,12 @@
         "max": 25
       },
       "desktop": {
-        "width": 1600,
-        "height": 1000
+        "width": 1274,
+        "height": 1060
       },
       "mobile": {
-        "width": 1200,
-        "height": 900
+        "width": 1472,
+        "height": 856
       },
       "shots": {
         "it": [
@@ -29,7 +29,11 @@
           "Select an activity and open its source.",
           "Move to the As-Is / To-Be comparison and end on the result."
         ]
-      }
+      },
+      "devices": [
+        "desktop",
+        "mobile"
+      ]
     },
     {
       "id": "problem",
@@ -40,11 +44,11 @@
         "max": 15
       },
       "desktop": {
-        "width": 1600,
-        "height": 1000
+        "width": 1274,
+        "height": 800
       },
       "mobile": {
-        "width": 1200,
+        "width": 1472,
         "height": 900
       },
       "shots": {
@@ -58,7 +62,10 @@
           "Open two sources about the same handoff.",
           "End on the question to resolve, without inventing an outcome."
         ]
-      }
+      },
+      "devices": [
+        "desktop"
+      ]
     },
     {
       "id": "proof-as-is",
@@ -69,12 +76,12 @@
         "max": 20
       },
       "desktop": {
-        "width": 1600,
-        "height": 1000
+        "width": 2606,
+        "height": 640
       },
       "mobile": {
-        "width": 1200,
-        "height": 900
+        "width": 1472,
+        "height": 1256
       },
       "shots": {
         "it": [
@@ -87,7 +94,11 @@
           "Select an activity and show its evidence.",
           "Show a point still requiring review."
         ]
-      }
+      },
+      "devices": [
+        "desktop",
+        "mobile"
+      ]
     },
     {
       "id": "benefit-evidence",
@@ -98,12 +109,12 @@
         "max": 15
       },
       "desktop": {
-        "width": 1600,
-        "height": 1000
+        "width": 1200,
+        "height": 1200
       },
       "mobile": {
-        "width": 1200,
-        "height": 900
+        "width": 1472,
+        "height": 1136
       },
       "shots": {
         "it": [
@@ -116,7 +127,11 @@
           "Open its evidence panel and supporting source.",
           "Keep the source-to-activity connection readable."
         ]
-      }
+      },
+      "devices": [
+        "desktop",
+        "mobile"
+      ]
     },
     {
       "id": "benefit-gaps",
@@ -127,12 +142,12 @@
         "max": 15
       },
       "desktop": {
-        "width": 1600,
-        "height": 1000
+        "width": 1200,
+        "height": 1200
       },
       "mobile": {
-        "width": 1200,
-        "height": 900
+        "width": 1472,
+        "height": 1136
       },
       "shots": {
         "it": [
@@ -145,7 +160,11 @@
           "Show the missing threshold or handoff.",
           "Bring the question into review without confirming it as fact."
         ]
-      }
+      },
+      "devices": [
+        "desktop",
+        "mobile"
+      ]
     },
     {
       "id": "benefit-scenarios",
@@ -156,12 +175,12 @@
         "max": 20
       },
       "desktop": {
-        "width": 1600,
-        "height": 1000
+        "width": 1200,
+        "height": 1200
       },
       "mobile": {
-        "width": 1200,
-        "height": 900
+        "width": 1472,
+        "height": 1136
       },
       "shots": {
         "it": [
@@ -174,7 +193,11 @@
           "Open simulation parameters and assumptions.",
           "Compare indicators while keeping the demo-data label visible."
         ]
-      }
+      },
+      "devices": [
+        "desktop",
+        "mobile"
+      ]
     },
     {
       "id": "proof-decision",
@@ -185,12 +208,12 @@
         "max": 20
       },
       "desktop": {
-        "width": 1600,
-        "height": 1000
+        "width": 2606,
+        "height": 640
       },
       "mobile": {
-        "width": 1200,
-        "height": 900
+        "width": 1472,
+        "height": 1256
       },
       "shots": {
         "it": [
@@ -203,7 +226,11 @@
           "Show its rationale, evidence and open question.",
           "End on the proposal review."
         ]
-      }
+      },
+      "devices": [
+        "desktop",
+        "mobile"
+      ]
     }
   ]
 }

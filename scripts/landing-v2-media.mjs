@@ -13,9 +13,14 @@ for (const slot of manifest.slots) {
   ids.add(slot.id);
   if (!['planned', 'ready'].includes(slot.status)) errors.push(`${slot.id}: use planned or ready.`);
   if (!(slot.seconds.min > 0 && slot.seconds.max >= slot.seconds.min)) errors.push(`${slot.id}: invalid duration.`);
+  if (!Array.isArray(slot.devices) || !slot.devices.length || slot.devices.some(device => !['desktop', 'mobile'].includes(device)) || new Set(slot.devices).size !== slot.devices.length || !slot.devices.includes('desktop')) {
+    errors.push(`${slot.id}: specify unique supported devices, including desktop.`);
+    continue;
+  }
   for (const device of ['desktop', 'mobile']) {
+    if (!slot.devices.includes(device)) continue;
     const { width, height } = slot[device];
-    if (!Number.isInteger(width) || !Number.isInteger(height) || width <= 0 || height <= 0 || width / height !== (device === 'desktop' ? 1.6 : 4 / 3)) errors.push(`${slot.id}: invalid ${device} dimensions.`);
+    if (!Number.isInteger(width) || !Number.isInteger(height) || width < 128 || height < 128 || width > 4096 || height > 4096 || width % 2 || height % 2) errors.push(`${slot.id}: ${device} dimensions must be even integers between 128 and 4096.`);
     for (const language of ['it', 'en']) {
       if (!slot.shots[language]?.length) errors.push(`${slot.id}: missing ${language} storyboard.`);
       const base = `${manifest.basePath}/${slot.id}.${device}.${language}`;

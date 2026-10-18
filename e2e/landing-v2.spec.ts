@@ -8,23 +8,42 @@ test('V2 has seven planned slots, responsive layouts and no premature video requ
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/v2');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Software di Process Intelligence/);
+  await page.evaluate(() => document.fonts.ready);
   await expect(page.locator('[data-video-slot]')).toHaveCount(7);
   await expect(page.locator('video')).toHaveCount(0);
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
-  for (const width of [375, 768, 1024, 1440]) {
+  for (const width of [320, 375, 414, 768, 834, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     const dimensions = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, viewport: document.documentElement.clientWidth }));
     expect(dimensions.scroll).toBeLessThanOrEqual(dimensions.viewport + 1);
     const table = page.locator('.v2-comparison-table');
-    if (width >= 768) await expect(table).toBeVisible(); else await expect(table).toBeHidden();
+    if (width >= 1024) await expect(table).toBeVisible(); else await expect(table).toBeHidden();
     const cards = page.locator('.v2-comparison-cards');
-    if (width < 768) await expect(cards).toBeVisible(); else await expect(cards).toBeHidden();
+    if (width < 1024) await expect(cards).toBeVisible(); else await expect(cards).toBeHidden();
+    await expect(cards.locator('[data-v2-differentiator]')).toHaveCount(6);
+    const extraProofs = page.locator('.v2-proof-mobile-details');
+    const closingVisual = page.locator('.v2-final-visual');
+    if (width < 768) { await expect(extraProofs).toBeVisible(); await expect(closingVisual).toBeVisible(); }
+    else { await expect(extraProofs).toBeHidden(); await expect(closingVisual).toBeHidden(); }
+    if (width < 1024) await expect(page.locator('.v2-problem [data-video-slot]')).toBeHidden();
+    else await expect(page.locator('.v2-problem [data-video-slot]')).toBeVisible();
+    for (const [index, benefit] of (await page.locator('.v2-benefit').all()).entries()) {
+      const mediaBox = await benefit.locator('[data-video-slot]').boundingBox();
+      const copyBox = await benefit.locator('.v2-benefit-copy').boundingBox();
+      if (width < 1024) expect(mediaBox!.y + mediaBox!.height).toBeLessThanOrEqual(copyBox!.y);
+      else if (index === 1) expect(mediaBox!.x).toBeGreaterThan(copyBox!.x);
+      else expect(mediaBox!.x).toBeLessThan(copyBox!.x);
+    }
     const ratio = await page.locator('.v2-media-frame').first().evaluate(element => {
       const rect = element.getBoundingClientRect();
       return rect.width / rect.height;
     });
-    expect(ratio).toBeCloseTo(width < 768 ? 4 / 3 : 16 / 10, 1);
-    if (width === 375 || width === 1440) await page.screenshot({ path: testInfo.outputPath(`v2-${width}.png`) });
+    expect(ratio).toBeCloseTo(width < 768 ? 184 / 107 : 637 / 530, 1);
+    if (width === 1440) {
+      const frame = await page.locator('.v2-hero .v2-media-frame').boundingBox();
+      expect(frame!.width).toBeCloseTo(637, 0);
+    }
+    if ([375, 414, 834, 1440].includes(width)) await page.screenshot({ path: testInfo.outputPath(`v2-${width}.png`) });
   }
   expect(missingAssets).toEqual([]);
   expect(errors).toEqual([]);
