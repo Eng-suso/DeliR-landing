@@ -1,0 +1,1410 @@
+{
+  "date": "2026-10-20",
+  "method": "REA capture_browser_scenario. Fresh Chrome profiles; light color scheme, en-US; initial load + End + lazy wait. CSS/font metadata only; no binaries exported. Completeness applies only to bounded scenario.",
+  "captures": [
+    {
+      "site": "processmind",
+      "view": "desktop",
+      "evidence_id": "ev_431c338457638b05e1a06b3a50d40acb26f9486ae9ec4a853fad79f70eeca689",
+      "requested_url": "https://processmind.com/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000,
+        "device_scale_factor": 1
+      },
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed"
+        },
+        {
+          "step_id": "settle",
+          "status": "completed"
+        },
+        {
+          "step_id": "footer",
+          "status": "completed"
+        },
+        {
+          "step_id": "lazy",
+          "status": "completed"
+        }
+      ],
+      "completeness": {
+        "status": "complete",
+        "equality_eligible": true,
+        "missing_sections": [],
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ],
+      "omissions": {
+        "by_kind": [],
+        "network_transactions": [],
+        "network_transaction_range": null
+      },
+      "stylesheets": [
+        {
+          "url": "https://processmind.com/_astro/Base.DSZE7YIe.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-8"
+        }
+      ],
+      "fonts": [
+        {
+          "url": "https://processmind.com/_astro/fonts/a14d1900bfe74992.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-4"
+        },
+        {
+          "url": "https://processmind.com/_astro/fonts/4f0b2c279482965c.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-5"
+        },
+        {
+          "url": "https://processmind.com/_astro/fonts/52056217662ab262.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-6"
+        },
+        {
+          "url": "https://processmind.com/_astro/fonts/ae6437875e76fe72.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-7"
+        }
+      ]
+    },
+    {
+      "site": "processmind",
+      "view": "mobile",
+      "evidence_id": "ev_1eae5f1713e60aaf4e046f54435aedbf0b50320b71573d29d16bec217bae5d94",
+      "requested_url": "https://processmind.com/",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "device_scale_factor": 1
+      },
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed"
+        },
+        {
+          "step_id": "settle",
+          "status": "completed"
+        },
+        {
+          "step_id": "footer",
+          "status": "completed"
+        },
+        {
+          "step_id": "lazy",
+          "status": "completed"
+        }
+      ],
+      "completeness": {
+        "status": "complete",
+        "equality_eligible": true,
+        "missing_sections": [],
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ],
+      "omissions": {
+        "by_kind": [],
+        "network_transactions": [],
+        "network_transaction_range": null
+      },
+      "stylesheets": [
+        {
+          "url": "https://processmind.com/_astro/Base.DSZE7YIe.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-8"
+        }
+      ],
+      "fonts": [
+        {
+          "url": "https://processmind.com/_astro/fonts/a14d1900bfe74992.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-4"
+        },
+        {
+          "url": "https://processmind.com/_astro/fonts/4f0b2c279482965c.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-5"
+        },
+        {
+          "url": "https://processmind.com/_astro/fonts/52056217662ab262.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-6"
+        },
+        {
+          "url": "https://processmind.com/_astro/fonts/ae6437875e76fe72.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-7"
+        }
+      ]
+    },
+    {
+      "site": "apple",
+      "view": "desktop",
+      "evidence_id": "ev_f7093a0eb4c6a5b1e482c19b0c2f5eec022739c5ef169e85aa13233f9139a81a",
+      "requested_url": "https://www.apple.com/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000,
+        "device_scale_factor": 1
+      },
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed"
+        },
+        {
+          "step_id": "settle",
+          "status": "completed"
+        },
+        {
+          "step_id": "footer",
+          "status": "completed"
+        },
+        {
+          "step_id": "lazy",
+          "status": "completed"
+        }
+      ],
+      "completeness": {
+        "status": "complete",
+        "equality_eligible": true,
+        "missing_sections": [],
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ],
+      "omissions": {
+        "by_kind": [],
+        "network_transactions": [],
+        "network_transaction_range": null
+      },
+      "stylesheets": [
+        {
+          "url": "https://www.apple.com/api-www/global-elements/global-header/v1/assets/globalheader.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-2"
+        },
+        {
+          "url": "https://www.apple.com/ac/globalfooter/8/en_US/styles/ac-globalfooter.built.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-3"
+        },
+        {
+          "url": "https://www.apple.com/ac/localnav/9/styles/ac-localnav.built.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-4"
+        },
+        {
+          "url": "https://www.apple.com/wss/fonts?families=SF+Pro,v3|SF+Pro+Icons,v3",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-5"
+        },
+        {
+          "url": "https://www.apple.com/v/homepage/a/styles/main.built.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-6"
+        },
+        {
+          "url": "https://www.apple.com/v/homepage/a/styles/homepage.built.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-7"
+        },
+        {
+          "url": "https://www.apple.com/autopush/us/fam-gallery/styles/home-gallery.built.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-8"
+        },
+        {
+          "url": "https://www.apple.com/v/homepage/a/styles/inline-media.built.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-9"
+        },
+        {
+          "url": "https://www.apple.com/homepage/styles/index_jr6iaf49.built.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-10"
+        },
+        {
+          "url": "https://www.apple.com/ac/localeswitcher/4/it_IT/styles/localeswitcher.built.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-37"
+        }
+      ],
+      "fonts": [
+        {
+          "url": "https://www.apple.com/wss/fonts/SF-Pro-Text/v3/sf-pro-text_semibold.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-26"
+        },
+        {
+          "url": "https://www.apple.com/wss/fonts/SF-Pro-Text/v3/sf-pro-text_regular.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-27"
+        },
+        {
+          "url": "https://www.apple.com/wss/fonts/SF-Pro-Display/v3/sf-pro-display_semibold.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-28"
+        },
+        {
+          "url": "https://www.apple.com/wss/fonts/SF-Pro-Text/v3/sf-pro-text_regular-italic.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-34"
+        },
+        {
+          "url": "https://www.apple.com/wss/fonts/SF-Pro-Display/v3/sf-pro-display_regular.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-35"
+        },
+        {
+          "url": "https://www.apple.com/wss/fonts/SF-Pro-Display/v3/sf-pro-display_bold.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-36"
+        },
+        {
+          "url": "https://www.apple.com/wss/fonts/SF-Pro-Icons/v3/sf-pro-icons_light.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-46"
+        },
+        {
+          "url": "https://www.apple.com/wss/fonts/SF-Pro-Text/v3/sf-pro-text_light.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-47"
+        }
+      ]
+    },
+    {
+      "site": "apple",
+      "view": "mobile",
+      "evidence_id": "ev_ac06d68958da50029339a1956794b926780331314e18cd82764ea81a72fbef91",
+      "requested_url": "https://www.apple.com/",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "device_scale_factor": 1
+      },
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed"
+        },
+        {
+          "step_id": "settle",
+          "status": "completed"
+        },
+        {
+          "step_id": "footer",
+          "status": "completed"
+        },
+        {
+          "step_id": "lazy",
+          "status": "completed"
+        }
+      ],
+      "completeness": {
+        "status": "complete",
+        "equality_eligible": true,
+        "missing_sections": [],
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ],
+      "omissions": {
+        "by_kind": [],
+        "network_transactions": [],
+        "network_transaction_range": null
+      },
+      "stylesheets": [
+        {
+          "url": "https://www.apple.com/api-www/global-elements/global-header/v1/assets/globalheader.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-2"
+        },
+        {
+          "url": "https://www.apple.com/ac/globalfooter/8/en_US/styles/ac-globalfooter.built.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-3"
+        },
+        {
+          "url": "https://www.apple.com/ac/localnav/9/styles/ac-localnav.built.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-4"
+        },
+        {
+          "url": "https://www.apple.com/wss/fonts?families=SF+Pro,v3|SF+Pro+Icons,v3",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-5"
+        },
+        {
+          "url": "https://www.apple.com/v/homepage/a/styles/main.built.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-6"
+        },
+        {
+          "url": "https://www.apple.com/v/homepage/a/styles/homepage.built.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-7"
+        },
+        {
+          "url": "https://www.apple.com/autopush/us/fam-gallery/styles/home-gallery.built.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-8"
+        },
+        {
+          "url": "https://www.apple.com/v/homepage/a/styles/inline-media.built.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-9"
+        },
+        {
+          "url": "https://www.apple.com/homepage/styles/index_jr6iaf49.built.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-10"
+        },
+        {
+          "url": "https://www.apple.com/ac/localeswitcher/4/it_IT/styles/localeswitcher.built.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-38"
+        }
+      ],
+      "fonts": [
+        {
+          "url": "https://www.apple.com/wss/fonts/SF-Pro-Text/v3/sf-pro-text_semibold.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-26"
+        },
+        {
+          "url": "https://www.apple.com/wss/fonts/SF-Pro-Display/v3/sf-pro-display_semibold.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-27"
+        },
+        {
+          "url": "https://www.apple.com/wss/fonts/SF-Pro-Text/v3/sf-pro-text_regular.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-28"
+        },
+        {
+          "url": "https://www.apple.com/wss/fonts/SF-Pro-Display/v3/sf-pro-display_regular.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-33"
+        },
+        {
+          "url": "https://www.apple.com/wss/fonts/SF-Pro-Text/v3/sf-pro-text_bold.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-34"
+        },
+        {
+          "url": "https://www.apple.com/wss/fonts/SF-Pro-Text/v3/sf-pro-text_regular-italic.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-35"
+        },
+        {
+          "url": "https://www.apple.com/wss/fonts/SF-Pro-Icons/v3/sf-pro-icons_light.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-46"
+        },
+        {
+          "url": "https://www.apple.com/wss/fonts/SF-Pro-Text/v3/sf-pro-text_light.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-47"
+        }
+      ]
+    },
+    {
+      "site": "besharp",
+      "view": "desktop",
+      "evidence_id": "ev_4d13ca8ceb66d82c1120017670026e767ab63aa2535787ff95b9a1ba82f82408",
+      "requested_url": "https://www.besharp.it/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000,
+        "device_scale_factor": 1
+      },
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed"
+        },
+        {
+          "step_id": "settle",
+          "status": "completed"
+        },
+        {
+          "step_id": "footer",
+          "status": "completed"
+        },
+        {
+          "step_id": "lazy",
+          "status": "completed"
+        }
+      ],
+      "completeness": {
+        "status": "complete",
+        "equality_eligible": true,
+        "missing_sections": [],
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ],
+      "omissions": {
+        "by_kind": [],
+        "network_transactions": [],
+        "network_transaction_range": null
+      },
+      "stylesheets": [
+        {
+          "url": "https://www.besharp.it/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/menu-item/style.min.css?ver=1",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-15"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/css/besharp-home.min.css?ver=3.0",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-16"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/css/vendor/owl.carousel.min.css?ver=3.0",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-17"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/css/vendor/owl.theme.default.min.css?ver=3.0",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-18"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/css/vendor/swiper-bundle.min.css?ver=3.0",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-19"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/css/vendor/aos.css?ver=3.0",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-20"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/css/all.min.css?ver=3.0",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-21"
+        },
+        {
+          "url": "https://www.gstatic.com/recaptcha/releases/4EDjxXf4knsx6UBM1L2V6cv8/styles__ltr.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-86"
+        }
+      ],
+      "fonts": [
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/gotham/Gotham-Bold.woff",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-2"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/gotham/Gotham-Bold.ttf",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-3"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/gotham/Gotham-Book.woff",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-4"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/gotham/Gotham-Book.ttf",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-5"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/gotham/Gotham-Black.woff",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-6"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/gotham/Gotham-Black.ttf",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-7"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/gotham/Gotham-Ultra.woff",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-8"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/gotham/Gotham-Ultra.ttf",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-9"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/sora/Sora-Regular.woff",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-10"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/sora/Sora-Regular.ttf",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-11"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/atomic/AtomicMarker.ttf",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-12"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/webfonts/fa-regular-400.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-13"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/sora/Sora-Bold.woff",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-64"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/webfonts/fa-solid-900.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-65"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/atomic/AtomicMarker.woff",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-66"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/webfonts/fa-brands-400.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-67"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBA.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-89"
+        }
+      ]
+    },
+    {
+      "site": "besharp",
+      "view": "mobile",
+      "evidence_id": "ev_fcee5e8ea9681df4fda9dcc73df4ca11bf8f772ab215a5f1b20bba65f19de4b2",
+      "requested_url": "https://www.besharp.it/",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "device_scale_factor": 1
+      },
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed"
+        },
+        {
+          "step_id": "settle",
+          "status": "completed"
+        },
+        {
+          "step_id": "footer",
+          "status": "completed"
+        },
+        {
+          "step_id": "lazy",
+          "status": "completed"
+        }
+      ],
+      "completeness": {
+        "status": "complete",
+        "equality_eligible": true,
+        "missing_sections": [],
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Browser host platform and architecture were not observed."
+      ],
+      "omissions": {
+        "by_kind": [],
+        "network_transactions": [],
+        "network_transaction_range": null
+      },
+      "stylesheets": [
+        {
+          "url": "https://www.besharp.it/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/menu-item/style.min.css?ver=1",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-15"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/css/besharp-home.min.css?ver=3.0",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-16"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/css/vendor/owl.carousel.min.css?ver=3.0",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-17"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/css/vendor/owl.theme.default.min.css?ver=3.0",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-18"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/css/vendor/swiper-bundle.min.css?ver=3.0",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-19"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/css/vendor/aos.css?ver=3.0",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-20"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/css/all.min.css?ver=3.0",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-21"
+        },
+        {
+          "url": "https://www.gstatic.com/recaptcha/releases/4EDjxXf4knsx6UBM1L2V6cv8/styles__ltr.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-86"
+        }
+      ],
+      "fonts": [
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/gotham/Gotham-Bold.woff",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-2"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/gotham/Gotham-Bold.ttf",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-3"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/gotham/Gotham-Book.woff",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-4"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/gotham/Gotham-Book.ttf",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-5"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/gotham/Gotham-Black.woff",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-6"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/gotham/Gotham-Black.ttf",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-7"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/gotham/Gotham-Ultra.woff",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-8"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/gotham/Gotham-Ultra.ttf",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-9"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/sora/Sora-Regular.woff",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-10"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/sora/Sora-Regular.ttf",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-11"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/atomic/AtomicMarker.ttf",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-12"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/webfonts/fa-regular-400.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-13"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/sora/Sora-Bold.woff",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-64"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/webfonts/fa-solid-900.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-65"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/fonts/atomic/AtomicMarker.woff",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-66"
+        },
+        {
+          "url": "https://www.besharp.it/wp-content/themes/besharp/assets/webfonts/fa-brands-400.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-67"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBA.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-89"
+        }
+      ]
+    },
+    {
+      "site": "signavio",
+      "view": "desktop",
+      "evidence_id": "ev_10932bf28ab6b974870cbc9da5a220cf8d83413d89a09085a1806c29bf7f8a19",
+      "requested_url": "https://www.signavio.com/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000,
+        "device_scale_factor": 1
+      },
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed"
+        },
+        {
+          "step_id": "settle",
+          "status": "completed"
+        },
+        {
+          "step_id": "footer",
+          "status": "completed"
+        },
+        {
+          "step_id": "lazy",
+          "status": "completed"
+        }
+      ],
+      "completeness": {
+        "status": "incomplete",
+        "equality_eligible": false,
+        "missing_sections": [
+          "events"
+        ],
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Some network requests had not completed when capture ended; later activity is unknown.",
+        "Browser host platform and architecture were not observed."
+      ],
+      "omissions": {
+        "by_kind": [],
+        "network_transactions": [],
+        "network_transaction_range": null
+      },
+      "stylesheets": [
+        {
+          "url": "https://www.signavio.com/css/app.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-2"
+        }
+      ],
+      "fonts": [
+        {
+          "url": "https://www.signavio.com/fonts/72Brand.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-41"
+        },
+        {
+          "url": "https://consent.trustarc.com/get?name=Benton-Sans-Regular.ttf",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-73"
+        }
+      ]
+    },
+    {
+      "site": "signavio",
+      "view": "mobile",
+      "evidence_id": "ev_c39a992242f662c5b75f368a95708b75ca1a54869222fe00f83e47e3a5c3e0e2",
+      "requested_url": "https://www.signavio.com/",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "device_scale_factor": 1
+      },
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed"
+        },
+        {
+          "step_id": "settle",
+          "status": "completed"
+        },
+        {
+          "step_id": "footer",
+          "status": "completed"
+        },
+        {
+          "step_id": "lazy",
+          "status": "completed"
+        }
+      ],
+      "completeness": {
+        "status": "incomplete",
+        "equality_eligible": false,
+        "missing_sections": [
+          "events"
+        ],
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Some network requests had not completed when capture ended; later activity is unknown.",
+        "Browser host platform and architecture were not observed."
+      ],
+      "omissions": {
+        "by_kind": [],
+        "network_transactions": [],
+        "network_transaction_range": null
+      },
+      "stylesheets": [
+        {
+          "url": "https://www.signavio.com/css/app.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-2"
+        }
+      ],
+      "fonts": [
+        {
+          "url": "https://www.signavio.com/fonts/72Brand.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-40"
+        },
+        {
+          "url": "https://consent.trustarc.com/get?name=Benton-Sans-Regular.ttf",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-72"
+        }
+      ]
+    },
+    {
+      "site": "celonis",
+      "view": "desktop",
+      "evidence_id": "ev_efbe5923b681a17d200f61e183fddf8fd7254103852e445a9fda46ccc76af42d",
+      "requested_url": "https://www.celonis.com/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000,
+        "device_scale_factor": 1
+      },
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed"
+        },
+        {
+          "step_id": "settle",
+          "status": "completed"
+        },
+        {
+          "step_id": "footer",
+          "status": "completed"
+        },
+        {
+          "step_id": "lazy",
+          "status": "completed"
+        }
+      ],
+      "completeness": {
+        "status": "incomplete",
+        "equality_eligible": false,
+        "missing_sections": [
+          "events"
+        ],
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Some network requests had not completed when capture ended; later activity is unknown.",
+        "Browser host platform and architecture were not observed."
+      ],
+      "omissions": {
+        "by_kind": [],
+        "network_transactions": [],
+        "network_transaction_range": null
+      },
+      "stylesheets": [
+        {
+          "url": "https://www.celonis.com/dist/styles/styles.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-7"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/header/header.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-17"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/home-hero/home-hero.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-19"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/fragment/fragment.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-20"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/square-value/square-value.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-38"
+        },
+        {
+          "url": "https://www.celonis.com/dist/styles/fonts.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-41"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/text-only/text-only.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-47"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/home-basic/home-basic.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-48"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/solutions/solutions.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-49"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/title/title.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-50"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/cards/cards.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-51"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/topic-highlight/topic-highlight.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-52"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/question/question.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-53"
+        },
+        {
+          "url": "https://www.celonis.com/dist/styles/components/link-with-arrow/link-with-arrow.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-70"
+        },
+        {
+          "url": "https://www.celonis.com/dist/styles/components/carousel/carousel.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-73"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/footer/footer.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-74"
+        },
+        {
+          "url": "https://www.celonis.com/dist/styles/lazy-styles.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-76"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/pnf/pnf.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-83"
+        },
+        {
+          "url": "https://www.celonis.com/dist/styles/pardot/external-forms-style.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-100"
+        }
+      ],
+      "fonts": [
+        {
+          "url": "https://www.celonis.com/src/assets/fonts/Poppins-Regular.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-46"
+        }
+      ]
+    },
+    {
+      "site": "celonis",
+      "view": "mobile",
+      "evidence_id": "ev_4dcfad05267c241045631c716091dc1e19696d1f23a692fa1e3abe9edbdd3902",
+      "requested_url": "https://www.celonis.com/",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "device_scale_factor": 1
+      },
+      "steps": [
+        {
+          "step_id": "scenario_start",
+          "status": "completed"
+        },
+        {
+          "step_id": "settle",
+          "status": "completed"
+        },
+        {
+          "step_id": "footer",
+          "status": "completed"
+        },
+        {
+          "step_id": "lazy",
+          "status": "completed"
+        }
+      ],
+      "completeness": {
+        "status": "incomplete",
+        "equality_eligible": false,
+        "missing_sections": [
+          "events"
+        ],
+        "truncated_sections": []
+      },
+      "limitations": [
+        "Artifact identity is unavailable for this observation.",
+        "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+        "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+        "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+        "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+        "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+        "Storage values are hashed only after declared-secret redaction.",
+        "Some network requests had not completed when capture ended; later activity is unknown.",
+        "Browser host platform and architecture were not observed."
+      ],
+      "omissions": {
+        "by_kind": [],
+        "network_transactions": [],
+        "network_transaction_range": null
+      },
+      "stylesheets": [
+        {
+          "url": "https://www.celonis.com/dist/styles/styles.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-7"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/header/header.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-17"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/home-hero/home-hero.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-19"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/fragment/fragment.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-20"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/square-value/square-value.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-38"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/text-only/text-only.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-51"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/home-basic/home-basic.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-52"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/solutions/solutions.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-53"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/title/title.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-54"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/cards/cards.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-55"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/topic-highlight/topic-highlight.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-56"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/question/question.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-57"
+        },
+        {
+          "url": "https://www.celonis.com/dist/styles/components/link-with-arrow/link-with-arrow.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-74"
+        },
+        {
+          "url": "https://www.celonis.com/dist/styles/components/carousel/carousel.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-77"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/footer/footer.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-78"
+        },
+        {
+          "url": "https://www.celonis.com/dist/styles/lazy-styles.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-80"
+        },
+        {
+          "url": "https://www.celonis.com/dist/styles/fonts.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-81"
+        },
+        {
+          "url": "https://www.celonis.com/dist/blocks/pnf/pnf.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-87"
+        },
+        {
+          "url": "https://www.celonis.com/dist/styles/pardot/external-forms-style.css",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-100"
+        }
+      ],
+      "fonts": [
+        {
+          "url": "https://www.celonis.com/src/assets/fonts/Poppins-Regular.woff2",
+          "status": 200,
+          "failure": null,
+          "transaction": "request-89"
+        }
+      ]
+    }
+  ]
+}

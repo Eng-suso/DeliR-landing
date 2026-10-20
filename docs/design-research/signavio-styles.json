@@ -1,0 +1,7360 @@
+{
+  "site": "signavio",
+  "page": "https://www.signavio.com/",
+  "evidence_ids": [
+    "ev_10932bf28ab6b974870cbc9da5a220cf8d83413d89a09085a1806c29bf7f8a19",
+    "ev_c39a992242f662c5b75f368a95708b75ca1a54869222fe00f83e47e3a5c3e0e2"
+  ],
+  "cssDeclarationCount": 5900,
+  "resources": [
+    {
+      "url": "https://www.signavio.com/css/app.css",
+      "status": 200,
+      "bytes": 270382,
+      "sha256": "19fdb1f71c8687ec2748fcc674739c717a779608b0dfce9502399ef00490e01b"
+    }
+  ],
+  "imports": [],
+  "parseErrors": [],
+  "fontFaces": [
+    {
+      "source": "https://www.signavio.com/css/app.css",
+      "font-family": "\"72brand\"",
+      "urls": [
+        "https://www.signavio.com/fonts/72Brand.woff2",
+        "https://www.signavio.com/fonts/72Brand.woff"
+      ],
+      "embeddedSource": false
+    },
+    {
+      "source": "https://www.signavio.com/css/app.css",
+      "font-family": "SAP-icons",
+      "urls": [
+        "https://www.signavio.com/fonts/SAP-icons.eot",
+        "https://www.signavio.com/fonts/SAP-icons.woff2",
+        "https://www.signavio.com/fonts/SAP-icons.woff",
+        "https://www.signavio.com/fonts/SAP-icons.ttf"
+      ],
+      "embeddedSource": false,
+      "font-weight": "400",
+      "font-style": "normal"
+    },
+    {
+      "source": "https://www.signavio.com/#inline-style-12",
+      "font-family": "\"Benton-Sans-Bold\"",
+      "urls": [
+        "https://consent.trustarc.com/get?name=Benton-Sans-Bold.ttf"
+      ],
+      "embeddedSource": false
+    },
+    {
+      "source": "https://www.signavio.com/#inline-style-12",
+      "font-family": "\"Benton-Sans-Regular\"",
+      "urls": [
+        "https://consent.trustarc.com/get?name=Benton-Sans-Regular.ttf"
+      ],
+      "embeddedSource": false
+    }
+  ],
+  "frequencies": {
+    "color-expressions": [
+      {
+        "value": "rgb(255 255 255 / var(--tw-text-opacity, 1))",
+        "count": 72,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bpiforum .BPIForumAgendaContent h3",
+          ".bpiforum .BPIForumAgendaContent h4",
+          ".custompage-success .featured-video .fbg h1"
+        ]
+      },
+      {
+        "value": "#fff",
+        "count": 49,
+        "sources": [
+          "https://www.signavio.com/css/app.css",
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          "*,:before,:after",
+          "::backdrop",
+          ".outline-white"
+        ]
+      },
+      {
+        "value": "rgb(0 0 0 / var(--tw-text-opacity, 1))",
+        "count": 39,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".product-content .content h2",
+          ".product-content .content h3",
+          ".product-content .content h4"
+        ]
+      },
+      {
+        "value": "#0000",
+        "count": 33,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "*,:before,:after",
+          "::backdrop",
+          ".shadow"
+        ]
+      },
+      {
+        "value": "rgb(0 0 0 / var(--tw-bg-opacity, 1))",
+        "count": 29,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".submenu",
+          ".sub-submenu",
+          "table.new-style td.linked a:hover"
+        ]
+      },
+      {
+        "value": "transparent",
+        "count": 27,
+        "sources": [
+          "https://www.signavio.com/css/app.css",
+          "https://www.signavio.com/#inline-style-7",
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          "html,:host",
+          "button,input:where([type=button]),input:where([type=reset]),input:where([type=submit])",
+          ".bpiforum .BPIForumAgendaContent h3"
+        ]
+      },
+      {
+        "value": "#ddd",
+        "count": 25,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style td:not(:last-child)",
+          "table.new-style td.table-controls button.collapse,table.new-style td.table-controls button.expand",
+          "table.new-style tbody tr:first-child td"
+        ]
+      },
+      {
+        "value": "#ad0f5b",
+        "count": 24,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".featured-news-tile span.news-labels.news-label",
+          ".events-wrpper .webinar-featured-image",
+          ".product-integrations h2"
+        ]
+      },
+      {
+        "value": "#870848",
+        "count": 22,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".mobile-nav-menu-container li",
+          ".mobile-nav-menu-container .sub-submenu",
+          "[data-tooltip].simptip-position-top:before"
+        ]
+      },
+      {
+        "value": "rgb(255 255 255 / var(--tw-bg-opacity, 1))",
+        "count": 17,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".underline-animate:after",
+          "table.new-style th.mobile-show",
+          "table.new-style td.table-controls button.collapse:hover,table.new-style td.table-controls button.expand:hover"
+        ]
+      },
+      {
+        "value": "rgb(245 246 247 / var(--tw-bg-opacity, 1))",
+        "count": 13,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style tbody tr:nth-child(odd)",
+          ".advisors,.advisors #advisors-bio,.advisors-wrap",
+          ".management .management-container .mobile .copy-group"
+        ]
+      },
+      {
+        "value": "#eee",
+        "count": 13,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style tbody td:before",
+          ".module-tile",
+          ".sg-module-tile"
+        ]
+      },
+      {
+        "value": "rgb(34 53 72 / var(--tw-text-opacity, 1))",
+        "count": 11,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".customer-success-about h3",
+          ".product-content .content p",
+          ".product-content .content ul li"
+        ]
+      },
+      {
+        "value": "rgb(34 53 72 / var(--tw-bg-opacity, 1))",
+        "count": 10,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".mobile-nav-item",
+          "table.new-style th",
+          ".download-gated .download-img .img .download-circle .download-link"
+        ]
+      },
+      {
+        "value": "rgb(234 236 238 / var(--tw-bg-opacity, 1))",
+        "count": 10,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".menulangtag",
+          "table.new-style td.table-controls button.collapse,table.new-style td.table-controls button.expand",
+          ".content.dictionary .arrowUp"
+        ]
+      },
+      {
+        "value": "rgb(131 150 168 / var(--tw-text-opacity, 1))",
+        "count": 10,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".extra section .content ul.advantages li",
+          ".extra section .trail-text",
+          ".extra section small"
+        ]
+      },
+      {
+        "value": "#000",
+        "count": 10,
+        "sources": [
+          "https://www.signavio.com/css/app.css",
+          "https://www.signavio.com/#inline-style-10",
+          "https://www.signavio.com/#inline-style-11",
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".embla__button",
+          ".vidyard-player-container .play-button",
+          ".search-container"
+        ]
+      },
+      {
+        "value": "#fae100",
+        "count": 9,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".simptip-warning.simptip-position-top:before",
+          ".simptip-warning.simptip-position-top:after",
+          ".simptip-warning.simptip-position-bottom:before"
+        ]
+      },
+      {
+        "value": "rgb(0 112 242 / var(--tw-bg-opacity, 1))",
+        "count": 8,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".side-content .hs-cta-wrapper .cta_button",
+          ".general-cta.sap a,.general-cta.sap div,.general-cta.sap>span,.general-cta.sap>input",
+          ".general-cta.blackberry a,.general-cta.blackberry div,.general-cta.blackberry>span,.general-cta.blackberry>input"
+        ]
+      },
+      {
+        "value": "rgb(0 0 0 / .1)",
+        "count": 8,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".shadow",
+          ".shadow-lg",
+          ".shadow-md"
+        ]
+      },
+      {
+        "value": "rgb(0 87 210 / var(--tw-bg-opacity, 1))",
+        "count": 7,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".general-cta.sap a:hover,.general-cta.sap div:hover,.general-cta.sap>span:hover .general-cta.sap>input:hover",
+          ".general-cta.blackberry a:hover,.general-cta.blackberry div:hover,.general-cta.blackberry>span:hover,.general-cta.blackberry>input:hover",
+          ".general-cta.aqua a:hover,.general-cta.aqua div:hover,.general-cta.aqua>span:hover,.general-cta.aqua>input:hover"
+        ]
+      },
+      {
+        "value": "rgb(27 144 255 / var(--tw-text-opacity, 1))",
+        "count": 7,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-sgnvblue-600",
+          ".content a",
+          ".content ol>li:before"
+        ]
+      },
+      {
+        "value": "#00a7ac",
+        "count": 7,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".events-wrpper .webinar-featured-image",
+          ".page-landing-template .subList .img",
+          ".success-stories-header,.success-stories-header-hero,.success-story-about"
+        ]
+      },
+      {
+        "value": "rgba(0,0,0,0)",
+        "count": 7,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "section.home-newsboard .item6 .newscontent:before",
+          "[data-tooltip]:before",
+          ".half-arrow.simptip-position-right:before,.half-arrow.simptip-position-left:before"
+        ]
+      },
+      {
+        "value": "#555555d9",
+        "count": 7,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".new-style table td,.new-style table th",
+          ".new-style table th a",
+          ".new-style table tfoot tr.legenda td span"
+        ]
+      },
+      {
+        "value": "rgb(71 94 117 / var(--tw-text-opacity, 1))",
+        "count": 6,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".menulangtag",
+          "table.new-style td,table.new-style th",
+          "table.new-style th a"
+        ]
+      },
+      {
+        "value": "rgb(255 255 255 / var(--tw-border-opacity, 1))",
+        "count": 6,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".page-landing-template .bacLinks li",
+          ".dark .hbspt-form select,.dark .hbspt-form textarea,.dark .hbspt-form input[type=text],.dark .hbspt-form input[type=email],.dark .hbspt-form input[type=tel],.dark .hbspt-form input[type=password],.dark .hbspt-form input[type=datetime],.dark .hbspt-form input[type=datetime-local],.dark .hbspt-form input[type=date],.dark .hbspt-form input[type=month],.dark .hbspt-form input[type=time],.dark .hbspt-form input[type=week],.dark .hbspt-form input[type=number],.dark .hbspt-form input[type=url],.dark .hbspt-form input[type=search],.dark .hbspt-form input[type=color],.dark .hbspt-form input[type=file]",
+          ".border-white"
+        ]
+      },
+      {
+        "value": "rgb(0 0 0 / var(--tw-border-opacity, 1))",
+        "count": 5,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".extra .trail-content .ctas a",
+          ".border-black",
+          "#mobileLanguage .mobilesubmenu li:not(:first-child)"
+        ]
+      },
+      {
+        "value": "rgb(213 218 221 / var(--tw-border-opacity, 1))",
+        "count": 5,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".download-list ul li.download-item",
+          ".download-list p.teasertext",
+          ".events-wrpper .webinar-desc h2"
+        ]
+      },
+      {
+        "value": "rgb(157 23 77 / var(--tw-text-opacity, 1))",
+        "count": 5,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".resource-center .filters-list li",
+          ".advisors>h2 span,.management>h2 span",
+          ".hbspt-form .hs_error_rollup li label"
+        ]
+      },
+      {
+        "value": "rgb(60 20 100 / var(--tw-text-opacity, 1))",
+        "count": 5,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".light .hbspt-form .hs-form-field:not(.hs-fieldtype-booleancheckbox) legend",
+          ".hbspt-form ul.hs-error-msgs li label",
+          ".hbspt-form ul.hs-error-msgs li label a"
+        ]
+      },
+      {
+        "value": "rgb(0 87 210 / var(--tw-border-opacity, 1))",
+        "count": 5,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".general-cta.sap a,.general-cta.sap div,.general-cta.sap>span,.general-cta.sap>input",
+          ".general-cta.aqua a,.general-cta.aqua div,.general-cta.aqua>span,.general-cta.aqua>input",
+          ".general-cta.outline-white a,.general-cta.outline-white div,.general-cta.outline-white>span,.general-cta.outline-white>input"
+        ]
+      },
+      {
+        "value": "#555",
+        "count": 5,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .sidebar::-webkit-scrollbar-thumb",
+          ".new-style table td.table-controls button.collapse,.new-style table td.table-controls button.expand",
+          ".new-style table td.linked a"
+        ]
+      },
+      {
+        "value": "#a9b4be",
+        "count": 4,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "input::-moz-placeholder,textarea::-moz-placeholder",
+          "input::placeholder,textarea::placeholder",
+          ".hbspt-form select:focus,.hbspt-form textarea:focus"
+        ]
+      },
+      {
+        "value": "rgb(169 180 190 / var(--tw-border-opacity, 1))",
+        "count": 4,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".general-cta.sap-outline a,.general-cta.sap-outline>div:not(.sap-video),.general-cta.sap-outline>span,.general-cta.sap-outline>input",
+          ".general-cta.sap-purple>a,.general-cta.sap-purple div,.general-cta.sap-purple>span,.general-cta.sap-purple>input",
+          ".border-gray-400"
+        ]
+      },
+      {
+        "value": "rgb(77 177 255 / var(--tw-border-opacity, 1))",
+        "count": 4,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".blog-submenu a.active,.blog-submenu a:hover",
+          ".resource-center .resource-center-nav ul",
+          ".resource-center .resource-center-nav ul li a.active,.resource-center .resource-center-nav ul li a:hover"
+        ]
+      },
+      {
+        "value": "#333",
+        "count": 4,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".product-integrations .content",
+          ".new-style table th",
+          ".speaker-social svg path"
+        ]
+      },
+      {
+        "value": "#3a7d90",
+        "count": 4,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme .agenda ul.nav li:hover",
+          ".signavio-live-theme .agenda ul.nav li.active",
+          ".signavio-live-theme .agenda .agenda-element .date .datelm"
+        ]
+      },
+      {
+        "value": "#6a6a6a08",
+        "count": 4,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#1E6A92",
+        "count": 4,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          "#truste-consent-button,#truste-consent-required",
+          "#truste-show-consent"
+        ]
+      },
+      {
+        "value": "rgb(213 218 221 / var(--tw-text-opacity, 1))",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".side-content .side-nl-container form input::-webkit-input-placeholder",
+          ".text-gray-300",
+          ".hover\\:text-gray-300:hover"
+        ]
+      },
+      {
+        "value": "rgb(169 180 190 / var(--tw-text-opacity, 1))",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".rcSearch::-moz-placeholder",
+          ".rcSearch::placeholder",
+          ".text-gray-400"
+        ]
+      },
+      {
+        "value": "rgb(238 114 62 / var(--tw-bg-opacity, 1))",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".customer-days form.hs-form .hs_submit .hs-button",
+          ".bg-sgnvorange-200",
+          ".sg-button--orange"
+        ]
+      },
+      {
+        "value": "white",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css",
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".light .hbspt-form input:-webkit-autofill,.light .hbspt-form input:-webkit-autofill:hover,.light .hbspt-form input:-webkit-autofill:focus,.light .hbspt-form input:-webkit-autofill:active",
+          ".nav-menu-child-anchor",
+          ".trustarc-banner"
+        ]
+      },
+      {
+        "value": "rgb(0 64 176 / var(--tw-text-opacity, 1))",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".general-cta.sap-outline a,.general-cta.sap-outline>div:not(.sap-video),.general-cta.sap-outline>span,.general-cta.sap-outline>input",
+          ".general-cta.sap-purple>a,.general-cta.sap-purple div,.general-cta.sap-purple>span,.general-cta.sap-purple>input",
+          ".text-sgnvblue-900"
+        ]
+      },
+      {
+        "value": "rgb(0 112 242 / var(--tw-border-opacity, 1))",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".border-sgnvblue-700",
+          ".embla__dot.is-selected:after",
+          ".hover\\:border-sgnvblue-700:hover"
+        ]
+      },
+      {
+        "value": "#0070F2",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css",
+          "https://www.signavio.com/#inline-style-11"
+        ],
+        "selectors": [
+          ".nav-menu-child-anchor:hover",
+          "#Linkedin:hover .cls-1",
+          ".cls-1:hover"
+        ]
+      },
+      {
+        "value": "#f5f6f7",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".nav-menu-child-anchor:hover",
+          ".nav-menu-child-anchor",
+          ".text-component blockquote"
+        ]
+      },
+      {
+        "value": "#7f7f7f",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style th:not(:last-child)",
+          ".new-style table th:not(:last-child)",
+          ".search-form-content input#search,.resource-center-form input[type=text],.post-password-form input[type=password]"
+        ]
+      },
+      {
+        "value": "#ccc",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style tbody td:before",
+          ".webinar",
+          ".new-style table tbody td:before"
+        ]
+      },
+      {
+        "value": "#fff0",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".download-gated .download-form .event-date-due",
+          ".customer-logos-slide:before",
+          ".customer-logos-slide:after"
+        ]
+      },
+      {
+        "value": "#fff9",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".customer-days header .hashtag",
+          ".customer-days .speakers .speaker .name",
+          ".signavio-live-theme header .hashtag"
+        ]
+      },
+      {
+        "value": "#ffffff80",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".home-success-stories-customers .success-stories-container",
+          ".overflow-scroll-gradient:before",
+          ".overflow-scroll-gradient:after"
+        ]
+      },
+      {
+        "value": "#1b90ff",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-component a,.product-feature a,.form-component a,.newagendatxt a",
+          ".text-component ol li,.product-feature ol li,.form-component ol li,.newagendatxt ol li",
+          ".text-component ol li::marker,.product-feature ol li::marker,.form-component ol li::marker,.newagendatxt ol li::marker"
+        ]
+      },
+      {
+        "value": "rgb(59 130 246 / .5)",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "*,:before,:after",
+          "::backdrop"
+        ]
+      },
+      {
+        "value": "rgb(219 230 128 / var(--tw-bg-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".match,.match td",
+          ".bg-sgnvyellow-100"
+        ]
+      },
+      {
+        "value": "rgb(131 150 168 / var(--tw-border-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".events-wrpper .webinar-desc .title",
+          ".md\\:border-gray-500"
+        ]
+      },
+      {
+        "value": "rgb(49 151 149 / var(--tw-bg-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".landing-page-theme .features-img .desktop .bgimg .litxt span.hs-cta-node a",
+          ".bg-teal-600"
+        ]
+      },
+      {
+        "value": "rgb(44 122 123 / var(--tw-border-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme .agenda ul.nav li",
+          ".border-teal-700"
+        ]
+      },
+      {
+        "value": "rgb(245 246 247 / var(--tw-border-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".page-landing-template .backLinkBorder",
+          ".border-gray-100"
+        ]
+      },
+      {
+        "value": "rgb(34 53 72 / var(--tw-border-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".hbspt-form ul.hs-error-msgs:before",
+          ".hover\\:border-gray-900:hover"
+        ]
+      },
+      {
+        "value": "rgb(53 74 95 / var(--tw-text-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".hbspt-form form.hs-form select option",
+          ".text-gray-800"
+        ]
+      },
+      {
+        "value": "rgb(210 10 10 / var(--tw-text-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".hbspt-form form.hs-form .hs-error-msgs label.hs-main-font-element,.hbspt-form form.hs-form label.hs-error-msg",
+          ".text-red-700"
+        ]
+      },
+      {
+        "value": "rgb(91 115 139 / var(--tw-text-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".dark .hbspt-form form.hs-form .hs-error-msgs label.hs-main-font-element,.hbspt-form form.hs-form label.hs-error-msg",
+          ".text-gray-600"
+        ]
+      },
+      {
+        "value": "rgb(234 236 238 / var(--tw-border-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".border-gray-200",
+          ".itcs-widgetc-container"
+        ]
+      },
+      {
+        "value": "rgb(151 10 130 / var(--tw-border-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".border-purple-300",
+          ".product-features .sg-button--bromberry,.main-content .content .sg-button--bromberry"
+        ]
+      },
+      {
+        "value": "rgb(251 139 36 / var(--tw-border-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".border-sgnvorange-100",
+          ".sg-button--orange:hover"
+        ]
+      },
+      {
+        "value": "rgb(238 114 62 / var(--tw-border-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".border-sgnvorange-200",
+          ".sg-button--orange"
+        ]
+      },
+      {
+        "value": "rgb(155 1 93 / var(--tw-border-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".border-sgnvraspberry-900",
+          ".hover\\:border-sgnvraspberry-900:hover"
+        ]
+      },
+      {
+        "value": "rgb(151 10 130 / var(--tw-bg-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bg-purple-300",
+          ".product-features .sg-button--bromberry,.main-content .content .sg-button--bromberry"
+        ]
+      },
+      {
+        "value": "rgb(251 139 36 / var(--tw-bg-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bg-sgnvorange-100",
+          ".sg-button--orange:hover"
+        ]
+      },
+      {
+        "value": "rgb(255 240 245 / var(--tw-bg-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bg-sgnvraspberry-100",
+          ".hover\\:bg-sgnvraspberry-100:hover"
+        ]
+      },
+      {
+        "value": "rgb(155 1 93 / var(--tw-bg-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bg-sgnvraspberry-900",
+          ".hover\\:bg-sgnvraspberry-900:hover"
+        ]
+      },
+      {
+        "value": "rgb(0 112 242 / var(--tw-text-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-sgnvblue-700",
+          ".hover\\:text-sgnvblue-700:hover"
+        ]
+      },
+      {
+        "value": "rgb(223 18 120 / var(--tw-text-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-sgnvraspberry-700",
+          ".hover\\:text-sgnvraspberry-700:hover"
+        ]
+      },
+      {
+        "value": "rgb(250 204 21 / var(--tw-text-opacity, 1))",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-yellow-400",
+          ".hover\\:text-yellow-400:hover"
+        ]
+      },
+      {
+        "value": "rgb(0 0 0 / .05)",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".shadow-inner",
+          ".shadow-sm"
+        ]
+      },
+      {
+        "value": "#59b9bd",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".related-posts .list-container .post .post-title span",
+          ".module-tile.aqua"
+        ]
+      },
+      {
+        "value": "#ccedee",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".product-integrations.BTS",
+          ".product-integrations.JM"
+        ]
+      },
+      {
+        "value": "#3330",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".customer-days header .menu"
+        ]
+      },
+      {
+        "value": "#3333334d",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".customer-days header .menu"
+        ]
+      },
+      {
+        "value": "#01999e",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme header"
+        ]
+      },
+      {
+        "value": "#f4b100",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme .agenda ul.nav li.eu",
+          ".signavio-live-theme .agenda .agenda-element .data .eu"
+        ]
+      },
+      {
+        "value": "#a5b827",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme .agenda ul.nav li.us",
+          ".signavio-live-theme .agenda .agenda-element .data .us"
+        ]
+      },
+      {
+        "value": "#4093c5",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme .agenda ul.nav li.asia",
+          ".signavio-live-theme .agenda .agenda-element .data .asia"
+        ]
+      },
+      {
+        "value": "#000c",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".basicLightbox",
+          ".succStorieBg,.custompage-success .featuredImage.featured-image-vfx .overlay"
+        ]
+      },
+      {
+        "value": "#98989808",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#c5c5c508",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#dedede08",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#10101008",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#b5b5b508",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#82828208",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#ededed08",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#7e7e7e08",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#c4c4c408",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#79797908",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#85858508",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#84848408",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#b9b9b908",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#a8a8a808",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#a9a9a908",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#49494908",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#96969608",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#44444408",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#6f6f6f08",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#bfbfbf08",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#93939308",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#4f4f4f08",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#1c1c1c08",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#1b1b1b08",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#e4e4e408",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#26262608",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#2a2a2a08",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#3b3b3b08",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#42424208",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#ececec08",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#f4f4f408",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#dcdcdc08",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#d1d1d108",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".success-stories-header,.success-stories-header-hero,.success-story-about",
+          ".product-gradient"
+        ]
+      },
+      {
+        "value": "#ad0f5b00",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".header-s-form-container input[type=search]",
+          ".s-form input[type=search]"
+        ]
+      },
+      {
+        "value": "#0000001a",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".homepagecontainer #menu-container",
+          ".at-a-glance-tile,.custom-module-tile:hover"
+        ]
+      },
+      {
+        "value": "#00000026",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".featured-success-stories-tile:hover,.success-story-archive-tile:hover",
+          ".at-a-glance-tile,.custom-module-tile:hover"
+        ]
+      },
+      {
+        "value": "rgba(0, 0, 0, 0.3)",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".trustarc-banner"
+        ]
+      },
+      {
+        "value": "#363636",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".truste-title",
+          ".truste-button2"
+        ]
+      },
+      {
+        "value": "rgb(0 0 0 / 30%)",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          "div#truste-consent-track .truste-consent-content"
+        ]
+      },
+      {
+        "value": "#eaecee",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "*,:before,:after"
+        ]
+      },
+      {
+        "value": "#475e75",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style tr.optional[class~=hidden] td"
+        ]
+      },
+      {
+        "value": "#d5dadd",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".light .hbspt-form select,.light .hbspt-form textarea,.light .hbspt-form input[type=text],.light .hbspt-form input[type=email],.light .hbspt-form input[type=tel],.light .hbspt-form input[type=password],.light .hbspt-form input[type=datetime],.light .hbspt-form input[type=datetime-local],.light .hbspt-form input[type=date],.light .hbspt-form input[type=month],.light .hbspt-form input[type=time],.light .hbspt-form input[type=week],.light .hbspt-form input[type=number],.light .hbspt-form input[type=url],.light .hbspt-form input[type=search],.light .hbspt-form input[type=color],.light .hbspt-form input[type=file]"
+        ]
+      },
+      {
+        "value": "rgb(204,204,204)",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".rcSearch"
+        ]
+      },
+      {
+        "value": "#3f3c3dbf",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".formShadow"
+        ]
+      },
+      {
+        "value": "#00000080",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".formShadow"
+        ]
+      },
+      {
+        "value": "rgb(238 57 57 / var(--tw-border-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".border-red-600"
+        ]
+      },
+      {
+        "value": "rgb(223 18 120 / var(--tw-border-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".border-sgnvraspberry-700"
+        ]
+      },
+      {
+        "value": "rgb(49 151 149 / var(--tw-border-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".border-teal-600"
+        ]
+      },
+      {
+        "value": "rgb(40 94 97 / var(--tw-border-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".border-teal-800"
+        ]
+      },
+      {
+        "value": "rgb(202 138 4 / var(--tw-border-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".border-yellow-600"
+        ]
+      },
+      {
+        "value": "rgb(213 218 221 / var(--tw-bg-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bg-gray-300"
+        ]
+      },
+      {
+        "value": "rgb(169 180 190 / var(--tw-bg-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bg-gray-400"
+        ]
+      },
+      {
+        "value": "rgb(249 250 251 / var(--tw-bg-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bg-gray-50"
+        ]
+      },
+      {
+        "value": "rgb(53 74 95 / var(--tw-bg-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bg-gray-800"
+        ]
+      },
+      {
+        "value": "rgb(235 248 255 / var(--tw-bg-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bg-sgnvblue-100"
+        ]
+      },
+      {
+        "value": "rgb(209 239 255 / var(--tw-bg-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bg-sgnvblue-200"
+        ]
+      },
+      {
+        "value": "rgb(27 144 255 / var(--tw-bg-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bg-sgnvblue-600"
+        ]
+      },
+      {
+        "value": "rgb(241 236 255 / var(--tw-bg-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bg-sgnvindigo-100"
+        ]
+      },
+      {
+        "value": "rgb(93 54 255 / var(--tw-bg-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bg-sgnvindigo-700"
+        ]
+      },
+      {
+        "value": "rgb(223 18 120 / var(--tw-bg-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bg-sgnvraspberry-700"
+        ]
+      },
+      {
+        "value": "rgb(218 253 245 / var(--tw-bg-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bg-sgnvteal-100"
+        ]
+      },
+      {
+        "value": "rgb(7 131 143 / var(--tw-bg-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bg-sgnvteal-700"
+        ]
+      },
+      {
+        "value": "#89d1ff",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".fill-sgnvblue-400"
+        ]
+      },
+      {
+        "value": "rgb(37 99 235 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-blue-600"
+        ]
+      },
+      {
+        "value": "rgb(30 58 138 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-blue-900"
+        ]
+      },
+      {
+        "value": "rgb(245 246 247 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-gray-100"
+        ]
+      },
+      {
+        "value": "rgb(79 70 229 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-indigo-600"
+        ]
+      },
+      {
+        "value": "rgb(238 57 57 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-red-600"
+        ]
+      },
+      {
+        "value": "rgb(235 248 255 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-sgnvblue-100"
+        ]
+      },
+      {
+        "value": "rgb(0 42 134 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-sgnvblue-1000"
+        ]
+      },
+      {
+        "value": "rgb(0 20 74 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-sgnvblue-1100"
+        ]
+      },
+      {
+        "value": "rgb(209 239 255 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-sgnvblue-200"
+        ]
+      },
+      {
+        "value": "rgb(166 224 255 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-sgnvblue-300"
+        ]
+      },
+      {
+        "value": "rgb(137 209 255 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-sgnvblue-400"
+        ]
+      },
+      {
+        "value": "rgb(77 177 255 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-sgnvblue-500"
+        ]
+      },
+      {
+        "value": "rgb(0 87 210 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-sgnvblue-800"
+        ]
+      },
+      {
+        "value": "rgb(254 131 174 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-sgnvraspberry-500"
+        ]
+      },
+      {
+        "value": "rgb(155 1 93 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-sgnvraspberry-900"
+        ]
+      },
+      {
+        "value": "rgb(30 41 59 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-slate-800"
+        ]
+      },
+      {
+        "value": "rgb(49 151 149 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-teal-600"
+        ]
+      },
+      {
+        "value": "rgb(202 138 4 / var(--tw-text-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".text-yellow-600"
+        ]
+      },
+      {
+        "value": "rgb(255 255 255 / var(--tw-ring-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".ring-white"
+        ]
+      },
+      {
+        "value": "currentColor",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".content ul li:before"
+        ]
+      },
+      {
+        "value": "rgb(30 58 138 / var(--tw-bg-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".hover\\:bg-blue-900:hover"
+        ]
+      },
+      {
+        "value": "rgb(221 107 5 / var(--tw-bg-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".hover\\:bg-sgnvorange-300:hover"
+        ]
+      },
+      {
+        "value": "rgb(255 220 232 / var(--tw-bg-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".hover\\:bg-sgnvraspberry-200:hover"
+        ]
+      },
+      {
+        "value": "rgb(147 197 253 / var(--tw-border-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".focus\\:border-blue-300:focus"
+        ]
+      },
+      {
+        "value": "rgb(99 102 241 / var(--tw-ring-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".focus\\:ring-indigo-500:focus"
+        ]
+      },
+      {
+        "value": "rgb(151 10 130 / var(--tw-ring-opacity, 1))",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".focus\\:ring-purple-300:focus"
+        ]
+      },
+      {
+        "value": "#0070f2",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".extra .refmodels ul li a"
+        ]
+      },
+      {
+        "value": "#096e75",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".module-tile.aqua"
+        ]
+      },
+      {
+        "value": "#e7ceda",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".product-integrations.HUB"
+        ]
+      },
+      {
+        "value": "#fdefcc",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".product-integrations.PM"
+        ]
+      },
+      {
+        "value": "#edf1d4",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".product-integrations.WA"
+        ]
+      },
+      {
+        "value": "#d9e9f3",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".product-integrations.PI"
+        ]
+      },
+      {
+        "value": "#3339",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".customer-days header .menu"
+        ]
+      },
+      {
+        "value": "#ffffffd9",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".customer-days .network .lc,.customer-days .network .rc"
+        ]
+      },
+      {
+        "value": "#333333e6",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".customer-days .tickets .form-container"
+        ]
+      },
+      {
+        "value": "#007886",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme header"
+        ]
+      },
+      {
+        "value": "#005f75",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme header"
+        ]
+      },
+      {
+        "value": "#095d75",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme .faqs .element"
+        ]
+      },
+      {
+        "value": "#dbeafe",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .toolbar button:hover,.pdf-viewer .toolbar .sapBtn:hover"
+        ]
+      },
+      {
+        "value": "#93c5fd",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .toolbar button:hover,.pdf-viewer .toolbar .sapBtn:hover"
+        ]
+      },
+      {
+        "value": "#1d4ed8",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .toolbar button:hover,.pdf-viewer .toolbar .sapBtn:hover"
+        ]
+      },
+      {
+        "value": "#bfdbfe",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .toolbar button.active"
+        ]
+      },
+      {
+        "value": "#60a5fa",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .toolbar button.active"
+        ]
+      },
+      {
+        "value": "#1e40af",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .toolbar button.active"
+        ]
+      },
+      {
+        "value": "#4f8cff4d",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .thumb-item.active"
+        ]
+      },
+      {
+        "value": "#000000b3",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .thumb-label"
+        ]
+      },
+      {
+        "value": "#0006",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .page-slot"
+        ]
+      },
+      {
+        "value": "#4f8cff1f",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .annotation-layer a:hover"
+        ]
+      },
+      {
+        "value": "#fffc",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".customer-success-about .text"
+        ]
+      },
+      {
+        "value": "#000001b5",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".modal-is-title"
+        ]
+      },
+      {
+        "value": "#ebf8ff",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".header-slider"
+        ]
+      },
+      {
+        "value": "#5550",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".new-style table tr.optional.hidden td"
+        ]
+      },
+      {
+        "value": "#0000004d",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".homepagecontainer #support-menu-container"
+        ]
+      },
+      {
+        "value": "#0003",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".featured-success-stories-tile:hover,.success-story-archive-tile:hover"
+        ]
+      },
+      {
+        "value": "#0057d2",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".side-content .hs-cta-wrapper .cta_button:hover"
+        ]
+      },
+      {
+        "value": "rgba(0,0,0,0.7)",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-7"
+        ],
+        "selectors": [
+          ".go1632949049"
+        ]
+      },
+      {
+        "value": "#828282",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".truste-text"
+        ]
+      },
+      {
+        "value": "#1429a0",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".truste-button1"
+        ]
+      },
+      {
+        "value": "#1428a0",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".truste-privacy-link, .truste-cookie-link"
+        ]
+      },
+      {
+        "value": "rgba(0, 0, 0, .42)",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          "div#truste-consent-track:before"
+        ]
+      },
+      {
+        "value": "#eaeaea",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          "div#truste-consent-track .truste-consent-content"
+        ]
+      },
+      {
+        "value": "#666",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          "p.truste-custom-text-wrapper,.truste-custom-list li"
+        ]
+      },
+      {
+        "value": "#1428A0",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          "p.truste-custom-text-wrapper a,p.truste-custom-text-wrapper+p a"
+        ]
+      },
+      {
+        "value": "#ffffff",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          "#truste-consent-button,#truste-consent-required"
+        ]
+      }
+    ],
+    "line-height": [
+      {
+        "value": "1.5rem",
+        "count": 41,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bpiforum .BPIForumAgendaContent h3",
+          ".bpiforum .BPIForumAgendaContent h4",
+          ".custompage-success .featured-video .fbg h1"
+        ]
+      },
+      {
+        "value": "1.25rem",
+        "count": 21,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style td.table-controls button.collapse,table.new-style td.table-controls button.expand",
+          "table.new-style td,table.new-style th,table.new-style td:first-child,table.new-style th:first-child",
+          "table.new-style td.linked a"
+        ]
+      },
+      {
+        "value": "1.75rem",
+        "count": 20,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".product-content .content h3",
+          ".page-title h1,h1",
+          ".product-quote .quote-content .quote-text"
+        ]
+      },
+      {
+        "value": "2rem",
+        "count": 15,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "h1",
+          ".custompage-success .featured-video .fbg h1",
+          ".customer-success-about .bg .text h3"
+        ]
+      },
+      {
+        "value": "2.5rem",
+        "count": 13,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".customer-success-about h3",
+          ".extra .product-trail .trail-content h2",
+          ".webinar .date .day"
+        ]
+      },
+      {
+        "value": "24px",
+        "count": 10,
+        "sources": [
+          "https://www.signavio.com/css/app.css",
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".extra section .content ul.advantages li",
+          ".extra .refmodels ul li a",
+          ".cta-fx"
+        ]
+      },
+      {
+        "value": "1.5",
+        "count": 6,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "html,:host",
+          ".page-landing-template h1 span,.page-landing-template h2.prtitle span",
+          ".light .hbspt-form form.hs-form .hs-dependent-field .hs-richtext,.light .hbspt-form form.hs-form div .hs-richtext,.light .hbspt-form form.hs-form fieldset .hs-richtext"
+        ]
+      },
+      {
+        "value": "20px",
+        "count": 6,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".new-style table td.table-controls button.collapse,.new-style table td.table-controls button.expand",
+          ".new-style table thead tr:first-child th",
+          ".new-style table thead tr:first-child th:first-child"
+        ]
+      },
+      {
+        "value": "2.25rem",
+        "count": 5,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".custompage-success .featured-video .fbg h1",
+          ".leading-9",
+          ".content.dictionary h2 span"
+        ]
+      },
+      {
+        "value": "3.5rem",
+        "count": 4,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".product-header .intro h1",
+          ".custompage-success .featured-video .fbg h1",
+          ".leading-13"
+        ]
+      },
+      {
+        "value": "1rem",
+        "count": 4,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".extra section small",
+          ".available-positions #positions a",
+          ".hbspt-form label"
+        ]
+      },
+      {
+        "value": "1",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style tr.optional[class~=hidden] td",
+          ".leading-none",
+          ".content ul li:before"
+        ]
+      },
+      {
+        "value": ".75rem",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".advisors .headline-column h3,.management .headline-column h3",
+          ".general-cta.small a,.general-cta.small div,.general-cta.small>span,.general-cta.small>input",
+          ".leading-3"
+        ]
+      },
+      {
+        "value": "1.25",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".page-landing-template h2.title",
+          ".page-landing-template h2 span",
+          ".leading-tight"
+        ]
+      },
+      {
+        "value": "42px",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme .about .intro h3",
+          ".leading-18",
+          ".md\\:leading-18"
+        ]
+      },
+      {
+        "value": "3rem",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".leading-12",
+          ".sm\\:leading-12",
+          ".md\\:leading-12"
+        ]
+      },
+      {
+        "value": "48px",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".landing-page-theme .circle-chart span",
+          ".page-footer-divider.pfd-question",
+          ".product-quote-text"
+        ]
+      },
+      {
+        "value": "0",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "sub,sup",
+          ".new-style table tr.optional.hidden td"
+        ]
+      },
+      {
+        "value": "2",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".page-landing-template .titlesContainer h1>*",
+          ".leading-loose"
+        ]
+      },
+      {
+        "value": "inherit",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "body",
+          "button,input,optgroup,select,textarea"
+        ]
+      },
+      {
+        "value": "19px",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css",
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".simptip-multiline:after",
+          "p.truste-custom-text-wrapper,.truste-custom-list li"
+        ]
+      },
+      {
+        "value": "26px",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".new-style table thead tr:first-child th",
+          ".new-style table tfoot td"
+        ]
+      },
+      {
+        "value": "28px",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".wp-block-button .wp-block-button__link",
+          ".text-component blockquote"
+        ]
+      },
+      {
+        "value": "4rem",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".product-header .intro h1"
+        ]
+      },
+      {
+        "value": "1.2rem",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "ul.no-list.hs-error-msgs.inputs-list label a"
+        ]
+      },
+      {
+        "value": "62px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".md\\:leading-16"
+        ]
+      },
+      {
+        "value": "50px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".md\\:leading-17"
+        ]
+      },
+      {
+        "value": "58px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".md\\:leading-171"
+        ]
+      },
+      {
+        "value": "11px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "[data-tooltip]:after"
+        ]
+      },
+      {
+        "value": "32px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".cta-fx"
+        ]
+      },
+      {
+        "value": "18px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".cta-fx"
+        ]
+      },
+      {
+        "value": "17px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".truste-text"
+        ]
+      },
+      {
+        "value": "30px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".truste-title"
+        ]
+      },
+      {
+        "value": "auto",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".truste-custom-list li"
+        ]
+      }
+    ],
+    "font-family": [
+      {
+        "value": "\"Benton-Sans-Regular\"",
+        "count": 13,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".truste-text",
+          ".truste-title",
+          ".truste-messageColumn"
+        ]
+      },
+      {
+        "value": "\"72brand\",Arial,Helvetica,sans-serif",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".light .hbspt-form select,.light .hbspt-form textarea,.light .hbspt-form input[type=text],.light .hbspt-form input[type=email],.light .hbspt-form input[type=tel],.light .hbspt-form input[type=password],.light .hbspt-form input[type=datetime],.light .hbspt-form input[type=datetime-local],.light .hbspt-form input[type=date],.light .hbspt-form input[type=month],.light .hbspt-form input[type=time],.light .hbspt-form input[type=week],.light .hbspt-form input[type=number],.light .hbspt-form input[type=url],.light .hbspt-form input[type=search],.light .hbspt-form input[type=color],.light .hbspt-form input[type=file]",
+          ".dark .hbspt-form select,.dark .hbspt-form textarea,.dark .hbspt-form input[type=text],.dark .hbspt-form input[type=email],.dark .hbspt-form input[type=tel],.dark .hbspt-form input[type=password],.dark .hbspt-form input[type=datetime],.dark .hbspt-form input[type=datetime-local],.dark .hbspt-form input[type=date],.dark .hbspt-form input[type=month],.dark .hbspt-form input[type=time],.dark .hbspt-form input[type=week],.dark .hbspt-form input[type=number],.dark .hbspt-form input[type=url],.dark .hbspt-form input[type=search],.dark .hbspt-form input[type=color],.dark .hbspt-form input[type=file]",
+          ".font-72brand"
+        ]
+      },
+      {
+        "value": "Arial,Helvetica,sans-serif",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".font-arial",
+          ".header-sap .sap-nav ul li",
+          ".header-sap .sap-nav ul li a"
+        ]
+      },
+      {
+        "value": "ui-sans-serif,system-ui,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",Segoe UI Symbol,\"Noto Color Emoji\"",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "html,:host"
+        ]
+      },
+      {
+        "value": "ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "code,kbd,samp,pre"
+        ]
+      },
+      {
+        "value": "inherit",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "button,input,optgroup,select,textarea"
+        ]
+      },
+      {
+        "value": "SAP-icons",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".sap-icon"
+        ]
+      },
+      {
+        "value": "Titillium Web,sans-serif",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "section.itcs-widgetc *"
+        ]
+      }
+    ],
+    "font-size": [
+      {
+        "value": "1rem",
+        "count": 43,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bpiforum .BPIForumAgendaContent h4",
+          "table.new-style td:first-child",
+          "table.new-style td.table-controls button.collapse,table.new-style td.table-controls button.expand"
+        ]
+      },
+      {
+        "value": ".875rem",
+        "count": 31,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style td,table.new-style th,table.new-style td:first-child,table.new-style th:first-child",
+          "table.new-style tfoot tr.legenda td span",
+          ".webinar .webinar-title a"
+        ]
+      },
+      {
+        "value": "1.25rem",
+        "count": 30,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".product-content .content h3",
+          ".bpiforum .BPIForumAgendaContent h3",
+          ".custompage-success .featured-video .fbg h1"
+        ]
+      },
+      {
+        "value": "1.5rem",
+        "count": 21,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".page-title h1,h1",
+          ".extra .trail-content .ctas a",
+          ".product-quote .quote-content .quote-text"
+        ]
+      },
+      {
+        "value": "1.875rem",
+        "count": 12,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "h1",
+          ".custompage-success .featured-video .fbg h1",
+          ".customer-success-about .bg .text h3"
+        ]
+      },
+      {
+        "value": "3rem",
+        "count": 9,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".product-header .intro h1",
+          ".custompage-success .featured-video .fbg h1",
+          ".extra .product-trail .trail-content h2"
+        ]
+      },
+      {
+        "value": "16px",
+        "count": 9,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".extra section .content ul.advantages li",
+          ".extra .refmodels ul li a",
+          ".landing-page-theme .counter-value"
+        ]
+      },
+      {
+        "value": "1.125rem",
+        "count": 9,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".side-content .hs-cta-wrapper .cta_button",
+          ".product-excerpt h3,.product-benefits h3",
+          ".general-cta.medium a,.general-cta.medium>div:not(.sap-video),.general-cta.medium>input"
+        ]
+      },
+      {
+        "value": "14px",
+        "count": 8,
+        "sources": [
+          "https://www.signavio.com/css/app.css",
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".hbspt-form .hs-richtext p",
+          ".cta-fx",
+          ".new-style table tfoot tr.legenda td span"
+        ]
+      },
+      {
+        "value": "2.25rem",
+        "count": 7,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".customer-success-about h3",
+          ".webinar .date .day",
+          ".product-quote .quote-content .quote-text"
+        ]
+      },
+      {
+        "value": ".75rem",
+        "count": 5,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".menulangtag",
+          ".download-gated .content .group:before",
+          ".general-cta.small a,.general-cta.small div,.general-cta.small>span,.general-cta.small>input"
+        ]
+      },
+      {
+        "value": "20px",
+        "count": 5,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".cta-fx",
+          ".new-style table thead tr:first-child th",
+          ".new-style table tfoot td"
+        ]
+      },
+      {
+        "value": "2.5rem",
+        "count": 4,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".dictionary h2 span",
+          ".text-xxl",
+          ".md\\:text-xxl"
+        ]
+      },
+      {
+        "value": ".8rem",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .toolbar button,.pdf-viewer .toolbar .sapBtn",
+          ".pdf-viewer .toolbar .page-info",
+          ".pdf-viewer .page-slot .page-placeholder"
+        ]
+      },
+      {
+        "value": "18px",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".cta-fx",
+          ".wp-block-button .wp-block-button__link",
+          ".s-form input[type=search]"
+        ]
+      },
+      {
+        "value": "12px",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".truste-messageColumn",
+          ".truste-privacy-link, .truste-cookie-link",
+          "p.truste-custom-text-wrapper,.truste-custom-list li"
+        ]
+      },
+      {
+        "value": "3.5rem",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".product-header .intro h1",
+          ".text-xxxl"
+        ]
+      },
+      {
+        "value": "4rem",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".product-quote .quote-content .quote-text:before",
+          ".text-6xl"
+        ]
+      },
+      {
+        "value": "7.5rem",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".product-quote .quote-content .quote-text:before",
+          ".text-7xl"
+        ]
+      },
+      {
+        "value": ".65rem",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".hbspt-form form.hs-form .hs-dependent-field :not(.hs-fieldtype-checkbox):not(.hs-fieldtype-radio) label:not(.hs-error-msg):not(.hs-form-booleancheckbox-display):not(.hs-form-radio-display):not(.hs-form-checkbox-display),.hbspt-form fieldset :not(.hs-fieldtype-checkbox):not(.hs-fieldtype-radio) label:not(.hs-error-msg):not(.hs-form-booleancheckbox-display):not(.hs-form-radio-display):not(.hs-form-checkbox-display)",
+          ".pdf-viewer .thumb-placeholder"
+        ]
+      },
+      {
+        "value": "28px",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".module-tile .details .date:before",
+          ".cta-fx"
+        ]
+      },
+      {
+        "value": "24px",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".content.dictionary .arrowUp",
+          ".cta-fx"
+        ]
+      },
+      {
+        "value": "0",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".sap-player-container .play-button"
+        ]
+      },
+      {
+        "value": "400",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".landing-page-theme .process-innovation ul li p"
+        ]
+      },
+      {
+        "value": "inherit",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "h1,h2,h3,h4,h5,h6"
+        ]
+      },
+      {
+        "value": "1em",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "code,kbd,samp,pre"
+        ]
+      },
+      {
+        "value": "80%",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "small"
+        ]
+      },
+      {
+        "value": "75%",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "sub,sup"
+        ]
+      },
+      {
+        "value": "100%",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "button,input,optgroup,select,textarea"
+        ]
+      },
+      {
+        "value": "40px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".md\\:text-40px"
+        ]
+      },
+      {
+        "value": "13px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "[data-tooltip]:after"
+        ]
+      },
+      {
+        "value": ".6rem",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .thumb-label"
+        ]
+      },
+      {
+        "value": "42px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".product-quote-text"
+        ]
+      },
+      {
+        "value": "10px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".truste-text"
+        ]
+      },
+      {
+        "value": "23px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          "h2.truste-custom-title"
+        ]
+      }
+    ],
+    "font-weight": [
+      {
+        "value": "300",
+        "count": 36,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".module-tile .details h3",
+          ".product-content .content h3",
+          "h1"
+        ]
+      },
+      {
+        "value": "600",
+        "count": 25,
+        "sources": [
+          "https://www.signavio.com/css/app.css",
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".product-content .content h4",
+          ".custompage-success .featured-video .fbg h1",
+          ".extra section .quotation small"
+        ]
+      },
+      {
+        "value": "700",
+        "count": 10,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".bpiforum .BPIForumAgendaContent h3",
+          ".bpiforum .BPIForumAgendaContent h4",
+          ".management .employees .copy-group .details h4"
+        ]
+      },
+      {
+        "value": "500",
+        "count": 4,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".font-medium",
+          "b,strong",
+          ".pdf-viewer .toolbar button,.pdf-viewer .toolbar .sapBtn"
+        ]
+      },
+      {
+        "value": "400",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".menulangtag",
+          ".newsboard-button",
+          ".font-normal"
+        ]
+      },
+      {
+        "value": "inherit",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "h1,h2,h3,h4,h5,h6",
+          "button,input,optgroup,select,textarea"
+        ]
+      },
+      {
+        "value": "100",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".videotile h3"
+        ]
+      },
+      {
+        "value": "200",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".custompage-success .text h3"
+        ]
+      },
+      {
+        "value": "bolder",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "b,strong"
+        ]
+      }
+    ],
+    "letter-spacing": [
+      {
+        "value": "0",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css",
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".tracking-normal",
+          ".content ul li:before",
+          ".truste-title"
+        ]
+      },
+      {
+        "value": "6px",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".products-countdown .countdown div span",
+          ".tracking-small"
+        ]
+      },
+      {
+        "value": "inherit",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "button,input,optgroup,select,textarea"
+        ]
+      },
+      {
+        "value": ".05em",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".tracking-wider"
+        ]
+      }
+    ],
+    "box-shadow": [
+      {
+        "value": "var(--tw-ring-offset-shadow, 0 0 #0000),var(--tw-ring-shadow, 0 0 #0000),var(--tw-shadow)",
+        "count": 7,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".shadow",
+          ".shadow-inner",
+          ".shadow-lg"
+        ]
+      },
+      {
+        "value": "0 -1px 1px #ddd",
+        "count": 4,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style tbody tr:first-child td",
+          ".new-style table tbody tr:first-child td",
+          ".html-snippet table tr:first-child td,.html-snippet table tr:first-child th"
+        ]
+      },
+      {
+        "value": "0 1px 1px #eee",
+        "count": 4,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".module-tile",
+          ".sg-module-tile",
+          "section.home-success-stories .single-story"
+        ]
+      },
+      {
+        "value": "none",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ":-moz-ui-invalid",
+          ".download-gated .hbspt-form",
+          ".events-wrpper .form.nsform .hbspt-form"
+        ]
+      },
+      {
+        "value": "var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow, 0 0 #0000)",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".ring-1",
+          ".focus\\:ring-2:focus"
+        ]
+      },
+      {
+        "value": "unset",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme .about .hbspt-form",
+          ".modal-autosize .modal-child"
+        ]
+      },
+      {
+        "value": "#00000080 4px 4px 8px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".formShadow"
+        ]
+      },
+      {
+        "value": "0 0",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".download-gated .download-form"
+        ]
+      },
+      {
+        "value": "0 0 0 2px #4f8cff4d",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .thumb-item.active"
+        ]
+      },
+      {
+        "value": "0 4px 20px #0006",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .page-slot"
+        ]
+      },
+      {
+        "value": "inset 0 0 0 2px #fff",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".cta-fx"
+        ]
+      },
+      {
+        "value": "0 1px 1px #ddd",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".new-style table tbody"
+        ]
+      },
+      {
+        "value": "0 10px 15px -3px #0003,0 4px 6px -2px #00000026",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".featured-success-stories-tile:hover,.success-story-archive-tile:hover"
+        ]
+      },
+      {
+        "value": "#0000001a 0 10px 15px -3px,#00000026 0 4px 6px -2px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".at-a-glance-tile,.custom-module-tile:hover"
+        ]
+      },
+      {
+        "value": "0 0 20px rgba(0, 0, 0, 0.3)",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".trustarc-banner"
+        ]
+      },
+      {
+        "value": "0 0 20px rgb(0 0 0 / 30%)",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          "div#truste-consent-track .truste-consent-content"
+        ]
+      }
+    ],
+    "font": [
+      {
+        "value": "inherit",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "::-webkit-file-upload-button"
+        ]
+      }
+    ],
+    "border-radius": [
+      {
+        "value": ".5rem",
+        "count": 8,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".menulangtag",
+          ".extra .trail-content .ctas a",
+          ".general-cta.sap a,.general-cta.sap div,.general-cta.sap>span,.general-cta.sap>input"
+        ]
+      },
+      {
+        "value": ".75rem",
+        "count": 6,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".side-content .hs-cta-wrapper .cta_button",
+          ".light .hbspt-form form.hs-form .hs_submit .hs-button",
+          ".dark .hbspt-form form.hs-form .hs_submit .hs-button"
+        ]
+      },
+      {
+        "value": "0",
+        "count": 5,
+        "sources": [
+          "https://www.signavio.com/css/app.css",
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".dark .hbspt-form select,.dark .hbspt-form textarea,.dark .hbspt-form input[type=text],.dark .hbspt-form input[type=email],.dark .hbspt-form input[type=tel],.dark .hbspt-form input[type=password],.dark .hbspt-form input[type=datetime],.dark .hbspt-form input[type=datetime-local],.dark .hbspt-form input[type=date],.dark .hbspt-form input[type=month],.dark .hbspt-form input[type=time],.dark .hbspt-form input[type=week],.dark .hbspt-form input[type=number],.dark .hbspt-form input[type=url],.dark .hbspt-form input[type=search],.dark .hbspt-form input[type=color],.dark .hbspt-form input[type=file]",
+          ".rcSearch",
+          ".rounded-none"
+        ]
+      },
+      {
+        "value": "50%",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".sap-player-container .play-button",
+          ".product-quote .quote-image img",
+          ".download-gated .download-img .img .download-circle .download-link"
+        ]
+      },
+      {
+        "value": "4px",
+        "count": 3,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".simptip-smooth:after",
+          ".pdf-viewer .thumb-item",
+          ".pdf-viewer .thumb-placeholder"
+        ]
+      },
+      {
+        "value": ".25rem",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".light .hbspt-form select,.light .hbspt-form textarea,.light .hbspt-form input[type=text],.light .hbspt-form input[type=email],.light .hbspt-form input[type=tel],.light .hbspt-form input[type=password],.light .hbspt-form input[type=datetime],.light .hbspt-form input[type=datetime-local],.light .hbspt-form input[type=date],.light .hbspt-form input[type=month],.light .hbspt-form input[type=time],.light .hbspt-form input[type=week],.light .hbspt-form input[type=number],.light .hbspt-form input[type=url],.light .hbspt-form input[type=search],.light .hbspt-form input[type=color],.light .hbspt-form input[type=file]",
+          ".rounded"
+        ]
+      },
+      {
+        "value": "9999px",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".rounded-full",
+          ".embla__dot:after"
+        ]
+      },
+      {
+        "value": "12px",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".landing-page-theme .features-img .desktop .bgimg .litxt span.hs-cta-node a",
+          ".text-component blockquote"
+        ]
+      },
+      {
+        "value": "24px",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".content.dictionary .arrowUp",
+          ".main-content.single-column .scrolltop:before"
+        ]
+      },
+      {
+        "value": ".375rem",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".rounded-md"
+        ]
+      },
+      {
+        "value": ".125rem",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".rounded-sm"
+        ]
+      },
+      {
+        "value": "6px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .toolbar button,.pdf-viewer .toolbar .sapBtn"
+        ]
+      },
+      {
+        "value": "3px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .sidebar::-webkit-scrollbar-thumb"
+        ]
+      },
+      {
+        "value": "96px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".page-footer-divider.pfd-question"
+        ]
+      },
+      {
+        "value": "30px",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-12"
+        ],
+        "selectors": [
+          ".truste-button1"
+        ]
+      }
+    ],
+    "transition-timing-function": [
+      {
+        "value": "cubic-bezier(.4,0,.2,1)",
+        "count": 9,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".light .hbspt-form form.hs-form .hs_submit .hs-button",
+          ".light .hbspt-form form.hs-form .hs_submit .hs-button:hover",
+          ".dark .hbspt-form form.hs-form .hs_submit .hs-button"
+        ]
+      },
+      {
+        "value": "cubic-bezier(.4,0,1,1)",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".ease-in"
+        ]
+      },
+      {
+        "value": "cubic-bezier(0,0,.2,1)",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".ease-out"
+        ]
+      }
+    ],
+    "motion-easing-literals": [
+      {
+        "value": "ease",
+        "count": 46,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style tr.optional td",
+          "table.new-style tr.optional.hidden td",
+          ".related-posts a"
+        ]
+      },
+      {
+        "value": "linear",
+        "count": 16,
+        "sources": [
+          "https://www.signavio.com/css/app.css",
+          "https://www.signavio.com/#inline-style-7"
+        ],
+        "selectors": [
+          ".sap-player-container .play-button",
+          "table.new-style tr.optional",
+          "table.new-style tr.optional.hidden"
+        ]
+      },
+      {
+        "value": "cubic-bezier(.4,0,.2,1)",
+        "count": 9,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".light .hbspt-form form.hs-form .hs_submit .hs-button",
+          ".light .hbspt-form form.hs-form .hs_submit .hs-button:hover",
+          ".dark .hbspt-form form.hs-form .hs_submit .hs-button"
+        ]
+      },
+      {
+        "value": "ease-out",
+        "count": 4,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".cta-fx.meet:hover:before",
+          ".cta-fx.meet:hover:after"
+        ]
+      },
+      {
+        "value": "ease-in",
+        "count": 4,
+        "sources": [
+          "https://www.signavio.com/#inline-style-7",
+          "https://www.signavio.com/#inline-style-8"
+        ],
+        "selectors": [
+          ".go456419034",
+          ".go3128134379",
+          ".ta-hide"
+        ]
+      },
+      {
+        "value": "cubic-bezier(.4,0,1,1)",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".ease-in"
+        ]
+      },
+      {
+        "value": "cubic-bezier(0,0,.2,1)",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".ease-out"
+        ]
+      }
+    ],
+    "transition-duration": [
+      {
+        "value": ".2s",
+        "count": 5,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".light .hbspt-form form.hs-form .hs_submit .hs-button",
+          ".light .hbspt-form form.hs-form .hs_submit .hs-button:hover",
+          ".dark .hbspt-form form.hs-form .hs_submit .hs-button"
+        ]
+      },
+      {
+        "value": ".15s",
+        "count": 5,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".transition",
+          ".transition-all",
+          ".transition-opacity"
+        ]
+      },
+      {
+        "value": ".3s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".duration-300"
+        ]
+      }
+    ],
+    "motion-time-literals": [
+      {
+        "value": "0s",
+        "count": 41,
+        "sources": [
+          "https://www.signavio.com/css/app.css",
+          "https://www.signavio.com/#inline-style-8"
+        ],
+        "selectors": [
+          "table.new-style tr.optional",
+          "table.new-style tr.optional td",
+          "table.new-style tr.optional.hidden"
+        ]
+      },
+      {
+        "value": ".2s",
+        "count": 31,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".light .hbspt-form form.hs-form .hs_submit .hs-button",
+          ".light .hbspt-form form.hs-form .hs_submit .hs-button:hover",
+          ".dark .hbspt-form form.hs-form .hs_submit .hs-button"
+        ]
+      },
+      {
+        "value": ".5s",
+        "count": 13,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style tr.optional td",
+          "table.new-style tr.optional.hidden td",
+          ".related-posts .list-container .post"
+        ]
+      },
+      {
+        "value": ".75s",
+        "count": 10,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style tr.optional td",
+          "table.new-style tr.optional.hidden td",
+          ".new-style table tr.optional td"
+        ]
+      },
+      {
+        "value": ".3s",
+        "count": 8,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".duration-300",
+          ".pdf-viewer .toolbar button,.pdf-viewer .toolbar .sapBtn",
+          ".pdf-viewer .sidebar"
+        ]
+      },
+      {
+        "value": ".25s",
+        "count": 8,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style tr.optional.hidden td",
+          ".cta-fx.meet:hover:before",
+          ".cta-fx.meet:hover:after"
+        ]
+      },
+      {
+        "value": ".15s",
+        "count": 7,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".transition",
+          ".transition-all",
+          ".transition-opacity"
+        ]
+      },
+      {
+        "value": "1s",
+        "count": 7,
+        "sources": [
+          "https://www.signavio.com/css/app.css",
+          "https://www.signavio.com/#inline-style-7"
+        ],
+        "selectors": [
+          "table.new-style tr.optional td",
+          ".signavio-live-theme header svg.pulse-svg-1 .second-circle",
+          ".new-style table tr.optional td"
+        ]
+      },
+      {
+        "value": ".125s",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style tr.optional",
+          ".new-style table tr.optional"
+        ]
+      },
+      {
+        "value": ".625s",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style tr.optional.hidden",
+          ".new-style table tr.optional.hidden"
+        ]
+      },
+      {
+        "value": "2s",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme header svg.pulse-svg-1 .third-circle",
+          "#notifier-container .notifier-point svg.pulse-svg-1 .first-circle"
+        ]
+      },
+      {
+        "value": ".4s",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".basicLightbox",
+          ".basicLightbox__placeholder"
+        ]
+      },
+      {
+        "value": "300ms",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/#inline-style-8"
+        ],
+        "selectors": [
+          ".ta-hide"
+        ]
+      },
+      {
+        "value": "1.5s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".landing-page-theme .lines"
+        ]
+      },
+      {
+        "value": "3s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme header svg.pulse-svg-1 .first-circle,.signavio-live-theme header svg.pulse-svg-1 .third-circle,.signavio-live-theme header svg.pulse-svg-1 .second-circle"
+        ]
+      },
+      {
+        "value": "4.5s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme header svg.pulse-svg-2 .first-circle,.signavio-live-theme header svg.pulse-svg-2 .third-circle,.signavio-live-theme header svg.pulse-svg-2 .second-circle"
+        ]
+      },
+      {
+        "value": "2.5s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme header svg.pulse-svg-2 .second-circle"
+        ]
+      },
+      {
+        "value": "3.5s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme header svg.pulse-svg-2 .third-circle"
+        ]
+      },
+      {
+        "value": ".1s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".simptip-movable:before,.simptip-movable:after"
+        ]
+      },
+      {
+        "value": "300s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".logo-items"
+        ]
+      },
+      {
+        "value": "0.75s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-7"
+        ],
+        "selectors": [
+          ".go1656994552"
+        ]
+      },
+      {
+        "value": "0.3s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-7"
+        ],
+        "selectors": [
+          ".go456419034"
+        ]
+      }
+    ],
+    "border-top-left-radius": [
+      {
+        "value": "0",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".rounded-tl-none"
+        ]
+      },
+      {
+        "value": ".25rem",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".rounded-l"
+        ]
+      },
+      {
+        "value": ".75rem",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".rounded-tl-xl"
+        ]
+      }
+    ],
+    "border-bottom-left-radius": [
+      {
+        "value": ".25rem",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".rounded-l"
+        ]
+      },
+      {
+        "value": ".75rem",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".rounded-bl-xl"
+        ]
+      }
+    ],
+    "border-top-right-radius": [
+      {
+        "value": ".25rem",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".rounded-r"
+        ]
+      },
+      {
+        "value": ".75rem",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".rounded-tr-xl"
+        ]
+      }
+    ],
+    "border-bottom-right-radius": [
+      {
+        "value": ".25rem",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".rounded-r"
+        ]
+      },
+      {
+        "value": ".75rem",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".rounded-br-xl"
+        ]
+      }
+    ],
+    "transition": [
+      {
+        "value": "all .2s ease 0s",
+        "count": 12,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".related-posts a",
+          ".related-posts .list-container .post .load-more",
+          ".landing-page-theme .features-img .desktop .bgimg .litxt span.hs-cta-node a"
+        ]
+      },
+      {
+        "value": "all .5s ease 0s",
+        "count": 5,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".related-posts .list-container .post",
+          ".related-posts .list-container .post:hover",
+          ".download-categories ul li a,.download-categories ul li a:hover"
+        ]
+      },
+      {
+        "value": "box-shadow .2s ease",
+        "count": 4,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".module-tile",
+          ".sg-module-tile",
+          "section.home-success-stories .single-story"
+        ]
+      },
+      {
+        "value": "all .15s",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".homepage-news-pr a img",
+          ".homepage-news-pr a:hover img"
+        ]
+      },
+      {
+        "value": "visibility 0s linear .125s",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style tr.optional",
+          ".new-style table tr.optional"
+        ]
+      },
+      {
+        "value": "height 1s ease 0s,padding 1s ease 0s,opacity .75s ease 0s,line-height .5s ease 0s",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style tr.optional td",
+          ".new-style table tr.optional td"
+        ]
+      },
+      {
+        "value": "visibility 0s linear .625s",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style tr.optional.hidden",
+          ".new-style table tr.optional.hidden"
+        ]
+      },
+      {
+        "value": "height .75s ease 0s,padding .75s ease 0s,opacity .75s ease .25s,line-height .75s linear 0s,color .5s ease 0s",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "table.new-style tr.optional.hidden td",
+          ".new-style table tr.optional.hidden td"
+        ]
+      },
+      {
+        "value": "all .5s",
+        "count": 2,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".header-s-form-container input[type=search]",
+          ".s-form input[type=search]"
+        ]
+      },
+      {
+        "value": "opacity .2s linear",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".sap-player-container .play-button"
+        ]
+      },
+      {
+        "value": "width .2s ease 0s,left .2s ease 0s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".underline-animate:after"
+        ]
+      },
+      {
+        "value": "opacity .5s ease 0s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".advisors .headline-column,.management .headline-column,.advisors .headline-column.hover-name,.advisors .headline-column.show-name,.management .headline-column.hover-name,.management .headline-column.show-name"
+        ]
+      },
+      {
+        "value": "all .1s linear",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".simptip-movable:before,.simptip-movable:after"
+        ]
+      },
+      {
+        "value": "opacity .2s linear,visibility .2s linear",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".simptip-fade:before,.simptip-fade:after"
+        ]
+      },
+      {
+        "value": "background .3s ease,color .3s ease,border .3s ease",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .toolbar button,.pdf-viewer .toolbar .sapBtn"
+        ]
+      },
+      {
+        "value": "width .3s,padding .3s,opacity .3s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .sidebar"
+        ]
+      },
+      {
+        "value": "border-color .2s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".pdf-viewer .thumb-item"
+        ]
+      },
+      {
+        "value": "opacity .4s ease",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".basicLightbox"
+        ]
+      },
+      {
+        "value": "transform .4s ease",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".basicLightbox__placeholder"
+        ]
+      },
+      {
+        "value": "width .25s ease-out,height .25s ease-out .25s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".cta-fx.meet:hover:before"
+        ]
+      },
+      {
+        "value": "height .25s ease-out,width .25s ease-out .25s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".cta-fx.meet:hover:after"
+        ]
+      },
+      {
+        "value": "none",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-7"
+        ],
+        "selectors": [
+          ".go722322694"
+        ]
+      },
+      {
+        "value": "transform 0.75s linear(0,0.006,0.023 2.2%,0.096 4.8%,0.532 15.4%,0.72 21%,0.793,0.853 26.7%,0.902,0.941,0.968 36.2%,0.987 39.7%,1 43.7%,1.007 48.3%,1.009 55.3%,1.002 78.2%,1 )",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-7"
+        ],
+        "selectors": [
+          ".go1656994552"
+        ]
+      },
+      {
+        "value": "opacity 0.3s ease-in",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-7"
+        ],
+        "selectors": [
+          ".go456419034"
+        ]
+      },
+      {
+        "value": "max-height 1s ease-in",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-7"
+        ],
+        "selectors": [
+          ".go3128134379"
+        ]
+      },
+      {
+        "value": "transform 1s linear(0,0.006,0.022 2.3%,0.091 5.1%,0.18 7.6%,0.508 16.3%,0.607,0.691,0.762,0.822 28.4%,0.872,0.912 35.1%,0.944 38.9%,0.968 43%,0.985 47.6%,0.996 53.1%,1.001 58.4%,1.003 65.1%,1 )",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-7"
+        ],
+        "selectors": [
+          ".go3508454897"
+        ]
+      },
+      {
+        "value": "opacity 300ms ease-in,visibility 0s ease-in 300ms",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/#inline-style-8"
+        ],
+        "selectors": [
+          ".ta-hide"
+        ]
+      }
+    ],
+    "animation": [
+      {
+        "value": "1.5s ease .5s normal forwards paused linesup",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".landing-page-theme .lines"
+        ]
+      },
+      {
+        "value": "pulse-1 3s linear infinite",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme header svg.pulse-svg-1 .first-circle,.signavio-live-theme header svg.pulse-svg-1 .third-circle,.signavio-live-theme header svg.pulse-svg-1 .second-circle"
+        ]
+      },
+      {
+        "value": "pulse-1 4.5s linear infinite",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".signavio-live-theme header svg.pulse-svg-2 .first-circle,.signavio-live-theme header svg.pulse-svg-2 .third-circle,.signavio-live-theme header svg.pulse-svg-2 .second-circle"
+        ]
+      },
+      {
+        "value": "pulse-1 2s linear infinite",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          "#notifier-container .notifier-point svg.pulse-svg-1 .first-circle"
+        ]
+      },
+      {
+        "value": "300s slides infinite linear",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".logo-items"
+        ]
+      },
+      {
+        "value": "animatebottom .2s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".animate-bottom"
+        ]
+      },
+      {
+        "value": "animatebottom50 .2s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".animate-bottom-50"
+        ]
+      },
+      {
+        "value": "animatebottom20 .2s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".animate-bottom-20"
+        ]
+      },
+      {
+        "value": "animatebottom5 .3s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".animate-bottom-5"
+        ]
+      },
+      {
+        "value": "animatetop .2s",
+        "count": 1,
+        "sources": [
+          "https://www.signavio.com/css/app.css"
+        ],
+        "selectors": [
+          ".animate-top"
+        ]
+      }
+    ]
+  },
+  "customProperties": {
+    "--tw-border-spacing-x": [
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-border-spacing-y": [
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-translate-x": [
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0px",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "10rem",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-translate-y": [
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0px",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": ".25rem",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "5rem",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-rotate": [
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-skew-x": [
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-skew-y": [
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-scale-x": [
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-scale-y": [
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-pan-x": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-pan-y": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-pinch-zoom": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-scroll-snap-strictness": [
+      {
+        "value": "proximity",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "proximity",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-gradient-from-position": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-gradient-via-position": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-gradient-to-position": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-ordinal": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-slashed-zero": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-numeric-figure": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-numeric-spacing": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-numeric-fraction": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-ring-inset": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "inset",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-ring-offset-width": [
+      {
+        "value": "0px",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0px",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "2px",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-ring-offset-color": [
+      {
+        "value": "#fff",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "#fff",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-ring-color": [
+      {
+        "value": "rgb(59 130 246 / .5)",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "rgb(59 130 246 / .5)",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "rgb(255 255 255 / var(--tw-ring-opacity, 1))",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "rgb(99 102 241 / var(--tw-ring-opacity, 1))",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "rgb(151 10 130 / var(--tw-ring-opacity, 1))",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-ring-offset-shadow": [
+      {
+        "value": "0 0 #0000",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0 0 #0000",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color)",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color)",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-ring-shadow": [
+      {
+        "value": "0 0 #0000",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0 0 #0000",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color)",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color)",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-shadow": [
+      {
+        "value": "0 0 #0000",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0 0 #0000",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1)",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "inset 0 2px 4px 0 rgb(0 0 0 / .05)",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0 10px 15px -3px rgb(0 0 0 / .1), 0 4px 6px -4px rgb(0 0 0 / .1)",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0 4px 6px -1px rgb(0 0 0 / .1), 0 2px 4px -2px rgb(0 0 0 / .1)",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0 0 #0000",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0 1px 2px 0 rgb(0 0 0 / .05)",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0 20px 25px -5px rgb(0 0 0 / .1), 0 8px 10px -6px rgb(0 0 0 / .1)",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-shadow-colored": [
+      {
+        "value": "0 0 #0000",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0 0 #0000",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color)",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "inset 0 2px 4px 0 var(--tw-shadow-color)",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color)",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color)",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0 0 #0000",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0 1px 2px 0 var(--tw-shadow-color)",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color)",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-blur": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-brightness": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-contrast": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-grayscale": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-hue-rotate": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-invert": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-saturate": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-sepia": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-drop-shadow": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-backdrop-blur": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-backdrop-brightness": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-backdrop-contrast": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-backdrop-grayscale": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-backdrop-hue-rotate": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-backdrop-invert": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-backdrop-opacity": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-backdrop-saturate": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-backdrop-sepia": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-contain-size": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-contain-layout": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-contain-paint": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-contain-style": [
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": " ",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-content": [
+      {
+        "value": "\"\"",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-text-opacity": [
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-bg-opacity": [
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": ".75",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-border-opacity": [
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-space-x-reverse": [
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-space-y-reverse": [
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "0",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ],
+    "--tw-ring-opacity": [
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": ".05",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      },
+      {
+        "value": "1",
+        "source": "https://www.signavio.com/css/app.css"
+      }
+    ]
+  },
+  "snapshots": [
+    {
+      "counts": {
+        "animationDuration": {
+          "0.2s": 3,
+          "300s": 1
+        },
+        "animationName": {
+          "animatebottom": 1,
+          "animatebottom20": 2,
+          "slides": 1
+        },
+        "animationTimingFunction": {
+          "ease": 3,
+          "linear": 1
+        },
+        "backgroundColor": {
+          "rgb(0, 0, 0)": 2,
+          "rgb(0, 112, 242)": 4,
+          "rgb(0, 42, 134)": 1,
+          "rgb(213, 218, 221)": 4,
+          "rgb(226, 216, 255)": 1,
+          "rgb(226, 244, 255)": 1,
+          "rgb(229, 245, 255)": 1,
+          "rgb(234, 234, 234)": 1,
+          "rgb(245, 246, 247)": 1,
+          "rgb(255, 255, 255)": 27,
+          "rgb(27, 144, 255)": 1,
+          "rgb(30, 106, 146)": 2,
+          "rgba(0, 0, 0, 0.7)": 1
+        },
+        "borderColor": {
+          "rgb(0, 0, 0)": 1,
+          "rgb(0, 112, 242)": 1,
+          "rgb(0, 87, 210)": 2,
+          "rgb(169, 180, 190)": 10,
+          "rgb(234, 236, 238)": 14,
+          "rgb(30, 106, 146)": 3
+        },
+        "borderTopLeftRadius": {
+          "12px": 13,
+          "6px": 2,
+          "8px": 18
+        },
+        "boxShadow": {
+          "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px": 1,
+          "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px": 12,
+          "rgba(0, 0, 0, 0.3) 0px 0px 20px 0px": 2
+        },
+        "color": {
+          "rgb(0, 0, 0)": 77,
+          "rgb(0, 112, 242)": 1,
+          "rgb(0, 64, 176)": 13,
+          "rgb(102, 102, 102)": 12,
+          "rgb(131, 150, 168)": 1,
+          "rgb(169, 180, 190)": 1,
+          "rgb(20, 40, 160)": 2,
+          "rgb(255, 255, 255)": 7,
+          "rgb(27, 144, 255)": 9,
+          "rgb(30, 106, 146)": 1,
+          "rgb(53, 74, 95)": 1,
+          "rgb(71, 94, 117)": 5,
+          "rgb(77, 177, 255)": 1,
+          "rgb(91, 115, 139)": 4
+        },
+        "fontFamily": {
+          "\"72brand\", Arial, Helvetica, sans-serif": 118,
+          "Benton-Sans-Regular": 17
+        },
+        "fontSize": {
+          "12px": 14,
+          "13px": 6,
+          "14px": 36,
+          "16px": 37,
+          "18px": 13,
+          "20px": 18,
+          "24px": 3,
+          "30px": 3,
+          "36px": 4,
+          "48px": 1
+        },
+        "fontWeight": {
+          "300": 6,
+          "400": 83,
+          "500": 46
+        },
+        "letterSpacing": {
+          "0.9px": 4,
+          "normal": 131
+        },
+        "lineHeight": {
+          "12px": 4,
+          "14px": 27,
+          "16px": 13,
+          "18px": 6,
+          "19px": 12,
+          "20px": 20,
+          "24px": 35,
+          "28px": 8,
+          "32px": 2,
+          "36px": 3,
+          "40px": 4,
+          "58px": 1
+        },
+        "transitionDuration": {
+          "0.2s": 18
+        },
+        "transitionTimingFunction": {
+          "cubic-bezier(0.4, 0, 0.2, 1)": 16,
+          "ease": 2
+        }
+      },
+      "elements": 528,
+      "headings": [
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "58px",
+          "size": "48px",
+          "tag": "H1",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "40px",
+          "size": "36px",
+          "tag": "H2",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "36px",
+          "size": "24px",
+          "tag": "H3",
+          "weight": "400"
+        },
+        {
+          "color": "rgb(131, 150, 168)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "36px",
+          "size": "16px",
+          "tag": "H2",
+          "weight": "400"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "40px",
+          "size": "36px",
+          "tag": "H2",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "40px",
+          "size": "36px",
+          "tag": "H2",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "24px",
+          "size": "20px",
+          "tag": "H3",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "24px",
+          "size": "20px",
+          "tag": "H3",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "24px",
+          "size": "20px",
+          "tag": "H3",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "20px",
+          "size": "18px",
+          "tag": "H2",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "20px",
+          "size": "18px",
+          "tag": "H2",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "28px",
+          "size": "30px",
+          "tag": "H3",
+          "weight": "400"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "16px",
+          "size": "16px",
+          "tag": "H2",
+          "weight": "400"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "0.9px",
+          "lineHeight": "28px",
+          "size": "18px",
+          "tag": "H3",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "0.9px",
+          "lineHeight": "28px",
+          "size": "18px",
+          "tag": "H3",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "0.9px",
+          "lineHeight": "28px",
+          "size": "18px",
+          "tag": "H3",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "0.9px",
+          "lineHeight": "28px",
+          "size": "18px",
+          "tag": "H3",
+          "weight": "500"
+        }
+      ],
+      "textElements": 135,
+      "theme": {
+        "bodyBackground": "rgb(255, 255, 255)",
+        "bodyClass": "bg-white w-full h-screen subpixel-antialiased leading-none font-72brand homepagecontainer",
+        "colorScheme": "normal",
+        "htmlClass": ""
+      },
+      "url": "https://www.signavio.com/",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "inlineStyleCount": 12
+    },
+    {
+      "counts": {
+        "animationDuration": {
+          "0.2s": 3,
+          "300s": 1
+        },
+        "animationName": {
+          "animatebottom": 1,
+          "animatebottom20": 2,
+          "slides": 1
+        },
+        "animationTimingFunction": {
+          "ease": 3,
+          "linear": 1
+        },
+        "backgroundColor": {
+          "rgb(0, 0, 0)": 2,
+          "rgb(0, 112, 242)": 3,
+          "rgb(0, 42, 134)": 1,
+          "rgb(213, 218, 221)": 5,
+          "rgb(226, 216, 255)": 1,
+          "rgb(226, 244, 255)": 1,
+          "rgb(229, 245, 255)": 1,
+          "rgb(234, 234, 234)": 1,
+          "rgb(245, 246, 247)": 2,
+          "rgb(255, 255, 255)": 24,
+          "rgb(27, 144, 255)": 1,
+          "rgb(30, 106, 146)": 2,
+          "rgba(0, 0, 0, 0.7)": 1
+        },
+        "borderColor": {
+          "rgb(0, 0, 0)": 1,
+          "rgb(0, 87, 210)": 2,
+          "rgb(169, 180, 190)": 10,
+          "rgb(234, 236, 238)": 13,
+          "rgb(30, 106, 146)": 3
+        },
+        "borderTopLeftRadius": {
+          "12px": 13,
+          "6px": 1,
+          "8px": 14
+        },
+        "boxShadow": {
+          "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px": 12,
+          "rgba(0, 0, 0, 0.3) 0px 0px 20px 0px": 2
+        },
+        "color": {
+          "rgb(0, 0, 0)": 77,
+          "rgb(0, 112, 242)": 1,
+          "rgb(0, 64, 176)": 12,
+          "rgb(102, 102, 102)": 12,
+          "rgb(131, 150, 168)": 1,
+          "rgb(169, 180, 190)": 1,
+          "rgb(20, 40, 160)": 2,
+          "rgb(255, 255, 255)": 6,
+          "rgb(27, 144, 255)": 9,
+          "rgb(30, 106, 146)": 1,
+          "rgb(53, 74, 95)": 1,
+          "rgb(71, 94, 117)": 1,
+          "rgb(77, 177, 255)": 1,
+          "rgb(91, 115, 139)": 4
+        },
+        "fontFamily": {
+          "\"72brand\", Arial, Helvetica, sans-serif": 112,
+          "Benton-Sans-Regular": 17
+        },
+        "fontSize": {
+          "12px": 14,
+          "13px": 6,
+          "14px": 32,
+          "16px": 35,
+          "18px": 13,
+          "20px": 18,
+          "24px": 3,
+          "30px": 4,
+          "36px": 4
+        },
+        "fontWeight": {
+          "300": 6,
+          "400": 77,
+          "500": 46
+        },
+        "letterSpacing": {
+          "0.9px": 4,
+          "normal": 125
+        },
+        "lineHeight": {
+          "12px": 2,
+          "14px": 23,
+          "16px": 13,
+          "18px": 6,
+          "19px": 12,
+          "20px": 20,
+          "24px": 35,
+          "28px": 8,
+          "32px": 2,
+          "36px": 4,
+          "40px": 4
+        },
+        "transitionDuration": {
+          "0.2s": 12
+        },
+        "transitionTimingFunction": {
+          "cubic-bezier(0.4, 0, 0.2, 1)": 10,
+          "ease": 2
+        }
+      },
+      "elements": 514,
+      "headings": [
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "36px",
+          "size": "30px",
+          "tag": "H1",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "40px",
+          "size": "36px",
+          "tag": "H2",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "36px",
+          "size": "24px",
+          "tag": "H3",
+          "weight": "400"
+        },
+        {
+          "color": "rgb(131, 150, 168)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "36px",
+          "size": "16px",
+          "tag": "H2",
+          "weight": "400"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "40px",
+          "size": "36px",
+          "tag": "H2",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "40px",
+          "size": "36px",
+          "tag": "H2",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "24px",
+          "size": "20px",
+          "tag": "H3",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "24px",
+          "size": "20px",
+          "tag": "H3",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "24px",
+          "size": "20px",
+          "tag": "H3",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "20px",
+          "size": "18px",
+          "tag": "H2",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "20px",
+          "size": "18px",
+          "tag": "H2",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "28px",
+          "size": "30px",
+          "tag": "H3",
+          "weight": "400"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "normal",
+          "lineHeight": "16px",
+          "size": "16px",
+          "tag": "H2",
+          "weight": "400"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "0.9px",
+          "lineHeight": "28px",
+          "size": "18px",
+          "tag": "H3",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "0.9px",
+          "lineHeight": "28px",
+          "size": "18px",
+          "tag": "H3",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "0.9px",
+          "lineHeight": "28px",
+          "size": "18px",
+          "tag": "H3",
+          "weight": "500"
+        },
+        {
+          "color": "rgb(0, 0, 0)",
+          "font": "\"72brand\", Arial, Helvetica, sans-serif",
+          "letterSpacing": "0.9px",
+          "lineHeight": "28px",
+          "size": "18px",
+          "tag": "H3",
+          "weight": "500"
+        }
+      ],
+      "textElements": 129,
+      "theme": {
+        "bodyBackground": "rgb(255, 255, 255)",
+        "bodyClass": "bg-white w-full h-screen subpixel-antialiased leading-none font-72brand homepagecontainer",
+        "colorScheme": "normal",
+        "htmlClass": ""
+      },
+      "url": "https://www.signavio.com/",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "inlineStyleCount": 12
+    }
+  ]
+}
