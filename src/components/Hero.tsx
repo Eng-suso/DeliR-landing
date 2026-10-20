@@ -1,6 +1,5 @@
 import { heroCopy as copy, journeyCopy } from '../content/landingCopy';
-import { ArrowDown, ArrowRight, Check, Workflow } from 'lucide-react';
-import { hybridExperience } from '../content/hybridExperience';
+import { ArrowDown, ArrowRight, Check } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { productClips } from '../lib/productClips';
 import { interestCtaLabel, pilotApplicationHref, productInterestHref } from '../lib/publicOffer';
@@ -28,7 +27,6 @@ const narration = {
 export default function Hero({ compact = false }: { compact?: boolean }) {
   const { language } = useLanguage();
   const t = copy[language];
-  const experience = hybridExperience[language];
   const film = <ProductFilm key={language} clip={productClips.hero} priority minimal autoPlay={!compact} narration={narration[language]} />;
   return <section id="hero" className="premium-hero bg-white pb-10 pt-10 sm:pb-14 sm:pt-14" aria-labelledby="hero-title">
     <div className="section-shell hero-layout">
@@ -51,13 +49,7 @@ export default function Hero({ compact = false }: { compact?: boolean }) {
         <p className="mt-2 text-sm leading-6 text-slate-600">{t.pilotLead} <a data-pilot-section="hero" href={pilotApplicationHref(language)} className="font-semibold text-brand-blue underline underline-offset-4">{t.pilotAction}</a>.</p>
       </div>
       <div className="hero-visual min-w-0" data-scroll-visual="hero">
-        {compact ? <div className="hybrid-demo-frame">
-          <div className="hybrid-demo-bar">
-            <p><Workflow aria-hidden="true" size={18} /><span>DeliR <span className="hybrid-workspace-label">/ {experience.workspace}</span></span></p>
-            <span className="hybrid-demo-tag">{experience.demo}</span>
-          </div>
-          {film}
-        </div> : film}
+        {film}
       </div>
     </div>
   </section>;

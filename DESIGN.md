@@ -48,16 +48,16 @@ Questi sono token e regole di progetto, non valori attribuiti ai concorrenti. I 
 
 | Ruolo | Specifica proposta | Origine |
 | --- | --- | --- |
-| Titoli | Hanken Grotesk Variable, pesi 600/700 | Font già presente nel progetto. Nessun font scaricato dai riferimenti. |
+| Titoli | Hanken Grotesk Variable, peso 500 per hero e capitoli, 600 per azioni | Font già presente nel progetto. Nessun font scaricato dai riferimenti. |
 | Testo | Hanken Grotesk Variable anche per il corpo nella V2, pesi 400/600 | Unifica il linguaggio tipografico usando il font già presente. La home mantiene lo stack di sistema. Nessun download di SF Pro o Gotham. |
-| H1 | 36–40 px mobile, 48–60 px desktop, line-height 1,06–1,12 | Scala di progetto da verificare in layout, con i quattro verbi approvati. |
-| H2 | 28–32 px mobile, 36–44 px desktop, line-height 1,15–1,25 | Una gerarchia distinta dalla hero. |
+| H1 | Circa 37–84 px sotto 1024px; 67–104 px desktop, line-height 0,98–1,02 | Scala fluida: masthead tipografico, quattro verbi approvati su due righe nei viewport verificati. |
+| H2 | 38–72 px, line-height 1,04, tracking −0,055em | Capitoli distinti da titoli interni delle demo (32–48 px). |
 | Corpo | 16 px mobile, 18 px desktop, line-height 1,55–1,7; colonna fino a circa 65 caratteri | Leggibilità e scansione. |
 | Label/nota | 12–14 px, line-height almeno 1,4; nessuna informazione indispensabile soltanto in piccolo | Target di progetto, non valore ricavato dalle frequenze dei footer concorrenti. |
-| Inchiostro | `#071126` | `--color-brand-ink` esistente. |
+| Inchiostro | `#101E2B`, titoli condivisi `#071126`, testo secondario `#4D5C68` | Token V2 di lettura, accanto all'ink esistente nei componenti condivisi. |
 | CTA e accento | `#004580`, hover `#003764` | Blu DeliR esistente. |
-| Fondo | `#FBFAF7`; superfici `#FFFFFF`; alternanza chiara `#EEF4FB` | Superficie studio e mist esistenti. |
-| Bordi | `#E2E8F0` o bordo studio al 12% | Token esistenti; verificare contrasto per ogni stato. |
+| Fondi | Carta `#FBFAF7`; prodotto bianco `#FFFFFF`; piano demo e dati `#EAF0F3`; capitoli scuri `#0C283B` | Alternanza per ruolo: apertura, dimostrazione, rassicurazione, chiusura. |
+| Bordi | `#CCD5D9`; bordo dello schermo `#E0E6E9` | Separazione editoriale; non sostituiscono focus e stato selezionato. |
 
 La headline resta **«Mappa. Analizza. Simula. Migliora.»**, con audience e subheadline approvate. Il title SEO rimane descrittivo della categoria e del destinatario. La brevità della headline non impone di rendere vaghi metadata, sottotitoli o sezioni.
 
@@ -65,15 +65,17 @@ La headline resta **«Mappa. Analizza. Simula. Migliora.»**, con audience e sub
 
 | Regola proposta | Valore/uso |
 | --- | --- |
-| Griglia | Una colonna su mobile, due nella hero e nelle demo quando la larghezza lo permette; ordine DOM coerente con quello di lettura. |
-| Spaziatura | Scala 4/8/12/16/24/32/48/64/96 px; sezioni circa 48–64 px mobile e 80–112 px desktop. |
+| Griglia | Hero: titolo e descrizione/azioni affiancati, poi demo a tutta larghezza; mobile in sequenza. Benefici alternati desktop, media prima del testo sotto 1024px. |
+| Spaziatura | Scala 4/8/12/16/24/32/48/64/96 px; capitoli 72–136 px, chiusura 88–160 px. |
 | CTA | Conservare la forma a pillola esistente, target almeno 44 × 44 px, una priorità visiva primaria. |
-| Card contenuto | Raggio 12–16 px; raggio 20–24 px riservato alle cornici delle demo. |
-| Ombra | Bordi per la separazione ordinaria; ombra studio esistente per media/card in rilievo. Evitare di dare rilievo a ogni elemento. |
-| Microinterazioni | 150–220 ms per colore, focus e feedback; non animare proprietà che spostano il layout. |
-| Aperture controllate | 280–350 ms per reveal necessari; testo essenziale leggibile anche se l'animazione non parte. |
+| Superfici | Nessuna cornice workspace, card per fase o riquadro per output; bordo singolo e raggio 4 px sullo schermo reale. Scene come tab sottolineate, percorso come indice aperto. |
+| Ombra | Solo demo hero: `0 12px 36px -24px rgb(12 40 59 / 24%)`. Benefici e output senza ombra. |
+| Microinterazioni | 220 ms colore/frecce, 240 ms indicatore di capitolo; aperture piccole 180 ms. |
+| Ingressi | 620 ms, translateY 24 px + opacità; hero testuale solo movimento 20 px, ritardi 70/140 ms, copy dei benefici 80 ms. Un IntersectionObserver, nessun loop di scroll. HTML visibile senza JS. |
 | Easing | `cubic-bezier(.22, 1, .36, 1)` già nel tema studio; `ease` per feedback semplici. |
 | Motion continuo | Non aggiungere marquee, scroll forzato o video automatici soltanto perché presenti nei riferimenti. Rispettare reduced motion e controlli di riproduzione. |
+
+La nuova [verifica REA del comportamento](docs/design-research/motion-followup.md) distingue cambi di stato osservati, dichiarazioni CSS e scelte DeliR. La barra dei tre capitoli segue la lettura, resta sotto la navigazione e usa sottolineatura più `aria-current`. Gli anchor attivati dall'utente scorrono in modo nativo e fluido; URL diretti e preferenza reduced motion restano immediati.
 
 ### Struttura e prove
 
@@ -98,14 +100,15 @@ Il [piano SEO con evidenze del repository](docs/design-research/seo-visibility.m
 
 | Punto di forza adattato | Comportamento DeliR implementato | File |
 | --- | --- | --- |
-| Gerarchia e prodotto protagonista | Headline più leggibile, Hanken per titoli e corpo, demo dentro una cornice workspace con caso dimostrativo esplicito. Riproduzione sempre su richiesta. | `src/components/Hero.tsx`, `src/styles/landing-hybrid.css` |
+| Gerarchia e prodotto protagonista | Masthead tipografico ampio, Hanken per titoli e corpo, demo panoramica senza chrome aggiunto. Riproduzione su richiesta. | `src/components/Hero.tsx`, `src/styles/landing-hybrid.css` |
 | Un percorso comprensibile | Quattro passaggi collegati alle sezioni e alla review To-Be. L'ultimo apre l'approfondimento necessario; non è una tab decorativa o un'interfaccia finta. | `src/components/v2/HybridProcessPath.tsx`, `src/content/hybridExperience.ts` |
-| Prove e risultato del lavoro vicini | Tre benefici leggibili, cornici delle demo chiare, scene con stato selezionato e output distinto sotto la spiegazione. | `src/components/v2/HybridJourney.tsx` |
-| Identità coerente | Blu DeliR, canvas caldo, raggi e ombre condivisi, numeri/nodi connessi come motivo visivo. Nessun asset dei riferimenti. | `src/styles/landing-hybrid.css` |
+| Prove e risultato del lavoro vicini | Tre benefici aperti, demo grandi, tab sottolineate, output tipografico, barra capitoli che segue la lettura. | `src/components/v2/HybridJourney.tsx` |
+| Identità coerente | Carta calda, bianco prodotto, piano grigio azzurro e capitoli navy; blu per azioni, ultima riga hero e selezioni. Nessun asset dei riferimenti. | `src/styles/landing-hybrid.css` |
+| Ritmo e movimento | Ingressi una volta, stessa curva e piccoli ritardi; anchor fluidi, nessuna inerzia artificiale; reduced motion e fallback senza JS. | `src/components/v2/V2Motion.tsx`, `src/components/FragmentNavigation.tsx` |
 | Navigazione prevedibile | Logo e link prodotto/pilot del footer restano nella V2 e conservano la lingua; barra di confronto separata dalla navigazione prodotto. | `src/pages/LandingV2Page.tsx`, `src/components/Navbar.tsx`, `src/components/Footer.tsx` |
 | Accessibilità e performance | Anchor reali, focus visibile, ordine coerente, note più contrastate sul blu, reduced motion e nessun nuovo runtime o font. | `e2e/landing-hybrid.spec.ts`, CSS isolato V2 |
 
-Verifiche del 20 ottobre: lint, TypeScript e build passati; 82 test unitari/componenti passati. 21 casi browser distinti passati tra Chromium e Safari mobile, incluso il nuovo percorso da tastiera e le regressioni home/HTML iniziale; scansione axe duplicata su Safari saltata intenzionalmente. Axe a 375/1440 px con contenuti espansi passa dopo la correzione delle note sul fondo blu e dello sfondo esplicito delle schede. Non è una certificazione WCAG né una verifica completa con screen reader. Lighthouse mobile locale finale: performance 91, accessibilità 100, best practices 100, LCP 2,80 s e CLS 0. Il target LCP di 2,5 s non è raggiunto in questa singola misura lab; l'indicizzabilità è esclusa per il noindex intenzionale. Il piano SEO rimane una proposta, senza modifica a robots o promozione della preview.
+Verifiche del 20 ottobre: 82 test unitari/componenti passati; regressioni home/HTML iniziale passate. I 13 casi V2 passano tra Chromium e Safari mobile, con un axe duplicato su Safari saltato intenzionalmente: sette viewport, capitoli, anchor, tastiera, video reali e cambio della preferenza reduced motion. Axe a 375/1440 px con contenuti espansi non rileva violazioni A/AA automatiche nei criteri controllati. Non è una certificazione WCAG né una verifica completa con screen reader. La verifica prestazioni di questa revisione è registrata in `docs/landing-hybrid.md`. Il piano SEO rimane una proposta, senza modifica a robots o promozione della preview.
 
 ## Evidenze misurate per riferimento
 

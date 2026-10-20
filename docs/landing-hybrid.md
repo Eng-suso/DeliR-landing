@@ -12,11 +12,11 @@ La promozione alla home è una decisione successiva. Questa revisione aggiorna l
 
 ## Composizione
 
-La V2 conserva blu DeliR, demo, spiegazione del problema, Dati e AI, condizioni del pilot, FAQ e footer. Usa Hanken Grotesk anche nel corpo, un canvas caldo, cornici chiare e un percorso a quattro nodi come firma visiva. I tre benefici sono immediatamente leggibili, con visual alternati su desktop e prima del testo sotto 1024px. Le regole visuali sono isolate in `landing-hybrid.css`; la home mantiene il suo layout.
+La V2 conserva blu DeliR, demo, spiegazione del problema, Dati e AI, condizioni del pilot, FAQ e footer. Usa Hanken Grotesk anche nel corpo e un masthead ampio: titolo e azioni affiancati su desktop, prodotto panoramico sotto. Carta calda, bianco, piano grigio azzurro e navy distinguono apertura, demo, rassicurazione e chiusura. I tre benefici hanno visual alternati su desktop e prima del testo sotto 1024px. Le regole visuali sono isolate in `landing-hybrid.css`; la home mantiene il suo layout.
 
-L’ibrido usa lo stesso sfondo come superficie statica e scorrimento nativo: non monta i controller di movimento e reveal della V1. Il relativo comando di pausa è omesso perché lo sfondo non è animato. La V1 mantiene effetti e controlli precedenti.
+L’ibrido usa scorrimento nativo, anchor fluidi solo dopo un'azione dell'utente e ingressi con IntersectionObserver: 620 ms, curva decelerante, 24 px e piccoli ritardi coerenti. Non usa i controller della V1 o un loop di scroll. La hero testuale si muove senza fade; gli altri ingressi usano anche opacità. Con reduced motion si torna immediatamente alla lettura statica; senza JavaScript il contenuto non è nascosto. La V1 mantiene i suoi effetti e controlli.
 
-La headline approvata è «Mappa. Analizza. Simula. Migliora.»; la subheadline è «Ricostruisci i processi del cliente, confronta le alternative e porta raccomandazioni sostenute da evidenze.». Sono condivise con la home. La V2 aggiunge i tre output e la cornice workspace alla demo. Il percorso sotto la hero collega Mappa/Evidenze, Analizza/Lacune, Simula/Scenari e Migliora/Review To-Be. Gli approfondimenti si aprono tramite gli anchor esistenti. Il logo e i link prodotto/pilot nel footer restano nella preview e conservano la lingua.
+La headline approvata è «Mappa. Analizza. Simula. Migliora.»; la subheadline è «Ricostruisci i processi del cliente, confronta le alternative e porta raccomandazioni sostenute da evidenze.». Sono condivise con la home. Il percorso sotto la hero è un indice tipografico aperto: Mappa/Evidenze, Analizza/Lacune, Simula/Scenari e Migliora/Review To-Be. Nessuna cornice workspace o card aggiunta attorno ai video; scene sottolineate e output testuali. Nei benefici una barra di capitoli resta sotto la navigazione e segue la posizione di lettura con sottolineatura e `aria-current`. Gli anchor compensano entrambe le barre. Gli approfondimenti si aprono tramite gli anchor esistenti. Logo e footer restano nella preview e conservano la lingua.
 
 I tre benefici visibili sono evidenze, lacune e scenari. Le scene aggiuntive restano nei rispettivi explorer. Contesto e decisioni sono in un approfondimento nativo `details`; gli indirizzi delle scene aprono automaticamente l’approfondimento. Il confronto completo è anch’esso espandibile e mantiene fonti e collegamenti alle demo. I due riepiloghi early access/pilot non sono ripetuti nell’anteprima. C’è una sola CTA dopo i benefici, oltre a navigazione, hero, pilot e chiusura.
 
@@ -26,7 +26,7 @@ La sezione Dati e AI rimane nel percorso principale. Le condizioni commerciali d
 
 Nessuna nuova registrazione obbligatoria. La hero e i tre benefici usano quattro demo esistenti, con altre scene consultabili. La hero dispone di registrazioni IT/EN; gli altri filmati conservano la UI originale, mentre testi, descrizioni e controlli sono localizzati.
 
-Nell’ibrido i player caricano il video solo dopo un’azione esplicita, anche senza riduzione del movimento; il poster resta visibile prima del play. Offrono pausa e dialogo con controlli nativi. La V1 mantiene il comportamento precedente. Gli approfondimenti chiusi non avviano i video. Non vengono richiesti asset pianificati sotto `/landing-v2/media/`. Il layout fuori schermo usa il rendering differito già presente nella V1; i controlli geometrici materializzano le sezioni scorrendole prima delle misure.
+Nell’ibrido i player caricano il video solo dopo un’azione esplicita, anche senza riduzione del movimento; il poster resta visibile prima del play. Offrono pausa e dialogo con controlli nativi. La V1 mantiene il comportamento precedente. Gli approfondimenti chiusi non avviano i video. Non vengono richiesti asset pianificati sotto `/landing-v2/media/`. Il capitolo prodotto resta materializzato per conservare la navigazione sticky; le altre sezioni mantengono il rendering differito. I controlli geometrici scorrono le sezioni prima delle misure.
 
 Il registro a sette slot e il suo validatore restano infrastruttura opzionale per nuovi export. La guida `landing-v2-video-guide.md` e il registro `landing-v2-figma-alignment.md` descrivono la precedente esplorazione Figma; non rappresentano più la composizione attiva di `/v2`.
 
@@ -42,13 +42,13 @@ Il registro a sette slot e il suo validatore restano infrastruttura opzionale pe
 
 I risultati di conversione non sono ancora misurati. I controlli automatici non equivalgono a una certificazione WCAG o a una verifica completa con screen reader.
 
-## Verifica dell'identità DeliR — 20 ottobre
+## Verifica della revisione motion e gerarchia — 20 ottobre
 
 - Lint, TypeScript e build passati; 82 test unitari/componenti passati.
-- 21 test browser distinti passati tra Chromium e Safari mobile; axe duplicato su Safari saltato intenzionalmente. Coperti sette viewport, il nuovo percorso con Enter, gli anchor e la review espandibile, logo/footer nella V2 IT/EN, menu/Escape, video reali, FAQ, home e HTML senza JavaScript.
+- 23 test browser distinti passati tra Chromium e Safari mobile, considerando i 13 casi V2 dopo l'ultima correzione e le dieci regressioni home/prerender; axe duplicato su Safari saltato intenzionalmente. Coperti sette viewport, percorso con Enter, capitolo attivo, cambio reduced motion, anchor sotto le barre sticky, review espandibile, logo/footer IT/EN, menu/Escape, video reali, FAQ e HTML senza JavaScript.
 - Axe a 375/1440 px con studio e approfondimenti aperti: nessuna violazione A/AA automatica nei criteri controllati dopo correzione del contrasto delle note e sfondo esplicito delle schede del problema. Non equivale a una verifica completa con tecnologie assistive.
 - Nessuna dipendenza, registrazione o font aggiunti. Nessun autoplay nella V2. La documentazione di ricerca e la matrice di applicazione sono in `DESIGN.md`.
-- Lighthouse mobile locale, una misura sulla build finale: performance 91, accessibilità 100, best practices 100; LCP 2,80 s, CLS 0. Budget configurati passati. Il target LCP di 2,5 s non è raggiunto in questa misura. L'indicizzabilità è esclusa per il noindex intenzionale; non sono dati sul campo o risultati SEO/conversione.
+- Lighthouse mobile locale sulla build di questa revisione, una misura: performance 93, accessibilità 100, best practices 100; LCP 2,84 s, CLS 0, TBT 24 ms e circa 285 KB trasferiti. Budget configurati passati; il target LCP di 2,5 s rimane aperto. L'indicizzabilità è esclusa per il noindex intenzionale; non sono dati sul campo o risultati SEO/conversione.
 
 ## Evidenza locale precedente — 18–19 ottobre
 

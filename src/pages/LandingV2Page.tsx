@@ -19,6 +19,7 @@ import PreviewToolbarV2 from '../components/v2/PreviewToolbarV2';
 import HybridJourney from '../components/v2/HybridJourney';
 import HybridVideoPlan from '../components/v2/HybridVideoPlan';
 import HybridProcessPath from '../components/v2/HybridProcessPath';
+import V2Motion from '../components/v2/V2Motion';
 
 export default function LandingV2Page() {
   const [params] = useSearchParams();
@@ -26,8 +27,8 @@ export default function LandingV2Page() {
   const studio = params.get('studio') === '1';
   return <div data-client-ready={typeof window !== 'undefined' ? 'true' : 'false'} className="landing-page landing-hybrid relative min-h-dvh">
     <SkipLink />
-    <div aria-hidden="true" className="flow-background flow-background-fixed"><div className="cloud-field" /></div>
-    <FragmentNavigation />
+    <FragmentNavigation smooth />
+    <V2Motion />
     <div className="relative z-10"><PreviewToolbarV2 studio={studio} /></div>
     <Navbar motionControl={false} homeHref={language === 'it' ? '/v2#hero' : '/v2?lang=en#hero'} />
     <main id="main-content" className="relative z-10">

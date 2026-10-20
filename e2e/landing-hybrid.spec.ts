@@ -109,6 +109,30 @@ test('supporting scenes and comparison remain deep linkable', async ({ page }) =
   await expect(page.locator('#scene-lacuna-aperta')).toBeVisible();
 });
 
+test('V2 chapters follow reading position and motion respects the visitor preference', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/v2');
+  await expect(page.locator('.hero-heading')).toHaveAttribute('data-v2-entered', 'true');
+  await expect(page.locator('.hero-heading')).toHaveCSS('animation-name', 'delir-arrive');
+  const chapter = page.getByRole('navigation', { name: 'Capitoli del prodotto' });
+  await chapter.getByRole('link', { name: 'Lacune', exact: true }).click();
+  await expect(page).toHaveURL(/#product-02$/);
+  await expect(chapter.getByRole('link', { name: 'Lacune', exact: true })).toHaveAttribute('aria-current', 'location');
+  await expect.poll(() => page.locator('#product-02').evaluate(element => {
+    const gap = element.getBoundingClientRect().top - document.querySelector('.hybrid-chapter-nav')!.getBoundingClientRect().bottom;
+    return gap >= 10 && gap <= 32;
+  })).toBe(true);
+  await expect(page.locator('#product-02 .product-screen-stage')).toHaveCSS('border-top-width', '0px');
+  await expect(page.locator('#product-02 .product-screen-stage')).toHaveCSS('box-shadow', 'none');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(page.locator('.hero-heading')).not.toHaveAttribute('data-v2-entered', 'true');
+  await expect(page.locator('.hero-heading')).toHaveCSS('animation-name', 'none');
+  await chapter.getByRole('link', { name: 'Scenari', exact: true }).focus();
+  await page.keyboard.press('Enter');
+  await expect(chapter.getByRole('link', { name: 'Scenari', exact: true })).toHaveAttribute('aria-current', 'location');
+  await expect(page.locator('#product-05 video')).toHaveCount(0);
+});
+
 test('video plan uses available recordings and preserves language', async ({ page }, testInfo) => {
   const mobile = testInfo.project.name === 'mobile-safari';
   await page.setViewportSize({ width: mobile ? 375 : 1440, height: 900 });
