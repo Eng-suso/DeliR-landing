@@ -50,7 +50,7 @@ Questi sono token e regole di progetto, non valori attribuiti ai concorrenti. I 
 | --- | --- | --- |
 | Titoli | Hanken Grotesk Variable, peso 500 per hero e capitoli, 600 per azioni | Font già presente nel progetto. Nessun font scaricato dai riferimenti. |
 | Testo | Hanken Grotesk Variable anche per il corpo nella V2, pesi 400/600 | Unifica il linguaggio tipografico usando il font già presente. La home mantiene lo stack di sistema. Nessun download di SF Pro o Gotham. |
-| H1 | Circa 37–84 px sotto 1024px; 67–104 px desktop, line-height 0,98–1,02 | Scala fluida: masthead tipografico, quattro verbi approvati su due righe nei viewport verificati. |
+| H1 | Circa 37–84 px sotto 1024px; 42–64 px desktop, line-height 1,02–1,04 | Scala fluida: quattro verbi su due righe con il visual affiancato su desktop. |
 | H2 | 38–72 px, line-height 1,04, tracking −0,055em | Capitoli distinti da titoli interni delle demo (32–48 px). |
 | Corpo | 16 px mobile, 18 px desktop, line-height 1,55–1,7; colonna fino a circa 65 caratteri | Leggibilità e scansione. |
 | Label/nota | 12–14 px, line-height almeno 1,4; nessuna informazione indispensabile soltanto in piccolo | Target di progetto, non valore ricavato dalle frequenze dei footer concorrenti. |
@@ -65,7 +65,7 @@ La headline resta **«Mappa. Analizza. Simula. Migliora.»**, con audience e sub
 
 | Regola proposta | Valore/uso |
 | --- | --- |
-| Griglia | Hero: titolo e descrizione/azioni affiancati, poi demo a tutta larghezza; mobile in sequenza. Benefici alternati desktop, media prima del testo sotto 1024px. |
+| Griglia | Hero: headline, subheadline e CTA a sinistra, visual a destra da 1024px; sotto questa soglia il visual segue le azioni. Benefici alternati desktop, media prima del testo sotto 1024px. |
 | Spaziatura | Scala 4/8/12/16/24/32/48/64/96 px; capitoli 72–136 px, chiusura 88–160 px. |
 | CTA | Conservare la forma a pillola esistente, target almeno 44 × 44 px, una priorità visiva primaria. |
 | Superfici | Nessuna cornice workspace, card per fase o riquadro per output; bordo singolo e raggio 4 px sullo schermo reale. Scene come tab sottolineate, percorso come indice aperto. |
@@ -100,7 +100,7 @@ Il [piano SEO con evidenze del repository](docs/design-research/seo-visibility.m
 
 | Punto di forza adattato | Comportamento DeliR implementato | File |
 | --- | --- | --- |
-| Gerarchia e prodotto protagonista | Masthead tipografico ampio, Hanken per titoli e corpo, demo panoramica senza chrome aggiunto. Riproduzione su richiesta. | `src/components/Hero.tsx`, `src/styles/landing-hybrid.css` |
+| Gerarchia e prodotto protagonista | Hanken per titoli e corpo; blocco testuale a sinistra e demo a destra, senza chrome aggiunto. Subheadline precedente ripristinata in IT/EN nella V2. Riproduzione su richiesta. | `src/components/Hero.tsx`, `src/styles/landing-hybrid.css` |
 | Un percorso comprensibile | Quattro passaggi collegati alle sezioni e alla review To-Be. L'ultimo apre l'approfondimento necessario; non è una tab decorativa o un'interfaccia finta. | `src/components/v2/HybridProcessPath.tsx`, `src/content/hybridExperience.ts` |
 | Prove e risultato del lavoro vicini | Tre benefici aperti, demo grandi, tab sottolineate, output tipografico, barra capitoli che segue la lettura. | `src/components/v2/HybridJourney.tsx` |
 | Identità coerente | Carta calda, bianco prodotto, piano grigio azzurro e capitoli navy; blu per azioni, ultima riga hero e selezioni. Nessun asset dei riferimenti. | `src/styles/landing-hybrid.css` |

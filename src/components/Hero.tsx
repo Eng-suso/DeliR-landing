@@ -24,7 +24,7 @@ const narration = {
   ],
 };
 
-export default function Hero({ compact = false }: { compact?: boolean }) {
+export default function Hero({ compact = false, subheadline }: { compact?: boolean; subheadline?: string }) {
   const { language } = useLanguage();
   const t = copy[language];
   const film = <ProductFilm key={language} clip={productClips.hero} priority minimal autoPlay={!compact} narration={narration[language]} />;
@@ -35,11 +35,11 @@ export default function Hero({ compact = false }: { compact?: boolean }) {
         <h1 id="hero-title" className="hero-headline mt-3 sm:mt-5 text-balance font-display text-[clamp(2.25rem,4.2vw,3.85rem)] font-semibold leading-[1.06] tracking-[-0.05em] text-brand-ink lg:text-[clamp(2rem,3.2vw,3rem)]"><span className="block">{t.first}</span>{' '}<span className="block text-brand-blue">{t.second}</span></h1>
       </div>
       {compact ? <div className="hero-description max-w-[36rem] text-base leading-7 text-slate-600">
-        <p>{t.body}</p>
+        <p>{subheadline ?? t.body}</p>
         <ul className="hybrid-hero-benefits" aria-label={language === 'it' ? 'Benefici DeliR' : 'DeliR benefits'}>
           {[0, 1, 4].map(index => <li key={index}><Check aria-hidden="true" className="size-4 shrink-0 text-brand-blue" /><span>{journeyCopy[language].modules[index].output}</span></li>)}
         </ul>
-      </div> : <p className="hero-description max-w-[36rem] text-pretty text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">{t.body}</p>}
+      </div> : <p className="hero-description max-w-[36rem] text-pretty text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">{subheadline ?? t.body}</p>}
       <div className="hero-actions">
         <div className="flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
           <a data-interest-section="hero" href={productInterestHref(language)} className="btn-primary whitespace-normal rounded-full px-7">{interestCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4" /></a>

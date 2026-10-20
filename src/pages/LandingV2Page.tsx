@@ -3,6 +3,7 @@ import '../styles/premium-landing.css';
 import '../styles/flow-backdrop.css';
 import '../styles/landing-hybrid.css';
 import { comparisonCopy } from '../content/landingCopy';
+import { hybridExperience } from '../content/hybridExperience';
 import { useLanguage } from '../i18n/LanguageContext';
 import SkipLink from '../components/SkipLink';
 import FragmentNavigation from '../components/FragmentNavigation';
@@ -32,7 +33,7 @@ export default function LandingV2Page() {
     <div className="relative z-10"><PreviewToolbarV2 studio={studio} /></div>
     <Navbar motionControl={false} homeHref={language === 'it' ? '/v2#hero' : '/v2?lang=en#hero'} />
     <main id="main-content" className="relative z-10">
-      <Hero compact />
+      <Hero compact subheadline={hybridExperience[language].subheadline} />
       {studio ? <HybridVideoPlan /> : null}
       <HybridProcessPath />
       <Problem />

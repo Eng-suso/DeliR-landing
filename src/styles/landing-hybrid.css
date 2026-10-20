@@ -28,7 +28,7 @@
 .landing-hybrid .premium-navigation nav > div:first-child { height: var(--delir-nav-height); }
 .landing-hybrid .premium-navigation a[aria-label='DeliR home'] { font-size: 28px; }
 
-/* A typographic opening, followed by the real product at an honest scale. */
+/* Copy and action lead on the left; the product sits alongside on desktop. */
 .landing-hybrid .premium-hero { padding-block: clamp(40px, 5vw, 80px) 0; scroll-margin-top: var(--delir-nav-height); }
 .landing-hybrid .hero-layout { gap: 24px; }
 .landing-hybrid .hero-headline { font-size: clamp(2.5rem, 8vw, 6.75rem); font-weight: 500; line-height: .98; letter-spacing: -.065em; }
@@ -133,11 +133,11 @@
 .landing-hybrid :is(.premium-final, footer) .text-slate-400 { color: #b9c8d8; }
 
 @media (min-width: 1024px) {
-  .landing-hybrid .hero-layout { grid-template-areas: 'heading description' 'heading actions' 'visual visual'; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); column-gap: clamp(48px, 7vw, 112px); row-gap: 24px; }
-  .landing-hybrid .hero-heading { align-self: start; }
-  .landing-hybrid .hero-description { align-self: end; padding-top: 38px; }
-  .landing-hybrid .hero-headline { font-size: clamp(4.2rem, 6.8vw, 6.5rem); }
-  .landing-hybrid .hero-visual { margin-top: 40px; }
+  .landing-hybrid .hero-layout { grid-template-areas: 'heading visual' 'description visual' 'actions visual'; grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr); column-gap: clamp(40px, 5vw, 72px); row-gap: 24px; }
+  .landing-hybrid .hero-heading { align-self: end; }
+  .landing-hybrid .hero-description { align-self: start; padding-top: 0; }
+  .landing-hybrid .hero-headline { font-size: clamp(2.65rem, 4.25vw, 4rem); line-height: 1.04; }
+  .landing-hybrid .hero-visual { align-self: center; margin-top: 0; padding: 0; background: transparent; }
   .landing-hybrid .hybrid-path-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px; }
   .landing-hybrid .hybrid-benefit { grid-template-columns: minmax(0, 1.35fr) minmax(0, .85fr); gap: clamp(40px, 6vw, 88px); }
   .landing-hybrid .hybrid-benefit:nth-child(even) { grid-template-columns: minmax(0, .85fr) minmax(0, 1.35fr); }

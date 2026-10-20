@@ -10,7 +10,7 @@ test('hybrid exposes three benefits, V1 trust and existing demos across devices'
   await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator('.hybrid-hero-benefits li')).toHaveCount(3);
-  await expect(page.locator('.hero-description > p')).toHaveText('Ricostruisci i processi del cliente, confronta le alternative e porta raccomandazioni sostenute da evidenze.');
+  await expect(page.locator('.hero-description > p')).toHaveText('Smetti di passare settimane a ricostruire come lavora davvero il tuo cliente. DeliR trasforma la conoscenza dispersa in un As-Is verificato, confronta scenari To-Be e migliora continuamente i processi, così puoi fornire raccomandazioni migliori più rapidamente.');
   await expect(page.locator('.hybrid-benefit')).toHaveCount(3);
   await expect(page.locator('#product-interest, #pilot-summary')).toHaveCount(0);
   await expect(page.locator('#fiducia')).toContainText('Prima di utilizzare dati reali');
@@ -40,8 +40,11 @@ test('hybrid exposes three benefits, V1 trust and existing demos across devices'
     const hero = await page.locator('#hero').evaluate(element => ({
       actionBottom: element.querySelector('.hero-actions')!.getBoundingClientRect().bottom,
       visualTop: element.querySelector('.hero-visual')!.getBoundingClientRect().top,
+      visualLeft: element.querySelector('.hero-visual')!.getBoundingClientRect().left,
+      copyRight: Math.max(...['.hero-heading', '.hero-description', '.hero-actions'].map(selector => element.querySelector(selector)!.getBoundingClientRect().right)),
     }));
     if (width < 1024) expect(hero.actionBottom).toBeLessThanOrEqual(hero.visualTop);
+    else expect(hero.copyRight).toBeLessThanOrEqual(hero.visualLeft);
     if ([375, 834, 1440].includes(width)) {
       // A full-page capture exceeds WebKit's image limit at the iPhone scale.
       await page.evaluate(() => window.scrollTo(0, 0));
@@ -87,6 +90,7 @@ test('DeliR workflow links reach real scenes and keep preview navigation in V2',
   await expect.poll(() => page.evaluate(() => document.querySelector('#hero-title')!.getBoundingClientRect().top - document.querySelector('.premium-navigation')!.getBoundingClientRect().bottom)).toBeGreaterThanOrEqual(0);
   await expect(page.locator('footer').getByRole('link', { name: 'Il prodotto', exact: true })).toHaveAttribute('href', '/v2#caso');
   await page.goto('/v2?lang=en');
+  await expect(page.locator('.hero-description > p')).toHaveText('Stop spending weeks reconstructing how your client really works. DeliR turns scattered knowledge into a verified As-Is, compares To-Be scenarios, and continuously improves processes so you deliver better recommendations faster.');
   await page.getByRole('navigation', { name: 'Explore the DeliR workflow' }).getByRole('link', { name: /^Improve/ }).click();
   await expect(page).toHaveURL(/lang=en#scene-review-to-be$/);
   await expect(page.locator('#product-04-title')).toHaveText('Explain the changes you recommend.');
