@@ -124,3 +124,15 @@ La CI valida TypeScript, lint, unit test, PHP, transazioni MariaDB, build di pro
 - assenza di richieste esterne automatiche prima dell’interazione.
 
 I test browser usano risposte simulate e non dimostrano una scrittura reale su IONOS: quella verifica resta un requisito di staging prima dell’apertura della waitlist.
+
+## Revisione del modulo nella PR20 — 20 ottobre 2026
+
+Il testo di apertura spiega il ricontatto all'apertura degli accessi; il pilot resta sotto il modulo. Email e tipo di attività sono obbligatori, tempistiche facoltative. Nessun campo nome, telefono o dati dei clienti.
+
+Con `npm run dev` il modulo è visibile anche a raccolta chiusa: l'avviso e il pulsante «Verifica i dati» distinguono l'anteprima. Si può verificare la compilazione, senza POST, salvataggio o conferma di iscrizione. Nessun evento di avvio modulo viene emesso in questa modalità. La build di produzione conserva i gate: il form attivo usa il contratto IONOS esistente e conferma soltanto una risposta JSON `accepted:true`.
+
+Il titolare ha confermato in chat l'installazione di `product_interest` e del file privato `waitlist.php`, con salvataggio verificato. Una lettura GET di `https://delir.it/api/waitlist.php` eseguita il 20 ottobre restituisce ancora 404 HTML: non prova un problema al database privato, ma indica che il punto d'ingresso pubblico va installato/verificato prima di aprire il frontend.
+
+Passo rimasto per la raccolta online: caricare il file del repository `public/api/waitlist.php` nella cartella `/public/api/waitlist.php` dell'hosting IONOS e verificare un invio controllato. Lo script di deploy del frontend preserva `/api`, quindi non installa questo file. Per il rilascio attivo usare i flag già elencati sopra. Nessuna modifica a produzione, consenso analytics o provider viene eseguita da questa revisione.
+
+Verifica della revisione: lint, TypeScript, build con 16 documenti prerenderizzati e 83 test unitari/componenti passati. Sei casi del modulo attivo passati in Chromium/Safari mobile (risposte server simulate), inclusi errore HTML 200, retry, conferma/focus, timing facoltativo, IT/EN, 320px e axe. Due regressioni passate: gate produzione chiuso e HTML senza JavaScript. Il nuovo test locale verifica che il preview non chiami fetch e non mostri una conferma falsa. Nessun invio di dati di prova al server IONOS e nessuna modifica a produzione.

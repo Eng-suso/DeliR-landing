@@ -15,10 +15,25 @@ function fill() {
   fireEvent.change(screen.getByLabelText('Tipo di attività'), { target: { value: 'independent' } });
 }
 it('does not collect fields when the destination is not ready', () => {
+  vi.stubEnv('DEV', false);
   const fetchMock = vi.spyOn(globalThis, 'fetch');
   show(false);
   expect(screen.queryByRole('form')).not.toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Scrivimi per entrare nella lista d’attesa' })).toHaveAttribute('href', expect.stringContaining('mailto:contact@delir.it'));
+  expect(fetchMock).not.toHaveBeenCalled();
+});
+it('lets the local preview validate without sending or claiming a signup', () => {
+  vi.stubEnv('DEV', true);
+  const fetchMock = vi.spyOn(globalThis, 'fetch');
+  show(false);
+  expect(screen.getByRole('form')).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'informativa privacy' })).toHaveAttribute('href', '/privacy');
+  fireEvent.click(screen.getByRole('button', { name: 'Verifica i dati' }));
+  expect(screen.getByLabelText('Email')).toHaveFocus();
+  fill();
+  fireEvent.click(screen.getByRole('button', { name: 'Verifica i dati' }));
+  expect(screen.getByRole('status')).toHaveTextContent('non vengono inviati né salvati');
+  expect(screen.queryByRole('heading', { name: 'Sei nella lista d’attesa.' })).not.toBeInTheDocument();
   expect(fetchMock).not.toHaveBeenCalled();
 });
 it('requires practice for qualification but does not require timing', () => {
