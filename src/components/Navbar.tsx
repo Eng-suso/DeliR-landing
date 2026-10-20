@@ -16,7 +16,7 @@ const copy = {
   },
 } as const;
 
-export default function Navbar({ motionControl = true }: { motionControl?: boolean }) {
+export default function Navbar({ motionControl = true, homeHref = '/' }: { motionControl?: boolean; homeHref?: string }) {
   const { language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [backgroundPaused, setBackgroundPaused] = useState(false);
@@ -44,7 +44,7 @@ export default function Navbar({ motionControl = true }: { motionControl?: boole
     <header className="premium-navigation sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur-lg">
       <nav aria-label={t.nav} className="section-shell">
         <div className="flex h-16 items-center justify-between gap-5">
-          <Link to="/" aria-label="DeliR home" className="shrink-0 font-display text-[23px] font-semibold tracking-[-0.05em] text-brand-ink">
+          <Link to={homeHref} aria-label="DeliR home" className="shrink-0 font-display text-[23px] font-semibold tracking-[-0.05em] text-brand-ink">
             DeliR<span className="text-brand-blue">.</span>
           </Link>
           <ul className="hidden items-center gap-7 lg:flex">

@@ -8,7 +8,6 @@ import SkipLink from '../components/SkipLink';
 import FragmentNavigation from '../components/FragmentNavigation';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
-import ProcessBridge from '../components/ProcessBridge';
 import Problem from '../components/Problem';
 import Comparison from '../components/Comparison';
 import BuiltFor from '../components/BuiltFor';
@@ -19,6 +18,7 @@ import Footer from '../components/Footer';
 import PreviewToolbarV2 from '../components/v2/PreviewToolbarV2';
 import HybridJourney from '../components/v2/HybridJourney';
 import HybridVideoPlan from '../components/v2/HybridVideoPlan';
+import HybridProcessPath from '../components/v2/HybridProcessPath';
 
 export default function LandingV2Page() {
   const [params] = useSearchParams();
@@ -29,11 +29,11 @@ export default function LandingV2Page() {
     <div aria-hidden="true" className="flow-background flow-background-fixed"><div className="cloud-field" /></div>
     <FragmentNavigation />
     <div className="relative z-10"><PreviewToolbarV2 studio={studio} /></div>
-    <Navbar motionControl={false} />
+    <Navbar motionControl={false} homeHref={language === 'it' ? '/v2#hero' : '/v2?lang=en#hero'} />
     <main id="main-content" className="relative z-10">
       <Hero compact />
       {studio ? <HybridVideoPlan /> : null}
-      <ProcessBridge />
+      <HybridProcessPath />
       <Problem />
       <HybridJourney />
       <BuiltFor />
@@ -45,6 +45,6 @@ export default function LandingV2Page() {
       <Faq />
       <FinalCTA />
     </main>
-    <Footer />
+    <Footer homePath="/v2" />
   </div>;
 }

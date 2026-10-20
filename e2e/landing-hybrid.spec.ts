@@ -66,6 +66,35 @@ test('hybrid exposes three benefits, V1 trust and existing demos across devices'
   expect(html).toContain('Il contesto del tuo cliente merita regole chiare.');
 });
 
+test('DeliR workflow links reach real scenes and keep preview navigation in V2', async ({ page }) => {
+  await page.goto('/v2');
+  await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
+  await expect(page.locator('#hero-title')).toHaveText('Mappa. Analizza. Simula. Migliora.');
+  const path = page.getByRole('navigation', { name: 'Esplora il percorso DeliR' });
+  await expect(path.getByRole('link')).toHaveCount(4);
+  const targets = ['product-03', 'product-02', 'product-05', 'scene-review-to-be'];
+  for (const [index, id] of targets.entries()) {
+    const link = path.getByRole('link').nth(index);
+    await link.focus();
+    await link.press('Enter');
+    await expect(page).toHaveURL(new RegExp(`#${id}$`));
+    await expect(page.locator(`#${id}`)).toBeVisible();
+    await expect(page.locator(`#${id} video`)).toHaveCount(0);
+  }
+  await expect(page.locator('.hybrid-more')).toHaveAttribute('open', '');
+  await page.getByRole('link', { name: 'DeliR home', exact: true }).click();
+  await expect(page).toHaveURL(/\/v2#hero$/);
+  await expect.poll(() => page.evaluate(() => document.querySelector('#hero-title')!.getBoundingClientRect().top - document.querySelector('.premium-navigation')!.getBoundingClientRect().bottom)).toBeGreaterThanOrEqual(0);
+  await expect(page.locator('footer').getByRole('link', { name: 'Il prodotto', exact: true })).toHaveAttribute('href', '/v2#caso');
+  await page.goto('/v2?lang=en');
+  await page.getByRole('navigation', { name: 'Explore the DeliR workflow' }).getByRole('link', { name: /^Improve/ }).click();
+  await expect(page).toHaveURL(/lang=en#scene-review-to-be$/);
+  await expect(page.locator('#product-04-title')).toHaveText('Explain the changes you recommend.');
+  await expect(page.getByRole('link', { name: 'DeliR home', exact: true })).toHaveAttribute('href', '/v2?lang=en#hero');
+  await expect(page.locator('footer').getByRole('link', { name: 'Product', exact: true })).toHaveAttribute('href', '/v2?lang=en#caso');
+  await expect(page.locator('footer').getByRole('link', { name: 'DeliR.', exact: true })).toHaveAttribute('href', '/v2?lang=en#hero');
+});
+
 test('supporting scenes and comparison remain deep linkable', async ({ page }) => {
   await page.goto('/v2#scene-memoria');
   await expect(page.locator('.hybrid-more')).toHaveAttribute('open', '');

@@ -1,6 +1,6 @@
 # DeliR — ricerca degli stili e direzione di design
 
-Ricerca del **20 ottobre 2026**, branch `codex/figma-v2-framework`. Stato: specifica proposta, **non implementata**. La landing, la headline e la subheadline approvate non vengono modificate da questa attività.
+Ricerca e applicazione del **20 ottobre 2026**, branch `codex/figma-v2-framework`. La direzione DeliR è applicata all'anteprima **`/v2` nella PR #20**. La home mantiene il suo layout; headline e subheadline approvate rimangono invariate. Nessun merge o rilascio è stato eseguito.
 
 ## Direzione consigliata
 
@@ -42,14 +42,14 @@ Nessun file font, logo, fotografia, video, marchio grafico o intero stylesheet d
 
 ## Specifica proposta per DeliR
 
-Questi sono token e regole **proposti**, non valori attribuiti ai concorrenti né modifiche già effettuate. I valori esistenti citati sono in `src/index.css` e `src/styles/premium-landing.css`.
+Questi sono token e regole di progetto, non valori attribuiti ai concorrenti. I valori esistenti citati sono in `src/index.css` e `src/styles/premium-landing.css`; l'applicazione specifica per V2 è isolata in `src/styles/landing-hybrid.css`. Le scale qui indicate sono obiettivi di design; i valori implementati esatti sono nel CSS.
 
 ### Tipografia e colore
 
 | Ruolo | Specifica proposta | Origine |
 | --- | --- | --- |
 | Titoli | Hanken Grotesk Variable, pesi 600/700 | Font già presente nel progetto. Nessun font scaricato dai riferimenti. |
-| Testo | Stack di sistema esistente, pesi 400/600; valutare Hanken anche per il corpo soltanto in una successiva prova visiva | Conserva la base attuale. Non introdurre download di SF Pro o Gotham. |
+| Testo | Hanken Grotesk Variable anche per il corpo nella V2, pesi 400/600 | Unifica il linguaggio tipografico usando il font già presente. La home mantiene lo stack di sistema. Nessun download di SF Pro o Gotham. |
 | H1 | 36–40 px mobile, 48–60 px desktop, line-height 1,06–1,12 | Scala di progetto da verificare in layout, con i quattro verbi approvati. |
 | H2 | 28–32 px mobile, 36–44 px desktop, line-height 1,15–1,25 | Una gerarchia distinta dalla hero. |
 | Corpo | 16 px mobile, 18 px desktop, line-height 1,55–1,7; colonna fino a circa 65 caratteri | Leggibilità e scansione. |
@@ -93,6 +93,19 @@ Il design sostiene la leggibilità; ranking e citazioni richiedono anche accesso
 Google non richiede un file AI, `llms.txt` o uno schema speciale per accedere alle funzioni AI. Anche per ChatGPT l'accessibilità non garantisce che una pagina venga selezionata o citata. Fonti: [Google AI optimization guide](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide), [requisiti tecnici Google](https://developers.google.com/search/docs/essentials/technical), [crawler OpenAI](https://developers.openai.com/api/docs/bots), [FAQ publisher OpenAI](https://help.openai.com/en/articles/12627856-publishers-and-developers-faq).
 
 Il [piano SEO con evidenze del repository](docs/design-research/seo-visibility.md) distingue quanto già esiste dalle verifiche ancora necessarie. Include anche il rischio di portabilità fra il routing Apache/PHP e il fallback SPA del Worker: la presenza del prerender nella build non prova che qualsiasi hosting lo serva correttamente.
+
+## Applicazione nella PR #20
+
+| Punto di forza adattato | Comportamento DeliR implementato | File |
+| --- | --- | --- |
+| Gerarchia e prodotto protagonista | Headline più leggibile, Hanken per titoli e corpo, demo dentro una cornice workspace con caso dimostrativo esplicito. Riproduzione sempre su richiesta. | `src/components/Hero.tsx`, `src/styles/landing-hybrid.css` |
+| Un percorso comprensibile | Quattro passaggi collegati alle sezioni e alla review To-Be. L'ultimo apre l'approfondimento necessario; non è una tab decorativa o un'interfaccia finta. | `src/components/v2/HybridProcessPath.tsx`, `src/content/hybridExperience.ts` |
+| Prove e risultato del lavoro vicini | Tre benefici leggibili, cornici delle demo chiare, scene con stato selezionato e output distinto sotto la spiegazione. | `src/components/v2/HybridJourney.tsx` |
+| Identità coerente | Blu DeliR, canvas caldo, raggi e ombre condivisi, numeri/nodi connessi come motivo visivo. Nessun asset dei riferimenti. | `src/styles/landing-hybrid.css` |
+| Navigazione prevedibile | Logo e link prodotto/pilot del footer restano nella V2 e conservano la lingua; barra di confronto separata dalla navigazione prodotto. | `src/pages/LandingV2Page.tsx`, `src/components/Navbar.tsx`, `src/components/Footer.tsx` |
+| Accessibilità e performance | Anchor reali, focus visibile, ordine coerente, note più contrastate sul blu, reduced motion e nessun nuovo runtime o font. | `e2e/landing-hybrid.spec.ts`, CSS isolato V2 |
+
+Verifiche del 20 ottobre: lint, TypeScript e build passati; 82 test unitari/componenti passati. 21 casi browser distinti passati tra Chromium e Safari mobile, incluso il nuovo percorso da tastiera e le regressioni home/HTML iniziale; scansione axe duplicata su Safari saltata intenzionalmente. Axe a 375/1440 px con contenuti espansi passa dopo la correzione delle note sul fondo blu e dello sfondo esplicito delle schede. Non è una certificazione WCAG né una verifica completa con screen reader. Lighthouse mobile locale finale: performance 91, accessibilità 100, best practices 100, LCP 2,80 s e CLS 0. Il target LCP di 2,5 s non è raggiunto in questa singola misura lab; l'indicizzabilità è esclusa per il noindex intenzionale. Il piano SEO rimane una proposta, senza modifica a robots o promozione della preview.
 
 ## Evidenze misurate per riferimento
 
@@ -1022,4 +1035,4 @@ Gli URL font sono riferimenti di rete, non file copiati. Le richieste includono 
 
 Sono stati verificati: 10 scenari REA, 10 snapshot DOM, 39 letture CSS HTTP riuscite, zero errori PostCSS e presenza dei dati di ogni sito nei cinque JSON. Le limitazioni degli scenari incompleti rimangono aperte e sono dichiarate sopra. Non è un audit completo dei siti concorrenti, né una prova di efficacia del loro design.
 
-Nella successiva implementazione: usare token DeliR, controllare focus/tastiera e contrasto per stato, validare a 320/390/768/1024/1440 px, mantenere i contenuti HTML e verificare performance e metadati sul deployment reale. Queste verifiche non vengono dichiarate eseguite per un redesign che non è stato implementato.
+L'applicazione V2 e le verifiche locali sono descritte nella sezione dedicata alla PR. La promozione alla home, i controlli sul deployment reale, i risultati di conversione e le verifiche SEO live restano passaggi successivi. Le frequenze dei riferimenti sono dati della ricerca, non misure delle prestazioni o dell'efficacia della nuova UI.

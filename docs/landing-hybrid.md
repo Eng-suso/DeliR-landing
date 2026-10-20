@@ -1,6 +1,6 @@
 # DeliR — anteprima ibrida V1 + V2
 
-18–19 ottobre 2026. Evoluzione della PR #20 dopo il confronto fra la landing attuale e il framework Figma.
+18–20 ottobre 2026. Evoluzione della PR #20 dopo il confronto fra la landing attuale e il framework Figma, con identità DeliR applicata alla V2 dopo la ricerca REA.
 
 ## Aprire
 
@@ -12,11 +12,11 @@ La promozione alla home è una decisione successiva. Questa revisione aggiorna l
 
 ## Composizione
 
-V1 fornisce colori, Hanken Grotesk, superfici, navigazione, demo, spiegazione del problema, Dati e AI, condizioni del pilot, FAQ e footer. Dalla V2 riprendiamo i tre benefici immediatamente leggibili e le sezioni con visual alternati su desktop e prima del testo sotto 1024px.
+La V2 conserva blu DeliR, demo, spiegazione del problema, Dati e AI, condizioni del pilot, FAQ e footer. Usa Hanken Grotesk anche nel corpo, un canvas caldo, cornici chiare e un percorso a quattro nodi come firma visiva. I tre benefici sono immediatamente leggibili, con visual alternati su desktop e prima del testo sotto 1024px. Le regole visuali sono isolate in `landing-hybrid.css`; la home mantiene il suo layout.
 
 L’ibrido usa lo stesso sfondo come superficie statica e scorrimento nativo: non monta i controller di movimento e reveal della V1. Il relativo comando di pausa è omesso perché lo sfondo non è animato. La V1 mantiene effetti e controlli precedenti.
 
-La hero conserva il titolo e la prima frase del messaggio esistente, seguiti da tre output già presenti nel catalogo. L’opzione `compact` del componente Hero è usata solo nell’anteprima: la home continua a mostrare il paragrafo completo.
+La headline approvata è «Mappa. Analizza. Simula. Migliora.»; la subheadline è «Ricostruisci i processi del cliente, confronta le alternative e porta raccomandazioni sostenute da evidenze.». Sono condivise con la home. La V2 aggiunge i tre output e la cornice workspace alla demo. Il percorso sotto la hero collega Mappa/Evidenze, Analizza/Lacune, Simula/Scenari e Migliora/Review To-Be. Gli approfondimenti si aprono tramite gli anchor esistenti. Il logo e i link prodotto/pilot nel footer restano nella preview e conservano la lingua.
 
 I tre benefici visibili sono evidenze, lacune e scenari. Le scene aggiuntive restano nei rispettivi explorer. Contesto e decisioni sono in un approfondimento nativo `details`; gli indirizzi delle scene aprono automaticamente l’approfondimento. Il confronto completo è anch’esso espandibile e mantiene fonti e collegamenti alle demo. I due riepiloghi early access/pilot non sono ripetuti nell’anteprima. C’è una sola CTA dopo i benefici, oltre a navigazione, hero, pilot e chiusura.
 
@@ -42,7 +42,15 @@ Il registro a sette slot e il suo validatore restano infrastruttura opzionale pe
 
 I risultati di conversione non sono ancora misurati. I controlli automatici non equivalgono a una certificazione WCAG o a una verifica completa con screen reader.
 
-## Evidenza locale
+## Verifica dell'identità DeliR — 20 ottobre
+
+- Lint, TypeScript e build passati; 82 test unitari/componenti passati.
+- 21 test browser distinti passati tra Chromium e Safari mobile; axe duplicato su Safari saltato intenzionalmente. Coperti sette viewport, il nuovo percorso con Enter, gli anchor e la review espandibile, logo/footer nella V2 IT/EN, menu/Escape, video reali, FAQ, home e HTML senza JavaScript.
+- Axe a 375/1440 px con studio e approfondimenti aperti: nessuna violazione A/AA automatica nei criteri controllati dopo correzione del contrasto delle note e sfondo esplicito delle schede del problema. Non equivale a una verifica completa con tecnologie assistive.
+- Nessuna dipendenza, registrazione o font aggiunti. Nessun autoplay nella V2. La documentazione di ricerca e la matrice di applicazione sono in `DESIGN.md`.
+- Lighthouse mobile locale, una misura sulla build finale: performance 91, accessibilità 100, best practices 100; LCP 2,80 s, CLS 0. Budget configurati passati. Il target LCP di 2,5 s non è raggiunto in questa misura. L'indicizzabilità è esclusa per il noindex intenzionale; non sono dati sul campo o risultati SEO/conversione.
+
+## Evidenza locale precedente — 18–19 ottobre
 
 - Lint, TypeScript, validatore degli export opzionali e build: superati; 16 documenti IT/EN prerenderizzati.
 - Vitest: 82 test superati in 13 file, copertura linee 99,29% sul perimetro configurato. Un primo avvio del worker Windows è andato in timeout; la suite completa ripetuta con threads/un worker è passata, senza cambiare la CI.

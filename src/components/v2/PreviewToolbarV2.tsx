@@ -11,7 +11,7 @@ export default function PreviewToolbarV2({ studio }: { studio: boolean }) {
   const suffix = next.toString();
   return <aside aria-label={it ? 'Strumenti anteprima V2' : 'V2 preview tools'} className="v2-preview-bar">
     <div className="section-shell flex flex-wrap items-center justify-between gap-x-6 gap-y-1">
-      <p className="text-xs font-medium">{it ? 'Anteprima ibrida · V1 + V2' : 'Hybrid preview · V1 + V2'}</p>
+      <p className="text-xs font-medium">{it ? 'Anteprima DeliR' : 'DeliR preview'}</p>
       <div className="flex flex-wrap items-center gap-x-5">
         <Link to={it ? '/' : '/?lang=en'} className="inline-flex min-h-11 items-center gap-1.5 text-xs underline underline-offset-4"><ArrowLeft aria-hidden="true" className="size-3.5" />{it ? 'Sito attuale' : 'Current site'}</Link>
         <Link to={`/v2${suffix ? `?${suffix}` : ''}`} preventScrollReset className="inline-flex min-h-11 items-center gap-1.5 text-xs font-semibold underline underline-offset-4" aria-current={studio ? 'page' : undefined}><Clapperboard aria-hidden="true" className="size-3.5" />{studio ? (it ? 'Nascondi piano video' : 'Hide video plan') : (it ? 'Mostra piano video' : 'Show video plan')}</Link>
