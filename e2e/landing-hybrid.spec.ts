@@ -10,7 +10,7 @@ test('hybrid exposes three benefits, V1 trust and existing demos across devices'
   await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator('.hybrid-hero-benefits li')).toHaveCount(3);
-  await expect(page.locator('.hero-description > p')).toHaveText('Smetti di passare settimane a ricostruire come lavora davvero il tuo cliente.');
+  await expect(page.locator('.hero-description > p')).toHaveText('Ricostruisci i processi del cliente, confronta le alternative e porta raccomandazioni sostenute da evidenze.');
   await expect(page.locator('.hybrid-benefit')).toHaveCount(3);
   await expect(page.locator('#product-interest, #pilot-summary')).toHaveCount(0);
   await expect(page.locator('#fiducia')).toContainText('Prima di utilizzare dati reali');

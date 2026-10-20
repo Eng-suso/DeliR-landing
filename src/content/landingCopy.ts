@@ -3,7 +3,7 @@
 export const heroCopy = {
   it: {
     eyebrow: 'Per consulenti BPM e Operations', first: 'Mappa. Analizza.', second: 'Simula. Migliora.',
-    body: 'Smetti di passare settimane a ricostruire come lavora davvero il tuo cliente. DeliR trasforma la conoscenza dispersa in un As-Is verificato, confronta scenari To-Be e migliora continuamente i processi, così puoi fornire raccomandazioni migliori più rapidamente.',
+    body: 'Ricostruisci i processi del cliente, confronta le alternative e porta raccomandazioni sostenute da evidenze.',
     secondary: 'Vedi il prodotto',
     pilotLead: 'Hai già un progetto reale?',
     pilotAction: 'Avvia un pilot',
@@ -11,7 +11,7 @@ export const heroCopy = {
   },
   en: {
     eyebrow: 'For BPM and Operations consultants', first: 'Map. Analyze.', second: 'Simulate. Improve.',
-    body: 'Stop spending weeks reconstructing how your client really works. DeliR turns scattered knowledge into a verified As-Is, compares To-Be scenarios, and continuously improves processes so you deliver better recommendations faster.',
+    body: 'Reconstruct your client’s processes, compare alternatives, and deliver recommendations backed by evidence.',
     secondary: 'See the product',
     pilotLead: 'Already have a real project?',
     pilotAction: 'Start a pilot',
