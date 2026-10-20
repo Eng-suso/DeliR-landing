@@ -1,4 +1,4 @@
-"""Publish the tested frontend via SFTP; never deploy API or private files."""
+"""Publish the tested frontend and waitlist entrypoint; preserve private files and other APIs."""
 import base64
 import errno
 import hashlib
@@ -18,6 +18,7 @@ ROOT_FILES = {'index.html', 'index.php', 'no-script.css', 'robots.txt',
               'sitemap.xml', 'favicon.svg', 'og-image.png', 'release.json'}
 FOLDERS = {'assets', 'seo', 'product-clips'}
 PRESERVED = {'.htaccess', '_headers', '_redirects', 'api'}
+WAITLIST_ENTRYPOINT = 'api/waitlist.php'
 ORIGIN = 'https://delir.it'
 
 
@@ -99,12 +100,15 @@ def plan(build, sha):
         top = relative.split('/')[0]
         if item.is_symlink():
             raise ReleaseError('Build contains a symlink')
+        if relative == WAITLIST_ENTRYPOINT and item.is_file():
+            result.append(relative)
+            continue
         if top in PRESERVED or item.is_dir():
             continue
         if top not in FOLDERS and relative not in ROOT_FILES:
             raise ReleaseError('Unexpected file in build: ' + relative)
         result.append(relative)
-    for essential in ['index.php', 'index.html', 'seo/home.it.html', 'seo/home.en.html', 'release.json']:
+    for essential in ['index.php', 'index.html', 'seo/home.it.html', 'seo/home.en.html', 'release.json', WAITLIST_ENTRYPOINT]:
         if essential not in result:
             raise ReleaseError('Incomplete frontend artifact: ' + essential)
     # Content-addressed assets are ready before HTML; the release marker is last.
@@ -144,9 +148,31 @@ def verify(sha):
             raise ReleaseError('Published SEO document is unavailable')
     if response('/delir-deploy-missing-' + sha, sha)[0] != 404:
         raise ReleaseError('Unknown paths no longer return HTTP 404')
+    verify_waitlist(sha)
 
 
-def deploy(sftp, build, sha, remote, release_id, check=verify, http=response):
+def verify_waitlist(sha):
+    # An empty object is rejected before any database connection or lead write.
+    # This checks that PHP executes and the existing private intake is enabled.
+    request = Request(ORIGIN + '/' + WAITLIST_ENTRYPOINT + '?release_check=' + sha,
+                      data=b'{}', method='POST', headers={
+                          'Content-Type': 'application/json', 'Origin': ORIGIN,
+                          'Sec-Fetch-Site': 'same-origin', 'Cache-Control': 'no-cache',
+                          'User-Agent': 'DeliR-deploy-check'})
+    try:
+        with urlopen(request, timeout=20) as result:
+            status, body = result.status, result.read(4096)
+    except HTTPError as error:
+        status, body = error.code, error.read(4096)
+    try:
+        payload = json.loads(body)
+    except (ValueError, UnicodeError):
+        raise ReleaseError('Waitlist endpoint did not execute as the expected PHP API') from None
+    if status != 422 or payload != {'accepted': False, 'error': 'invalid_request'}:
+        raise ReleaseError('Waitlist endpoint is unavailable or its private intake is not enabled')
+
+
+def deploy(sftp, build, sha, remote, release_id, check=verify, http=response, probe=verify_waitlist):
     if not remote.startswith('/') or '..' in PurePosixPath(remote).parts:
         raise ReleaseError('IONOS_SFTP_DIRECTORY must be an absolute SFTP path without traversal')
     remote = posixpath.normpath(remote)
@@ -196,6 +222,9 @@ def deploy(sftp, build, sha, remote, release_id, check=verify, http=response):
                 sftp.rename(final, saved)
             journal.append((final, saved if old is not None else None))
             sftp.rename(stage + '/' + name, final)
+            if name == WAITLIST_ENTRYPOINT:
+                # Fail before publishing HTML that opens the form.
+                probe(sha)
         # Retry transient HTTP failures while the release is still reversible.
         for attempt in range(3):
             try:

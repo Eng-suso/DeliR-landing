@@ -70,12 +70,13 @@ class DeploymentTests(unittest.TestCase):
         (self.build / '.htaccess').write_text('new build rules that must not replace server rules')
         (self.build / 'api').mkdir()
         (self.build / 'api/pilot.php').write_text('build API that must not replace existing API')
+        (self.build / 'api/waitlist.php').write_text('reviewed waitlist entrypoint')
         (self.remote / 'public/.htaccess').write_text('existing server rules')
         (self.remote / 'public/index.html').write_text('previous frontend')
         (self.remote / 'public/api/pilot.php').write_text('existing working API')
 
-    def publish(self, check=lambda sha: None, http=lambda path, sha: (403, '')):
-        return deploy.deploy(self.sftp, self.build, SHA, '/public', 'a' * 12 + '-123-1', check, http)
+    def publish(self, check=lambda sha: None, http=lambda path, sha: (403, ''), probe=lambda sha: None):
+        return deploy.deploy(self.sftp, self.build, SHA, '/public', 'a' * 12 + '-123-1', check, http, probe)
 
     def assert_preserved(self):
         self.assertEqual((self.remote / 'public/.htaccess').read_text(), 'existing server rules')
@@ -86,6 +87,46 @@ class DeploymentTests(unittest.TestCase):
         self.assertEqual((self.remote / 'public/index.html').read_text(), 'new frontend')
         self.assertEqual(self.sftp.path(backup + '/index.html').read_text(), 'previous frontend')
         self.assert_preserved()
+        self.assertEqual((self.remote / 'public/api/waitlist.php').read_text(), 'reviewed waitlist entrypoint')
+
+    def test_waitlist_probe_runs_before_new_html_and_rolls_back_on_failure(self):
+        def unavailable(sha):
+            self.assertEqual((self.remote / 'public/index.html').read_text(), 'previous frontend')
+            raise deploy.ReleaseError('simulated closed private intake')
+        with self.assertRaises(deploy.ReleaseError):
+            self.publish(probe=unavailable)
+        self.assertFalse((self.remote / 'public/api/waitlist.php').exists())
+        self.assert_preserved()
+
+    def test_previous_waitlist_endpoint_is_backed_up_and_restored(self):
+        endpoint = self.remote / 'public/api/waitlist.php'
+        endpoint.write_text('previous waitlist entrypoint')
+        self.sftp.fail_publish = True
+        with self.assertRaises(OSError):
+            self.publish()
+        self.assertEqual(endpoint.read_text(), 'previous waitlist entrypoint')
+        self.assert_preserved()
+
+    def test_missing_waitlist_entrypoint_is_rejected_before_upload(self):
+        (self.build / 'api/waitlist.php').unlink()
+        with self.assertRaises(deploy.ReleaseError):
+            self.publish()
+
+    def test_waitlist_probe_accepts_only_the_expected_validation_rejection(self):
+        from urllib.error import HTTPError
+        for status, body, valid in [(422, b'{"accepted":false,"error":"invalid_request"}', True),
+                                    (503, b'{"accepted":false,"error":"temporarily_unavailable"}', False),
+                                    (404, b'<html>missing</html>', False),
+                                    (201, b'{"accepted":true}', False)]:
+            with self.subTest(status=status):
+                error = HTTPError('https://example.test/api', status, 'fixture', {}, io.BytesIO(body))
+                with patch.object(deploy, 'urlopen', side_effect=error) as fetch:
+                    if valid:
+                        deploy.verify_waitlist(SHA)
+                    else:
+                        with self.assertRaises(deploy.ReleaseError):
+                            deploy.verify_waitlist(SHA)
+                    self.assertEqual(fetch.call_args.args[0].data, b'{}')
 
     def test_failed_upload_does_not_change_the_live_frontend(self):
         self.sftp.fail_upload = True
