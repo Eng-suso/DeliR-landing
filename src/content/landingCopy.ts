@@ -2,7 +2,7 @@
 
 export const heroCopy = {
   it: {
-    eyebrow: 'Per consulenti BPM e Operations', first: 'Software di Process Intelligence', second: 'per Operations efficienti ed efficaci.',
+    eyebrow: 'Per consulenti BPM e Operations', first: 'Mappa. Analizza.', second: 'Simula. Migliora.',
     body: 'Smetti di passare settimane a ricostruire come lavora davvero il tuo cliente. DeliR trasforma la conoscenza dispersa in un As-Is verificato, confronta scenari To-Be e migliora continuamente i processi, così puoi fornire raccomandazioni migliori più rapidamente.',
     secondary: 'Vedi il prodotto',
     pilotLead: 'Hai già un progetto reale?',
@@ -10,7 +10,7 @@ export const heroCopy = {
     waitlistNote: 'Early access per consulenti e team Operations. Nessun acquisto richiesto.',
   },
   en: {
-    eyebrow: 'For BPM and Operations consultants', first: 'Process Intelligence Software', second: 'for Efficient and Effective Operations.',
+    eyebrow: 'For BPM and Operations consultants', first: 'Map. Analyze.', second: 'Simulate. Improve.',
     body: 'Stop spending weeks reconstructing how your client really works. DeliR turns scattered knowledge into a verified As-Is, compares To-Be scenarios, and continuously improves processes so you deliver better recommendations faster.',
     secondary: 'See the product',
     pilotLead: 'Already have a real project?',
