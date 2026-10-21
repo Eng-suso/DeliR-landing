@@ -46,13 +46,18 @@ class FilesystemSFTP:
         if self.fail_publish and '/stage/release.json' in source:
             self.fail_publish = False
             raise OSError('simulated publish failure')
+        if self.path(target).exists():
+            raise FileExistsError('standard SFTP rename does not replace an existing target')
         self.path(source).rename(self.path(target))
 
     def remove(self, value):
         self.path(value).unlink()
 
     def open(self, value, mode):
-        return self.path(value).open(mode)
+        return self.path(value).open('xb' if mode == 'wx' else mode)
+
+    def chmod(self, value, mode):
+        self.path(value).chmod(mode)
 
 
 class DeploymentTests(unittest.TestCase):
@@ -210,15 +215,112 @@ class DeploymentTests(unittest.TestCase):
         folder = self.remote / 'private/delir'
         folder.mkdir(parents=True)
         stamp = datetime.now(timezone.utc).isoformat(timespec='seconds')
-        (folder / 'diagnostic.log').write_text(stamp + ' interest_private_waitlist_missing\n')
+        (folder / 'diagnostic.log').write_text(stamp + ' interest_private_handler_missing\n')
         def unavailable(sha):
             raise deploy.ReleaseError('probe fixture')
         with patch('builtins.print') as output:
             with self.assertRaises(deploy.ReleaseError):
                 self.publish(probe=unavailable)
-        self.assertEqual(output.call_args.args[0], '::notice::Waitlist private diagnostic: interest_private_waitlist_missing')
+        self.assertEqual(output.call_args.args[0], '::notice::Waitlist private diagnostic: interest_private_handler_missing')
         self.assertEqual((self.remote / 'public/index.html').read_text(), 'previous frontend')
         self.assertFalse((self.remote / 'public/api/waitlist.php').exists())
+
+    def private_backend(self):
+        folder = self.remote / 'private/delir'
+        folder.mkdir(parents=True)
+        for name in ['config.php', 'pilot.php']:
+            (folder / name).write_text('existing private ' + name)
+        stamp = datetime.now(timezone.utc).isoformat(timespec='seconds')
+        (folder / 'diagnostic.log').write_text(stamp + ' interest_private_waitlist_missing\n')
+        return folder
+
+    def test_missing_private_library_is_installed_and_probed_before_html(self):
+        folder = self.private_backend()
+        calls = []
+        def ready_after_install(sha):
+            calls.append(sha)
+            self.assertEqual((self.remote / 'public/index.html').read_text(), 'previous frontend')
+            if not (folder / 'waitlist.php').exists():
+                raise deploy.ReleaseError('fixture missing library')
+            self.assertEqual((folder / 'waitlist.php').read_bytes(), deploy.WAITLIST_LIBRARY.read_bytes())
+        with patch('builtins.print'):
+            self.publish(probe=ready_after_install)
+        self.assertEqual(len(calls), 2)
+        self.assertEqual((self.remote / 'public/index.html').read_text(), 'new frontend')
+        self.assertEqual((folder / 'config.php').read_text(), 'existing private config.php')
+        self.assertEqual((folder / 'pilot.php').read_text(), 'existing private pilot.php')
+        self.assertFalse(list(folder.glob('.waitlist-*.tmp')))
+
+    def test_failed_readiness_after_bootstrap_removes_only_the_created_library(self):
+        folder = self.private_backend()
+        def unavailable(sha):
+            raise deploy.ReleaseError('fixture still unavailable')
+        with patch('builtins.print'), self.assertRaises(deploy.ReleaseError):
+            self.publish(probe=unavailable)
+        self.assertFalse((folder / 'waitlist.php').exists())
+        self.assertEqual((folder / 'config.php').read_text(), 'existing private config.php')
+        self.assertEqual((folder / 'pilot.php').read_text(), 'existing private pilot.php')
+        self.assertEqual((self.remote / 'public/index.html').read_text(), 'previous frontend')
+
+    def test_bootstrap_refuses_existing_libraries_and_missing_prerequisites(self):
+        folder = self.private_backend()
+        existing = folder / 'waitlist.php'
+        existing.write_text('owner library')
+        with self.assertRaises(deploy.ReleaseError):
+            deploy.install_missing_waitlist_library(self.sftp, '/public', 'a' * 12 + '-123-1')
+        self.assertEqual(existing.read_text(), 'owner library')
+        existing.unlink()
+        (folder / 'pilot.php').unlink()
+        with self.assertRaises(deploy.ReleaseError):
+            deploy.install_missing_waitlist_library(self.sftp, '/public', 'a' * 12 + '-123-1')
+        self.assertFalse(existing.exists())
+        with self.assertRaises(deploy.ReleaseError):
+            deploy.install_missing_waitlist_library(self.sftp, '/', 'a' * 12 + '-123-1')
+
+    def test_bootstrap_keeps_a_concurrently_created_owner_library(self):
+        folder = self.private_backend()
+        original = self.sftp.rename
+        def owner_created_file(source, target):
+            (folder / 'waitlist.php').write_text('concurrent owner library')
+            original(source, target)
+        with patch.object(self.sftp, 'rename', side_effect=owner_created_file), self.assertRaises(FileExistsError):
+            deploy.install_missing_waitlist_library(self.sftp, '/public', 'a' * 12 + '-123-1')
+        self.assertEqual((folder / 'waitlist.php').read_text(), 'concurrent owner library')
+        self.assertFalse(list(folder.glob('.waitlist-*.tmp')))
+
+    def test_bootstrap_does_not_replace_an_existing_temporary_file(self):
+        folder = self.private_backend()
+        temporary = folder / ('.waitlist-' + 'a' * 12 + '-123-1.tmp')
+        temporary.write_text('owner temporary file')
+        with self.assertRaises(FileExistsError):
+            deploy.install_missing_waitlist_library(self.sftp, '/public', 'a' * 12 + '-123-1')
+        self.assertEqual(temporary.read_text(), 'owner temporary file')
+        self.assertFalse((folder / 'waitlist.php').exists())
+
+    def test_final_verification_failure_also_rolls_back_created_private_module(self):
+        folder = self.private_backend()
+        def readiness(sha):
+            if not (folder / 'waitlist.php').exists():
+                raise deploy.ReleaseError('fixture missing library')
+        def failed_release(sha):
+            raise deploy.ReleaseError('fixture final check failure')
+        with patch('builtins.print'), patch.object(deploy.time, 'sleep'), self.assertRaises(deploy.ReleaseError):
+            self.publish(check=failed_release, probe=readiness)
+        self.assertFalse((folder / 'waitlist.php').exists())
+        self.assertEqual((self.remote / 'public/index.html').read_text(), 'previous frontend')
+
+    def test_rollback_preserves_owner_changes_to_the_new_private_module(self):
+        folder = self.private_backend()
+        def readiness(sha):
+            if not (folder / 'waitlist.php').exists():
+                raise deploy.ReleaseError('fixture missing library')
+        def owner_changed_library(sha):
+            (folder / 'waitlist.php').write_text('owner revision made during release')
+            raise deploy.ReleaseError('fixture failed final check')
+        with patch('builtins.print'), patch.object(deploy.time, 'sleep'), self.assertRaises(deploy.ReleaseError):
+            self.publish(check=owner_changed_library, probe=readiness)
+        self.assertEqual((folder / 'waitlist.php').read_text(), 'owner revision made during release')
+        self.assertEqual((self.remote / 'public/index.html').read_text(), 'previous frontend')
 
     def test_partial_publish_failure_restores_previous_frontend(self):
         self.sftp.fail_publish = True
