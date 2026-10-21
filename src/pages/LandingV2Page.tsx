@@ -1,4 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
+import { Plus } from 'lucide-react';
 import '../styles/premium-landing.css';
 import '../styles/flow-backdrop.css';
 import '../styles/landing-hybrid.css';
@@ -9,7 +10,7 @@ import SkipLink from '../components/SkipLink';
 import FragmentNavigation from '../components/FragmentNavigation';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
-import Problem from '../components/Problem';
+import HybridProblem from '../components/v2/HybridProblem';
 import Comparison from '../components/Comparison';
 import BuiltFor from '../components/BuiltFor';
 import PilotInvitation from '../components/PilotInvitation';
@@ -31,16 +32,16 @@ export default function LandingV2Page() {
     <FragmentNavigation smooth />
     <V2Motion />
     {studio ? <div className="relative z-10"><PreviewToolbarV2 /></div> : null}
-    <Navbar motionControl={false} homeHref={language === 'it' ? '/v2#hero' : '/v2?lang=en#hero'} />
+    <Navbar motionControl={false} readingMode homeHref={language === 'it' ? '/v2#hero' : '/v2?lang=en#hero'} />
     <main id="main-content" className="relative z-10">
       <Hero compact subheadline={hybridExperience[language].subheadline} />
       {studio ? <HybridVideoPlan /> : null}
       <HybridProcessPath />
-      <Problem />
+      <HybridProblem />
       <HybridJourney />
       <BuiltFor />
       <details className="hybrid-comparison section-shell">
-        <summary>{comparisonCopy[language].tableTitle}</summary>
+        <summary><span>{comparisonCopy[language].tableTitle}</span><Plus aria-hidden="true" className="hybrid-disclosure-icon size-5" /></summary>
         <Comparison />
       </details>
       <PilotInvitation />

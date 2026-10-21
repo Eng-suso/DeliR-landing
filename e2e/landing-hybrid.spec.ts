@@ -9,7 +9,7 @@ test('hybrid exposes three benefits, V1 trust and existing demos across devices'
   await page.goto('/v2');
   await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   await page.evaluate(() => document.fonts.ready);
-  await expect(page.locator('.hybrid-hero-benefits li')).toHaveCount(3);
+  await expect(page.locator('.hybrid-hero-benefits')).toHaveCount(0);
   await expect(page.locator('.hero-description > p')).toHaveText('Smetti di passare settimane a ricostruire come lavora davvero il tuo cliente. DeliR trasforma la conoscenza dispersa in un As-Is verificato, confronta scenari To-Be e migliora continuamente i processi, così puoi fornire raccomandazioni migliori più rapidamente.');
   await expect(page.locator('.hybrid-benefit')).toHaveCount(3);
   await expect(page.locator('#product-interest, #pilot-summary')).toHaveCount(0);
@@ -22,7 +22,7 @@ test('hybrid exposes three benefits, V1 trust and existing demos across devices'
   for (const width of [320, 375, 414, 768, 834, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
-    for (const [index, benefit] of (await page.locator('.hybrid-benefit').all()).entries()) {
+    for (const benefit of await page.locator('.hybrid-benefit').all()) {
       await benefit.scrollIntoViewIfNeeded();
       await expect(benefit).toBeVisible();
       // Read both boxes together: scroll anchoring can move a deferred section
@@ -30,11 +30,10 @@ test('hybrid exposes three benefits, V1 trust and existing demos across devices'
       const layout = await benefit.evaluate(element => {
         const media = element.querySelector('.product-screen-stage')!.getBoundingClientRect();
         const copy = element.querySelector('.hybrid-benefit-copy')!.getBoundingClientRect();
-        return { mediaBottom: media.bottom, mediaX: media.x, copyTop: copy.top, copyX: copy.x };
+        return { mediaTop: media.top, mediaWidth: media.width, copyBottom: copy.bottom, articleWidth: element.getBoundingClientRect().width };
       });
-      if (width < 1024) expect(layout.mediaBottom).toBeLessThanOrEqual(layout.copyTop);
-      else if (index === 1) expect(layout.mediaX).toBeGreaterThan(layout.copyX);
-      else expect(layout.mediaX).toBeLessThan(layout.copyX);
+      expect(layout.copyBottom).toBeLessThanOrEqual(layout.mediaTop);
+      expect(layout.mediaWidth).toBeGreaterThanOrEqual(layout.articleWidth - 2);
     }
     await page.locator('#hero').scrollIntoViewIfNeeded();
     const hero = await page.locator('#hero').evaluate(element => ({
@@ -135,6 +134,39 @@ test('V2 chapters follow reading position and motion respects the visitor prefer
   await page.keyboard.press('Enter');
   await expect(chapter.getByRole('link', { name: 'Scenari', exact: true })).toHaveAttribute('aria-current', 'location');
   await expect(page.locator('#product-05 video')).toHaveCount(0);
+});
+
+test('V2 keeps repeated anchors, history and mobile conversion usable', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/v2');
+  const quickAction = page.locator('.v2-quick-action');
+  await expect(quickAction).toBeVisible();
+  await expect(quickAction).toHaveAttribute('href', '/waitlist');
+  await expect(page.locator('#metodo')).toHaveCSS('content-visibility', 'visible');
+  const product = page.locator('.hero-actions a[href="#caso"]');
+  await product.click();
+  await expect(page).toHaveURL(/#caso$/);
+  await expect(page.locator('#caso')).toBeFocused();
+  await expect.poll(() => page.locator('#caso').evaluate(element => {
+    const gap = element.getBoundingClientRect().top - document.querySelector('.premium-navigation')!.getBoundingClientRect().bottom;
+    return Math.abs(gap - 24);
+  })).toBeLessThan(2);
+  const chapters = page.getByRole('navigation', { name: 'Capitoli del prodotto' });
+  const gaps = chapters.getByRole('link', { name: 'Lacune', exact: true });
+  await gaps.click();
+  await expect(chapters.getByRole('link', { name: 'Lacune', exact: true })).toHaveAttribute('aria-current', 'location');
+  await expect(page.locator('#product-02')).toBeFocused();
+  await expect.poll(() => page.locator('#product-02').evaluate(element => Math.abs(element.getBoundingClientRect().top - document.querySelector('.hybrid-chapter-nav')!.getBoundingClientRect().bottom - 20))).toBeLessThan(8);
+  await page.evaluate(() => window.scrollBy({ top: 360, behavior: 'instant' }));
+  await gaps.click();
+  await expect.poll(() => page.locator('#product-02').evaluate(element => Math.abs(element.getBoundingClientRect().top - document.querySelector('.hybrid-chapter-nav')!.getBoundingClientRect().bottom - 20))).toBeLessThan(8);
+  await page.goBack();
+  await expect(page).toHaveURL(/#caso$/);
+  await expect(page.locator('.premium-navigation')).toHaveAttribute('data-scrolled', 'true');
+  await quickAction.click();
+  await expect(page).toHaveURL(/\/waitlist$/);
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
 test('video plan uses available recordings and preserves language', async ({ page }, testInfo) => {

@@ -1036,6 +1036,8 @@ Gli URL font sono riferimenti di rete, non file copiati. Le richieste includono 
 
 ## Verifica e prossima implementazione
 
+La revisione UX/scroll del 21 ottobre 2026, con nuove osservazioni REA su Apple e il limite di accesso a Revolut, è documentata in [ux-scroll-2026-10-21.md](docs/design-research/ux-scroll-2026-10-21.md). Contiene le scelte originali DeliR e distingue i risultati osservati dai comportamenti non verificati.
+
 Sono stati verificati: 10 scenari REA, 10 snapshot DOM, 39 letture CSS HTTP riuscite, zero errori PostCSS e presenza dei dati di ogni sito nei cinque JSON. Le limitazioni degli scenari incompleti rimangono aperte e sono dichiarate sopra. Non è un audit completo dei siti concorrenti, né una prova di efficacia del loro design.
 
 L'applicazione V2 e le verifiche locali sono descritte nella sezione dedicata alla PR. La promozione alla home, i controlli sul deployment reale, i risultati di conversione e le verifiche SEO live restano passaggi successivi. Le frequenze dei riferimenti sono dati della ricerca, non misure delle prestazioni o dell'efficacia della nuova UI.

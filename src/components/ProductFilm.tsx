@@ -5,7 +5,7 @@ import { useLanguage } from '../i18n/LanguageContext';
 import type { ProductClip } from '../lib/productClips';
 import { heroPosterSizes } from '../lib/heroMedia';
 
-type Props = { clip: ProductClip; priority?: boolean; minimal?: boolean; autoPlay?: boolean; narration?: readonly { start: number; text: string }[]; focusFrame?: { x: number; y: number; width: number; height: number } };
+type Props = { clip: ProductClip; priority?: boolean; minimal?: boolean; autoPlay?: boolean; sizes?: string; cover?: { poster: string; posterSrcSet: string; description: string }; narration?: readonly { start: number; text: string }[]; focusFrame?: { x: number; y: number; width: number; height: number } };
 type ConnectionNavigator = Navigator & { connection?: { saveData?: boolean } };
 
 function ambientPlaybackAllowed() {
@@ -14,7 +14,7 @@ function ambientPlaybackAllowed() {
     && !(navigator as ConnectionNavigator).connection?.saveData;
 }
 
-export default function ProductFilm({ clip, priority = false, minimal = false, autoPlay = true, narration, focusFrame }: Props) {
+export default function ProductFilm({ clip, priority = false, minimal = false, autoPlay = true, sizes, cover, narration, focusFrame }: Props) {
   const { language } = useLanguage();
   const id = useId();
   const frameRef = useRef<HTMLDivElement>(null);
@@ -33,14 +33,14 @@ export default function ProductFilm({ clip, priority = false, minimal = false, a
   const title = clip.title[language];
   const description = clip.description[language];
   const localizedMedia = clip.localizedMedia?.[language];
-  const poster = localizedMedia?.poster ?? clip.poster;
-  const posterSrcSet = localizedMedia?.posterSrcSet ?? clip.posterSrcSet;
+  const poster = cover?.poster ?? localizedMedia?.poster ?? clip.poster;
+  const posterSrcSet = cover?.posterSrcSet ?? localizedMedia?.posterSrcSet ?? clip.posterSrcSet;
   const mp4 = localizedMedia?.mp4 ?? `/product-clips/${clip.id}.mp4`;
   // Localized hero recordings are supplied as MP4. Do not fall back to the old-language WebM.
   const webm = localizedMedia ? undefined : `/product-clips/${clip.id}.webm`;
   const captions = localizedMedia?.captions ?? `/product-clips/${clip.id}.${language}.vtt`;
   const mobileFocus = ['evidenze-sul-processo', 'lacuna-aperta', 'confronto', 'memoria', 'review-to-be'].includes(clip.id);
-  const posterSizes = `${mobileFocus ? '(max-width: 640px) 1920px, ' : ''}${priority ? heroPosterSizes : '(max-width: 640px) calc(100vw - 64px), (max-width: 1023px) calc(100vw - 96px), 640px'}`;
+  const posterSizes = sizes ?? `${mobileFocus ? '(max-width: 640px) 1920px, ' : ''}${priority ? heroPosterSizes : '(max-width: 640px) calc(100vw - 64px), (max-width: 1023px) calc(100vw - 96px), 640px'}`;
   const sentence = narration?.reduce((current, item) => item.start <= playbackTime ? item : current, narration[0]);
   // Frame a detail from the original recording; the dialog retains the full view.
   const mediaStyle = focusFrame ? {
@@ -113,7 +113,7 @@ export default function ProductFilm({ clip, priority = false, minimal = false, a
   return (
     <figure id={priority ? 'hero-product-outcome' : `scene-${clip.id}`} className="product-film scroll-mt-24" data-clip={clip.id}>
       <div ref={frameRef} style={{ aspectRatio: focusFrame ? `${focusFrame.width} / ${focusFrame.height}` : `${clip.width} / ${clip.height}` }} className="relative isolate aspect-video overflow-hidden rounded-[14px] border border-slate-200 bg-white sm:rounded-[20px]">
-        <img src={poster} srcSet={posterSrcSet} sizes={focusFrame ? '(max-width: 640px) 1440px, 1920px' : posterSizes} alt={description} width={clip.width} height={clip.height} loading={priority || (!autoPlay && visible) ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : undefined} decoding="async" style={mediaStyle} className={focusFrame ? 'absolute' : 'h-full w-full object-contain'} />
+        <img src={poster} srcSet={posterSrcSet} sizes={focusFrame ? '(max-width: 640px) 1440px, 1920px' : posterSizes} alt={cover?.description ?? description} width={clip.width} height={clip.height} loading={priority || (!autoPlay && visible) ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : undefined} decoding="async" style={mediaStyle} className={focusFrame ? 'absolute' : 'h-full w-full object-contain'} />
         {loadVideo ? (
           <video ref={videoRef} aria-label={title} aria-describedby={`${id}-description`} autoPlay={shouldPlay} muted playsInline loop preload="none" poster={poster}
             onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => { setFailed(true); setPlaying(false); }}

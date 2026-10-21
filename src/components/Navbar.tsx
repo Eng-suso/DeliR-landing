@@ -16,7 +16,7 @@ const copy = {
   },
 } as const;
 
-export default function Navbar({ motionControl = true, homeHref = '/' }: { motionControl?: boolean; homeHref?: string }) {
+export default function Navbar({ motionControl = true, homeHref = '/', readingMode = false }: { motionControl?: boolean; homeHref?: string; readingMode?: boolean }) {
   const { language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [backgroundPaused, setBackgroundPaused] = useState(false);
@@ -53,6 +53,7 @@ export default function Navbar({ motionControl = true, homeHref = '/' }: { motio
             ))}
           </ul>
           <div className="ml-auto flex items-center gap-2 lg:ml-0 lg:gap-4">
+            {readingMode ? <a data-interest-section="navigation" href={productInterestHref(language)} className="v2-quick-action lg:hidden">{language === 'it' ? 'Lista d’attesa' : 'Join waitlist'}</a> : null}
             {motionControl ? (
             <button type="button" onClick={() => setBackgroundPaused((paused) => !paused)} aria-pressed={backgroundPaused} aria-label={language === 'it' ? 'Ferma lo sfondo animato' : 'Pause the animated background'} title={language === 'it' ? (backgroundPaused ? 'Riprendi lo sfondo' : 'Ferma lo sfondo') : (backgroundPaused ? 'Resume the background' : 'Pause the background')} className="background-motion-control inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-brand-blue/15 text-brand-blue transition-colors hover:bg-brand-blue/5">
               {backgroundPaused ? <Play aria-hidden="true" className="h-4 w-4" /> : <Pause aria-hidden="true" className="h-4 w-4" />}
@@ -82,6 +83,7 @@ export default function Navbar({ motionControl = true, homeHref = '/' }: { motio
         ) : null}
       </nav>
       {motionControl ? <div aria-hidden="true" data-scroll-progress className="scroll-progress" /> : null}
+      {readingMode ? <div aria-hidden="true" data-v2-scroll-progress className="scroll-progress" /> : null}
     </header>
   );
 }

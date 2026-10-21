@@ -1,5 +1,5 @@
-import { ArrowRight } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { ArrowRight, Plus } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import { journeyCopy } from '../../content/landingCopy';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { hybridBenefits, hybridExtraBenefits } from '../../content/hybridMedia';
@@ -10,35 +10,39 @@ export default function HybridJourney() {
   const { language } = useLanguage();
   const t = journeyCopy[language];
   const [chapter, setChapter] = useState(hybridBenefits[0].id);
+  const navigation = useRef<HTMLElement>(null);
   useEffect(() => {
-    let observer: IntersectionObserver;
-    const observe = () => {
-      observer?.disconnect();
-      // Percentage root margins resolve against width, including vertical ones.
-      // Use viewport-height pixels so the reading band also works on wide screens.
-      observer = new IntersectionObserver(entries => {
-        const visible = entries.find(entry => entry.isIntersecting);
-        if (visible) setChapter(visible.target.id);
-      }, { rootMargin: `-${Math.round(window.innerHeight * .2)}px 0px -${Math.round(window.innerHeight * .5)}px 0px` });
-      hybridBenefits.forEach(benefit => {
-        const target = document.getElementById(benefit.id);
-        if (target) observer.observe(target);
-      });
+    const articles = hybridBenefits.map(benefit => document.getElementById(benefit.id)).filter((element): element is HTMLElement => Boolean(element));
+    let frame = 0;
+    let current = hybridBenefits[0].id;
+    const update = () => {
+      frame = 0;
+      const line = (navigation.current?.getBoundingClientRect().bottom ?? 0) + 40;
+      // Read every chapter together, in document order. Intersection callbacks
+      // alone can choose a departing chapter during long anchor transitions.
+      const positions = articles.map(element => ({ id: element.id, top: element.getBoundingClientRect().top }));
+      const next = positions.filter(item => item.top <= line).at(-1)?.id ?? hybridBenefits[0].id;
+      if (next !== current) { current = next; setChapter(next); }
     };
-    observe();
-    window.addEventListener('resize', observe);
-    return () => { observer.disconnect(); window.removeEventListener('resize', observe); };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    const resize = new ResizeObserver(schedule);
+    const section = navigation.current?.closest('section');
+    if (section) resize.observe(section);
+    update();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule, { passive: true });
+    return () => { cancelAnimationFrame(frame); resize.disconnect(); window.removeEventListener('scroll', schedule); window.removeEventListener('resize', schedule); };
   }, []);
   function benefitContent(benefit: typeof hybridBenefits[number], index?: number) {
     const module = t.modules[benefit.module];
     return <>
-      <ClipExplorer clips={benefit.clips} name={module.name} initial={benefit.initial} autoPlay={false} />
       <div className="hybrid-benefit-copy min-w-0">
         <p className="landing-eyebrow">{index !== undefined ? <span aria-hidden="true" className="hybrid-benefit-number">0{index + 1}</span> : null}{module.name}</p>
         <h3 id={`${benefit.id}-title`} className="mt-4 text-balance font-display text-3xl font-semibold leading-tight tracking-tight text-brand-ink">{module.title}</h3>
         <p className="mt-4 text-base leading-7 text-slate-600">{module.body}</p>
-        <p className="hybrid-deliverable"><span>{t.result}</span><strong>{module.output}</strong></p>
+        <p className="hybrid-deliverable">{module.output}</p>
       </div>
+      <ClipExplorer clips={benefit.clips} name={module.name} initial={benefit.initial} autoPlay={false} editorial />
     </>;
   }
   return <section id="caso" className="premium-journey hybrid-journey scroll-mt-24 py-14 sm:py-20" aria-labelledby="journey-title">
@@ -49,7 +53,7 @@ export default function HybridJourney() {
         <p className="mt-5 text-base leading-7 text-slate-600">{t.intro}</p>
         <p className="hybrid-case-note">{t.demo}</p>
       </div>
-      <nav className="hybrid-chapter-nav" aria-label={language === 'it' ? 'Capitoli del prodotto' : 'Product chapters'}>
+      <nav ref={navigation} className="hybrid-chapter-nav" aria-label={language === 'it' ? 'Capitoli del prodotto' : 'Product chapters'}>
         <span aria-hidden="true">{language === 'it' ? 'Dentro DeliR' : 'Inside DeliR'}</span>
         <ol>{hybridBenefits.map((benefit, index) => <li key={benefit.id}><a href={`#${benefit.id}`} aria-current={chapter === benefit.id ? 'location' : undefined}><span aria-hidden="true">0{index + 1}</span>{t.modules[benefit.module].name}</a></li>)}</ol>
       </nav>
@@ -59,7 +63,7 @@ export default function HybridJourney() {
         </article>)}
       </div>
       <details className="hybrid-more">
-        <summary>{language === 'it' ? 'Approfondisci contesto e decisioni' : 'Explore context and decisions'}</summary>
+        <summary><span>{language === 'it' ? 'Approfondisci contesto e decisioni' : 'Explore context and decisions'}</span><Plus aria-hidden="true" className="hybrid-disclosure-icon size-5" /></summary>
         <div className="hybrid-extra-grid">{hybridExtraBenefits.map(benefit => <article key={benefit.id} id={benefit.id} data-product-module={t.modules[benefit.module].name} aria-labelledby={`${benefit.id}-title`} className="hybrid-extra-benefit scroll-mt-24">
           {benefitContent(benefit)}
         </article>)}</div>
