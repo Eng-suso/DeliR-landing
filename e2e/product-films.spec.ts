@@ -14,7 +14,7 @@ test('silent films respect reduced motion and play only after opt-in', async ({ 
   const video = hero.locator('video').first();
   await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.currentTime)).toBeGreaterThan(0);
   await expect(video).toHaveAttribute('playsinline', '');
-  await expect(video.locator('track')).toHaveAttribute('src', '/product-clips/hero-loop-v2.it.vtt');
+  await expect(video.locator('track')).toHaveAttribute('src', '/product-clips/v3/hero.it.vtt');
   await hero.getByRole('button', { name: 'Pausa: DeliR in azione' }).click();
   await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
   await page.locator('#faq').scrollIntoViewIfNeeded();
@@ -23,37 +23,30 @@ test('silent films respect reduced motion and play only after opt-in', async ({ 
   await expect.poll(() => hero.locator('video').first().evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
 });
 
-test('all seventeen supplied scenes have keyboard selectors and working media', async ({ page, request }, testInfo) => {
+test('every benefit has one localized recording with working media', async ({ page, request }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Asset inventory runs once; playback is tested in every browser');
   await page.goto('/');
   await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
   await expect(page.locator('[data-product-module]')).toHaveCount(5);
   await page.locator('.hybrid-more > summary').click();
-  const ids = new Set(['hero-loop']);
+  const ids = new Set(['hero']);
   for (const chapter of await page.locator('[data-product-module]').all()) {
     await chapter.scrollIntoViewIfNeeded();
-    const selectors = chapter.getByRole('group').getByRole('link');
-    for (const selector of await selectors.all()) {
-      await selector.focus();
-      await selector.press('Enter');
-      await expect(selector).toHaveAttribute('aria-current', 'true');
-      const film = chapter.locator('[data-clip]');
-      const id = await film.getAttribute('data-clip');
-      expect(id).toBeTruthy();
-      ids.add(id!);
-      await expect(film.locator('img')).toHaveAttribute('alt', /\S/);
-      await expect(film.locator('video')).toHaveCount(0);
-    }
+    // One recording per benefit: no scene selector.
+    await expect(chapter.getByRole('group')).toHaveCount(0);
+    const film = chapter.locator('[data-clip]');
+    await expect(film).toHaveCount(1);
+    const id = await film.getAttribute('data-clip');
+    expect(id).toBeTruthy();
+    ids.add(id!);
+    await expect(film.locator('img')).toHaveAttribute('alt', /\S/);
   }
-  expect(ids.size).toBe(17);
+  expect([...ids].sort()).toEqual(['contesto', 'decisioni', 'evidenze', 'hero', 'lacune', 'scenari']);
   for (const id of ids) {
-    const files = id === 'hero-loop'
-      ? ['hero-loop-v2.it.mp4', 'hero-loop-v2.en.mp4', 'hero-loop-v2.it.vtt', 'hero-loop-v2.en.vtt']
-      : ['mp4', 'webm', 'it.vtt', 'en.vtt'].map(extension => `${id}.${extension}`);
-    for (const file of files) {
-      const response = await request.head(`/product-clips/${file}`);
+    for (const file of ['it.mp4', 'en.mp4', 'it.vtt', 'en.vtt'].map(extension => `${id}.${extension}`)) {
+      const response = await request.head(`/product-clips/v3/${file}`);
       expect(response.ok(), `${file} is available`).toBe(true);
-      if (/\.(mp4|webm)$/.test(file)) expect(response.headers()['content-type']).toContain('video/');
+      if (file.endsWith('.mp4')) expect(response.headers()['content-type']).toContain('video/');
     }
   }
 });
@@ -66,14 +59,11 @@ test('selected scene and fullscreen dialog remain accessible in English', async 
   if (testInfo.project.name.includes('mobile')) await page.getByRole('button', { name: 'Close navigation menu' }).click();
   const chapter = page.locator('#product-05');
   await page.getByRole('navigation', { name: 'Product chapters' }).getByRole('link', { name: 'Scenarios', exact: true }).click();
-  const scene = chapter.getByRole('group').getByRole('link', { name: /Scenario comparison/ });
-  await scene.click();
-  await expect(scene).toHaveAttribute('aria-current', 'true');
-  const expand = chapter.getByRole('button', { name: 'Open full video: Scenario comparison' });
+  const expand = chapter.getByRole('button', { name: 'Open full video: Simulation and scenarios' });
   await expand.click();
-  const dialog = page.getByRole('dialog', { name: 'Scenario comparison' });
+  const dialog = page.getByRole('dialog', { name: 'Simulation and scenarios' });
   await expect(dialog).toBeVisible();
-  await expect(dialog.locator('track')).toHaveAttribute('src', '/product-clips/confronto.en.vtt');
+  await expect(dialog.locator('track')).toHaveAttribute('src', '/product-clips/v3/scenari.en.vtt');
   if (testInfo.project.name === 'chromium') {
     const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
     expect(results.violations).toEqual([]);
@@ -134,19 +124,16 @@ test('visible films and their full-video dialog autoplay on desktop and mobile',
   await expect.poll(() => inlineVideo.evaluate((video: HTMLVideoElement) => video.paused)).toBe(true);
 });
 
-test('a newly selected scene starts without pressing play', async ({ page }) => {
+test('a newly reached benefit starts its film without pressing play', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/#product-03');
   await expect(page.locator('.landing-page')).toHaveAttribute('data-motion', 'full');
-  const chapter = page.locator('#product-03');
-  const firstFilm = chapter.locator('.product-film');
+  const firstFilm = page.locator('#product-03 .product-film');
   await firstFilm.scrollIntoViewIfNeeded();
   await expect.poll(() => firstFilm.locator(':scope > div > video').evaluate((video: HTMLVideoElement) => video.currentTime), { timeout: 15_000 }).toBeGreaterThan(0);
-  const secondScene = chapter.getByRole('group').getByRole('link').nth(1);
-  await secondScene.click();
-  await expect(secondScene).toHaveAttribute('aria-current', 'true');
+  await page.getByRole('navigation', { name: 'Capitoli del prodotto' }).getByRole('link', { name: /Lacune/ }).click();
   await expect.poll(() => page.evaluate(() => document.documentElement.classList.contains('lenis-scrolling'))).toBe(false);
-  const selected = chapter.locator('[data-clip="fonti-e-affermazioni"]');
+  const selected = page.locator('#product-02 [data-clip="lacune"]');
   await selected.scrollIntoViewIfNeeded();
   await expect.poll(() => selected.locator(':scope > div > video').evaluate((video: HTMLVideoElement) => video.currentTime), { timeout: 15_000 }).toBeGreaterThan(0);
 });
@@ -165,7 +152,7 @@ test('Save-Data keeps visible films opt-in even with motion enabled', async ({ p
   await expect.poll(() => hero.locator('video').evaluate((video: HTMLVideoElement) => video.currentTime)).toBeGreaterThan(0);
 });
 
-test('hero uses the original full-HD video and shows complete centered sentences', async ({ page, isMobile, browserName }) => {
+test('hero uses the localized recording and shows complete centered sentences', async ({ page, isMobile, browserName }) => {
   await page.goto('/');
   await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
   const hero = page.locator('#hero-product-outcome');
@@ -175,7 +162,7 @@ test('hero uses the original full-HD video and shows complete centered sentences
   await expect(page.locator('section[aria-labelledby="hero-title"]').getByRole('heading', { level: 2 })).toHaveCount(0);
   await hero.scrollIntoViewIfNeeded();
   await hero.getByRole('button', { name: 'Riproduci: DeliR in azione' }).click();
-  await expect.poll(() => hero.locator('video').first().evaluate((element: HTMLVideoElement) => element.currentSrc)).toContain('/product-clips/hero-loop-v2.it.mp4');
+  await expect.poll(() => hero.locator('video').first().evaluate((element: HTMLVideoElement) => element.currentSrc)).toContain('/product-clips/v3/hero.it.mp4');
   if (isMobile) await page.getByRole('button', { name: 'Apri il menu' }).click();
   await page.getByRole('button', { name: 'English', exact: true }).click();
   if (isMobile) await page.getByRole('button', { name: 'Close navigation menu' }).click();
@@ -187,14 +174,14 @@ test('hero uses the original full-HD video and shows complete centered sentences
   // FFprobe checks source resolution. This Windows WebKit run reported a
   // smaller videoWidth; intrinsic dimensions are additionally checked in Chromium.
   if (browserName === 'chromium') {
-    expect(await video.evaluate((element: HTMLVideoElement) => element.videoWidth)).toBe(1920);
-    expect(await video.evaluate((element: HTMLVideoElement) => element.videoHeight)).toBe(1080);
+    expect(await video.evaluate((element: HTMLVideoElement) => element.videoWidth)).toBe(1600);
+    expect(await video.evaluate((element: HTMLVideoElement) => element.videoHeight)).toBe(900);
   } else {
     expect(await video.evaluate((element: HTMLVideoElement) => element.videoWidth)).toBeGreaterThan(0);
   }
   await expect(video.locator('source')).toHaveCount(1);
-  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.currentSrc)).toContain('/product-clips/hero-loop-v2.en.mp4');
-  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.duration)).toBe(25);
+  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.currentSrc)).toContain('/product-clips/v3/hero.en.mp4');
+  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => Math.round(element.duration))).toBe(24);
   await hero.getByRole('button', { name: 'Pause: DeliR in action' }).click();
   await video.evaluate((element: HTMLVideoElement) => { element.currentTime = 6; });
   await expect(hero.locator(':scope > p')).toHaveText('Review the model alongside its sources.');
@@ -225,8 +212,8 @@ test('direct English entry and language switch select localized posters and full
     const dialog = page.getByRole('dialog', { name: title });
     const video = dialog.locator('video');
     await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.currentTime)).toBeGreaterThan(0);
-    await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.currentSrc)).toContain(`/product-clips/hero-loop-v2.${language}.mp4`);
-    await expect(video.locator('track')).toHaveAttribute('src', `/product-clips/hero-loop-v2.${language}.vtt`);
+    await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.currentSrc)).toContain(`/product-clips/v3/hero.${language}.mp4`);
+    await expect(video.locator('track')).toHaveAttribute('src', `/product-clips/v3/hero.${language}.vtt`);
     await page.keyboard.press('Escape');
     await expect(dialog).not.toBeVisible();
     await expect(expand).toBeFocused();

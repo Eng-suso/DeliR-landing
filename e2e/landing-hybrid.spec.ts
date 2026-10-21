@@ -75,7 +75,7 @@ test('DeliR workflow links reach real scenes and keep preview navigation in V2',
   await expect(page.locator('#hero-title')).toHaveText('Mappa. Analizza. Simula. Migliora.');
   const path = page.getByRole('navigation', { name: 'Esplora il percorso DeliR' });
   await expect(path.getByRole('link')).toHaveCount(4);
-  const targets = ['product-03', 'product-02', 'product-05', 'scene-review-to-be'];
+  const targets = ['product-03', 'product-02', 'product-05', 'scene-decisioni'];
   for (const [index, id] of targets.entries()) {
     const link = path.getByRole('link').nth(index);
     await link.focus();
@@ -92,7 +92,7 @@ test('DeliR workflow links reach real scenes and keep preview navigation in V2',
   await page.goto('/v2?lang=en');
   await expect(page.locator('.hero-description > p')).toHaveText('Stop spending weeks reconstructing how your client really works.');
   await page.getByRole('navigation', { name: 'Explore the DeliR workflow' }).getByRole('link', { name: /^Improve/ }).click();
-  await expect(page).toHaveURL(/lang=en#scene-review-to-be$/);
+  await expect(page).toHaveURL(/lang=en#scene-decisioni$/);
   await expect(page.locator('#product-04-title')).toHaveText('Explain the changes you recommend.');
   await expect(page.getByRole('link', { name: 'DeliR home', exact: true })).toHaveAttribute('href', '/v2?lang=en#hero');
   await expect(page.locator('footer').getByRole('link', { name: 'Product', exact: true })).toHaveAttribute('href', '/v2?lang=en#caso');
@@ -100,20 +100,22 @@ test('DeliR workflow links reach real scenes and keep preview navigation in V2',
 });
 
 test('supporting scenes and comparison remain deep linkable', async ({ page }) => {
+  // Pre-v3 scene links land on the recording that covers the same step.
   await page.goto('/v2#scene-memoria');
   await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
+  await expect(page).toHaveURL(/#scene-contesto$/);
   await expect(page.locator('.hybrid-more')).toHaveAttribute('open', '');
-  await expect(page.locator('#scene-memoria')).toBeVisible();
-  await page.goto('/v2?lang=en#scene-review-to-be');
+  await expect(page.locator('#scene-contesto')).toBeVisible();
+  await page.goto('/v2?lang=en#scene-decisioni');
   await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
-  await expect(page.locator('#scene-review-to-be')).toBeVisible();
+  await expect(page.locator('#scene-decisioni')).toBeVisible();
   await expect(page.locator('#product-04-title')).toHaveText('Explain the changes you recommend.');
   await page.goto('/v2?lang=it#confronto');
   await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   await expect(page.locator('#confronto table')).toBeVisible();
   await expect(page.locator('#confronto table')).toBeVisible();
   await page.locator('#confronto').getByRole('link', { name: /DeliR · Trova lacune/ }).click();
-  await expect(page.locator('#scene-lacuna-aperta')).toBeVisible();
+  await expect(page.locator('#scene-lacune')).toBeVisible();
 });
 
 test('V2 chapters follow reading position and motion respects the visitor preference', async ({ page }) => {

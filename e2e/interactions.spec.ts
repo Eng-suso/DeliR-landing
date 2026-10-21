@@ -17,7 +17,7 @@ for (const language of ['it', 'en']) {
       await expect(page).toHaveURL(new RegExp(`${target}$`));
       await expect(page.locator(target!)).toBeInViewport();
       if (target!.startsWith('#scene-')) {
-        await expect(page.locator(`[href="${target}"][aria-current="true"]`)).toHaveCount(1);
+        await expect(page.locator(`${target}[data-clip]`)).toBeVisible();
       }
     }
   });
@@ -47,9 +47,9 @@ test('product chapters and buying questions remain accessible', async ({ page })
   await page.locator('#caso').scrollIntoViewIfNeeded();
   await expect(page.locator('[data-product-module]')).toHaveCount(5);
   const chapter = page.locator('#product-03');
-  await expect(chapter.locator('img')).toHaveAttribute('alt', /canvas BPMN/);
+  await expect(chapter.locator('img')).toHaveAttribute('alt', /pannello delle evidenze/);
   await chapter.getByRole('button', { name: /Apri il video completo/ }).click();
-  const dialog = page.getByRole('dialog', { name: 'Evidenze sul processo' });
+  const dialog = page.getByRole('dialog', { name: 'Dalle fonti al processo' });
   await expect(dialog).toBeVisible();
   await expect(dialog.locator('video')).toHaveAttribute('controls', '');
   await dialog.getByRole('button', { name: 'Chiudi il video' }).click();
@@ -83,19 +83,21 @@ test('chapters and scenes support keyboard navigation and direct links', async (
   await page.locator('.hybrid-more > summary').click();
   const decisionLink = page.getByRole('navigation', { name: 'Esplora il percorso DeliR' }).getByRole('link', { name: /^Migliora/ });
   await decisionLink.focus(); await decisionLink.press('Enter');
-  await expect(page).toHaveURL(/#scene-review-to-be$/);
+  await expect(page).toHaveURL(/#scene-decisioni$/);
   const chapter = page.locator('#product-04');
   await expect(chapter.getByRole('heading', { name: 'Spiega le modifiche che raccomandi.' })).toBeVisible();
-  await expect(page.locator('#scene-review-to-be')).toBeInViewport();
+  await expect(page.locator('#scene-decisioni')).toBeInViewport();
   const expand = chapter.getByRole('button', { name: /Apri il video completo/ });
   await expand.focus(); await expand.press('Enter');
-  const dialog = page.getByRole('dialog', { name: 'Review TO-BE' });
+  const dialog = page.getByRole('dialog', { name: 'Modifiche spiegate, fino al cliente' });
   await expect(dialog).toBeVisible(); await page.keyboard.press('Escape');
   await expect(dialog).not.toBeVisible(); await expect(expand).toBeFocused();
+  // A scene link published before v3 opens the recording that now covers that step.
   await page.goto('/#scene-review-as-is');
-  await page.locator('#scene-review-as-is').waitFor();
-  await expect(page.locator('#scene-review-as-is')).toBeInViewport();
-  await page.reload(); await page.locator('#scene-review-as-is').waitFor(); await expect(page.locator('#scene-review-as-is')).toBeInViewport();
+  await expect(page).toHaveURL(/#scene-evidenze$/);
+  await page.locator('#scene-evidenze').waitFor();
+  await expect(page.locator('#scene-evidenze')).toBeInViewport();
+  await page.reload(); await page.locator('#scene-evidenze').waitFor(); await expect(page.locator('#scene-evidenze')).toBeInViewport();
 });
 
 test('mobile menu closes with Escape and restores focus', async ({ page, isMobile }) => {

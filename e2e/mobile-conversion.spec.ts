@@ -20,10 +20,10 @@ for (const language of ['it', 'en']) {
       await expect(page.locator('#confronto table th[scope="col"]')).toHaveCount(8);
       await expect(page.locator('[data-product-benefit="true"]')).toHaveCount(3);
       await expect(page.locator('.hybrid-more')).not.toHaveAttribute('open', '');
-      await page.goto(`/?lang=${language}#scene-confronto`);
+      await page.goto(`/?lang=${language}#scene-scenari`);
       await expect(page.locator('#product-05')).toBeVisible();
-      await expect(page.locator('#scene-confronto')).toBeInViewport();
-      const expand = page.locator('#scene-confronto').getByRole('button', { name: /Apri il video completo|Open full video/ });
+      await expect(page.locator('#scene-scenari')).toBeInViewport();
+      const expand = page.locator('#scene-scenari').getByRole('button', { name: /Apri il video completo|Open full video/ });
       await expand.click();
       await expect(page.getByRole('dialog')).toBeVisible();
       await expect(page.getByRole('dialog').locator('video')).toHaveAttribute('controls', '');
