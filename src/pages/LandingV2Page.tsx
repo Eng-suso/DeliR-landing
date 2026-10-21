@@ -16,7 +16,7 @@ import Faq from '../components/Faq';
 import FinalCTA from '../components/FinalCTA';
 import Footer from '../components/Footer';
 import PreviewToolbarV2 from '../components/v2/PreviewToolbarV2';
-import HybridJourney from '../components/v2/HybridJourney';
+import ProductVideos from '../components/v2/ProductVideos';
 import HybridVideoPlan from '../components/v2/HybridVideoPlan';
 import HybridProcessPath from '../components/v2/HybridProcessPath';
 import V2Motion from '../components/v2/V2Motion';
@@ -38,7 +38,7 @@ export default function LandingV2Page({ homePath = '/v2' }: { homePath?: '/' | '
       {studio ? <HybridVideoPlan /> : null}
       <HybridProcessPath />
       <HybridProblem />
-      <HybridJourney />
+      <ProductVideos />
       <BuiltFor />
       <Comparison />
       <PilotInvitation />
