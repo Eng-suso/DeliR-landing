@@ -4,11 +4,11 @@ import { registerDocumentScroll, scrollDocumentTo } from './documentScroll';
 afterEach(() => vi.restoreAllMocks());
 
 describe('document scroll ownership', () => {
-  it('keeps native smooth and immediate navigation available without a controller', () => {
+  it('positions native anchors immediately without a controller-owned animation', () => {
     const native = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
     scrollDocumentTo(140, true);
     scrollDocumentTo(40, false);
-    expect(native.mock.calls).toEqual([[{ top: 140, behavior: 'smooth' }], [{ top: 40, behavior: 'instant' }]]);
+    expect(native.mock.calls).toEqual([[{ top: 140, behavior: 'instant' }], [{ top: 40, behavior: 'instant' }]]);
   });
 
   it('uses the current controller for smooth anchors and immediate history restoration', () => {

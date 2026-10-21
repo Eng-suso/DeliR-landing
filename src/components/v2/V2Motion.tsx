@@ -10,11 +10,13 @@ export default function V2Motion() {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
     let observer: IntersectionObserver | undefined;
+    let revision = 0;
     const selector = '.hero-heading, .hero-description, .hero-actions, .hero-visual, .hybrid-path-steps li, .hybrid-problem-intro, .hybrid-problem-sequence li, .hybrid-problem-conclusion, .hybrid-journey-heading, .hybrid-benefit-copy, main [data-reveal]';
     // A component gets one transform, never a second animated ancestor.
     const targets = Array.from(root.querySelectorAll<HTMLElement>(selector)).filter(target => !target.parentElement?.closest(selector));
     const header = root.querySelector<HTMLElement>('.premium-navigation');
     const update = () => {
+      const currentRevision = ++revision;
       observer?.disconnect();
       root.dataset.motion = preference.matches || saveData ? 'reduced' : 'full';
       if (preference.matches || saveData || !('IntersectionObserver' in window)) {
@@ -22,6 +24,8 @@ export default function V2Motion() {
         return;
       }
       observer = new IntersectionObserver(entries => {
+        // WebKit can deliver a queued callback from a disconnected observer.
+        if (currentRevision !== revision || preference.matches) return;
         for (const entry of entries) {
           // Outgoing elements move away from the viewport, avoiding threshold
           // feedback when transforms affect the observed bounding rectangle.
@@ -57,6 +61,7 @@ export default function V2Motion() {
     window.addEventListener('resize', update, { passive: true });
     preference.addEventListener('change', update);
     return () => {
+      revision++;
       observer?.disconnect();
       layout.disconnect(); cancelAnimationFrame(frame);
       window.removeEventListener('scroll', schedule);

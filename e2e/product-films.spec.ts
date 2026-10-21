@@ -206,6 +206,10 @@ test('direct English entry and language switch select localized posters and full
   const hero = page.locator('#hero-product-outcome');
   for (const language of ['en', 'it'] as const) {
     const title = language === 'it' ? 'DeliR in azione' : 'DeliR in action';
+    const expand = hero.getByRole('button', { name: `${language === 'it' ? 'Apri il video completo' : 'Open full video'}: ${title}` });
+    // Language switches replace the film. Wait for the localized instance,
+    // rather than the shared BPMN poster on the outgoing one.
+    await expect(expand).toBeVisible();
     await expect(hero.locator('img')).toHaveAttribute('alt', /BPMN/);
     await hero.scrollIntoViewIfNeeded();
     // The new recordings already frame each scene; retain the entire image on mobile.
@@ -216,7 +220,6 @@ test('direct English entry and language switch select localized posters and full
     });
     expect(framing.width).toBeLessThanOrEqual(1);
     expect(framing.left).toBeGreaterThanOrEqual(0);
-    const expand = hero.getByRole('button', { name: `${language === 'it' ? 'Apri il video completo' : 'Open full video'}: ${title}` });
     await expand.focus();
     await expand.press('Enter');
     const dialog = page.getByRole('dialog', { name: title });
