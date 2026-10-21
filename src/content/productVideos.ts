@@ -79,7 +79,7 @@ export const solveVideos: ProductVideo[] = [
 ];
 
 export const walkthroughVideo: ProductVideo = {
-  id: 'walkthrough', seconds: 240,
+  id: 'walkthrough', seconds: 287,
   title: { it: 'Il percorso completo', en: 'The full walkthrough' },
   summary: { it: 'Tutto il percorso operativo di DeliR in un’unica registrazione, dalle interviste alla consegna.', en: 'DeliR’s whole operating path in one recording, from interviews to handover.' },
   description: {

@@ -1,0 +1,88 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:09.770
+The client's interviews are in the project
+
+00:00:09.820 --> 00:00:13.657
+DeliR extracts statements from the interviews
+
+00:00:13.707 --> 00:00:24.978
+Every statement has its verified quote
+
+00:00:25.028 --> 00:00:35.017
+Sources are compared with each other
+
+00:00:35.067 --> 00:00:45.469
+Conflicting versions surface right away
+
+00:00:44.919 --> 00:00:56.173
+Ask DeliR to rebuild the process
+
+00:00:56.223 --> 00:01:03.138
+DeliR reads the sources and extracts the facts
+
+00:01:03.188 --> 00:01:09.726
+The answer quotes people: nothing invented
+
+00:01:09.776 --> 00:01:22.969
+What nobody says becomes an open question
+
+00:01:22.419 --> 00:01:33.266
+The As-Is in BPMN 2.0: 2 lanes, 5 activities
+
+00:01:33.316 --> 00:01:42.746
+The diagram matches the sources: 100%
+
+00:01:42.796 --> 00:01:59.481
+Each element shows its supporting quote
+
+00:01:59.531 --> 00:02:15.175
+Every version stays tracked
+
+00:02:14.625 --> 00:02:26.401
+To-Be hypotheses come from the people doing the work
+
+00:02:26.451 --> 00:02:35.176
+Each proposal carries its own quotes
+
+00:02:34.626 --> 00:02:40.896
+Simulating today's process (As-Is)
+
+00:02:40.946 --> 00:02:46.394
+Requests flow through the process
+
+00:02:46.444 --> 00:02:53.394
+The queue builds up at “Approve spend”
+
+00:02:53.444 --> 00:03:12.576
+Six KPIs update as the simulation runs
+
+00:03:12.026 --> 00:03:20.867
+The heatmap shows where requests wait
+
+00:03:20.917 --> 00:03:30.868
+Bottleneck: 1d 9h average wait
+
+00:03:30.318 --> 00:03:38.108
+To-Be: complete request and a daily delegate
+
+00:03:38.158 --> 00:03:44.107
+Same requests, no queue at approval
+
+00:03:44.157 --> 00:04:00.268
+The same six KPIs, in the new process
+
+00:03:59.718 --> 00:04:11.186
+To-Be: cycle time −95%, cost per case −43%
+
+00:04:11.236 --> 00:04:16.871
+Simulated values, not guaranteed results
+
+00:04:16.321 --> 00:04:29.327
+DeliR checks the work is complete
+
+00:04:29.377 --> 00:04:42.035
+The process owner gets a read-only dashboard
+
+00:04:42.085 --> 00:04:46.793
+From interviews to decision, with numbers
