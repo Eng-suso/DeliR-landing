@@ -31,7 +31,7 @@ test('hero prioritizes the waitlist while the paid pilot remains visible and ava
   for (const term of ['Conosci perimetro e prezzo prima di iniziare', 'Paghi solo quando ogni milestone viene consegnata', 'Puoi fermarti in qualsiasi momento, senza impegni a lungo termine']) await expect(page.locator('#pilot').getByText(term)).toBeVisible();
   await expect(hero.getByRole('link', { name: 'Entra nella lista d’attesa' })).toHaveAttribute('href', '/waitlist');
   await expect(hero.getByRole('link', { name: 'Avvia un pilot' })).toHaveAttribute('href', '/pilot#application');
-  await expect(page.locator('#pilot-summary').getByRole('link', { name: 'Testa DeliR sul tuo progetto' })).toHaveAttribute('href', '/pilot#application');
+  await expect(page.locator('#pilot').getByRole('link', { name: 'Testa DeliR sul tuo progetto' })).toHaveAttribute('href', '/pilot#application');
   await hero.getByRole('link', { name: 'Vedi il prodotto' }).click();
   await expect(page).toHaveURL(/#caso$/);
   await page.goto('/pilot');
@@ -80,11 +80,13 @@ test('landing has no runtime errors', async ({ page }, testInfo) => {
 test('chapters and scenes support keyboard navigation and direct links', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
-  const decisionLink = page.getByRole('navigation', { name: 'Benefici DeliR' }).getByRole('link', { name: 'Decisioni', exact: true });
+  await page.locator('.hybrid-more > summary').click();
+  const decisionLink = page.getByRole('navigation', { name: 'Esplora il percorso DeliR' }).getByRole('link', { name: /^Migliora/ });
   await decisionLink.focus(); await decisionLink.press('Enter');
-  await expect(page).toHaveURL(/#product-04$/);
+  await expect(page).toHaveURL(/#scene-review-to-be$/);
   const chapter = page.locator('#product-04');
-  await expect(chapter.getByRole('heading', { name: 'Spiega le modifiche che raccomandi.' })).toBeInViewport();
+  await expect(chapter.getByRole('heading', { name: 'Spiega le modifiche che raccomandi.' })).toBeVisible();
+  await expect(page.locator('#scene-review-to-be')).toBeInViewport();
   const expand = chapter.getByRole('button', { name: /Apri il video completo/ });
   await expand.focus(); await expand.press('Enter');
   const dialog = page.getByRole('dialog', { name: 'Review TO-BE' });
@@ -118,18 +120,16 @@ test('shared evidence links lead to the dedicated sources page', async ({ page }
   await expect(page.locator('#comparison-evidence-review')).toBeInViewport();
 });
 
-test('animated background can be paused with the keyboard and respects reduced motion', async ({ page }) => {
+test('reading motion respects the visitor preference and exposes no decorative background loop', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
   await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
-  const control = page.getByRole('button', { name: 'Ferma lo sfondo animato' });
-  const ribbons = page.getByTestId('page-background').locator('.flow-motion');
-  await expect(ribbons).toHaveCSS('animation-play-state', 'running');
-  await control.focus(); await control.press('Enter');
-  await expect(control).toHaveAttribute('aria-pressed', 'true');
-  await expect(ribbons).toHaveCSS('animation-play-state', 'paused');
-  await control.press('Enter');
-  await expect(ribbons).toHaveCSS('animation-play-state', 'running');
+  await expect(page.getByTestId('page-background')).toHaveCount(0);
+  await expect(page.locator('.landing-hybrid')).toHaveAttribute('data-motion', 'full');
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await expect(ribbons).toHaveCSS('animation-name', 'none');
+  // Check the visitor-visible result, independent of observer bookkeeping.
+  await expect(page.locator('.hero-heading')).toHaveCSS('opacity', '1');
+  await expect(page.locator('.hero-heading')).toHaveCSS('transform', 'none');
+  await expect(page.locator('.hero-heading')).toHaveCSS('transition-duration', '0s');
+  await expect(page.locator('html')).not.toHaveClass(/\blenis\b/);
 });

@@ -12,7 +12,7 @@ import {
   type PilotApplicationErrors,
   type PilotApplicationFields,
 } from '../lib/pilotApplication';
-import { pilotRiskReversals } from '../lib/publicOffer';
+import { pilotRiskReversals, projectContactHref } from '../lib/publicOffer';
 import FragmentNavigation from '../components/FragmentNavigation';
 import { useFragment } from '../lib/useFragment';
 import '../styles/premium-landing.css';
@@ -35,7 +35,7 @@ const copy = {
     brief: 'Processo o problema da analizzare', briefPlaceholder: 'Esempio: capire perché il ciclo di acquisto indiretto è troppo lungo e confrontare possibili scenari di miglioramento.',
     briefHelp: 'Descrivi obiettivo e incertezza attuale. Non identificare il cliente.', submit: 'Richiedi la valutazione del progetto', submitting: 'Invio in corso…',
     noProject: 'Non hai ancora un progetto adatto?', updates: 'Esplora il prodotto.', success: 'Candidatura ricevuta.', successBody: 'Valuteremo il fit dell’incarico e ti contatteremo con il prossimo passo.',
-    pendingTitle: 'Anteprima del modulo', pendingBody: 'Puoi provare la compilazione. L’invio non è ancora attivo: i dati restano in questa pagina e non vengono trasmessi o salvati.', previewSubmit: 'Verifica i dati', pendingError: 'I dati sono pronti, ma l’invio non è ancora disponibile. La richiesta non è stata trasmessa.',
+    contactBody: 'Scrivimi per raccontarmi il tuo progetto. Il link apre il tuo programma email; l’invio avviene lì.', contactAction: 'Scrivimi per valutare un pilot',
     errors: { name: { required: 'Inserisci il tuo nome.', long: 'Mantieni il nome entro 100 caratteri.' }, email: { required: 'Inserisci la tua email di lavoro.', invalid: 'Inserisci un indirizzo email valido.' }, practice: { required: 'Seleziona il tipo di attività.' }, timing: { required: 'Seleziona quando parte l’incarico.' }, projectBrief: { required: 'Descrivi brevemente il processo o il problema.', short: 'Aggiungi un po’ di contesto in più.', long: 'Mantieni la descrizione entro 600 caratteri.' }, submission: 'Non siamo riusciti a inviare la candidatura. Riprova.' },
   },
   en: {
@@ -49,7 +49,7 @@ const copy = {
     brief: 'Process or problem to analyze', briefPlaceholder: 'Example: understand why the indirect procurement cycle takes too long and compare improvement scenarios.',
     briefHelp: 'Describe the objective and current uncertainty. Do not identify the client.', submit: 'Request a project review', submitting: 'Submitting…',
     noProject: 'No suitable project yet?', updates: 'Explore the product.', success: 'Application received.', successBody: 'We will review the engagement fit and contact you with the next step.',
-    pendingTitle: 'Form preview', pendingBody: 'You can try filling out the form. Submission is not active yet: your details stay on this page and are not sent or saved.', previewSubmit: 'Check your details', pendingError: 'Your details are ready, but submission is not available yet. Your request has not been sent.',
+    contactBody: 'Email me about your project. The link opens your email app; send your message there.', contactAction: 'Email me about a pilot',
     errors: { name: { required: 'Enter your name.', long: 'Keep your name under 100 characters.' }, email: { required: 'Enter your work email.', invalid: 'Enter a valid email address.' }, practice: { required: 'Select your practice type.' }, timing: { required: 'Select when the engagement starts.' }, projectBrief: { required: 'Briefly describe the process or problem.', short: 'Add a little more context.', long: 'Keep the description under 600 characters.' }, submission: 'We could not submit your application. Please try again.' },
   },
 } as const;
@@ -73,7 +73,6 @@ export default function PilotPage({ captureEnabled }: PilotPageProps) {
     const warnBeforeLeave = (event: BeforeUnloadEvent) => {
       if (!hasDraft) return;
       event.preventDefault();
-    if (status !== 'idle') return;
     };
     window.addEventListener('beforeunload', warnBeforeLeave);
     return () => window.removeEventListener('beforeunload', warnBeforeLeave);
@@ -99,16 +98,12 @@ export default function PilotPage({ captureEnabled }: PilotPageProps) {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (status !== 'idle') return;
+    if (!captureEnabled || status !== 'idle') return;
     const nextErrors = validatePilotApplication(fields);
     setErrors(nextErrors);
     const firstInvalidField = (Object.keys(nextErrors) as Array<keyof PilotApplicationFields>)[0];
     if (firstInvalidField) {
       document.getElementById(firstInvalidField)?.focus();
-      return;
-    }
-    if (!captureEnabled) {
-      setSubmitError(t.pendingError);
       return;
     }
     trackPilotEvent('pilot_submit_attempt', language);
@@ -162,8 +157,7 @@ export default function PilotPage({ captureEnabled }: PilotPageProps) {
             <>
               <h2 id="application-title" className="font-display text-2xl font-medium text-slate-950">{t.formTitle}</h2>
               <p className="mt-2 text-sm leading-6 text-slate-600">{t.formIntro}</p>
-              {!captureEnabled ? <div role="status" className="mt-6 border-l-2 border-brand-blue bg-[#EEF4F8] px-4 py-3 text-sm leading-6 text-brand-ink"><strong className="block font-semibold">{t.pendingTitle}</strong>{t.pendingBody}</div> : null}
-              <form method="post" onSubmit={handleSubmit} noValidate className="mt-8 space-y-6" aria-label={t.formTitle}>
+              {captureEnabled ? <form method="post" onSubmit={handleSubmit} noValidate className="mt-8 space-y-6" aria-label={t.formTitle}>
                 <fieldset disabled={!clientReady || status === 'submitting'} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="text-sm font-semibold text-slate-800">{t.name}</label>
@@ -198,11 +192,14 @@ export default function PilotPage({ captureEnabled }: PilotPageProps) {
                 </fieldset>
                 {submitError ? <div role="alert" className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">{submitError}</div> : null}
                 <button type="submit" disabled={!clientReady || status === 'submitting'} aria-busy={status === 'submitting'} className="btn-primary w-full">
-                  {!captureEnabled ? t.previewSubmit : status === 'submitting' ? t.submitting : t.submit}{status === 'submitting' || !captureEnabled ? null : <ArrowRight aria-hidden="true" className="h-4 w-4" />}
+                  {status === 'submitting' ? t.submitting : t.submit}{status === 'submitting' ? null : <ArrowRight aria-hidden="true" className="h-4 w-4" />}
                 </button>
-                {captureEnabled ? <p className="text-center text-xs leading-5 text-slate-500">{language === 'it' ? 'Leggi come trattiamo i dati nella ' : 'Read how we handle your data in the '}<a href={privacyNoticeUrl} className="font-semibold text-blue-700 underline underline-offset-4">{language === 'it' ? 'informativa privacy' : 'privacy notice'}</a>.</p> : null}
+                <p className="text-center text-xs leading-5 text-slate-500">{language === 'it' ? 'Leggi come trattiamo i dati nella ' : 'Read how we handle your data in the '}<a href={privacyNoticeUrl} className="font-semibold text-blue-700 underline underline-offset-4">{language === 'it' ? 'informativa privacy' : 'privacy notice'}</a>.</p>
                 <p className="text-center text-xs leading-5 text-slate-500">{t.noProject} <Link to={`${homeHref}#caso`} className="font-semibold text-blue-700 underline decoration-blue-300 underline-offset-4 hover:text-blue-900">{t.updates}</Link></p>
-              </form>
+              </form> : <div className="mt-8">
+                <p className="text-sm leading-6 text-slate-600">{t.contactBody}</p>
+                <a href={projectContactHref(language)} className="btn-primary mt-5 whitespace-normal">{t.contactAction}<ArrowRight aria-hidden="true" className="size-4" /></a>
+              </div>}
             </>
           )}
         </motion.section>

@@ -24,9 +24,13 @@ test('mobile navigation opens, remains operable, and closes after selection', as
 
 test('comparison keeps every product visible without horizontal scrolling', async ({ page }) => {
   await page.goto('/#confronto');
+  await page.locator('.landing-page[data-client-ready="true"]').waitFor();
   const comparison = page.locator('#confronto');
   await comparison.scrollIntoViewIfNeeded();
   await expect(comparison.locator('table')).toBeVisible();
+  await expect(comparison.locator('thead .comparison-product-name')).toHaveText(['DeliR', 'LucidFlow', 'PRIME BPM', 'Bizagi', 'Visio', 'Miro', 'ChatGPT / Claude']);
+  await expect(comparison.locator('.comparison-rating--partial').first()).toHaveAccessibleName(/Parziale/);
+  await expect(comparison.locator('.comparison-rating--unknown').first()).toHaveAccessibleName(/Da verificare/);
   await expect(comparison.locator('[data-comparison-card]')).toHaveCount(0);
   const rows = comparison.locator('tbody tr');
   await expect(rows).toHaveCount(7);

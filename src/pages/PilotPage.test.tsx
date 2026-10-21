@@ -27,11 +27,11 @@ function fillForm() {
 }
 
 describe('pilot submission states', () => {
-  it('allows preview validation but never sends data while capture is closed', () => {
+  it('offers email without collecting fields while capture is closed', () => {
     const fetchMock = vi.spyOn(globalThis, 'fetch');
-    showForm(false); fillForm();
-    fireEvent.click(screen.getByRole('button', { name: 'Verifica i dati' }));
-    expect(screen.getByRole('alert')).toHaveTextContent('La richiesta non è stata trasmessa.');
+    showForm(false);
+    expect(screen.queryByRole('form')).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Scrivimi per valutare un pilot' })).toHaveAttribute('href', expect.stringContaining('mailto:contact@delir.it'));
     expect(fetchMock).not.toHaveBeenCalled();
     expect(screen.queryByText('Candidatura ricevuta.')).not.toBeInTheDocument();
   });

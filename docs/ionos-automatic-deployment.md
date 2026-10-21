@@ -54,3 +54,13 @@ npm run build
 `dist/` è la build; `npm run preview` permette di controllarla localmente. La build manuale non è un deploy: per un caricamento manuale seguire [pubblicazione frontend](ionos-frontend-publication.md). Il deploy automatico usa invece le opzioni esplicite della CI e aggiunge `release.json` con il commit verificato.
 
 Fonti: [IONOS — dati SFTP](https://www.ionos.it/aiuto/hosting/configurare-e-gestire-gli-accessi-ftp/dati-di-connessione-ftp/sftp-nel-web-hosting-company-name/), [GitHub — Secrets di Actions](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions), [GitHub — environment di deploy](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments).
+
+## Apertura waitlist nella PR20 — 20 ottobre 2026
+
+Il titolare ha confermato backend privato, tabella `product_interest` e prova di salvataggio. La build IONOS della PR ora abilita il modulo con `VITE_WAITLIST_READY=true` e `VITE_WAITLIST_ENDPOINT=/api/waitlist.php`.
+
+Il deploy include una sola eccezione alla conservazione delle API: `api/waitlist.php`, esattamente il file pubblico già testato. Il pilot, ogni altro file in `/api`, `.htaccess` e `/private` restano preservati. Il file waitlist viene caricato nello staging protetto, installato e verificato prima degli ingressi HTML; un eventuale file precedente viene conservato nel backup del rilascio.
+
+La verifica invia soltanto `{}` e richiede HTTP 422 con `accepted:false` e `error:invalid_request`. Questo controllo verifica esecuzione PHP, presenza delle librerie/configurazione e gate privato abilitato. Il payload viene scartato prima della connessione database: non crea lead fittizi né verifica autonomamente il database reale. Per la scrittura reale resta l'evidenza riferita dal titolare; la CI prova il contratto e le transazioni su MariaDB isolato.
+
+Se l'endpoint manca, viene servito come file statico, il gate è chiuso oppure il controllo fallisce, il deploy ripristina i file già sostituiti e non pubblica l'HTML con la raccolta attiva. Il normale controllo di fine rilascio ripete anche la verifica endpoint. La pubblicazione resta nel job `deploy-ionos`, dopo quality, push su main e protezioni dell'ambiente `ionos-production` esistenti. La PR non esegue alcun rilascio da sola.

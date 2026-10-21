@@ -4,6 +4,7 @@ for (const language of ['it', 'en'] as const) {
   test(`${language}: trust section leads to data details without sharing client files`, async ({ page }) => {
     const it = language === 'it';
     await page.goto(`/?lang=${language}`);
+    await page.locator('.landing-page[data-client-ready="true"]').waitFor();
     const trust = page.locator('#fiducia');
     await trust.scrollIntoViewIfNeeded();
     await expect(trust.getByRole('heading', { level: 2 })).toHaveText(it ? 'Il contesto del tuo cliente merita regole chiare.' : 'Your client’s context deserves clear rules.');

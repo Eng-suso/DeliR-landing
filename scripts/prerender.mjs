@@ -42,7 +42,7 @@ try {
     }
   }
   await writeFile(path.join(root, 'dist/seo/prerender.css'), [...staticStyles].map(([declarations, id]) => `[data-prerender-style="${id}"]{${declarations.replaceAll('&quot;', '"').replaceAll('&amp;', '&')}}`).join('\n'));
-  console.log('Prerendered 14 documents (IT/EN), including a real 404 document.');
+  console.log(`Prerendered ${(siteRoutes.length + 1) * 2} documents (IT/EN), including a real 404 document.`);
 } finally {
   // Fixed child of this build directory; never remove the workspace or its parent.
   await rm(temporary, { recursive: true, force: true });

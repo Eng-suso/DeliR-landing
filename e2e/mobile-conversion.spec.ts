@@ -13,12 +13,13 @@ for (const language of ['it', 'en']) {
         overflow: document.documentElement.scrollWidth > innerWidth,
       }));
       expect(shape.top).toBeLessThan(600);
-      expect(shape.height).toBeLessThan(13000);
+      expect(shape.height).toBeLessThan(20000);
       expect(shape.overflow).toBe(false);
-      await expect(page.locator('#pilot-summary')).toBeVisible();
-      await expect(page.locator('#product-interest')).toBeVisible();
+      await expect(page.locator('.v2-quick-action')).toHaveAttribute('href', language === 'it' ? '/waitlist' : '/waitlist?lang=en');
+      await expect(page.locator('#pilot')).toBeVisible();
       await expect(page.locator('#confronto table th[scope="col"]')).toHaveCount(8);
-      await expect(page.locator('[data-product-module]:not([hidden])')).toHaveCount(1);
+      await expect(page.locator('[data-product-benefit="true"]')).toHaveCount(3);
+      await expect(page.locator('.hybrid-more')).not.toHaveAttribute('open', '');
       await page.goto(`/?lang=${language}#scene-confronto`);
       await expect(page.locator('#product-05')).toBeVisible();
       await expect(page.locator('#scene-confronto')).toBeInViewport();

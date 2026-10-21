@@ -15,10 +15,20 @@ function fill() {
   fireEvent.change(screen.getByLabelText('Tipo di attività'), { target: { value: 'independent' } });
 }
 it('does not collect fields when the destination is not ready', () => {
+  vi.stubEnv('DEV', false);
   const fetchMock = vi.spyOn(globalThis, 'fetch');
   show(false);
   expect(screen.queryByRole('form')).not.toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Scrivimi per entrare nella lista d’attesa' })).toHaveAttribute('href', expect.stringContaining('mailto:contact@delir.it'));
+  expect(fetchMock).not.toHaveBeenCalled();
+});
+it('keeps unconfigured development intake closed too', () => {
+  vi.stubEnv('DEV', true);
+  const fetchMock = vi.spyOn(globalThis, 'fetch');
+  show(false);
+  expect(screen.queryByRole('form')).not.toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Scrivimi per entrare nella lista d’attesa' })).toBeVisible();
+  expect(screen.queryByRole('heading', { name: 'Sei nella lista d’attesa.' })).not.toBeInTheDocument();
   expect(fetchMock).not.toHaveBeenCalled();
 });
 it('requires practice for qualification but does not require timing', () => {
@@ -37,7 +47,7 @@ it('preserves failed requests and focuses receipt only after server acceptance',
   expect(screen.queryByRole('heading', { name: 'Sei nella lista d’attesa.' })).not.toBeInTheDocument();
   fetchMock.mockResolvedValue(Response.json({ accepted: true }, { status: 201 }));
   fireEvent.click(screen.getByRole('button', { name: 'Entra nella lista d’attesa' }));
-  expect(await screen.findByRole('heading', { name: 'Sei nella lista d’attesa.' })).toHaveFocus();
+  await waitFor(() => expect(screen.getByRole('heading', { name: 'Sei nella lista d’attesa.' })).toHaveFocus());
   expect(screen.queryByRole('form')).not.toBeInTheDocument();
 });
 it('prevents multiple requests while the server response is pending', async () => {

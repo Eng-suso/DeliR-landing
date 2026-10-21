@@ -1,20 +1,50 @@
-import PremiumBackground from '../components/PremiumBackground';
+import { useSearchParams } from 'react-router-dom';
+import '../styles/premium-landing.css';
+import '../styles/flow-backdrop.css';
+import '../styles/landing-hybrid.css';
+import { hybridExperience } from '../content/hybridExperience';
+import { useLanguage } from '../i18n/LanguageContext';
 import SkipLink from '../components/SkipLink';
-import NavbarV2 from '../components/v2/NavbarV2';
-import HeroV2 from '../components/v2/HeroV2';
-import ProblemV2 from '../components/v2/ProblemV2';
+import FragmentNavigation from '../components/FragmentNavigation';
+import Navbar from '../components/Navbar';
+import Hero from '../components/Hero';
+import HybridProblem from '../components/v2/HybridProblem';
+import Comparison from '../components/Comparison';
+import BuiltFor from '../components/BuiltFor';
+import PilotInvitation from '../components/PilotInvitation';
+import Faq from '../components/Faq';
+import FinalCTA from '../components/FinalCTA';
+import Footer from '../components/Footer';
+import PreviewToolbarV2 from '../components/v2/PreviewToolbarV2';
+import HybridJourney from '../components/v2/HybridJourney';
+import HybridVideoPlan from '../components/v2/HybridVideoPlan';
+import HybridProcessPath from '../components/v2/HybridProcessPath';
+import V2Motion from '../components/v2/V2Motion';
+import SmoothScroll from '../components/SmoothScroll';
 
-// Dev-only preview of the v2 direction, compared side by side with the current landing page.
-export default function LandingV2Page() {
-  return (
-    <div className="relative min-h-dvh font-grotesk text-ink">
-      <SkipLink />
-      <PremiumBackground />
-      <NavbarV2 />
-      <main id="main-content" className="relative z-10">
-        <HeroV2 />
-        <ProblemV2 />
-      </main>
-    </div>
-  );
+export default function LandingV2Page({ homePath = '/v2' }: { homePath?: '/' | '/v2' }) {
+  const [params] = useSearchParams();
+  const { language } = useLanguage();
+  const studio = params.get('studio') === '1';
+  return <div data-client-ready={typeof window !== 'undefined' ? 'true' : 'false'} className="landing-page landing-hybrid relative min-h-dvh">
+    <SkipLink />
+    <SmoothScroll controlledAnchors />
+    <FragmentNavigation smooth />
+    <V2Motion />
+    {studio ? <div className="relative z-10"><PreviewToolbarV2 /></div> : null}
+    <Navbar motionControl={false} readingMode homeHref={`${homePath}${language === 'it' ? '' : '?lang=en'}#hero`} />
+    <main id="main-content" className="relative z-10">
+      <Hero compact subheadline={hybridExperience[language].subheadline} benefits={hybridExperience[language].benefits} />
+      {studio ? <HybridVideoPlan /> : null}
+      <HybridProcessPath />
+      <HybridProblem />
+      <HybridJourney />
+      <BuiltFor />
+      <Comparison />
+      <PilotInvitation />
+      <Faq />
+      <FinalCTA />
+    </main>
+    <Footer homePath={homePath} />
+  </div>;
 }

@@ -16,7 +16,7 @@ const copy = {
   },
 } as const;
 
-export default function Navbar() {
+export default function Navbar({ motionControl = true, homeHref = '/', readingMode = false }: { motionControl?: boolean; homeHref?: string; readingMode?: boolean }) {
   const { language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [backgroundPaused, setBackgroundPaused] = useState(false);
@@ -24,9 +24,10 @@ export default function Navbar() {
   const t = copy[language];
 
   useEffect(() => {
+    if (!motionControl) return;
     document.documentElement.dataset.backgroundPaused = String(backgroundPaused);
     return () => { delete document.documentElement.dataset.backgroundPaused; };
-  }, [backgroundPaused]);
+  }, [backgroundPaused, motionControl]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -43,7 +44,7 @@ export default function Navbar() {
     <header className="premium-navigation sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur-lg">
       <nav aria-label={t.nav} className="section-shell">
         <div className="flex h-16 items-center justify-between gap-5">
-          <Link to="/" aria-label="DeliR home" className="shrink-0 font-display text-[23px] font-semibold tracking-[-0.05em] text-brand-ink">
+          <Link to={homeHref} aria-label="DeliR home" className="shrink-0 font-display text-[23px] font-semibold tracking-[-0.05em] text-brand-ink">
             DeliR<span className="text-brand-blue">.</span>
           </Link>
           <ul className="hidden items-center gap-7 lg:flex">
@@ -52,9 +53,12 @@ export default function Navbar() {
             ))}
           </ul>
           <div className="ml-auto flex items-center gap-2 lg:ml-0 lg:gap-4">
+            {readingMode ? <a data-interest-section="navigation" href={productInterestHref(language)} className="v2-quick-action lg:hidden">{language === 'it' ? 'Lista d’attesa' : 'Join waitlist'}</a> : null}
+            {motionControl ? (
             <button type="button" onClick={() => setBackgroundPaused((paused) => !paused)} aria-pressed={backgroundPaused} aria-label={language === 'it' ? 'Ferma lo sfondo animato' : 'Pause the animated background'} title={language === 'it' ? (backgroundPaused ? 'Riprendi lo sfondo' : 'Ferma lo sfondo') : (backgroundPaused ? 'Resume the background' : 'Pause the background')} className="background-motion-control inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-brand-blue/15 text-brand-blue transition-colors hover:bg-brand-blue/5">
               {backgroundPaused ? <Play aria-hidden="true" className="h-4 w-4" /> : <Pause aria-hidden="true" className="h-4 w-4" />}
             </button>
+            ) : null}
             <div className="hidden items-center gap-4 lg:flex">
               <LanguageSwitch />
               <a data-interest-section="navigation" href={productInterestHref(language)} className="btn-primary min-h-11 rounded-full px-5 py-2">{t.cta}</a>
@@ -78,7 +82,8 @@ export default function Navbar() {
           </div>
         ) : null}
       </nav>
-      <div aria-hidden="true" data-scroll-progress className="scroll-progress" />
+      {motionControl ? <div aria-hidden="true" data-scroll-progress className="scroll-progress" /> : null}
+      {readingMode ? <div aria-hidden="true" data-v2-scroll-progress className="scroll-progress" /> : null}
     </header>
   );
 }

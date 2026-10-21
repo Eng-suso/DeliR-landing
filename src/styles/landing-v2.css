@@ -1,0 +1,178 @@
+/* Figma B2B V2: desktop frame 1440, mobile frame 414.
+   Hero geometry read from selected layers: row 1303; columns 586 + 80 + 637;
+   visual 637 x 530. Other ratios are visual estimates pending inspect access. */
+.landing-v2 {
+  --v2-space: 80px;
+  --v2-gap: 80px;
+  --v2-hero-ratio: 637 / 530;
+  --v2-mobile-hero-ratio: 184 / 107;
+  --v2-benefit-ratio: 1;
+  --v2-mobile-benefit-ratio: 92 / 71;
+  --v2-proof-ratio: 1303 / 320;
+  --v2-mobile-proof-ratio: 184 / 157;
+  background: #fff;
+  color: var(--color-brand-ink);
+}
+.landing-v2 .section-shell { max-width: 1440px; padding-inline: clamp(24px, 4.75695vw, 68.5px); }
+.v2-preview-bar { border-bottom: 1px solid var(--color-brand-border); background: var(--color-brand-mist); color: var(--color-brand-ink); }
+.v2-section { padding-block: var(--v2-space); scroll-margin-top: 24px; }
+.v2-split { display: grid; align-items: center; gap: 40px; }
+.v2-title { font-family: var(--font-display); font-size: clamp(32px, 3.34vw, 48px); font-weight: 600; line-height: 1.15; letter-spacing: -.035em; text-wrap: balance; }
+.v2-body { max-width: 60ch; color: #475569; font-size: 18px; line-height: 1.6; }
+.landing-v2 .v2-action { min-height: 76px; width: min(100%, 340px); gap: 12px; padding: 16px 24px; border-radius: 8px; font-size: 17px; line-height: 1.4; white-space: normal; }
+.v2-section-action { margin-top: 24px; text-align: center; }
+
+/* The template keeps the primary action in the header on both devices. */
+.v2-header { position: relative; background: #fff; }
+.v2-nav-row { display: flex; min-height: 90px; align-items: center; gap: 16px; }
+.v2-logo { display: inline-flex; min-height: 44px; align-items: center; margin-right: auto; font: 700 28px var(--font-display); letter-spacing: -.03em; }
+.v2-desktop-contact { display: flex; align-items: center; gap: 24px; }
+.v2-desktop-contact > a, .v2-mobile-contact a { display: inline-flex; min-height: 44px; align-items: center; gap: 8px; color: var(--color-brand-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+.v2-mobile-contact { display: none; }
+.landing-v2 .v2-nav-cta { min-height: 60px; border-radius: 8px; padding-inline: 24px; font-size: 14px; white-space: normal; }
+.v2-nav-toggle { display: inline-flex; min-height: 44px; min-width: 44px; align-items: center; justify-content: center; border-radius: 8px; }
+.v2-nav-toggle:hover { background: var(--color-brand-mist); }
+.v2-navigation-panel { border-top: 1px solid var(--color-brand-border); padding-block: 8px 20px; }
+.v2-navigation-panel ul { display: flex; flex-wrap: wrap; gap: 0 32px; }
+.v2-navigation-panel a { display: flex; min-height: 48px; align-items: center; color: var(--color-brand-ink); font-size: 16px; }
+.v2-navigation-panel a:hover { color: var(--color-brand-blue); }
+
+/* A compact value statement, three benefits, action and reassurance. */
+.v2-hero { background: var(--color-brand-navy); color: #fff; }
+.v2-hero .v2-title { color: #fff; font-size: clamp(36px, 4.17vw, 60px); line-height: 1.08; }
+.v2-hero-outcome { color: #bfdbfe; font-family: var(--font-display); font-size: clamp(22px, 2vw, 28px); font-weight: 500; line-height: 1.3; }
+.v2-hero-benefits { display: grid; gap: 14px; margin-block: 28px 32px; }
+.v2-hero-benefits li { display: flex; align-items: flex-start; gap: 14px; font-size: 18px; line-height: 1.55; }
+.v2-benefit-check { display: inline-flex; width: 24px; height: 24px; flex-shrink: 0; align-items: center; justify-content: center; margin-top: 2px; border-radius: 50%; background: #fff; color: var(--color-brand-blue); }
+.v2-hero-friction { margin-top: 16px; max-width: 48ch; color: #cbd5e1; font-size: 13px; line-height: 1.6; }
+.v2-hero-secondary { display: flex; flex-wrap: wrap; gap: 0 24px; margin-top: 8px; color: #cbd5e1; font-size: 13px; line-height: 1.7; }
+.v2-hero-secondary a { display: inline-flex; min-height: 44px; align-items: center; gap: 8px; color: #fff; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+.v2-context-strip { display: flex; min-height: 134px; align-items: center; border-block: 1px solid var(--color-brand-border); background: #fff; }
+.v2-context-strip .section-shell { width: 100%; padding-block: 24px; }
+
+/* Different media compositions are intentional, not a scaled desktop. */
+.v2-media-frame { position: relative; aspect-ratio: 637 / 400; overflow: hidden; border: 1px solid var(--color-brand-border); background: #fff; }
+.v2-media-frame picture, .v2-media-frame img { display: block; width: 100%; height: 100%; }
+.v2-media-frame img { object-fit: contain; }
+.v2-media-frame video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: var(--color-brand-navy); }
+.v2-hero .v2-media-frame { aspect-ratio: var(--v2-hero-ratio); }
+.v2-hero figcaption, .v2-hero figcaption a { color: #dbeafe; }
+.v2-benefit .v2-media-frame { aspect-ratio: var(--v2-benefit-ratio); }
+.v2-proof .v2-media-frame { aspect-ratio: var(--v2-proof-ratio); }
+.v2-play { position: absolute; inset: 0; display: grid; width: 56px; height: 56px; place-items: center; margin: auto; border: 2px solid #fff; border-radius: 50%; background: var(--color-brand-blue); color: #fff; }
+.v2-play:hover { background: var(--color-brand-blue-hover); }
+.v2-shot-card { border: 1px solid #cbd5e1; border-radius: 8px; padding-inline: 16px; background: #f8fafc; color: var(--color-brand-ink); }
+
+/* The first proof has three cards on mobile; the second keeps one. */
+.v2-proof { background: var(--color-brand-mist); }
+.v2-proof-heading, .v2-comparison-heading, .v2-how-heading { max-width: 960px; margin: 0 auto 32px; text-align: center; }
+.v2-proof-mobile-details { display: none; }
+.v2-demo-still { min-width: 0; border: 1px solid var(--color-brand-border); background: #fff; }
+.v2-still-frame { aspect-ratio: 184 / 125; overflow: hidden; }
+.v2-demo-still img { width: 100%; height: 100%; object-fit: contain; }
+.v2-demo-still figcaption { padding: 16px; font-size: 16px; line-height: 1.5; }
+.v2-benefit { background: #fff; }
+
+/* Desktop keeps the existing full matrix; mobile follows the six-card wireframe. */
+.v2-comparison { background: #fff; }
+.v2-comparison-table { width: 100%; table-layout: fixed; border-collapse: collapse; text-align: center; font-size: 13px; line-height: 1.5; }
+.v2-comparison-table th, .v2-comparison-table td { padding: 16px 8px; border: 1px solid var(--color-brand-border); }
+.v2-comparison-table th:first-child { width: 27%; }
+.v2-comparison-table th:nth-child(2), .v2-comparison-table td:nth-child(2) { background: var(--color-brand-mist); }
+.v2-comparison-desktop-action { margin: 0 0 32px; text-align: center; }
+.v2-comparison-cards, .v2-comparison-mobile-action { display: none; }
+.v2-status-link { display: inline-flex; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; border-radius: 6px; color: var(--color-brand-blue); }
+.v2-status-link:hover { background: #dbeafe; }
+.v2-status-link[data-status="no"] { color: #475569; }
+.v2-comparison-notes { margin-top: 24px; }
+.v2-differentiator { display: flex; min-height: 314px; flex-direction: column; align-items: center; justify-content: center; border: 1px solid #cbd5e1; padding: 28px; text-align: center; }
+
+/* Three steps, then FAQs in a single reading column. */
+.v2-how { background: var(--color-brand-mist); }
+.v2-step-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.v2-step { min-width: 0; min-height: 314px; border: 1px solid #cbd5e1; padding: 32px; background: #fff; text-align: center; }
+.v2-pilot-terms { max-width: 780px; margin: 16px auto 0; text-align: left; }
+.v2-pilot-terms summary { display: flex; min-height: 44px; align-items: center; justify-content: center; color: var(--color-brand-blue); font-size: 14px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.v2-mobile-proof-strip { display: none; }
+.landing-v2 .premium-faq { padding-block: var(--v2-space) 24px; }
+.landing-v2 .premium-faq .section-shell { display: block; }
+.landing-v2 .premium-faq .section-shell > div:first-child { max-width: 960px; margin-inline: auto; text-align: center; }
+.landing-v2 .premium-faq .section-shell > div:last-child { max-width: 960px; margin: 32px auto 0; }
+.landing-v2 .premium-faq .landing-title { max-width: none; margin-top: 16px; font-size: clamp(32px, 3.34vw, 48px); }
+.v2-faq-action { padding-bottom: var(--v2-space); text-align: center; }
+
+/* The mobile ending includes a visual; the desktop ending is text-led. */
+.v2-final { background: var(--color-brand-mist); text-align: center; }
+.v2-final .v2-title, .v2-final .v2-body { max-width: 900px; margin-inline: auto; }
+.v2-final-visual { display: none; }
+.v2-footer { border-top: 1px solid var(--color-brand-border); padding-block: 24px; background: var(--color-brand-mist); text-align: center; }
+.v2-footer nav a, .v2-footer nav button { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-brand-blue); font-size: 13px; text-decoration: underline; text-underline-offset: 4px; }
+.v2-footer nav a:hover, .v2-footer nav button:hover { color: var(--color-brand-blue-hover); }
+
+@media (min-width: 1024px) {
+  .v2-split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--v2-gap); }
+  .v2-hero-layout { grid-template-columns: minmax(0, 586fr) minmax(0, 637fr); }
+  .v2-hero-layout > .v2-media-slot { align-self: stretch; display: flex; flex-direction: column; justify-content: center; }
+  .v2-benefit-reverse .v2-media-slot { order: 2; }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .landing-v2 { --v2-space: 64px; }
+  .v2-hero-copy { max-width: 680px; }
+  .v2-hero-layout > .v2-media-slot { width: min(100%, 637px); margin-inline: auto; }
+  .v2-benefit .v2-media-slot { max-width: 637px; width: 100%; margin-inline: auto; }
+  .v2-benefit-copy { max-width: 680px; }
+  .v2-comparison-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .v2-step-grid { grid-template-columns: 1fr; max-width: 600px; margin-inline: auto; }
+}
+@media (max-width: 1023px) {
+  .v2-comparison-table, .v2-comparison-desktop-action { display: none; }
+  .v2-comparison-cards { display: grid; gap: 20px; }
+  .v2-comparison-mobile-action { display: block; margin-top: 24px; text-align: center; }
+  .v2-problem .v2-media-slot { display: none; }
+  .v2-studio .v2-problem .v2-media-slot { display: block; }
+}
+@media (max-width: 767px) {
+  .landing-v2 { --v2-space: 48px; }
+  .landing-v2 .section-shell { padding-inline: 24px; }
+  .v2-mobile-contact { display: block; min-height: 51px; background: var(--color-brand-light); }
+  .v2-mobile-contact .section-shell { display: flex; min-height: 51px; align-items: center; justify-content: space-between; gap: 8px; }
+  .v2-mobile-contact a { font-size: 13px; }
+  .v2-desktop-contact { display: none; }
+  .v2-nav-row { min-height: 88px; gap: 8px; }
+  .v2-logo { font-size: 24px; }
+  .landing-v2 .v2-nav-cta { min-height: 56px; max-width: 196px; padding-inline: 12px; font-size: 13px; }
+  .v2-navigation-panel ul { display: block; }
+  .v2-hero .v2-title { font-size: 36px; line-height: 1.16; }
+  .v2-hero-outcome { font-size: 24px; }
+  .v2-hero-benefits { gap: 14px; margin-block: 24px 28px; }
+  .v2-hero-benefits li { font-size: 18px; }
+  .v2-hero-secondary { display: block; }
+  .v2-hero-secondary > a { margin-right: 16px; }
+  .landing-v2 .v2-action { width: 100%; }
+  .v2-hero .v2-media-frame { aspect-ratio: var(--v2-mobile-hero-ratio); }
+  .v2-benefit .v2-media-frame { aspect-ratio: var(--v2-mobile-benefit-ratio); }
+  .v2-proof .v2-media-frame { aspect-ratio: var(--v2-mobile-proof-ratio); }
+  .v2-proof-heading, .v2-comparison-heading, .v2-how-heading { text-align: left; margin-bottom: 24px; }
+  .v2-body { font-size: 17px; line-height: 1.6; }
+  .v2-problem .v2-body { font-size: 20px; line-height: 1.5; }
+  .v2-proof-mobile-details { display: grid; gap: 20px; margin-top: 20px; }
+  .v2-split { gap: 24px; }
+  .v2-benefit .v2-media-slot { order: 0; }
+  .v2-benefit .v2-benefit-copy { order: 1; }
+  .v2-benefit .v2-title { font-size: 28px; line-height: 1.2; }
+  .v2-benefit .v2-body { font-size: 16px; line-height: 1.6; }
+  .v2-step-grid { grid-template-columns: 1fr; gap: 20px; }
+  .v2-step { min-height: 314px; padding: 28px; }
+  .v2-mobile-proof-strip { display: block; }
+  .landing-v2 .premium-faq .section-shell > div:first-child { text-align: left; }
+  .landing-v2 .premium-faq .section-shell > div:last-child { margin-top: 24px; }
+  .v2-final { text-align: left; }
+  .v2-final-visual { display: block; margin-bottom: 24px; }
+  .v2-final .v2-still-frame { aspect-ratio: var(--v2-mobile-benefit-ratio); }
+  .v2-footer nav { column-gap: 16px; }
+}
+@media (max-width: 374px) {
+  .landing-v2 .section-shell { padding-inline: 16px; }
+  .v2-logo { font-size: 22px; }
+  .landing-v2 .v2-nav-cta { max-width: 166px; padding-inline: 10px; font-size: 12px; }
+}

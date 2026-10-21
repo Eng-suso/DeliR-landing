@@ -1,8 +1,8 @@
 import { expect, test } from '@playwright/test';
 
 const approved = {
-  it: 'Smetti di passare settimane a ricostruire come lavora davvero il tuo cliente. DeliR trasforma la conoscenza dispersa in un As-Is verificato, confronta scenari To-Be e migliora continuamente i processi, così puoi fornire raccomandazioni migliori più rapidamente.',
-  en: 'Stop spending weeks reconstructing how your client really works. DeliR turns scattered knowledge into a verified As-Is, compares To-Be scenarios, and continuously improves processes so you deliver better recommendations faster.',
+  it: 'Smetti di passare settimane a ricostruire come lavora davvero il tuo cliente.',
+  en: 'Stop spending weeks reconstructing how your client really works.',
 };
 
 for (const language of ['it', 'en'] as const) {
@@ -11,7 +11,11 @@ for (const language of ['it', 'en'] as const) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(`/?lang=${language}`);
       await page.locator('.landing-page[data-client-ready="true"]').waitFor();
-      await expect(page.locator('.hero-description')).toHaveText(approved[language]);
+      await expect(page.locator('.hero-description > p')).toHaveText(approved[language]);
+      await expect(page.locator('.hybrid-hero-benefits li')).toHaveCount(3);
+      const reassurance = language === 'it' ? 'Iscrizione gratuita · Nessun obbligo d’acquisto · Nessun documento del cliente richiesto' : 'Free signup · No purchase obligation · No client documents needed';
+      await expect(page.locator('.hero-actions > p').first()).toHaveText(reassurance);
+      await expect(page.locator('#early-access .btn-primary + p')).toHaveText(reassurance);
       await expect(page.locator('.hero-description')).toBeVisible();
       const geometry = await page.evaluate(() => {
         const box = (selector: string) => document.querySelector(selector)!.getBoundingClientRect();

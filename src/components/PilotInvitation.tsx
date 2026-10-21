@@ -1,37 +1,9 @@
+import { pilotCopy as copy } from '../content/landingCopy';
 import { ArrowRight, Check } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { pilotCtaLabel, pilotRiskReversals, pilotApplicationHref } from '../lib/publicOffer';
 
-const copy = {
-  it: {
-    eyebrow: 'Pilot a pagamento · per milestone', title: 'Porta un progetto. Mantieni il pieno controllo.',
-    body: 'Testa DeliR su un incarico reale per un cliente, con un perimetro e un obiettivo chiari.',
-    kickoff: 'Prima di iniziare concordiamo cosa significa avere successo, cosa consegnerà DeliR e come verrà verificata ogni milestone.',
-    example: 'Progetto di esempio: acquisti indiretti',
-    steps: [
-      ['Definisci il progetto', 'Definisci obiettivo, perimetro, fonti disponibili, persone chiave coinvolte e risultati attesi.'],
-      ['Comprendi e migliora', 'DeliR ricostruisce l’As-Is dalle evidenze disponibili, individua le informazioni mancanti, sviluppa opzioni To-Be e confronta scenari alternativi.'],
-      ['Verifica e decidi', 'Verifica As-Is, opzioni To-Be, risultati degli scenari, evidenze, assunzioni e punti ancora aperti con le persone coinvolte.'],
-    ],
-    control: 'Il controllo resta a te',
-    firstContact: 'Per il primo confronto non servono documenti del cliente.',
-    note: 'Porta il progetto, l’obiettivo e la tempistica prevista.',
-  },
-  en: {
-    eyebrow: 'Paid pilot · milestone-based', title: 'Bring one project. Keep full control.',
-    body: 'Test DeliR on a real client engagement with a clear scope and objective.',
-    kickoff: 'Before kickoff, we agree what success looks like, what DeliR will deliver, and how each milestone will be reviewed.',
-    example: 'Example project: indirect procurement',
-    steps: [
-      ['Define the project', 'Set the objective, scope, available sources, key stakeholders, and expected outcomes.'],
-      ['Understand and improve', 'DeliR reconstructs the As-Is from available evidence, finds missing information, develops To-Be options, and compares alternative scenarios.'],
-      ['Review and decide', 'Review the As-Is, To-Be options, scenario results, evidence, assumptions, and remaining points with the people involved.'],
-    ],
-    control: 'You stay in control',
-    firstContact: 'No client documents are needed for the first conversation.',
-    note: 'Bring the project, the objective, and the expected timing.',
-  },
-};
+
 
 export default function PilotInvitation() {
   const { language } = useLanguage(); const t = copy[language];

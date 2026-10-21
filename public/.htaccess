@@ -12,11 +12,11 @@ RewriteEngine On
 RewriteCond %{SERVER_PORT} !=443 [OR]
 RewriteCond %{HTTP_HOST} !^delir\.it$ [NC]
 RewriteRule ^ https://delir.it%{REQUEST_URI} [R=301,L]
-RewriteRule ^(pilot|security-data|comparison-sources|privacy|waitlist)/$ /$1 [R=301,L]
+RewriteRule ^(pilot|security-data|comparison-sources|privacy|waitlist|v2)/$ /$1 [R=301,L]
 
 # Root and application routes use pre-rendered HTML selected by language.
 RewriteRule ^$ index.php [END]
-RewriteRule ^(pilot|security-data|comparison-sources|privacy|waitlist)/?$ index.php [END]
+RewriteRule ^(pilot|security-data|comparison-sources|privacy|waitlist|v2)/?$ index.php [END]
 
 # Existing assets and API files must keep their original handlers.
 RewriteCond %{REQUEST_FILENAME} -f [OR]

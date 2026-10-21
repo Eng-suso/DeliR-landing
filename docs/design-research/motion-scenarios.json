@@ -1,0 +1,313 @@
+[
+  {
+    "site": "beSharp",
+    "evidence_id": "ev_8a12f245529b7a2017fa2086c9089fb31b746f39af151d8af763f7369a81aeb2",
+    "parameters": {
+      "start_url": {
+        "url": "https://www.besharp.it/",
+        "query": []
+      },
+      "environment": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "device_scale_factor": 1
+        },
+        "locale": "en-US",
+        "timezone": "UTC",
+        "color_scheme": "light",
+        "reduced_motion": "no-preference",
+        "service_workers": "block"
+      },
+      "actions": [
+        {
+          "step_id": "initial",
+          "action": "wait_for_timeout",
+          "duration_ms": 1800
+        },
+        {
+          "step_id": "scroll",
+          "timeout_ms": 10000,
+          "action": "press",
+          "locator": {
+            "kind": "css",
+            "selector": "body"
+          },
+          "key": "PageDown"
+        },
+        {
+          "step_id": "settled",
+          "action": "wait_for_timeout",
+          "duration_ms": 700
+        },
+        {
+          "step_id": "scroll-again",
+          "timeout_ms": 10000,
+          "action": "press",
+          "locator": {
+            "kind": "css",
+            "selector": "body"
+          },
+          "key": "PageDown"
+        },
+        {
+          "step_id": "revealed",
+          "action": "wait_for_timeout",
+          "duration_ms": 700
+        }
+      ]
+    },
+    "completeness": {
+      "status": "complete",
+      "equality_eligible": true,
+      "missing_sections": [],
+      "truncated_sections": []
+    },
+    "limitations": [
+      "Artifact identity is unavailable for this observation.",
+      "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+      "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+      "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+      "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+      "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+      "Storage values are hashed only after declared-secret redaction.",
+      "Browser host platform and architecture were not observed."
+    ],
+    "steps": [
+      {
+        "step_id": "scenario_start",
+        "status": "completed",
+        "dom": {
+          "sha256": "32ca016d81bbadf46854ac9c8fd65a45c876d53d1fa61a688104037952489daf",
+          "bytes": 230439
+        }
+      },
+      {
+        "step_id": "initial",
+        "status": "completed",
+        "dom": {
+          "sha256": "32ca016d81bbadf46854ac9c8fd65a45c876d53d1fa61a688104037952489daf",
+          "bytes": 230439
+        }
+      },
+      {
+        "step_id": "scroll",
+        "status": "completed",
+        "dom": {
+          "sha256": "32ca016d81bbadf46854ac9c8fd65a45c876d53d1fa61a688104037952489daf",
+          "bytes": 230439
+        }
+      },
+      {
+        "step_id": "settled",
+        "status": "completed",
+        "dom": {
+          "sha256": "ea150a51a69e0896925cebff4bf849a2a50aecaf8ab0799b27c4516f7092f095",
+          "bytes": 230624
+        }
+      },
+      {
+        "step_id": "scroll-again",
+        "status": "completed",
+        "dom": {
+          "sha256": "ea150a51a69e0896925cebff4bf849a2a50aecaf8ab0799b27c4516f7092f095",
+          "bytes": 230624
+        }
+      },
+      {
+        "step_id": "revealed",
+        "status": "completed",
+        "dom": {
+          "sha256": "ea150a51a69e0896925cebff4bf849a2a50aecaf8ab0799b27c4516f7092f095",
+          "bytes": 230624
+        }
+      }
+    ]
+  },
+  {
+    "site": "ProcessMind",
+    "evidence_id": "ev_1f6f08741b96939ab18bfbe0e0aeaefd375b9d4e9f51a105f2a9ece024840700",
+    "parameters": {
+      "start_url": {
+        "url": "https://processmind.com/",
+        "query": []
+      },
+      "environment": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "device_scale_factor": 1
+        },
+        "locale": "en-US",
+        "timezone": "UTC",
+        "color_scheme": "light",
+        "reduced_motion": "no-preference",
+        "service_workers": "block"
+      },
+      "actions": [
+        {
+          "step_id": "initial",
+          "action": "wait_for_timeout",
+          "duration_ms": 1200
+        },
+        {
+          "step_id": "scroll",
+          "action": "press",
+          "locator": {
+            "kind": "css",
+            "selector": "body"
+          },
+          "key": "PageDown"
+        },
+        {
+          "step_id": "settled",
+          "action": "wait_for_timeout",
+          "duration_ms": 800
+        }
+      ]
+    },
+    "completeness": {
+      "status": "complete",
+      "equality_eligible": true,
+      "missing_sections": [],
+      "truncated_sections": []
+    },
+    "limitations": [
+      "Artifact identity is unavailable for this observation.",
+      "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+      "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+      "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+      "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+      "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+      "Storage values are hashed only after declared-secret redaction.",
+      "Browser host platform and architecture were not observed."
+    ],
+    "steps": [
+      {
+        "step_id": "scenario_start",
+        "status": "completed",
+        "dom": {
+          "sha256": "f18f9fbe8576ed3a3fcac68109fba76e267752f62051ed3f29366f22aa9cda7d",
+          "bytes": 372614
+        }
+      },
+      {
+        "step_id": "initial",
+        "status": "completed",
+        "dom": {
+          "sha256": "f18f9fbe8576ed3a3fcac68109fba76e267752f62051ed3f29366f22aa9cda7d",
+          "bytes": 372614
+        }
+      },
+      {
+        "step_id": "scroll",
+        "status": "completed",
+        "dom": {
+          "sha256": "f18f9fbe8576ed3a3fcac68109fba76e267752f62051ed3f29366f22aa9cda7d",
+          "bytes": 372614
+        }
+      },
+      {
+        "step_id": "settled",
+        "status": "completed",
+        "dom": {
+          "sha256": "4f35b2d48dd8d9852d3b1135bf2f2189367409930e0102f5e1bdfee25a151ed8",
+          "bytes": 372655
+        }
+      }
+    ]
+  },
+  {
+    "site": "SAP Signavio",
+    "evidence_id": "ev_3316a77d670353a8734c0505395cc5af45d4f9e1ae6ab26ce5faade8e2a8c8ce",
+    "parameters": {
+      "start_url": {
+        "url": "https://www.signavio.com/",
+        "query": []
+      },
+      "environment": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "device_scale_factor": 1
+        },
+        "locale": "en-US",
+        "timezone": "UTC",
+        "color_scheme": "light",
+        "reduced_motion": "no-preference",
+        "service_workers": "block"
+      },
+      "actions": [
+        {
+          "step_id": "initial",
+          "action": "wait_for_timeout",
+          "duration_ms": 1200
+        },
+        {
+          "step_id": "scroll",
+          "action": "press",
+          "locator": {
+            "kind": "css",
+            "selector": "body"
+          },
+          "key": "PageDown"
+        },
+        {
+          "step_id": "settled",
+          "action": "wait_for_timeout",
+          "duration_ms": 800
+        }
+      ]
+    },
+    "completeness": {
+      "status": "complete",
+      "equality_eligible": true,
+      "missing_sections": [],
+      "truncated_sections": []
+    },
+    "limitations": [
+      "Artifact identity is unavailable for this observation.",
+      "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+      "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+      "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+      "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+      "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+      "Storage values are hashed only after declared-secret redaction.",
+      "Browser host platform and architecture were not observed."
+    ],
+    "steps": [
+      {
+        "step_id": "scenario_start",
+        "status": "completed",
+        "dom": {
+          "sha256": "99ad78d24c139b6148891a771cf0bb276fb565f66ef23a03f2d72922e4108029",
+          "bytes": 321351
+        }
+      },
+      {
+        "step_id": "initial",
+        "status": "completed",
+        "dom": {
+          "sha256": "99ad78d24c139b6148891a771cf0bb276fb565f66ef23a03f2d72922e4108029",
+          "bytes": 321351
+        }
+      },
+      {
+        "step_id": "scroll",
+        "status": "completed",
+        "dom": {
+          "sha256": "99ad78d24c139b6148891a771cf0bb276fb565f66ef23a03f2d72922e4108029",
+          "bytes": 321351
+        }
+      },
+      {
+        "step_id": "settled",
+        "status": "completed",
+        "dom": {
+          "sha256": "99ad78d24c139b6148891a771cf0bb276fb565f66ef23a03f2d72922e4108029",
+          "bytes": 321351
+        }
+      }
+    ]
+  }
+]

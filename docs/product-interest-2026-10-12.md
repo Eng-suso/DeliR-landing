@@ -124,3 +124,28 @@ La CI valida TypeScript, lint, unit test, PHP, transazioni MariaDB, build di pro
 - assenza di richieste esterne automatiche prima dell’interazione.
 
 I test browser usano risposte simulate e non dimostrano una scrittura reale su IONOS: quella verifica resta un requisito di staging prima dell’apertura della waitlist.
+
+## Revisione del modulo nella PR20 — 20 ottobre 2026
+
+Il testo di apertura spiega il ricontatto all'apertura degli accessi; il pilot resta sotto il modulo. Email e tipo di attività sono obbligatori, tempistiche facoltative. Nessun campo nome, telefono o dati dei clienti.
+
+Con `npm run dev` il modulo è visibile anche a raccolta chiusa: l'avviso e il pulsante «Verifica i dati» distinguono l'anteprima. Si può verificare la compilazione, senza POST, salvataggio o conferma di iscrizione. Nessun evento di avvio modulo viene emesso in questa modalità. La build di produzione conserva i gate: il form attivo usa il contratto IONOS esistente e conferma soltanto una risposta JSON `accepted:true`.
+
+Il titolare ha confermato in chat l'installazione di `product_interest` e del file privato `waitlist.php`, con salvataggio verificato. Una lettura GET di `https://delir.it/api/waitlist.php` eseguita il 20 ottobre restituisce ancora 404 HTML: non prova un problema al database privato, ma indica che il punto d'ingresso pubblico va installato/verificato prima di aprire il frontend.
+
+Passo rimasto per la raccolta online: caricare il file del repository `public/api/waitlist.php` nella cartella `/public/api/waitlist.php` dell'hosting IONOS e verificare un invio controllato. Lo script di deploy del frontend preserva `/api`, quindi non installa questo file. Per il rilascio attivo usare i flag già elencati sopra. Nessuna modifica a produzione, consenso analytics o provider viene eseguita da questa revisione.
+
+Verifica della revisione: lint, TypeScript, build con 16 documenti prerenderizzati e 83 test unitari/componenti passati. Sei casi del modulo attivo passati in Chromium/Safari mobile (risposte server simulate), inclusi errore HTML 200, retry, conferma/focus, timing facoltativo, IT/EN, 320px e axe. Due regressioni passate: gate produzione chiuso e HTML senza JavaScript. Il nuovo test locale verifica che il preview non chiami fetch e non mostri una conferma falsa. Nessun invio di dati di prova al server IONOS e nessuna modifica a produzione.
+
+## Rilascio integrato nella PR20 — 20 ottobre 2026
+
+L'apertura non richiede più il caricamento manuale del file pubblico descritto nella revisione precedente: la pipeline IONOS include ora il solo `api/waitlist.php` nella pubblicazione con backup e rollback. La build della release abilita il modulo; la configurazione privata rimane quella dichiarata installata e verificata dal titolare. Le build locali senza flag conservano il fallback, mentre `npm run dev` mostra l'anteprima compilabile senza invio.
+
+Prima dell'HTML, il rilascio verifica l'endpoint con un payload vuoto: deve essere eseguito da PHP e rifiutato come richiesta non valida. Un 404, 503 o risposta inattesa fa ripristinare i file precedenti. La verifica non inserisce lead o altri dati; prova di scrittura reale riferita dal titolare, transazioni/deduplicazione/quote verificate dalla CI su database temporaneo. [Procedura di pubblicazione aggiornata](ionos-automatic-deployment.md).
+
+
+## Rimozione dei percorsi demo — 21 ottobre 2026
+
+Su richiesta del titolare, eliminati avviso e flusso di sola validazione locale della waitlist e del pilot. I moduli compaiono solo con destinazione e informativa configurate, in sviluppo come in produzione; altrimenti il contatto email è esplicito. La nota privacy descrive il canale effettivo. Queste regole sostituiscono le precedenti indicazioni sull’anteprima compilabile.
+
+La V2 ordinaria non mostra più la barra di revisione o un titolo browser di anteprima. Le indicazioni per produrre i video restano accessibili soltanto con `?studio=1`; noindex e le diciture sui dati simulati restano invariati. I flag di build e il rilascio automatico IONOS della PR20 non cambiano.

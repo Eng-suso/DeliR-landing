@@ -37,13 +37,14 @@ test('benefits are readable while scrolling and navigation reaches their real pr
   await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
   await expect.poll(() => page.evaluate(() => document.documentElement.classList.contains('lenis'))).toBe(true);
 
-  const labels = ['Evidenze', 'Lacune', 'Contesto', 'Decisioni', 'Scenari'];
-  await expect(page.locator('[data-product-benefit="true"]')).toHaveCount(4);
-  await expect(page.locator('[data-product-module]:not([hidden])')).toHaveCount(1);
+  const labels = ['Evidenze', 'Lacune', 'Scenari'];
+  await expect(page.locator('[data-product-benefit="true"]')).toHaveCount(3);
+  await expect(page.locator('.hybrid-more')).not.toHaveAttribute('open', '');
   let previousImage = '';
   for (let index = 0; index < labels.length; index += 1) {
-    const chapter = page.locator('[data-product-module]').nth(index);
-    await page.getByRole('navigation', { name: 'Benefici DeliR' }).getByRole('link', { name: labels[index], exact: true }).click();
+    const chapter = page.locator('[data-product-benefit="true"]').nth(index);
+    await page.getByRole('navigation', { name: 'Capitoli del prodotto' }).getByRole('link', { name: labels[index], exact: true }).click();
+    await expect(page.locator('html')).not.toHaveClass(/lenis-scrolling/);
     await chapter.scrollIntoViewIfNeeded();
     await expect(chapter).toHaveAttribute('data-product-module', labels[index]);
     const image = chapter.locator('img');

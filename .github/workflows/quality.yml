@@ -60,7 +60,7 @@ jobs:
           php -l server/ionos/interest-metrics.php
           php server/ionos/tests.php --require-db
           php server/ionos/waitlist-tests.php --require-db
-      - name: Build IONOS release with the final notice and pilot intake
+      - name: Build IONOS release with pilot and waitlist intake
         run: npm run build
         # Build settings must not override isolated unit-test fixtures.
         env:
@@ -68,7 +68,8 @@ jobs:
           VITE_PRIVACY_NOTICE_URL: /privacy
           VITE_PILOT_ENDPOINT: /api/pilot.php
           VITE_LEAD_CAPTURE_READY: 'true'
-          VITE_WAITLIST_READY: 'false'
+          VITE_WAITLIST_READY: 'true'
+          VITE_WAITLIST_ENDPOINT: /api/waitlist.php
           VITE_ANALYTICS_READY: 'true'
           VITE_GA_MEASUREMENT_ID: G-6D2FN0HCDS
       - name: Identify the tested frontend release
@@ -83,6 +84,8 @@ jobs:
           retention-days: 7
       - run: npx playwright install --with-deps chromium webkit
       - run: npm run test:e2e
+        env:
+          PLAYWRIGHT_WAITLIST_ENABLED: 'true'
       - name: Build isolated enabled-waitlist fixture
         run: npx vite build --configLoader runner --outDir dist-interest
         env:
@@ -145,7 +148,7 @@ jobs:
           python3 -m venv "$RUNNER_TEMP/ionos-deploy-venv"
           "$RUNNER_TEMP/ionos-deploy-venv/bin/python" -m pip install --upgrade 'pip==26.2.1'
           "$RUNNER_TEMP/ionos-deploy-venv/bin/python" -m pip install 'paramiko==5.0.0'
-      - name: Publish the tested frontend and verify delir.it
+      - name: Publish the tested frontend and waitlist entrypoint, then verify delir.it
         if: steps.current.outputs.publish == 'true'
         env:
           IONOS_SFTP_HOST: ${{ secrets.IONOS_SFTP_HOST }}
