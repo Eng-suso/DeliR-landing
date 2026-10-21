@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-test('hybrid exposes three benefits, V1 trust and existing demos across devices', async ({ page }, testInfo) => {
+test('hybrid exposes the product videos, V1 trust and demos across devices', async ({ page }, testInfo) => {
   const errors: string[] = [];
   const missingAssets: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
@@ -11,11 +11,12 @@ test('hybrid exposes three benefits, V1 trust and existing demos across devices'
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator('.hybrid-hero-benefits li')).toHaveCount(3);
   await expect(page.locator('.hero-description > p')).toHaveText('Smetti di passare settimane a ricostruire come lavora davvero il tuo cliente.');
-  await expect(page.locator('.hybrid-benefit')).toHaveCount(3);
+  await expect(page.locator('#caso .pv-card')).toHaveCount(2);
+  await expect(page.locator('#caso [role="tab"]')).toHaveCount(4);
   await expect(page.locator('#product-interest, #pilot-summary')).toHaveCount(0);
   await expect(page.locator('#fiducia')).toContainText('Prima di utilizzare dati reali');
   await expect(page.locator('#pilot')).toContainText('Conosci perimetro e prezzo prima di iniziare');
-  await expect(page.locator('.hybrid-more')).not.toHaveAttribute('open', '');
+  await expect(page.locator('#caso video')).toHaveCount(0);
   await expect(page.locator('#confronto table')).toBeVisible();
   await expect(page.locator('#confronto')).not.toHaveJSProperty('tagName', 'DETAILS');
   await expect(page.locator('#piano-video')).toHaveCount(0);
@@ -23,18 +24,18 @@ test('hybrid exposes three benefits, V1 trust and existing demos across devices'
   for (const width of [320, 375, 414, 768, 834, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
-    for (const benefit of await page.locator('.hybrid-benefit').all()) {
-      await benefit.scrollIntoViewIfNeeded();
-      await expect(benefit).toBeVisible();
-      // Read both boxes together: scroll anchoring can move a deferred section
+    for (const card of await page.locator('#caso .pv-card, #caso .pv-panel').all()) {
+      await card.scrollIntoViewIfNeeded();
+      await expect(card).toBeVisible();
+      // Read the boxes together: scroll anchoring can move a deferred section
       // between two separate browser round trips while resizing.
-      const layout = await benefit.evaluate(element => {
-        const media = element.querySelector('.product-screen-stage')!.getBoundingClientRect();
-        const copy = element.querySelector('.hybrid-benefit-copy')!.getBoundingClientRect();
-        return { mediaTop: media.top, mediaWidth: media.width, copyBottom: copy.bottom, articleWidth: element.getBoundingClientRect().width };
+      const layout = await card.evaluate(element => {
+        const player = element.querySelector('.pv-player')!.getBoundingClientRect();
+        return { ratio: player.width / player.height, right: player.right, width: element.getBoundingClientRect().width };
       });
-      expect(layout.copyBottom).toBeLessThanOrEqual(layout.mediaTop);
-      expect(layout.mediaWidth).toBeGreaterThanOrEqual(layout.articleWidth - 2);
+      // The whole 16:9 recording stays visible: no crop at any width.
+      expect(Math.abs(layout.ratio - 16 / 9)).toBeLessThan(0.03);
+      expect(layout.right).toBeLessThanOrEqual(width + 1);
     }
     await page.locator('#hero').scrollIntoViewIfNeeded();
     const hero = await page.locator('#hero').evaluate(element => ({
@@ -55,36 +56,36 @@ test('hybrid exposes three benefits, V1 trust and existing demos across devices'
   // Cropped images inside a skipped section cannot be scroll targets in WebKit.
   await page.setViewportSize({ width: 375, height: 900 });
   await page.locator('.hero-actions a[href="#caso"]').click();
-  const firstBenefit = page.locator('#product-03');
-  await firstBenefit.locator('.product-screen-stage').scrollIntoViewIfNeeded();
-  await expect.poll(() => firstBenefit.locator('img').first().evaluate(img => (img as HTMLImageElement).naturalWidth), { timeout: 15_000 }).toBeGreaterThan(0);
-  await firstBenefit.screenshot({ path: testInfo.outputPath('hybrid-benefit-375.png') });
+  const firstVideo = page.locator('#caso [data-product-video="problem"]');
+  await firstVideo.scrollIntoViewIfNeeded();
+  await expect.poll(() => firstVideo.locator('img').evaluate(img => (img as HTMLImageElement).naturalWidth), { timeout: 15_000 }).toBeGreaterThan(0);
+  await page.locator('#caso').screenshot({ path: testInfo.outputPath('product-videos-375.png') });
   expect(errors).toEqual([]);
   expect(missingAssets).toEqual([]);
   const prerender = await page.request.get('/seo/v2.it.html');
   expect(prerender.ok()).toBe(true);
   const html = await prerender.text();
   expect(html).toContain('noindex, follow');
-  expect(html).toContain('hybrid-benefit-copy');
+  expect(html).toContain('pv-tabs');
   expect(html).toContain('Il contesto del tuo cliente merita regole chiare.');
 });
 
-test('DeliR workflow links reach real scenes and keep preview navigation in V2', async ({ page }) => {
+test('DeliR workflow links open their product video and keep preview navigation in V2', async ({ page }) => {
   await page.goto('/v2');
   await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   await expect(page.locator('#hero-title')).toHaveText('Mappa. Analizza. Simula. Migliora.');
   const path = page.getByRole('navigation', { name: 'Esplora il percorso DeliR' });
   await expect(path.getByRole('link')).toHaveCount(4);
-  const targets = ['product-03', 'product-02', 'product-05', 'scene-review-to-be'];
+  const targets = ['evidence', 'discovery', 'simulation', 'results'];
   for (const [index, id] of targets.entries()) {
     const link = path.getByRole('link').nth(index);
     await link.focus();
     await link.press('Enter');
     await expect(page).toHaveURL(new RegExp(`#${id}$`));
-    await expect(page.locator(`#${id}`)).toBeVisible();
-    await expect(page.locator(`#${id} video`)).toHaveCount(0);
+    await expect(page.locator('#caso [role="tabpanel"] [data-product-video]')).toHaveAttribute('data-product-video', id);
+    await expect(page.locator('#caso [role="tabpanel"]')).toBeInViewport();
+    await expect(page.locator('#caso video')).toHaveCount(0);
   }
-  await expect(page.locator('.hybrid-more')).toHaveAttribute('open', '');
   await page.getByRole('link', { name: 'DeliR home', exact: true }).click();
   await expect(page).toHaveURL(/\/v2#hero$/);
   await expect.poll(() => page.evaluate(() => document.querySelector('#hero-title')!.getBoundingClientRect().top - document.querySelector('.premium-navigation')!.getBoundingClientRect().bottom)).toBeGreaterThanOrEqual(0);
@@ -92,55 +93,47 @@ test('DeliR workflow links reach real scenes and keep preview navigation in V2',
   await page.goto('/v2?lang=en');
   await expect(page.locator('.hero-description > p')).toHaveText('Stop spending weeks reconstructing how your client really works.');
   await page.getByRole('navigation', { name: 'Explore the DeliR workflow' }).getByRole('link', { name: /^Improve/ }).click();
-  await expect(page).toHaveURL(/lang=en#scene-review-to-be$/);
-  await expect(page.locator('#product-04-title')).toHaveText('Explain the changes you recommend.');
+  await expect(page).toHaveURL(/lang=en#results$/);
+  await expect(page.getByRole('tab', { name: /Results & Deliverables/ })).toHaveAttribute('aria-selected', 'true');
   await expect(page.getByRole('link', { name: 'DeliR home', exact: true })).toHaveAttribute('href', '/v2?lang=en#hero');
   await expect(page.locator('footer').getByRole('link', { name: 'Product', exact: true })).toHaveAttribute('href', '/v2?lang=en#caso');
   await expect(page.locator('footer').getByRole('link', { name: 'DeliR.', exact: true })).toHaveAttribute('href', '/v2?lang=en#hero');
 });
 
-test('supporting scenes and comparison remain deep linkable', async ({ page }) => {
+test('earlier scene links and comparison remain deep linkable', async ({ page }) => {
   await page.goto('/v2#scene-memoria');
   await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
-  await expect(page.locator('.hybrid-more')).toHaveAttribute('open', '');
-  await expect(page.locator('#scene-memoria')).toBeVisible();
-  await page.goto('/v2?lang=en#scene-review-to-be');
+  await expect(page.getByRole('tab', { name: /Risultati e consegna/ })).toHaveAttribute('aria-selected', 'true');
+  await page.goto('/v2?lang=en#scene-confronto');
   await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
-  await expect(page.locator('#scene-review-to-be')).toBeVisible();
-  await expect(page.locator('#product-04-title')).toHaveText('Explain the changes you recommend.');
+  await expect(page.getByRole('tab', { name: /Analysis & Simulation/ })).toHaveAttribute('aria-selected', 'true');
   await page.goto('/v2?lang=it#confronto');
   await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   await expect(page.locator('#confronto table')).toBeVisible();
   await expect(page.locator('#confronto table')).toBeVisible();
   await page.locator('#confronto').getByRole('link', { name: /DeliR · Trova lacune/ }).click();
-  await expect(page.locator('#scene-lacuna-aperta')).toBeVisible();
+  await expect(page).toHaveURL(/#discovery$/);
+  await expect(page.getByRole('tab', { name: /Process Discovery/ })).toHaveAttribute('aria-selected', 'true');
 });
 
-test('V2 chapters follow reading position and motion respects the visitor preference', async ({ page }) => {
+test('V2 product steps switch in place and motion respects the visitor preference', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/v2');
   await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   await expect(page.locator('.hero-heading')).toHaveAttribute('data-v2-visibility', 'visible');
   await expect(page.locator('.hero-heading')).toHaveCSS('transition-duration', '0.56s, 0.56s');
-  const chapter = page.getByRole('navigation', { name: 'Capitoli del prodotto' });
-  await chapter.getByRole('link', { name: 'Lacune', exact: true }).click();
-  await expect(page).toHaveURL(/#product-02$/);
-  await expect(chapter.getByRole('link', { name: 'Lacune', exact: true })).toHaveAttribute('aria-current', 'location');
-  await expect.poll(() => page.locator('#product-02').evaluate(element => {
-    const gap = element.getBoundingClientRect().top - document.querySelector('.hybrid-chapter-nav')!.getBoundingClientRect().bottom;
-    return gap >= 10 && gap <= 32;
-  })).toBe(true);
-  await expect(page.locator('#product-02 .product-screen-stage')).toHaveCSS('border-top-width', '0px');
-  await expect(page.locator('#product-02 .product-screen-stage')).toHaveCSS('box-shadow', 'none');
+  const steps = page.getByRole('tablist', { name: 'Passaggi del prodotto' });
+  await steps.getByRole('tab', { name: /Evidenze e BPMN/ }).click();
+  await expect(steps.getByRole('tab', { name: /Evidenze e BPMN/ })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByRole('tabpanel')).toContainText('BPMN 2.0');
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect(page.locator('.hero-heading')).not.toHaveAttribute('data-v2-visibility', /.+/);
   await expect(page.locator('.hero-heading')).toHaveCSS('animation-name', 'none');
-  await chapter.getByRole('link', { name: 'Scenari', exact: true }).focus();
-  await page.keyboard.press('Enter');
-  await expect(page).toHaveURL(/#product-05$/);
-  await expect(page.locator('#product-05')).toBeFocused();
-  await expect(chapter.getByRole('link', { name: 'Scenari', exact: true })).toHaveAttribute('aria-current', 'location');
-  await expect(page.locator('#product-05 video')).toHaveCount(0);
+  await steps.getByRole('tab', { name: /Evidenze e BPMN/ }).focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(steps.getByRole('tab', { name: /Analisi e simulazione/ })).toBeFocused();
+  await expect(steps.getByRole('tab', { name: /Analisi e simulazione/ })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('#caso video')).toHaveCount(0);
 });
 
 test('V2 keeps repeated anchors, history and mobile conversion usable', async ({ page }) => {
@@ -160,17 +153,12 @@ test('V2 keeps repeated anchors, history and mobile conversion usable', async ({
     const gap = element.getBoundingClientRect().top - document.querySelector('.premium-navigation')!.getBoundingClientRect().bottom;
     return Math.abs(gap - 24);
   })).toBeLessThan(2);
-  const chapters = page.getByRole('navigation', { name: 'Capitoli del prodotto' });
-  const gaps = chapters.getByRole('link', { name: 'Lacune', exact: true });
-  await gaps.click();
-  await expect(chapters.getByRole('link', { name: 'Lacune', exact: true })).toHaveAttribute('aria-current', 'location');
-  await expect(page.locator('#product-02')).toBeFocused();
-  await expect.poll(() => page.locator('#product-02').evaluate(element => Math.abs(element.getBoundingClientRect().top - document.querySelector('.hybrid-chapter-nav')!.getBoundingClientRect().bottom - 20))).toBeLessThan(8);
-  await page.evaluate(() => window.scrollBy({ top: 360, behavior: 'instant' }));
-  await gaps.click();
-  await expect.poll(() => page.locator('#product-02').evaluate(element => Math.abs(element.getBoundingClientRect().top - document.querySelector('.hybrid-chapter-nav')!.getBoundingClientRect().bottom - 20))).toBeLessThan(8);
-  await page.goBack();
-  await expect(page).toHaveURL(/#caso$/);
+  // Repeating the same product link returns to the section from anywhere.
+  await page.evaluate(() => window.scrollBy({ top: 900, behavior: 'instant' }));
+  await page.locator('.hero-actions a[href="#caso"]').evaluate(link => (link as HTMLAnchorElement).click());
+  await expect.poll(() => page.locator('#caso').evaluate(element => Math.abs(element.getBoundingClientRect().top - document.querySelector('.premium-navigation')!.getBoundingClientRect().bottom - 24))).toBeLessThan(2);
+  await page.getByRole('tab', { name: /Process Discovery/ }).scrollIntoViewIfNeeded();
+  await expect(page.locator('#caso')).toBeInViewport();
   await expect(page.locator('.premium-navigation')).toHaveAttribute('data-scrolled', 'true');
   await quickAction.click();
   await expect(page).toHaveURL(/\/waitlist$/);
@@ -235,9 +223,13 @@ test('keyboard opens menus, supporting content, full demo and FAQ', async ({ pag
   await page.keyboard.press('Escape');
   await expect(dialog).not.toBeVisible();
   await expect(expand).toBeFocused();
-  const more = page.locator('.hybrid-more > summary');
-  await more.focus(); await page.keyboard.press('Enter');
-  await expect(page.locator('#product-01-title')).toBeVisible();
+  const walkthrough = page.getByRole('button', { name: /Guarda il percorso completo/ });
+  await walkthrough.focus(); await page.keyboard.press('Enter');
+  const full = page.getByRole('dialog', { name: 'Il percorso completo' });
+  await expect(full).toBeVisible();
+  await expect(full.locator('video')).toHaveAttribute('controls', '');
+  await page.keyboard.press('Escape');
+  await expect(full).not.toBeVisible();
   const question = page.locator('#faq button').first();
   await question.focus(); await page.keyboard.press('Enter');
   await expect(question).toHaveAttribute('aria-expanded', 'true');
@@ -248,7 +240,7 @@ test('hybrid studio and expanded content have no automatic A/AA violations', asy
   for (const width of [375, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/v2?studio=1');
-    await page.locator('.hybrid-more > summary').click();
+    await page.locator('#caso .pv-description > summary').first().click();
     const result = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
     expect(result.violations).toEqual([]);
   }
