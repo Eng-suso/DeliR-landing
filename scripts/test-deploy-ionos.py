@@ -82,6 +82,27 @@ class DeploymentTests(unittest.TestCase):
         self.assertEqual((self.remote / 'public/.htaccess').read_text(), 'existing server rules')
         self.assertEqual((self.remote / 'public/api/pilot.php').read_text(), 'existing working API')
 
+    def test_build_preflight_needs_no_hosting_configuration_or_connection(self):
+        with patch.dict(os.environ, {'GITHUB_SHA': SHA}, clear=True), \
+                patch.object(deploy, 'Path', return_value=self.build), \
+                patch.object(deploy, 'connect') as connection, \
+                patch('builtins.print') as output:
+            deploy.main(check_only=True)
+        connection.assert_not_called()
+        self.assertIn('Validated', output.call_args.args[0])
+
+    def test_unexpected_public_document_is_rejected_before_connecting(self):
+        document = self.build / 'landing-v2/media/README.md'
+        document.parent.mkdir(parents=True)
+        document.write_text('internal video instructions')
+        with patch.dict(os.environ, {'GITHUB_SHA': SHA}, clear=True), \
+                patch.object(deploy, 'Path', return_value=self.build), \
+                patch.object(deploy, 'connect') as connection:
+            with self.assertRaisesRegex(deploy.ReleaseError, 'Unexpected file in build'):
+                deploy.main()
+        connection.assert_not_called()
+        self.assertEqual((self.remote / 'public/index.html').read_text(), 'previous frontend')
+
     def test_success_preserves_api_and_routing_and_keeps_old_frontend_backup(self):
         backup = self.publish()
         self.assertEqual((self.remote / 'public/index.html').read_text(), 'new frontend')

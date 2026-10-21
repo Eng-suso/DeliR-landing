@@ -250,8 +250,12 @@ def deploy(sftp, build, sha, remote, release_id, check=verify, http=response, pr
     return backup
 
 
-def main():
+def main(check_only=False):
     sha = required('GITHUB_SHA')
+    files = plan(Path('dist'), sha)
+    if check_only:
+        print('Validated ' + str(len(files)) + ' publishable files for commit ' + sha)
+        return
     release_id = sha[:12] + '-' + required('GITHUB_RUN_ID') + '-' + required('GITHUB_RUN_ATTEMPT')
     remote = required('IONOS_SFTP_DIRECTORY')
     transport, sftp = connect()
@@ -265,7 +269,9 @@ def main():
 
 if __name__ == '__main__':
     try:
-        main()
+        if sys.argv[1:] not in ([], ['--check-build']):
+            raise ReleaseError('Unknown deployment option')
+        main(check_only=sys.argv[1:] == ['--check-build'])
     except ReleaseError as error:
         print('::error::' + str(error), file=sys.stderr)
         sys.exit(1)
