@@ -1,0 +1,10 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:08.200
+The As-Is replay: requests queue at «Approve spend».
+
+00:00:08.200 --> 00:00:14.100
+The heatmap marks «Approve spend» as the bottleneck.
+
+00:00:14.100 --> 00:00:27.300
+Repeated To-Be scenarios, with a 95% interval and the decision record. Simulated demo values.

@@ -1,0 +1,16 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.700
+Client sources become a BPMN process.
+
+00:00:04.700 --> 00:00:09.200
+Each activity is linked to the interview sentence behind it.
+
+00:00:09.200 --> 00:00:13.800
+The As-Is simulation shows requests queuing at «Approve spend»: the bottleneck.
+
+00:00:13.800 --> 00:00:18.400
+Repeated To-Be scenarios compare time and cost per request. Simulated values.
+
+00:00:18.400 --> 00:00:23.600
+The process goes to the client through a dashboard link.
