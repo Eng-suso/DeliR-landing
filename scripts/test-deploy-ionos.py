@@ -7,6 +7,7 @@ from pathlib import Path
 import tempfile
 import types
 import unittest
+from datetime import datetime, timezone
 from unittest.mock import patch
 
 spec = importlib.util.spec_from_file_location('deploy', Path(__file__).with_name('deploy-ionos.py'))
@@ -49,6 +50,9 @@ class FilesystemSFTP:
 
     def remove(self, value):
         self.path(value).unlink()
+
+    def open(self, value, mode):
+        return self.path(value).open(mode)
 
 
 class DeploymentTests(unittest.TestCase):
@@ -175,6 +179,46 @@ class DeploymentTests(unittest.TestCase):
                 self.assertIn('HTTP ' + str(status), str(failure.exception))
                 self.assertIn(code, str(failure.exception))
                 self.assertNotIn('DO_NOT_LOG_RESPONSE', str(failure.exception))
+
+    def test_private_diagnostic_reads_only_fresh_fixed_codes_and_never_changes_private_files(self):
+        folder = self.remote / 'private/delir'
+        folder.mkdir(parents=True)
+        config = folder / 'config.php'
+        config.write_text('DO_NOT_READ_CONFIGURATION')
+        log = folder / 'diagnostic.log'
+        stamp = datetime.now(timezone.utc).isoformat(timespec='seconds')
+        for body, expected in [
+            (stamp + ' interest_private_handler_missing\n', 'interest_private_handler_missing'),
+            (stamp + ' interest_DO_NOT_LOG_RESPONSE\n', None),
+            ('2000-01-01T00:00:00+00:00 interest_capture_disabled\n', None),
+            ('DO_NOT_LOG_RESPONSE\n', None),
+            ('x' * 66001, None),
+        ]:
+            with self.subTest(expected=expected, length=len(body)):
+                log.write_text(body)
+                self.assertEqual(deploy.private_waitlist_event(self.sftp, '/public'), expected)
+                self.assertEqual(log.read_text(), body)
+                self.assertEqual(config.read_text(), 'DO_NOT_READ_CONFIGURATION')
+        self.assertIsNone(deploy.private_waitlist_event(self.sftp, '/'))
+        log.unlink()
+        self.assertIsNone(deploy.private_waitlist_event(self.sftp, '/public'))
+        with patch.object(self.sftp, 'open', side_effect=PermissionError('DO_NOT_LOG_RESPONSE')):
+            log.write_text(stamp + ' interest_capture_disabled\n')
+            self.assertIsNone(deploy.private_waitlist_event(self.sftp, '/public'))
+
+    def test_failed_probe_emits_only_a_fixed_private_code_and_still_rolls_back(self):
+        folder = self.remote / 'private/delir'
+        folder.mkdir(parents=True)
+        stamp = datetime.now(timezone.utc).isoformat(timespec='seconds')
+        (folder / 'diagnostic.log').write_text(stamp + ' interest_private_waitlist_missing\n')
+        def unavailable(sha):
+            raise deploy.ReleaseError('probe fixture')
+        with patch('builtins.print') as output:
+            with self.assertRaises(deploy.ReleaseError):
+                self.publish(probe=unavailable)
+        self.assertEqual(output.call_args.args[0], '::notice::Waitlist private diagnostic: interest_private_waitlist_missing')
+        self.assertEqual((self.remote / 'public/index.html').read_text(), 'previous frontend')
+        self.assertFalse((self.remote / 'public/api/waitlist.php').exists())
 
     def test_partial_publish_failure_restores_previous_frontend(self):
         self.sftp.fail_publish = True

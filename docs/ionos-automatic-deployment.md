@@ -73,6 +73,8 @@ Il controllo ora riporta lo stato HTTP e soltanto un codice di protocollo ricono
 
 L'entrypoint waitlist registra la causa con prefisso `interest_` in `/private/delir/diagnostic.log`, lo stesso file privato già gestito dalla manutenzione del pilot: lock esclusivo, limite di circa 64 KiB, timestamp e soli codici fissi. Non vengono registrati campi del modulo, IP, credenziali, configurazione o testo delle eccezioni. Se il log non è scrivibile, il log PHP riceve soltanto `delir_interest_diagnostic_unavailable`.
 
+Solo dopo il fallimento del probe, se l'account SFTP consente già l'accesso, il deploy legge quel singolo log privato e riporta in Actions esclusivamente un codice `interest_` riconosciuto degli ultimi due minuti. Config e richieste non vengono letti; non sono modificati file privati. Percorsi con symlink, log oltre 66 KiB, testo libero, eventi vecchi e accessi negati sono ignorati senza stampare contenuti o dettagli dell'eccezione. Un account confinato a `/public` non acquisisce nuovi permessi e continua a richiedere la lettura manuale del solo codice da IONOS.
+
 | Codice privato | Verifica |
 | --- | --- |
 | `interest_private_config_missing` / `interest_private_waitlist_missing` / `interest_private_pilot_missing` | Posizione, nome e lettura del file indicato sotto `/private/delir`. |
