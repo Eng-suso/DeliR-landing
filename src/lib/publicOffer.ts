@@ -35,6 +35,11 @@ export const interestCtaLabel = {
   en: 'Join the waitlist',
 } as const;
 
+export const waitlistRiskReversals = {
+  it: ['Iscrizione gratuita', 'Nessun obbligo d’acquisto', 'Nessun documento del cliente richiesto'],
+  en: ['Free signup', 'No purchase obligation', 'No client documents needed'],
+} as const;
+
 export function productInterestHref(language: 'it' | 'en') {
   return `/waitlist${language === 'en' ? '?lang=en' : ''}`;
 }

@@ -9,14 +9,15 @@ test('hybrid exposes three benefits, V1 trust and existing demos across devices'
   await page.goto('/v2');
   await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   await page.evaluate(() => document.fonts.ready);
-  await expect(page.locator('.hybrid-hero-benefits')).toHaveCount(0);
-  await expect(page.locator('.hero-description > p')).toHaveText('Smetti di passare settimane a ricostruire come lavora davvero il tuo cliente. DeliR trasforma la conoscenza dispersa in un As-Is verificato, confronta scenari To-Be e migliora continuamente i processi, così puoi fornire raccomandazioni migliori più rapidamente.');
+  await expect(page.locator('.hybrid-hero-benefits li')).toHaveCount(3);
+  await expect(page.locator('.hero-description > p')).toHaveText('Smetti di passare settimane a ricostruire come lavora davvero il tuo cliente.');
   await expect(page.locator('.hybrid-benefit')).toHaveCount(3);
   await expect(page.locator('#product-interest, #pilot-summary')).toHaveCount(0);
   await expect(page.locator('#fiducia')).toContainText('Prima di utilizzare dati reali');
   await expect(page.locator('#pilot')).toContainText('Conosci perimetro e prezzo prima di iniziare');
   await expect(page.locator('.hybrid-more')).not.toHaveAttribute('open', '');
-  await expect(page.locator('.hybrid-comparison')).not.toHaveAttribute('open', '');
+  await expect(page.locator('#confronto table')).toBeVisible();
+  await expect(page.locator('#confronto')).not.toHaveJSProperty('tagName', 'DETAILS');
   await expect(page.locator('#piano-video')).toHaveCount(0);
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
   for (const width of [320, 375, 414, 768, 834, 1024, 1440]) {
@@ -89,7 +90,7 @@ test('DeliR workflow links reach real scenes and keep preview navigation in V2',
   await expect.poll(() => page.evaluate(() => document.querySelector('#hero-title')!.getBoundingClientRect().top - document.querySelector('.premium-navigation')!.getBoundingClientRect().bottom)).toBeGreaterThanOrEqual(0);
   await expect(page.locator('footer').getByRole('link', { name: 'Il prodotto', exact: true })).toHaveAttribute('href', '/v2#caso');
   await page.goto('/v2?lang=en');
-  await expect(page.locator('.hero-description > p')).toHaveText('Stop spending weeks reconstructing how your client really works. DeliR turns scattered knowledge into a verified As-Is, compares To-Be scenarios, and continuously improves processes so you deliver better recommendations faster.');
+  await expect(page.locator('.hero-description > p')).toHaveText('Stop spending weeks reconstructing how your client really works.');
   await page.getByRole('navigation', { name: 'Explore the DeliR workflow' }).getByRole('link', { name: /^Improve/ }).click();
   await expect(page).toHaveURL(/lang=en#scene-review-to-be$/);
   await expect(page.locator('#product-04-title')).toHaveText('Explain the changes you recommend.');
@@ -109,7 +110,7 @@ test('supporting scenes and comparison remain deep linkable', async ({ page }) =
   await expect(page.locator('#product-04-title')).toHaveText('Explain the changes you recommend.');
   await page.goto('/v2?lang=it#confronto');
   await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
-  await expect(page.locator('.hybrid-comparison')).toHaveAttribute('open', '');
+  await expect(page.locator('#confronto table')).toBeVisible();
   await expect(page.locator('#confronto table')).toBeVisible();
   await page.locator('#confronto').getByRole('link', { name: /DeliR · Trova lacune/ }).click();
   await expect(page.locator('#scene-lacuna-aperta')).toBeVisible();
@@ -248,7 +249,6 @@ test('hybrid studio and expanded content have no automatic A/AA violations', asy
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/v2?studio=1');
     await page.locator('.hybrid-more > summary').click();
-    await page.locator('.hybrid-comparison > summary').click();
     const result = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
     expect(result.violations).toEqual([]);
   }

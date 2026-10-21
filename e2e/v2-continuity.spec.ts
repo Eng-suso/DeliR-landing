@@ -7,6 +7,10 @@ test('V2 Lenis wheel, anchors, keyboard, dialogs and route cleanup share one scr
   await page.goto('/v2');
   await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   await expect(page.locator('html')).toHaveClass(/\blenis\b/);
+  await page.setViewportSize({ width: 834, height: 900 });
+  await expect(page.locator('html')).not.toHaveClass(/\blenis\b/);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await expect(page.locator('html')).toHaveClass(/\blenis\b/);
   await page.mouse.move(1300, 700);
   await page.mouse.wheel(0, 900);
   await expect(page.locator('html')).toHaveClass(/lenis-scrolling/);

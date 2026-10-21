@@ -127,6 +127,9 @@ test('reading motion respects the visitor preference and exposes no decorative b
   await expect(page.getByTestId('page-background')).toHaveCount(0);
   await expect(page.locator('.landing-hybrid')).toHaveAttribute('data-motion', 'full');
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await expect(page.locator('[data-v2-visibility]')).toHaveCount(0);
+  // Check the visitor-visible result, independent of observer bookkeeping.
+  await expect(page.locator('.hero-heading')).toHaveCSS('opacity', '1');
+  await expect(page.locator('.hero-heading')).toHaveCSS('transform', 'none');
+  await expect(page.locator('.hero-heading')).toHaveCSS('transition-duration', '0s');
   await expect(page.locator('html')).not.toHaveClass(/\blenis\b/);
 });

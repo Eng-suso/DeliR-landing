@@ -51,9 +51,9 @@
 .landing-hybrid .hero-description { max-width: 51ch; color: var(--delir-muted); font-size: 18px; line-height: 1.55; }
 .landing-hybrid .hero-actions > p { max-width: 48ch; }
 .landing-hybrid .hero-actions .btn-text { padding-inline: 10px; }
-.landing-hybrid .hybrid-hero-benefits { display: grid; gap: 7px; margin-top: 22px; font-size: 14px; line-height: 1.5; color: var(--delir-ink); }
+.landing-hybrid .hybrid-hero-benefits { display: grid; gap: 10px; margin-top: 20px; font-size: 16px; line-height: 1.5; color: var(--delir-ink); }
 .landing-hybrid .hybrid-hero-benefits li { display: flex; align-items: flex-start; gap: 10px; }
-.landing-hybrid .hybrid-hero-benefits svg { margin-top: 3px; color: var(--delir-blue); }
+.landing-hybrid .hybrid-hero-benefits svg { margin-top: 4px; color: var(--delir-blue); }
 .landing-hybrid .hero-visual { margin-top: 28px; padding: 0; background: transparent; }
 .landing-hybrid .hero-visual::before { display: none; }
 .landing-hybrid .hero-visual .product-film { animation: none; }
@@ -122,17 +122,21 @@
 .landing-hybrid .scene-button { min-height: 48px; padding: 12px 0; gap: 8px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; box-shadow: none; background: transparent; color: var(--delir-muted); font-size: 13px; line-height: 1.5; transition: color var(--delir-control-time) ease, border-color var(--delir-control-time) ease; }
 .landing-hybrid .scene-button > span:first-child { display: none; }
 .landing-hybrid .scene-button:hover, .landing-hybrid .scene-button-active { color: var(--delir-blue); border-bottom-color: var(--delir-blue); background: transparent; box-shadow: none; }
-.landing-hybrid .hybrid-more, .landing-hybrid .hybrid-comparison { border-block: 1px solid var(--delir-edge); }
-.landing-hybrid :is(.hybrid-more, .hybrid-comparison) > summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; list-style: none; min-height: 72px; padding-block: 22px; color: var(--delir-ink); font-size: 17px; font-weight: 500; line-height: 1.6; cursor: pointer; }
-.landing-hybrid :is(.hybrid-more, .hybrid-comparison) > summary:hover { color: var(--delir-blue); text-decoration: underline; text-underline-offset: 5px; }
-.landing-hybrid :is(.hybrid-more, .hybrid-comparison) > summary::-webkit-details-marker { display: none; }
+.landing-hybrid .hybrid-more { border-block: 1px solid var(--delir-edge); }
+.landing-hybrid .hybrid-more > summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; list-style: none; min-height: 72px; padding-block: 22px; color: var(--delir-ink); font-size: 17px; font-weight: 500; line-height: 1.6; cursor: pointer; }
+.landing-hybrid .hybrid-more > summary:hover { color: var(--delir-blue); text-decoration: underline; text-underline-offset: 5px; }
+.landing-hybrid .hybrid-more > summary::-webkit-details-marker { display: none; }
 .landing-hybrid .hybrid-disclosure-icon { flex-shrink: 0; transition: transform var(--delir-control-time) var(--delir-ease); }
 .landing-hybrid details[open] > summary .hybrid-disclosure-icon { transform: rotate(45deg); }
 .landing-hybrid .hybrid-extra-grid { display: grid; gap: 40px; padding-block: 16px 48px; }
 .landing-hybrid .hybrid-extra-benefit { display: grid; align-content: start; gap: 28px; min-width: 0; }
-.landing-hybrid .hybrid-comparison .section-shell { padding-inline: 0; }
-.landing-hybrid .hybrid-comparison .premium-comparison { padding-top: 24px; border: 0; background: transparent; }
-.landing-hybrid .hybrid-comparison .comparison-next { display: none; }
+.landing-hybrid .premium-comparison { background: var(--delir-canvas); }
+.landing-hybrid .comparison-table { box-shadow: none; }
+.landing-hybrid .comparison-table :is(.comparison-delir-heading, .comparison-delir-cell) { background: var(--delir-tint); color: var(--delir-blue); border-color: var(--delir-edge); }
+.landing-hybrid .comparison-rating--delir { color: var(--delir-blue); }
+.landing-hybrid .comparison-rating--delir::before { display: none; }
+.landing-hybrid .comparison-rating svg { filter: none; }
+.landing-hybrid .comparison-rating--partial { color: var(--delir-muted); }
 
 /* Reassurance recedes; the closing action gets the second dark chapter. */
 .landing-hybrid .premium-trust { background: var(--delir-tint); border: 0; padding-block: clamp(72px, 9vw, 136px); }

@@ -6,7 +6,7 @@ import { registerDocumentScroll } from '../lib/documentScroll';
 // Native scrolling stays in place for touch devices and people requesting reduced motion.
 export default function SmoothScroll({ controlledAnchors = false }: { controlledAnchors?: boolean }) {
   useEffect(() => {
-    const desktop = window.matchMedia(controlledAnchors ? '(hover: hover) and (pointer: fine)' : '(min-width: 1024px) and (hover: hover) and (pointer: fine)');
+    const desktop = window.matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine)');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let disposed = false;
     let revision = 0;

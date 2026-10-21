@@ -98,6 +98,22 @@ export default function ProductFilm({ clip, priority = false, minimal = false, a
     }
   }, [shouldPlay, visible]);
 
+  useEffect(() => {
+    if (!continuous || !shouldPlay || !visible) return;
+    // Safari may reject autoplay while an entering parent still has opacity 0.
+    // Retry once at the end of that reveal, without a timer or playback reset.
+    const revealFinished = (event: TransitionEvent) => {
+      const video = videoRef.current;
+      if (event.propertyName !== 'opacity' || !(event.target instanceof Element)
+        || !frameRef.current || !event.target.contains(frameRef.current)
+        || !video?.paused || pausedByUser.current || document.hidden) return;
+      resumed.current = true;
+      void video.play().catch(() => {});
+    };
+    document.addEventListener('transitionend', revealFinished);
+    return () => document.removeEventListener('transitionend', revealFinished);
+  }, [continuous, shouldPlay, visible]);
+
   const togglePlayback = () => {
     if (isPlaying) {
       pausedByUser.current = true;
@@ -123,7 +139,12 @@ export default function ProductFilm({ clip, priority = false, minimal = false, a
         <img src={poster} srcSet={posterSrcSet} sizes={focusFrame ? '(max-width: 640px) 1440px, 1920px' : posterSizes} alt={cover?.description ?? description} width={clip.width} height={clip.height} loading={priority || (!autoPlay && visible) ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : undefined} decoding="async" style={mediaStyle} className={focusFrame ? 'absolute' : 'h-full w-full object-contain'} />
         {loadVideo ? (
           <video ref={videoRef} aria-label={title} aria-describedby={`${id}-description`} autoPlay={shouldPlay} muted playsInline loop preload="none" poster={poster}
-            onPlay={() => setPlaying(true)} onPause={event => {
+            onCanPlay={event => {
+              if (shouldPlay && visible && !pausedByUser.current && !document.hidden && event.currentTarget.paused && !resumed.current) {
+                resumed.current = true;
+                void event.currentTarget.play().catch(() => {});
+              }
+            }} onPlay={() => setPlaying(true)} onPause={event => {
               setPlaying(false);
               if (continuous && shouldPlay && visible && !document.hidden && !pausedByUser.current && event.currentTarget.isConnected && !resumed.current) {
                 resumed.current = true;

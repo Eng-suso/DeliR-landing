@@ -1,9 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
-import { Plus } from 'lucide-react';
 import '../styles/premium-landing.css';
 import '../styles/flow-backdrop.css';
 import '../styles/landing-hybrid.css';
-import { comparisonCopy } from '../content/landingCopy';
 import { hybridExperience } from '../content/hybridExperience';
 import { useLanguage } from '../i18n/LanguageContext';
 import SkipLink from '../components/SkipLink';
@@ -36,16 +34,13 @@ export default function LandingV2Page({ homePath = '/v2' }: { homePath?: '/' | '
     {studio ? <div className="relative z-10"><PreviewToolbarV2 /></div> : null}
     <Navbar motionControl={false} readingMode homeHref={`${homePath}${language === 'it' ? '' : '?lang=en'}#hero`} />
     <main id="main-content" className="relative z-10">
-      <Hero compact subheadline={hybridExperience[language].subheadline} />
+      <Hero compact subheadline={hybridExperience[language].subheadline} benefits={hybridExperience[language].benefits} />
       {studio ? <HybridVideoPlan /> : null}
       <HybridProcessPath />
       <HybridProblem />
       <HybridJourney />
       <BuiltFor />
-      <details className="hybrid-comparison section-shell">
-        <summary><span>{comparisonCopy[language].tableTitle}</span><Plus aria-hidden="true" className="hybrid-disclosure-icon size-5" /></summary>
-        <Comparison />
-      </details>
+      <Comparison />
       <PilotInvitation />
       <Faq />
       <FinalCTA />

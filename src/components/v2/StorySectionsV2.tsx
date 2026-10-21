@@ -1,4 +1,4 @@
-import { ArrowRight, Check, X } from 'lucide-react';
+import { ArrowRight, Check, Minus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { comparisonCopy, journeyCopy, pilotCopy } from '../../content/landingCopy';
 import { useLanguage } from '../../i18n/LanguageContext';
@@ -67,8 +67,7 @@ export function ComparisonV2() {
   function rating(row: ComparisonRow, product?: typeof comparisonProducts[number]) {
     const status = product ? row.cells[product.id].status : 'yes';
     const label = `${product?.name ?? 'DeliR'} · ${row.label[language]} · ${t[status]}`;
-    const Icon = status === 'yes' ? Check : X;
-    const content = <><Icon aria-hidden="true" className="size-5" /><span className="sr-only">{t[status]}</span></>;
+    const content = <>{status === 'yes' ? <Check aria-hidden="true" className="size-5" /> : status === 'partial' ? <span aria-hidden="true" className="text-xl">~</span> : <Minus aria-hidden="true" className="size-5" />}<span className="sr-only">{t[status]}</span></>;
     return product ? <Link className="v2-status-link" data-status={status} aria-label={`${label} · ${t.cellSources}`} to={`${sources}#comparison-evidence-${row.id}`}>{content}</Link>
       : <Link className="v2-status-link" data-status={status} aria-label={`${label} · ${t.demoLabel}`} to={`/${language === 'en' ? '?lang=en' : ''}${row.evidence}`}>{content}</Link>;
   }
