@@ -21,6 +21,7 @@ FOLDERS = {'assets', 'seo', 'product-clips'}
 PRESERVED = {'.htaccess', '_headers', '_redirects', 'api'}
 WAITLIST_ENTRYPOINT = 'api/waitlist.php'
 ORIGIN = 'https://delir.it'
+WAITLIST_LIBRARY = Path(__file__).resolve().parent.parent / 'server/ionos/waitlist.php'
 
 
 class ReleaseError(Exception):
@@ -215,6 +216,43 @@ def private_waitlist_event(sftp, remote):
     return None
 
 
+def install_missing_waitlist_library(sftp, remote, release_id):
+    # Only create the missing, tested module. Never overwrite config or libraries.
+    if remote == '/' or not re.fullmatch(r'[a-f0-9]{12}-[0-9]+-[0-9]+', release_id):
+        raise ReleaseError('Private library installation requires an accessible sibling private directory')
+    private = posixpath.join(posixpath.dirname(remote), 'private', 'delir')
+    for folder in [posixpath.dirname(private), private]:
+        info = attributes(sftp, folder)
+        if info is None or not stat.S_ISDIR(info.st_mode):
+            raise ReleaseError('Existing private backend directory is unavailable')
+    for name in ['config.php', 'pilot.php']:
+        info = attributes(sftp, private + '/' + name)
+        if info is None or not stat.S_ISREG(info.st_mode):
+            raise ReleaseError('Existing private backend prerequisites are unavailable')
+    target = private + '/waitlist.php'
+    if attributes(sftp, target) is not None:
+        raise ReleaseError('Private waitlist library already exists; refusing to overwrite it')
+    if WAITLIST_LIBRARY.is_symlink() or not WAITLIST_LIBRARY.is_file():
+        raise ReleaseError('Tested private waitlist source is unavailable')
+    payload = WAITLIST_LIBRARY.read_bytes()
+    temporary = private + '/.waitlist-' + release_id + '.tmp'
+    staged = False
+    try:
+        # Exclusive creation and standard SFTP rename preserve concurrent owner changes.
+        with sftp.open(temporary, 'wx') as stream:
+            staged = True
+            stream.write(payload)
+        info = attributes(sftp, temporary)
+        if info is None or not stat.S_ISREG(info.st_mode) or info.st_size != len(payload):
+            raise ReleaseError('Private library staging is incomplete')
+        sftp.chmod(temporary, 0o600)
+        sftp.rename(temporary, target)
+    finally:
+        if staged and attributes(sftp, temporary) is not None:
+            sftp.remove(temporary)
+    return target
+
+
 def deploy(sftp, build, sha, remote, release_id, check=verify, http=response, probe=verify_waitlist):
     if not remote.startswith('/') or '..' in PurePosixPath(remote).parts:
         raise ReleaseError('IONOS_SFTP_DIRECTORY must be an absolute SFTP path without traversal')
@@ -248,6 +286,7 @@ def deploy(sftp, build, sha, remote, release_id, check=verify, http=response, pr
     directory(sftp, stage)
     directory(sftp, backup)
     journal = []
+    private_library = None
     try:
         # Upload the complete release before changing any existing frontend file.
         for name in files:
@@ -273,7 +312,18 @@ def deploy(sftp, build, sha, remote, release_id, check=verify, http=response, pr
                     event = private_waitlist_event(sftp, remote)
                     if event:
                         print('::notice::Waitlist private diagnostic: ' + event)
-                    raise
+                    if event != 'interest_private_waitlist_missing':
+                        raise
+                    private_library = install_missing_waitlist_library(sftp, remote, release_id)
+                    journal.append((private_library, None))
+                    print('::notice::Installed missing tested private waitlist library; existing private files preserved')
+                    try:
+                        probe(sha)
+                    except ReleaseError:
+                        event = private_waitlist_event(sftp, remote)
+                        if event:
+                            print('::notice::Waitlist private diagnostic after installation: ' + event)
+                        raise
         # Retry transient HTTP failures while the release is still reversible.
         for attempt in range(3):
             try:
@@ -288,6 +338,13 @@ def deploy(sftp, build, sha, remote, release_id, check=verify, http=response, pr
         for final, saved in reversed(journal):
             try:
                 if attributes(sftp, final) is not None:
+                    if final == private_library:
+                        expected = WAITLIST_LIBRARY.read_bytes()
+                        with sftp.open(final, 'rb') as stream:
+                            unchanged = stream.read(len(expected) + 1) == expected
+                        if not unchanged:
+                            print('::notice::Preserved a private library changed by its owner during deployment')
+                            continue
                     sftp.remove(final)
                 if saved:
                     sftp.rename(saved, final)

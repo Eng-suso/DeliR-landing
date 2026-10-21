@@ -85,3 +85,13 @@ Solo dopo il fallimento del probe, se l'account SFTP consente già l'accesso, il
 | `interest_request_failed` | Errore residuo del gestore; non vengono pubblicati stack trace. |
 
 I codici database esistenti sono registrati solo per richieste valide che raggiungono il gestore; il probe di rilascio invia `{}` e non verifica le scritture nel database. Leggere soltanto l'ultima riga `interest_` dal log privato per una diagnosi; non condividere il config o il log completo. I test usano directory temporanee e un database CI isolato, mai dati di produzione.
+
+### File privato mancante: causa osservata e installazione limitata
+
+Il run `39661407248`, dopo quality superata, ha ricevuto HTTP 503 e letto dal log privato il codice recente `interest_private_waitlist_missing`. Il runtime del dominio non trova dunque la libreria nel percorso effettivo; la precedente conferma del titolare non coincide con questa verifica sul server. L'account SFTP del deploy può già leggere quella directory, senza nuovi permessi.
+
+Soltanto per quel codice preciso, il deploy può creare `/private/delir/waitlist.php` dalla copia `server/ionos/waitlist.php` dello stesso commit testato. Richiede cartelle private già presenti, config e pilot regolari, destinazione assente e assenza di symlink. Non legge o modifica configurazioni, credenziali, database o librerie esistenti. Un file già presente blocca l'installazione invece di essere sovrascritto.
+
+La copia passa da un file temporaneo esclusivo nella stessa directory privata, con dimensione verificata e permessi 0600, poi viene rinominata con il comando SFTP standard che rifiuta destinazioni esistenti. Non transita nella directory pubblica. Il probe HTTP viene ripetuto prima degli ingressi HTML; ogni altro errore continua a bloccare la pubblicazione. La libreria appena creata entra nel journal di ripristino, ma un'eventuale modifica concorrente del titolare viene conservata. Non sono eseguite migrazioni né scritture di lead di prova.
+
+Fonte per creazione esclusiva e rename senza sostituzione: [Paramiko SFTP](https://docs.paramiko.org/en/stable/api/sftp.html). I test del trasporto simulano queste semantiche e coprono installazione, prerequisiti mancanti, file esistenti, conflitti concorrenti e rollback.
