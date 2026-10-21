@@ -20,28 +20,28 @@ export const productVideoPath = (id: ProductVideoId, ext: 'mp4' | 'webm' | 'jpg'
 
 export const narrativeVideos: ProductVideo[] = [
   {
-    id: 'problem', seconds: 38,
+    id: 'problem', seconds: 40,
     title: { it: 'Le informazioni sono sparse', en: 'Information is scattered' },
-    summary: { it: 'Interviste, documenti ed email: il processo si ricostruisce a mano, per giorni.', en: 'Interviews, documents and emails: the process gets rebuilt by hand, for days.' },
+    summary: { it: 'Interviste lunghe, in testo libero: i passaggi sono sparsi e ognuno racconta una versione diversa.', en: 'Long free-text interviews: the steps are scattered and everyone tells a different version.' },
     description: {
-      it: 'Tre interviste con versioni diverse dello stesso processo, poi documenti, fogli, email e appunti sparsi. Il consulente ricostruisce il processo a mano su una lavagna: dopo quattro giorni l’analisi non è ancora iniziata.',
-      en: 'Three interviews with different versions of the same process, then scattered documents, spreadsheets, emails and notes. The consultant rebuilds the process by hand on a whiteboard: after four days the analysis has not started yet.',
+      it: 'Le tre interviste del cliente nel progetto. Il testo della trascrizione di Paolo scorre: richieste via mail, informazioni che si completano a voce, passaggi sparsi tra le risposte. Poi l’intervista di Laura: tre persone, tre versioni dello stesso processo.',
+      en: 'The client’s three interviews in the project. Paolo’s transcript scrolls by: requests sent by email, details completed over the phone, steps scattered across the answers. Then Laura’s interview: three people, three versions of the same process.',
     },
   },
   {
-    id: 'agitate', seconds: 38,
-    title: { it: 'E le decisioni restano scoperte', en: 'And decisions are left exposed' },
-    summary: { it: 'Ipotesi non verificate, errori nel modello, numeri senza fonte.', en: 'Unverified assumptions, modelling errors, numbers without a source.' },
+    id: 'agitate', seconds: 40,
+    title: { it: 'E intanto il processo si blocca', en: 'Meanwhile the process stalls' },
+    summary: { it: 'Una soglia che nessuno conosce, un passaggio che nessuno sa chi fa, richieste che aspettano giorni.', en: 'A threshold nobody knows, a step nobody knows who does, requests waiting for days.' },
     description: {
-      it: 'Sulla lavagna l’autorizzazione è un’ipotesi: nessuno sa sopra quale cifra serve e chi firma. Poi finisce nella corsia sbagliata. Al workshop il risparmio «stimato» non ha fonte né simulazione, e il cliente chiede: «Questo chi l’ha detto?».',
-      en: 'On the whiteboard the approval is an assumption: nobody knows above what amount it is needed or who signs. Then it ends up in the wrong lane. At the workshop the “estimated” saving has no source and no simulation, and the client asks: “Who said that?”.',
+      it: 'Nessuna fonte dice sopra quale cifra serve l’autorizzazione: resta una domanda bloccante. Nelle interviste Paolo non sa chi regolarizza un acquisto urgente e a nessuno è mai stato detto. Intanto, nella heatmap del processo di oggi, le richieste aspettano in media 1 giorno e 9 ore su «Autorizza spesa». Valori simulati.',
+      en: 'No source says above what amount approval is needed: it stays a blocking question. In the interviews Paolo does not know who regularises an urgent purchase, and nobody was ever told. Meanwhile, in the heatmap of today’s process, requests wait 1 day 9 hours on average at “Approve spend”. Simulated values.',
     },
   },
 ];
 
 export const solveVideos: ProductVideo[] = [
   {
-    id: 'discovery', seconds: 45,
+    id: 'discovery', seconds: 46,
     title: { it: 'Process Discovery', en: 'Process Discovery' },
     summary: { it: 'Le interviste diventano affermazioni con citazione. Ciò che nessuno dice diventa una domanda aperta.', en: 'Interviews become statements with quotes. What nobody says becomes an open question.' },
     description: {
@@ -50,7 +50,7 @@ export const solveVideos: ProductVideo[] = [
     },
   },
   {
-    id: 'evidence', seconds: 50,
+    id: 'evidence', seconds: 49,
     title: { it: 'Evidenze e BPMN', en: 'Evidence & BPMN' },
     summary: { it: 'Un As-Is in BPMN 2.0 in cui ogni elemento ha la sua fonte, versione dopo versione.', en: 'A BPMN 2.0 As-Is where every element has its source, version after version.' },
     description: {
@@ -59,7 +59,7 @@ export const solveVideos: ProductVideo[] = [
     },
   },
   {
-    id: 'simulation', seconds: 55,
+    id: 'simulation', seconds: 59,
     title: { it: 'Analisi e simulazione', en: 'Analysis & Simulation' },
     summary: { it: 'Simuli il processo di oggi e lo scenario To-Be: sei KPI in movimento e il collo di bottiglia misurato.', en: 'Simulate today’s process and the To-Be scenario: six live KPIs and a measured bottleneck.' },
     description: {
@@ -68,7 +68,7 @@ export const solveVideos: ProductVideo[] = [
     },
   },
   {
-    id: 'results', seconds: 35,
+    id: 'results', seconds: 41,
     title: { it: 'Risultati e consegna', en: 'Results & Deliverables' },
     summary: { it: 'Il confronto As-Is / To-Be e un cruscotto in sola lettura per il process owner.', en: 'The As-Is / To-Be comparison and a read-only dashboard for the process owner.' },
     description: {

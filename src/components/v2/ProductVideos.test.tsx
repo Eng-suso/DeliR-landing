@@ -18,7 +18,7 @@ describe('Product videos', () => {
   it('shows Problem and Agitate, four Solve steps and loads no video before a request', () => {
     const { container } = render(<ProductVideos />);
     expect(screen.getByRole('heading', { name: 'Le informazioni sono sparse' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'E le decisioni restano scoperte' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'E intanto il processo si blocca' })).toBeInTheDocument();
     expect(screen.getAllByRole('tab').map(tab => tab.textContent)).toEqual([
       expect.stringContaining('Process Discovery'), expect.stringContaining('Evidenze e BPMN'),
       expect.stringContaining('Analisi e simulazione'), expect.stringContaining('Risultati e consegna'),
