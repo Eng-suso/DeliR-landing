@@ -36,8 +36,8 @@ export const interestCtaLabel = {
 } as const;
 
 export const waitlistRiskReversals = {
-  it: ['Iscrizione gratuita', 'Nessun obbligo d’acquisto', 'Nessun documento del cliente richiesto'],
-  en: ['Free signup', 'No purchase obligation', 'No client documents needed'],
+  it: ['Iscrizione gratuita', 'Senza impegno', 'Nessuna carta'],
+  en: ['Free signup', 'No commitment', 'No card required'],
 } as const;
 
 export function productInterestHref(language: 'it' | 'en') {

@@ -6,6 +6,8 @@ The owner confirmed product benefits, rather than pilot payment terms, for the h
 
 The hero and closing waitlist CTA now state three signup facts immediately below the button: free signup, no purchase obligation and no client documents required. These describe the waitlist flow, which asks for email and practice type. They do not promise free product access, a launch date, project results or pilot terms.
 
+After PR #20 merged, the owner requested three much shorter reassurances. The follow-up uses “Iscrizione gratuita · Senza impegno · Nessuna carta” and “Free signup · No commitment · No card required” consistently below both CTAs. These still describe signup, not product pricing or pilot terms; the form requests no payment details. The original no-client-documents reassurance is replaced in this CTA line.
+
 ## Focused CRO diagnosis
 
 Heuristic readiness estimate: 77/100 (moderate), not a conversion measurement. Clarity 22/25; goal focus 18/20; traffic/message match 7/15; trust 11/15; friction 12/15; objection handling 7/10. Traffic composition and conversion rates are unknown, so those aspects are assumptions. The goal is waitlist registration by BPM/Operations consultants, with a separate pilot path for an existing client project. This scope was already established and the owner explicitly selected the message direction.
