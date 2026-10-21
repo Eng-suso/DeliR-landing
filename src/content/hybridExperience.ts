@@ -16,7 +16,7 @@ export const hybridExperience = {
       { name: 'Mappa', description: 'Collega il modello alle fonti.', href: '#product-03' },
       { name: 'Analizza', description: 'Porta le lacune in review.', href: '#product-02' },
       { name: 'Simula', description: 'Confronta scenari e ipotesi.', href: '#product-05' },
-      { name: 'Migliora', description: 'Motiva la proposta al cliente.', href: '#scene-review-to-be' },
+      { name: 'Migliora', description: 'Motiva la proposta al cliente.', href: '#scene-decisioni' },
     ],
   },
   en: {
@@ -36,7 +36,7 @@ export const hybridExperience = {
       { name: 'Map', description: 'Connect the model to its sources.', href: '#product-03' },
       { name: 'Analyze', description: 'Bring gaps into the review.', href: '#product-02' },
       { name: 'Simulate', description: 'Compare scenarios and assumptions.', href: '#product-05' },
-      { name: 'Improve', description: 'Explain your proposal to the client.', href: '#scene-review-to-be' },
+      { name: 'Improve', description: 'Explain your proposal to the client.', href: '#scene-decisioni' },
     ],
   },
 } as const;

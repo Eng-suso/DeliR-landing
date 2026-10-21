@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useReducer, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useFragment } from '../lib/useFragment';
 import { scrollDocumentTo } from '../lib/documentScroll';
+import { legacySceneFragments } from '../lib/productClips';
 
 export default function FragmentNavigation({ smooth = false }: { smooth?: boolean }) {
   const fragment = useFragment();
@@ -12,6 +13,11 @@ export default function FragmentNavigation({ smooth = false }: { smooth?: boolea
   // Router pushes update the URL without the browser's hashchange event.
   // Notify native fragment subscribers without triggering a native scroll.
   useLayoutEffect(() => { window.dispatchEvent(new Event('hashchange')); }, [hash]);
+  // Older scene links keep working: they open the recording that covers that step now.
+  useLayoutEffect(() => {
+    const current = legacySceneFragments[fragment];
+    if (current) navigate(`${window.location.pathname}${window.location.search}#${current}`, { replace: true, preventScrollReset: true });
+  }, [fragment, navigate]);
   useEffect(() => {
     if (!smooth) return;
     const followAnchor = (event: MouseEvent) => {
