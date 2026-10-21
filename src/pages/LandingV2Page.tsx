@@ -22,17 +22,19 @@ import HybridJourney from '../components/v2/HybridJourney';
 import HybridVideoPlan from '../components/v2/HybridVideoPlan';
 import HybridProcessPath from '../components/v2/HybridProcessPath';
 import V2Motion from '../components/v2/V2Motion';
+import SmoothScroll from '../components/SmoothScroll';
 
-export default function LandingV2Page() {
+export default function LandingV2Page({ homePath = '/v2' }: { homePath?: '/' | '/v2' }) {
   const [params] = useSearchParams();
   const { language } = useLanguage();
   const studio = params.get('studio') === '1';
   return <div data-client-ready={typeof window !== 'undefined' ? 'true' : 'false'} className="landing-page landing-hybrid relative min-h-dvh">
     <SkipLink />
+    <SmoothScroll controlledAnchors />
     <FragmentNavigation smooth />
     <V2Motion />
     {studio ? <div className="relative z-10"><PreviewToolbarV2 /></div> : null}
-    <Navbar motionControl={false} readingMode homeHref={language === 'it' ? '/v2#hero' : '/v2?lang=en#hero'} />
+    <Navbar motionControl={false} readingMode homeHref={`${homePath}${language === 'it' ? '' : '?lang=en'}#hero`} />
     <main id="main-content" className="relative z-10">
       <Hero compact subheadline={hybridExperience[language].subheadline} />
       {studio ? <HybridVideoPlan /> : null}
@@ -48,6 +50,6 @@ export default function LandingV2Page() {
       <Faq />
       <FinalCTA />
     </main>
-    <Footer homePath="/v2" />
+    <Footer homePath={homePath} />
   </div>;
 }

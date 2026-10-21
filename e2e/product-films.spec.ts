@@ -18,7 +18,7 @@ test('silent films respect reduced motion and play only after opt-in', async ({ 
   await hero.getByRole('button', { name: 'Pausa: DeliR in azione' }).click();
   await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
   await page.locator('#faq').scrollIntoViewIfNeeded();
-  await expect(hero.locator('video')).toHaveCount(0);
+  await expect(hero.locator('video')).toHaveCount(1);
   await hero.scrollIntoViewIfNeeded();
   await expect.poll(() => hero.locator('video').first().evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
 });
@@ -28,10 +28,10 @@ test('all seventeen supplied scenes have keyboard selectors and working media', 
   await page.goto('/');
   await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
   await expect(page.locator('[data-product-module]')).toHaveCount(5);
+  await page.locator('.hybrid-more > summary').click();
   const ids = new Set(['hero-loop']);
   for (const chapter of await page.locator('[data-product-module]').all()) {
-    const chapterId = await chapter.getAttribute('id');
-    await page.locator('nav[aria-label="Benefici DeliR"]').locator('a[href="#' + chapterId + '"]').click();
+    await chapter.scrollIntoViewIfNeeded();
     const selectors = chapter.getByRole('group').getByRole('link');
     for (const selector of await selectors.all()) {
       await selector.focus();
@@ -65,7 +65,7 @@ test('selected scene and fullscreen dialog remain accessible in English', async 
   await page.getByRole('button', { name: 'English', exact: true }).click();
   if (testInfo.project.name.includes('mobile')) await page.getByRole('button', { name: 'Close navigation menu' }).click();
   const chapter = page.locator('#product-05');
-  await page.getByRole('navigation', { name: 'DeliR benefits' }).getByRole('link', { name: 'Scenarios', exact: true }).click();
+  await page.getByRole('navigation', { name: 'Product chapters' }).getByRole('link', { name: 'Scenarios', exact: true }).click();
   const scene = chapter.getByRole('group').getByRole('link', { name: /Scenario comparison/ });
   await scene.click();
   await expect(scene).toHaveAttribute('aria-current', 'true');
@@ -96,7 +96,7 @@ test('video load failure leaves an accessible poster and explanation', async ({ 
   await expect(hero.getByRole('button', { name: 'Riproduci: DeliR in azione' })).toBeDisabled();
 });
 
-test('desktop autoplay stops off-screen and responds to reduced motion', async ({ page }, testInfo) => {
+test('desktop autoplay retains visited clips and responds to reduced motion', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop autoplay policy runs once');
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.emulateMedia({ reducedMotion: 'no-preference' });
@@ -106,7 +106,7 @@ test('desktop autoplay stops off-screen and responds to reduced motion', async (
   await hero.scrollIntoViewIfNeeded();
   await expect.poll(() => hero.locator('video').first().evaluate((element: HTMLVideoElement) => element.currentTime)).toBeGreaterThan(0);
   await page.locator('#product-03').scrollIntoViewIfNeeded();
-  await expect(hero.locator('video')).toHaveCount(0);
+  await expect(hero.locator('video')).toHaveCount(1);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect(page.locator('.product-film > div > video')).toHaveCount(0);
   await hero.scrollIntoViewIfNeeded();
@@ -206,7 +206,7 @@ test('direct English entry and language switch select localized posters and full
   const hero = page.locator('#hero-product-outcome');
   for (const language of ['en', 'it'] as const) {
     const title = language === 'it' ? 'DeliR in azione' : 'DeliR in action';
-    await expect(hero.locator('img')).toHaveAttribute('src', new RegExp(`hero-loop-v2\\.${language}`));
+    await expect(hero.locator('img')).toHaveAttribute('alt', /BPMN/);
     await hero.scrollIntoViewIfNeeded();
     // The new recordings already frame each scene; retain the entire image on mobile.
     const framing = await hero.locator('img').evaluate(image => {

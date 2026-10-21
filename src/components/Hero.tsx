@@ -27,7 +27,7 @@ const narration = {
 export default function Hero({ compact = false, subheadline }: { compact?: boolean; subheadline?: string }) {
   const { language } = useLanguage();
   const t = copy[language];
-  const film = <ProductFilm key={language} clip={productClips.hero} priority minimal autoPlay={!compact} narration={narration[language]} cover={compact ? { poster: productClips.evidence.poster, posterSrcSet: productClips.evidence.posterSrcSet, description: productClips.evidence.description[language] } : undefined} />;
+  const film = <ProductFilm key={language} clip={productClips.hero} priority minimal continuous={compact} narration={narration[language]} cover={compact ? { poster: productClips.evidence.poster, posterSrcSet: productClips.evidence.posterSrcSet, description: productClips.evidence.description[language] } : undefined} />;
   return <section id="hero" className="premium-hero bg-white pb-10 pt-10 sm:pb-14 sm:pt-14" aria-labelledby="hero-title">
     <div className="section-shell hero-layout">
       <div className="hero-heading min-w-0">

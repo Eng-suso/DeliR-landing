@@ -4,7 +4,7 @@ import { LanguageProvider } from './i18n/LanguageContext';
 import ScrollToTop from './components/ScrollToTop';
 import { pilotCaptureReady, waitlistCaptureReady } from './lib/leadCaptureReadiness';
 import SiteMetadata from './components/SiteMetadata';
-import LandingPage from './pages/LandingPage';
+import LandingV2Page from './pages/LandingV2Page';
 import ConsentManager from './components/ConsentManager';
 
 // The primary conversion page is critical content: avoid a second JS/CSS
@@ -16,8 +16,6 @@ const ComparisonSourcesPage = lazy(() => import('./pages/ComparisonSourcesPage')
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const EnterpriseReadinessPage = import.meta.env.DEV ? lazy(() => import('./pages/EnterpriseReadinessPage')) : null;
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
-// Reviewable V1/V2 hybrid; separate from the current homepage and marked noindex.
-const LandingV2Page = lazy(() => import('./pages/LandingV2Page'));
 
 export default function App() {
   return (
@@ -27,7 +25,7 @@ export default function App() {
         <ScrollToTop />
         <Suspense fallback={<div className="min-h-dvh bg-[#f2f8ff]" role="status" aria-label="Loading DeliR" />}>
           <Routes>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<LandingV2Page homePath="/" />} />
             <Route path="/pilot" element={<PilotPage captureEnabled={pilotCaptureReady} />} />
             <Route path="/waitlist" element={<WaitlistPage captureEnabled={waitlistCaptureReady} />} />
             <Route path="/security-data" element={<SecurityDataPage />} />

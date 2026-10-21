@@ -5,6 +5,10 @@ test('critical production routes render', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Production route smoke runs once; cross-browser specs cover rendering');
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await expect(page.locator('.landing-hybrid')).toBeVisible();
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'index, follow');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://delir.it/');
+  await expect(page.locator('.hero-actions a[data-interest-section="hero"]')).toHaveAttribute('href', '/waitlist');
   await page.goto('/waitlist');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   if (process.env.PLAYWRIGHT_WAITLIST_ENABLED === 'true') {

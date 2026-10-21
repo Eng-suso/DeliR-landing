@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useReducer, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useFragment } from '../lib/useFragment';
+import { scrollDocumentTo } from '../lib/documentScroll';
 
 export default function FragmentNavigation({ smooth = false }: { smooth?: boolean }) {
   const fragment = useFragment();
@@ -37,10 +38,21 @@ export default function FragmentNavigation({ smooth = false }: { smooth?: boolea
     let disposed = false;
     let focused = false;
     let lastDestination: number | undefined;
+    let missingTarget: MutationObserver | undefined;
     const scrollToTarget = () => {
       if (disposed || window.location.hash.slice(1) !== fragment) return;
       const target = document.getElementById(fragment);
-      if (!target) return;
+      if (!target) {
+        // Scene links can name a figure mounted by another fragment subscriber.
+        // Wait for that real node instead of relying on a font-ready race.
+        if (!missingTarget) {
+          missingTarget = new MutationObserver(schedule);
+          missingTarget.observe(document.body, { childList: true, subtree: true });
+        }
+        return;
+      }
+      missingTarget?.disconnect();
+      missingTarget = undefined;
       let ancestor: HTMLElement | null = target.parentElement;
       while (ancestor) {
         if (ancestor instanceof HTMLDetailsElement) ancestor.open = true;
@@ -67,14 +79,14 @@ export default function FragmentNavigation({ smooth = false }: { smooth?: boolea
         const destination = Math.max(0, documentTop - margin);
         if (lastDestination !== undefined && Math.abs(destination - lastDestination) < 1) return;
         lastDestination = destination;
-        window.scrollTo({ top: destination, behavior: animate ? 'smooth' : 'instant' });
+        scrollDocumentTo(destination, animate);
       } else target.scrollIntoView({ block: 'start', behavior: 'instant' });
     };
     // Restore before paint, then correct any font-driven layout shift.
     // Do not hold direct links behind font loading or override user input.
-    const cancel = () => { disposed = true; cancelAnimationFrame(frame); };
+    const cancel = () => { disposed = true; cancelAnimationFrame(frame); missingTarget?.disconnect(); };
     const cancelOnFocus = (event: FocusEvent) => {
-      if (event.target instanceof Node && !document.getElementById(fragment)?.contains(event.target)) cancel();
+      if (focused && event.target instanceof Node && !document.getElementById(fragment)?.contains(event.target)) cancel();
     };
     const schedule = () => {
       if (disposed) return;

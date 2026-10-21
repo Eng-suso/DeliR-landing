@@ -5,7 +5,7 @@ import { useLanguage } from '../i18n/LanguageContext';
 import type { ProductClip } from '../lib/productClips';
 import { heroPosterSizes } from '../lib/heroMedia';
 
-type Props = { clip: ProductClip; priority?: boolean; minimal?: boolean; autoPlay?: boolean; sizes?: string; cover?: { poster: string; posterSrcSet: string; description: string }; narration?: readonly { start: number; text: string }[]; focusFrame?: { x: number; y: number; width: number; height: number } };
+type Props = { clip: ProductClip; priority?: boolean; minimal?: boolean; autoPlay?: boolean; continuous?: boolean; sizes?: string; cover?: { poster: string; posterSrcSet: string; description: string }; narration?: readonly { start: number; text: string }[]; focusFrame?: { x: number; y: number; width: number; height: number } };
 type ConnectionNavigator = Navigator & { connection?: { saveData?: boolean } };
 
 function ambientPlaybackAllowed() {
@@ -14,7 +14,7 @@ function ambientPlaybackAllowed() {
     && !(navigator as ConnectionNavigator).connection?.saveData;
 }
 
-export default function ProductFilm({ clip, priority = false, minimal = false, autoPlay = true, sizes, cover, narration, focusFrame }: Props) {
+export default function ProductFilm({ clip, priority = false, minimal = false, autoPlay = true, continuous = false, sizes, cover, narration, focusFrame }: Props) {
   const { language } = useLanguage();
   const id = useId();
   const frameRef = useRef<HTMLDivElement>(null);
@@ -22,12 +22,15 @@ export default function ProductFilm({ clip, priority = false, minimal = false, a
   const dialogRef = useRef<HTMLDialogElement>(null);
   const expandRef = useRef<HTMLButtonElement>(null);
   const [visible, setVisible] = useState(false);
+  const [seen, setSeen] = useState(false);
   const [ambient, setAmbient] = useState(() => autoPlay && ambientPlaybackAllowed());
   const [pageActive, setPageActive] = useState(true);
   const [requested, setRequested] = useState(false);
   const [paused, setPaused] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [failed, setFailed] = useState(false);
+  const resumed = useRef(false);
+  const pausedByUser = useRef(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [playbackTime, setPlaybackTime] = useState(0);
   const title = clip.title[language];
@@ -69,39 +72,43 @@ export default function ProductFilm({ clip, priority = false, minimal = false, a
     const frame = frameRef.current;
     if (!frame) return;
     const observer = new IntersectionObserver(([entry]) => {
-      const inView = entry.isIntersecting && entry.intersectionRatio >= 0.2;
+      const inView = entry.isIntersecting && (continuous ? entry.intersectionRatio > 0 : entry.intersectionRatio >= .2);
       setVisible(inView);
-      if (!inView) setPlaying(false);
-    }, { threshold: 0.2 });
+      if (inView) setSeen(true);
+      if (!inView && !continuous) setPlaying(false);
+    }, { threshold: continuous ? [0, .01] : .2 });
     observer.observe(frame);
     return () => observer.disconnect();
-  }, []);
+  }, [continuous]);
 
-  // V1 autoplays visible films; the hybrid disables ambient playback.
-  // Reduced motion and Save-Data also retain a poster until the visitor opts in.
-  // No video source exists outside the viewport, so off-screen clips are not fetched.
-  const loadVideo = visible && (ambient || requested) && !failed;
+  // V2 keeps a visited film mounted and looping across viewport boundaries.
+  // Unvisited clips stay unloaded; reduced motion/Save-Data remain opt-in.
+  const loadVideo = (visible || (continuous && seen)) && (ambient || requested) && !failed;
   const shouldPlay = loadVideo && !paused && !dialogOpen && pageActive;
+  const isPlaying = playing && loadVideo;
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+    resumed.current = false;
     if (shouldPlay) {
       void video.play().catch(() => { /* Poster and explicit play remain available if autoplay is blocked. */ });
     } else {
       video.pause();
     }
-  }, [shouldPlay]);
+  }, [shouldPlay, visible]);
 
   const togglePlayback = () => {
-    if (playing) {
+    if (isPlaying) {
+      pausedByUser.current = true;
       setPaused(true);
       videoRef.current?.pause();
     } else {
+      pausedByUser.current = false;
       // Safari needs the media element and play() in the original user gesture.
       // Mount just this opted-in film before issuing the imperative play call.
       if (!videoRef.current) {
-        flushSync(() => { setVisible(true); setRequested(true); setPaused(false); });
+        flushSync(() => { setVisible(true); setSeen(true); setRequested(true); setPaused(false); });
       } else {
         setRequested(true);
         setPaused(false);
@@ -116,7 +123,13 @@ export default function ProductFilm({ clip, priority = false, minimal = false, a
         <img src={poster} srcSet={posterSrcSet} sizes={focusFrame ? '(max-width: 640px) 1440px, 1920px' : posterSizes} alt={cover?.description ?? description} width={clip.width} height={clip.height} loading={priority || (!autoPlay && visible) ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : undefined} decoding="async" style={mediaStyle} className={focusFrame ? 'absolute' : 'h-full w-full object-contain'} />
         {loadVideo ? (
           <video ref={videoRef} aria-label={title} aria-describedby={`${id}-description`} autoPlay={shouldPlay} muted playsInline loop preload="none" poster={poster}
-            onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => { setFailed(true); setPlaying(false); }}
+            onPlay={() => setPlaying(true)} onPause={event => {
+              setPlaying(false);
+              if (continuous && shouldPlay && visible && !document.hidden && !pausedByUser.current && event.currentTarget.isConnected && !resumed.current) {
+                resumed.current = true;
+                void event.currentTarget.play().catch(() => {});
+              }
+            }} onError={() => { setFailed(true); setPlaying(false); }}
             onTimeUpdate={narration ? event => setPlaybackTime(event.currentTarget.currentTime) : undefined}
             onSeeking={narration ? event => setPlaybackTime(event.currentTarget.currentTime) : undefined}
             onSeeked={narration ? event => setPlaybackTime(event.currentTarget.currentTime) : undefined}
@@ -127,8 +140,8 @@ export default function ProductFilm({ clip, priority = false, minimal = false, a
           </video>
         ) : null}
         {minimal ? <div className="absolute bottom-3 right-3 z-10 flex gap-2">
-          <button type="button" onClick={togglePlayback} disabled={failed} aria-label={`${playing && visible ? text.pause : text.play}: ${title}`} className="flex size-11 items-center justify-center rounded-full border border-white/30 bg-brand-navy/90 text-white shadow-sm hover:bg-brand-blue disabled:opacity-50">
-            {playing && visible ? <Pause aria-hidden="true" className="size-4" /> : <Play aria-hidden="true" className="size-4" />}
+          <button type="button" onClick={togglePlayback} disabled={failed} aria-label={`${isPlaying ? text.pause : text.play}: ${title}`} className="flex size-11 items-center justify-center rounded-full border border-white/30 bg-brand-navy/90 text-white shadow-sm hover:bg-brand-blue disabled:opacity-50">
+            {isPlaying ? <Pause aria-hidden="true" className="size-4" /> : <Play aria-hidden="true" className="size-4" />}
           </button>
           <button ref={expandRef} type="button" onClick={() => { setDialogOpen(true); dialogRef.current?.showModal(); }} aria-label={`${text.expand}: ${title}`} className="flex size-11 items-center justify-center rounded-full border border-white/30 bg-brand-navy/90 text-white shadow-sm hover:bg-brand-blue"><Maximize2 aria-hidden="true" className="size-4" /></button>
         </div> : null}
@@ -138,13 +151,13 @@ export default function ProductFilm({ clip, priority = false, minimal = false, a
 
       {!minimal ? <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <div className="flex min-w-0 items-center gap-2 text-xs text-slate-600">
-          <span aria-hidden="true" className={`size-1.5 rounded-full ${playing && visible ? 'bg-blue-600' : 'bg-slate-400'}`} />
+          <span aria-hidden="true" className={`size-1.5 rounded-full ${isPlaying ? 'bg-blue-600' : 'bg-slate-400'}`} />
           <span>{text.silent}</span><span aria-hidden="true">·</span><span className="tabular-nums">{Math.round(clip.duration)}s</span>
         </div>
         <div className="flex shrink-0 items-center gap-1">
-          <button type="button" onClick={togglePlayback} disabled={failed} aria-label={`${playing && visible ? text.pause : text.play}: ${title}`} className="film-control">
-            {playing && visible ? <Pause aria-hidden="true" className="size-4" /> : <Play aria-hidden="true" className="size-4" />}
-            <span>{playing && visible ? text.pause : text.play}</span>
+          <button type="button" onClick={togglePlayback} disabled={failed} aria-label={`${isPlaying ? text.pause : text.play}: ${title}`} className="film-control">
+            {isPlaying ? <Pause aria-hidden="true" className="size-4" /> : <Play aria-hidden="true" className="size-4" />}
+            <span>{isPlaying ? text.pause : text.play}</span>
           </button>
           <button ref={expandRef} type="button" onClick={() => { setDialogOpen(true); dialogRef.current?.showModal(); }} aria-label={`${text.expand}: ${title}`} className="film-control">
             <Maximize2 aria-hidden="true" className="size-4" /><span className="sm:hidden">{language === 'it' ? 'Video completo' : 'Full video'}</span><span className="hidden sm:inline">{text.expand}</span>
@@ -161,7 +174,7 @@ export default function ProductFilm({ clip, priority = false, minimal = false, a
           <h2 id={`${id}-dialog-title`} className="min-w-0 truncate text-base font-semibold text-brand-ink">{title}</h2>
           <button type="button" onClick={() => dialogRef.current?.close()} aria-label={text.close} className="film-control"><X aria-hidden="true" className="size-5" /></button>
         </div>
-        {dialogOpen ? <video aria-label={title} aria-describedby={`${id}-dialog-description`} controls autoPlay muted playsInline preload="metadata" poster={poster} className="mx-auto max-h-[calc(100dvh-210px)] w-full bg-slate-950">
+        {dialogOpen ? <video aria-label={title} aria-describedby={`${id}-dialog-description`} controls autoPlay muted playsInline loop={continuous} preload="metadata" poster={poster} className="mx-auto max-h-[calc(100dvh-210px)] w-full bg-slate-950">
           <source src={mp4} type="video/mp4" />
           {webm ? <source src={webm} type="video/webm" /> : null}
           <track kind="captions" src={captions} srcLang={language} label={language === 'it' ? 'Descrizione italiana' : 'English description'} />

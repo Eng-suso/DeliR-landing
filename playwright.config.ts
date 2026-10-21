@@ -2,6 +2,8 @@ import { defineConfig, devices } from '@playwright/test';
 const testOrigin = process.env.PLAYWRIGHT_BASE_URL || 'http://127.0.0.1:4173';
 const testPort = new URL(testOrigin).port || '4173';
 const fixtureDirectory = process.env.PLAYWRIGHT_INTEREST_FIXTURE === 'true' ? 'dist-interest' : 'dist';
+// The checked-in production settings enable the verified IONOS waitlist.
+process.env.PLAYWRIGHT_WAITLIST_ENABLED ??= 'true';
 
 export default defineConfig({
   testDir: './e2e',

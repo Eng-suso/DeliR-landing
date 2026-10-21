@@ -1,7 +1,6 @@
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { LanguageProvider } from './i18n/LanguageContext';
-import LandingPage from './pages/LandingPage';
 import LandingV2Page from './pages/LandingV2Page';
 import PilotPage from './pages/PilotPage';
 import SecurityDataPage from './pages/SecurityDataPage';
@@ -15,6 +14,6 @@ export { structuredData } from './lib/structuredData';
 
 // Render the same public components and readiness flags as the browser application.
 export function renderPage(pathname: string, language: 'it' | 'en') {
-  const page = pathname === '/v2' ? <LandingV2Page /> : pathname === '/' ? <LandingPage /> : pathname === '/pilot' ? <PilotPage captureEnabled={pilotCaptureReady} /> : pathname === '/security-data' ? <SecurityDataPage /> : pathname === '/comparison-sources' ? <ComparisonSourcesPage /> : pathname === '/privacy' ? <PrivacyPage /> : pathname === '/waitlist' ? <WaitlistPage captureEnabled={waitlistCaptureReady} /> : <NotFoundPage />;
+  const page = pathname === '/v2' ? <LandingV2Page /> : pathname === '/' ? <LandingV2Page homePath="/" /> : pathname === '/pilot' ? <PilotPage captureEnabled={pilotCaptureReady} /> : pathname === '/security-data' ? <SecurityDataPage /> : pathname === '/comparison-sources' ? <ComparisonSourcesPage /> : pathname === '/privacy' ? <PrivacyPage /> : pathname === '/waitlist' ? <WaitlistPage captureEnabled={waitlistCaptureReady} /> : <NotFoundPage />;
   return renderToString(<StaticRouter location={`${pathname}?lang=${language}`}><LanguageProvider>{page}</LanguageProvider></StaticRouter>);
 }

@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { pageMetadata } from '../lib/siteMetadata';
 import { structuredData } from '../lib/structuredData';
 import { preload } from 'react-dom';
-import { heroMedia, heroPosterSizes } from '../lib/heroMedia';
+import { productClips } from '../lib/productClips';
+import { heroPosterSizes } from '../lib/heroMedia';
 import { useLocation } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext';
 
@@ -11,7 +12,7 @@ export default function SiteMetadata() {
   const { pathname } = useLocation();
   const { language } = useLanguage();
   useEffect(() => {
-    const hero = heroMedia[language];
+    const hero = productClips.evidence;
     if (pathname === '/') preload(hero.poster, { as: 'image', imageSrcSet: hero.posterSrcSet, imageSizes: heroPosterSizes, fetchPriority: 'high' });
     const { title, description, robots, canonical } = pageMetadata(pathname, language);
     document.title = title;

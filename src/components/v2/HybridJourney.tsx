@@ -42,7 +42,7 @@ export default function HybridJourney() {
         <p className="mt-4 text-base leading-7 text-slate-600">{module.body}</p>
         <p className="hybrid-deliverable">{module.output}</p>
       </div>
-      <ClipExplorer clips={benefit.clips} name={module.name} initial={benefit.initial} autoPlay={false} editorial />
+      <ClipExplorer clips={benefit.clips} name={module.name} initial={benefit.initial} continuous editorial />
     </>;
   }
   return <section id="caso" className="premium-journey hybrid-journey scroll-mt-24 py-14 sm:py-20" aria-labelledby="journey-title">
@@ -68,7 +68,7 @@ export default function HybridJourney() {
           {benefitContent(benefit)}
         </article>)}</div>
       </details>
-      <div className="mt-8 flex flex-col gap-5 border-t border-slate-200 pt-8 lg:flex-row lg:items-center lg:justify-between">
+      <div data-reveal className="mt-8 flex flex-col gap-5 border-t border-slate-200 pt-8 lg:flex-row lg:items-center lg:justify-between">
         <p className="max-w-2xl text-base font-medium leading-7 text-brand-ink">{t.principle}</p>
         <a data-interest-section="caso" href={productInterestHref(language)} className="btn-primary whitespace-normal">{interestCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4" /></a>
       </div>

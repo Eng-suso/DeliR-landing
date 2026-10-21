@@ -65,17 +65,17 @@ La headline resta **«Mappa. Analizza. Simula. Migliora.»**, con audience e sub
 
 | Regola proposta | Valore/uso |
 | --- | --- |
-| Griglia | Hero: headline, subheadline e CTA a sinistra, visual a destra da 1024px; sotto questa soglia il visual segue le azioni. Benefici alternati desktop, media prima del testo sotto 1024px. |
+| Griglia | Hero: headline, subheadline e CTA a sinistra, visual a destra da 1024px; sotto questa soglia il visual segue le azioni. Nei capitoli il testo precede il media a tutta larghezza su ogni dispositivo; copy in due colonne su desktop. |
 | Spaziatura | Scala 4/8/12/16/24/32/48/64/96 px; capitoli 72–136 px, chiusura 88–160 px. |
 | CTA | Conservare la forma a pillola esistente, target almeno 44 × 44 px, una priorità visiva primaria. |
-| Superfici | Nessuna cornice workspace, card per fase o riquadro per output; bordo singolo e raggio 4 px sullo schermo reale. Scene come tab sottolineate, percorso come indice aperto. |
-| Ombra | Solo demo hero: `0 12px 36px -24px rgb(12 40 59 / 24%)`. Benefici e output senza ombra. |
+| Superfici | Nessuna cornice workspace, card per fase o riquadro per output; media senza bordo o raggio aggiuntivi. Scene come tab sottolineate, percorso come indice aperto. |
+| Ombra | Hero, benefici e output senza ombra aggiuntiva. |
 | Microinterazioni | 220 ms colore/frecce, 240 ms indicatore di capitolo; aperture piccole 180 ms. |
-| Ingressi | 620 ms, translateY 24 px + opacità; hero testuale solo movimento 20 px, ritardi 70/140 ms, copy dei benefici 80 ms. Un IntersectionObserver, nessun loop di scroll. HTML visibile senza JS. |
+| Ingressi/uscite | Reversibili: 560 ms in ingresso, 320 ms in uscita, translateY ±28 px e opacità. Un IntersectionObserver, componenti senza trasformazioni annidate. HTML visibile senza JS. |
 | Easing | `cubic-bezier(.22, 1, .36, 1)` già nel tema studio; `ease` per feedback semplici. |
-| Motion continuo | Non aggiungere marquee, scroll forzato o video automatici soltanto perché presenti nei riferimenti. Rispettare reduced motion e controlli di riproduzione. |
+| Scroll/video | Su richiesta esplicita: Lenis 0,95 s con puntatore preciso, touch nativo. Video muti in autoplay/loop dopo il primo ingresso, mantenuti montati attraversando i bordi dello schermo; pausa esplicita, reduced motion e Save-Data rispettati. |
 
-La nuova [verifica REA del comportamento](docs/design-research/motion-followup.md) distingue cambi di stato osservati, dichiarazioni CSS e scelte DeliR. La barra dei tre capitoli segue la lettura, resta sotto la navigazione e usa sottolineatura più `aria-current`. Gli anchor attivati dall'utente scorrono in modo nativo e fluido; URL diretti e preferenza reduced motion restano immediati.
+La nuova [verifica REA del comportamento](docs/design-research/reversible-motion-2026-10-21.md) distingue cambi di stato osservati, dichiarazioni CSS e scelte DeliR. La barra dei tre capitoli segue la lettura, resta sotto la navigazione e usa sottolineatura più `aria-current`. Gli anchor usano la stessa istanza Lenis quando attiva, con fallback nativo; URL diretti e preferenza reduced motion restano immediati.
 
 ### Struttura e prove
 
@@ -1037,6 +1037,8 @@ Gli URL font sono riferimenti di rete, non file copiati. Le richieste includono 
 ## Verifica e prossima implementazione
 
 La revisione UX/scroll del 21 ottobre 2026, con nuove osservazioni REA su Apple e il limite di accesso a Revolut, è documentata in [ux-scroll-2026-10-21.md](docs/design-research/ux-scroll-2026-10-21.md). Contiene le scelte originali DeliR e distingue i risultati osservati dai comportamenti non verificati.
+
+Il successivo comportamento reversibile richiesto dall'utente, con nuove osservazioni REA su ProcessMind e la correzione della sovrapposizione nella sezione scura, è documentato in [reversible-motion-2026-10-21.md](docs/design-research/reversible-motion-2026-10-21.md).
 
 Sono stati verificati: 10 scenari REA, 10 snapshot DOM, 39 letture CSS HTTP riuscite, zero errori PostCSS e presenza dei dati di ogni sito nei cinque JSON. Le limitazioni degli scenari incompleti rimangono aperte e sono dichiarate sopra. Non è un audit completo dei siti concorrenti, né una prova di efficacia del loro design.
 

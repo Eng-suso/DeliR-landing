@@ -1,8 +1,8 @@
 import { expect, test } from '@playwright/test';
 
 const approved = {
-  it: 'Ricostruisci i processi del cliente, confronta le alternative e porta raccomandazioni sostenute da evidenze.',
-  en: 'Reconstruct your client’s processes, compare alternatives, and deliver recommendations backed by evidence.',
+  it: 'Smetti di passare settimane a ricostruire come lavora davvero il tuo cliente. DeliR trasforma la conoscenza dispersa in un As-Is verificato, confronta scenari To-Be e migliora continuamente i processi, così puoi fornire raccomandazioni migliori più rapidamente.',
+  en: 'Stop spending weeks reconstructing how your client really works. DeliR turns scattered knowledge into a verified As-Is, compares To-Be scenarios, and continuously improves processes so you deliver better recommendations faster.',
 };
 
 for (const language of ['it', 'en'] as const) {

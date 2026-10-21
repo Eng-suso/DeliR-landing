@@ -12,6 +12,7 @@
   --delir-nav-height: 72px;
   --delir-control-time: 220ms;
   --delir-enter-time: 560ms;
+  --delir-exit-time: 320ms;
   font-family: var(--font-display);
   color: var(--delir-ink);
   background: var(--delir-canvas);
@@ -158,7 +159,7 @@
   .landing-hybrid .hero-headline { font-size: clamp(2.65rem, 4.25vw, 4rem); line-height: 1.04; }
   .landing-hybrid .hero-visual { align-self: center; margin-top: 0; padding: 0; background: transparent; }
   .landing-hybrid .hybrid-problem-layout { grid-template-columns: 1fr 1fr; gap: 64px 96px; }
-  .landing-hybrid .hybrid-problem-intro { position: sticky; top: calc(var(--delir-nav-height) + 32px); align-self: start; }
+  .landing-hybrid .hybrid-problem-intro { align-self: start; }
   .landing-hybrid .hybrid-benefit > .hybrid-benefit-copy { display: grid; grid-template-columns: 1fr .9fr; gap: 0 80px; align-items: start; }
   .landing-hybrid .hybrid-benefit-copy .landing-eyebrow { grid-column: 1 / -1; }
   .landing-hybrid .hybrid-benefit-copy h3 { grid-column: 1; grid-row: 2 / 4; }
@@ -197,18 +198,21 @@
   .landing-hybrid .premium-method .method-card p { max-width: none; }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .landing-hybrid [data-v2-entered] { animation: delir-enter var(--delir-enter-time) var(--delir-ease) both; }
-  .landing-hybrid .hero-heading[data-v2-entered], .landing-hybrid .hero-description[data-v2-entered], .landing-hybrid .hero-actions[data-v2-entered] { animation-name: delir-arrive; }
-  .landing-hybrid .hero-description[data-v2-entered] { animation-delay: 70ms; }
-  .landing-hybrid .hero-actions[data-v2-entered] { animation-delay: 140ms; }
-  .landing-hybrid .hybrid-benefit-copy[data-v2-entered] { animation-delay: 80ms; }
+  /* Enabled only by the observer. Initial HTML and the first viewport are readable. */
+  .landing-hybrid[data-motion='full'] [data-v2-visibility] {
+    opacity: 1;
+    transform: none;
+    transition: opacity var(--delir-enter-time) var(--delir-ease), transform var(--delir-enter-time) var(--delir-ease);
+  }
+  .landing-hybrid[data-motion='full'] [data-v2-visibility='below'] { opacity: 0; transform: translateY(28px); transition-duration: var(--delir-exit-time); }
+  .landing-hybrid[data-motion='full'] [data-v2-visibility='above'] { opacity: 0; transform: translateY(-28px); transition-duration: var(--delir-exit-time); }
+  .landing-hybrid[data-motion='full'] [data-v2-visibility]:is(:focus-within, :has(dialog[open])) { opacity: 1; transform: none; transition: none; }
   .landing-hybrid .film-dialog[open] { animation: delir-disclose 180ms ease-out; }
 }
-@keyframes delir-enter { from { opacity: .65; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes delir-arrive { from { transform: translateY(20px); } to { transform: translateY(0); } }
 @keyframes delir-disclose { from { opacity: .4; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) {
-  .landing-hybrid [data-v2-entered], .landing-hybrid .film-dialog[open] { animation: none; }
+  .landing-hybrid [data-v2-visibility] { opacity: 1; transform: none; }
+  .landing-hybrid .film-dialog[open] { animation: none; }
   .landing-hybrid .hybrid-path-steps a:hover svg { transform: none; }
   .landing-hybrid *, .landing-hybrid *::before, .landing-hybrid *::after { transition-duration: 0s !important; }
 }

@@ -100,12 +100,15 @@ test('DeliR workflow links reach real scenes and keep preview navigation in V2',
 
 test('supporting scenes and comparison remain deep linkable', async ({ page }) => {
   await page.goto('/v2#scene-memoria');
+  await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   await expect(page.locator('.hybrid-more')).toHaveAttribute('open', '');
   await expect(page.locator('#scene-memoria')).toBeVisible();
   await page.goto('/v2?lang=en#scene-review-to-be');
+  await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   await expect(page.locator('#scene-review-to-be')).toBeVisible();
   await expect(page.locator('#product-04-title')).toHaveText('Explain the changes you recommend.');
   await page.goto('/v2?lang=it#confronto');
+  await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   await expect(page.locator('.hybrid-comparison')).toHaveAttribute('open', '');
   await expect(page.locator('#confronto table')).toBeVisible();
   await page.locator('#confronto').getByRole('link', { name: /DeliR · Trova lacune/ }).click();
@@ -115,8 +118,9 @@ test('supporting scenes and comparison remain deep linkable', async ({ page }) =
 test('V2 chapters follow reading position and motion respects the visitor preference', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/v2');
-  await expect(page.locator('.hero-heading')).toHaveAttribute('data-v2-entered', 'true');
-  await expect(page.locator('.hero-heading')).toHaveCSS('animation-name', 'delir-arrive');
+  await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
+  await expect(page.locator('.hero-heading')).toHaveAttribute('data-v2-visibility', 'visible');
+  await expect(page.locator('.hero-heading')).toHaveCSS('transition-duration', '0.56s, 0.56s');
   const chapter = page.getByRole('navigation', { name: 'Capitoli del prodotto' });
   await chapter.getByRole('link', { name: 'Lacune', exact: true }).click();
   await expect(page).toHaveURL(/#product-02$/);
@@ -128,10 +132,12 @@ test('V2 chapters follow reading position and motion respects the visitor prefer
   await expect(page.locator('#product-02 .product-screen-stage')).toHaveCSS('border-top-width', '0px');
   await expect(page.locator('#product-02 .product-screen-stage')).toHaveCSS('box-shadow', 'none');
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await expect(page.locator('.hero-heading')).not.toHaveAttribute('data-v2-entered', 'true');
+  await expect(page.locator('.hero-heading')).not.toHaveAttribute('data-v2-visibility', /.+/);
   await expect(page.locator('.hero-heading')).toHaveCSS('animation-name', 'none');
   await chapter.getByRole('link', { name: 'Scenari', exact: true }).focus();
   await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(/#product-05$/);
+  await expect(page.locator('#product-05')).toBeFocused();
   await expect(chapter.getByRole('link', { name: 'Scenari', exact: true })).toHaveAttribute('aria-current', 'location');
   await expect(page.locator('#product-05 video')).toHaveCount(0);
 });
@@ -140,6 +146,7 @@ test('V2 keeps repeated anchors, history and mobile conversion usable', async ({
   await page.setViewportSize({ width: 375, height: 812 });
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/v2');
+  await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   const quickAction = page.locator('.v2-quick-action');
   await expect(quickAction).toBeVisible();
   await expect(quickAction).toHaveAttribute('href', '/waitlist');
@@ -176,6 +183,7 @@ test('video plan uses available recordings and preserves language', async ({ pag
   await expect(page.getByRole('complementary', { name: 'Produzione video' })).toHaveCount(0);
   await expect(page).not.toHaveTitle(/anteprima|preview/i);
   await page.goto('/v2?studio=1');
+  await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   await expect(page).toHaveURL(/studio=1/);
   await expect(page.locator('.hybrid-plan-card')).toHaveCount(4);
   await expect(page.locator('#piano-video')).toContainText('Nessun nuovo video è obbligatorio');
@@ -212,13 +220,16 @@ test('keyboard opens menus, supporting content, full demo and FAQ', async ({ pag
   await expect(toggle).toHaveAttribute('aria-expanded', 'false');
   const film = page.locator('#hero-product-outcome');
   await film.scrollIntoViewIfNeeded();
-  await expect(film.locator('video')).toHaveCount(0);
+  await expect.poll(() => film.locator(':scope > div > video').evaluate(video => (video as HTMLVideoElement).currentTime), { timeout: 15_000 }).toBeGreaterThan(0);
+  const pause = film.getByRole('button', { name: 'Pausa: DeliR in azione' });
+  if (await pause.isVisible()) await pause.click();
   await film.getByRole('button', { name: 'Riproduci: DeliR in azione' }).click();
   await expect.poll(() => film.locator(':scope > div > video').evaluate(video => (video as HTMLVideoElement).readyState), { timeout: 15_000 }).toBeGreaterThanOrEqual(2);
   const expand = film.getByRole('button', { name: 'Apri il video completo: DeliR in azione' });
   await expand.focus(); await page.keyboard.press('Enter');
   const dialog = page.getByRole('dialog', { name: 'DeliR in azione' });
   await expect(dialog).toBeVisible();
+  await expect(dialog.locator('video')).toHaveAttribute('loop', '');
   await expect.poll(() => dialog.locator('video').evaluate(video => (video as HTMLVideoElement).readyState), { timeout: 15_000 }).toBeGreaterThanOrEqual(2);
   await page.keyboard.press('Escape');
   await expect(dialog).not.toBeVisible();

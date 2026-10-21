@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLanguage } from '../../i18n/LanguageContext';
 
-/** One entrance vocabulary, with no scroll loop, hidden prerender or animation library. */
+/** Reversible viewport reveals; document scrolling and prerender stay native. */
 export default function V2Motion() {
   const { language } = useLanguage();
   useEffect(() => {
@@ -10,30 +10,28 @@ export default function V2Motion() {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
     let observer: IntersectionObserver | undefined;
-    const selector = '.hero-heading, .hero-description, .hero-actions, .hybrid-journey-heading, .hybrid-benefit-copy, .hybrid-product-media, .hybrid-problem-intro, .premium-pilot [data-reveal], .premium-trust [data-reveal]';
-    const targets = Array.from(root.querySelectorAll<HTMLElement>(selector));
+    const selector = '.hero-heading, .hero-description, .hero-actions, .hero-visual, .hybrid-path-steps li, .hybrid-problem-intro, .hybrid-problem-sequence li, .hybrid-problem-conclusion, .hybrid-journey-heading, .hybrid-benefit-copy, main [data-reveal]';
+    // A component gets one transform, never a second animated ancestor.
+    const targets = Array.from(root.querySelectorAll<HTMLElement>(selector)).filter(target => !target.parentElement?.closest(selector));
+    const header = root.querySelector<HTMLElement>('.premium-navigation');
     const update = () => {
       observer?.disconnect();
-      targets.forEach(target => target.removeAttribute('data-v2-entered'));
       root.dataset.motion = preference.matches || saveData ? 'reduced' : 'full';
-      if (preference.matches || saveData || !('IntersectionObserver' in window)) return;
+      if (preference.matches || saveData || !('IntersectionObserver' in window)) {
+        targets.forEach(target => target.removeAttribute('data-v2-visibility'));
+        return;
+      }
       observer = new IntersectionObserver(entries => {
         for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          const linked = document.getElementById(window.location.hash.slice(1))?.closest('section');
-          if (linked?.contains(entry.target) || entry.target.contains(document.activeElement)) { observer?.unobserve(entry.target); continue; }
-          entry.target.setAttribute('data-v2-entered', 'true');
-          observer?.unobserve(entry.target);
+          // Outgoing elements move away from the viewport, avoiding threshold
+          // feedback when transforms affect the observed bounding rectangle.
+          const state = entry.isIntersecting ? 'visible' : entry.boundingClientRect.top < window.innerHeight / 2 ? 'above' : 'below';
+          (entry.target as HTMLElement).dataset.v2Visibility = state;
         }
-      }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
+      }, { threshold: 0, rootMargin: `-${(header?.offsetHeight ?? 72) + 24}px 0px -${Math.min(80, window.innerHeight * .1)}px 0px` });
       targets.forEach(target => observer?.observe(target));
     };
     update();
-    const focus = (event: FocusEvent) => {
-      targets.filter(target => event.target instanceof Node && target.contains(event.target)).forEach(target => target.removeAttribute('data-v2-entered'));
-    };
-    root.addEventListener('focusin', focus);
-    const header = root.querySelector<HTMLElement>('.premium-navigation');
     const progress = root.querySelector<HTMLElement>('[data-v2-scroll-progress]');
     const links = Array.from(root.querySelectorAll<HTMLAnchorElement>('.premium-navigation ul a[href^="#"]'));
     const sections = links.map(link => ({ link, target: document.getElementById(link.hash.slice(1)) }));
@@ -56,17 +54,18 @@ export default function V2Motion() {
     readPosition();
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
     preference.addEventListener('change', update);
     return () => {
       observer?.disconnect();
       layout.disconnect(); cancelAnimationFrame(frame);
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', schedule);
+      window.removeEventListener('resize', update);
       links.forEach(link => link.removeAttribute('aria-current'));
       delete root.dataset.motion;
       preference.removeEventListener('change', update);
-      root.removeEventListener('focusin', focus);
-      targets.forEach(target => target.removeAttribute('data-v2-entered'));
+      targets.forEach(target => target.removeAttribute('data-v2-visibility'));
     };
   }, [language]);
   return null;
