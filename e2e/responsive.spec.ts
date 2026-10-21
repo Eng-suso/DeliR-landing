@@ -24,6 +24,7 @@ test('mobile navigation opens, remains operable, and closes after selection', as
 
 test('comparison keeps every product visible without horizontal scrolling', async ({ page }) => {
   await page.goto('/#confronto');
+  await page.locator('.landing-page[data-client-ready="true"]').waitFor();
   const comparison = page.locator('#confronto');
   await comparison.scrollIntoViewIfNeeded();
   await expect(comparison.locator('table')).toBeVisible();
