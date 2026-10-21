@@ -52,7 +52,7 @@ it('preserves failed requests and focuses receipt only after server acceptance',
   expect(screen.queryByRole('heading', { name: 'Sei nella lista d’attesa.' })).not.toBeInTheDocument();
   fetchMock.mockResolvedValue(Response.json({ accepted: true }, { status: 201 }));
   fireEvent.click(screen.getByRole('button', { name: 'Entra nella lista d’attesa' }));
-  expect(await screen.findByRole('heading', { name: 'Sei nella lista d’attesa.' })).toHaveFocus();
+  await waitFor(() => expect(screen.getByRole('heading', { name: 'Sei nella lista d’attesa.' })).toHaveFocus());
   expect(screen.queryByRole('form')).not.toBeInTheDocument();
 });
 it('prevents multiple requests while the server response is pending', async () => {
