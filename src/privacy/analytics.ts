@@ -118,3 +118,20 @@ export function trackInterestEvent(event: InterestEvent, language: 'it' | 'en', 
   });
   return true;
 }
+
+export type VideoEvent = 'video_play' | 'video_complete';
+export const productVideoIds = ['problem', 'agitate', 'discovery', 'evidence', 'simulation', 'results', 'walkthrough'] as const;
+const videoEvents: readonly string[] = ['video_play', 'video_complete'];
+
+// Which product video precedes a waitlist request: only the allowlisted video id
+// and the language, never playback position, titles or arbitrary URLs.
+export function trackVideoEvent(event: VideoEvent, video: string, language: 'it' | 'en'): boolean {
+  if (!analyticsAvailable || !started || !readConsent()?.analytics || !videoEvents.includes(event)) return false;
+  if (!(productVideoIds as readonly string[]).includes(video)) return false;
+  analyticsWindow().gtag?.('event', event, {
+    send_to: measurementId, language: language === 'en' ? 'en' : 'it', video_id: video, section: 'caso',
+    page_location: `https://delir.it/${language === 'en' ? '?lang=en' : ''}`,
+    page_referrer: '',
+  });
+  return true;
+}
