@@ -167,9 +167,15 @@ def verify_waitlist(sha):
     try:
         payload = json.loads(body)
     except (ValueError, UnicodeError):
-        raise ReleaseError('Waitlist endpoint did not execute as the expected PHP API') from None
+        raise ReleaseError('Waitlist readiness failed (HTTP ' + str(status) + ', non-JSON response)') from None
     if status != 422 or payload != {'accepted': False, 'error': 'invalid_request'}:
-        raise ReleaseError('Waitlist endpoint is unavailable or its private intake is not enabled')
+        # Only fixed protocol codes may reach Actions logs; never echo response bodies.
+        known = {'temporarily_unavailable', 'https_required', 'origin_not_allowed',
+                 'method_not_allowed', 'json_required', 'body_too_large',
+                 'invalid_request', 'invalid_application', 'too_many_requests', 'client_unavailable'}
+        code = payload.get('error') if isinstance(payload, dict) else None
+        safe_code = code if isinstance(code, str) and code in known else 'unexpected_response'
+        raise ReleaseError('Waitlist readiness failed (HTTP ' + str(status) + ', ' + safe_code + ')')
 
 
 def deploy(sftp, build, sha, remote, release_id, check=verify, http=response, probe=verify_waitlist):

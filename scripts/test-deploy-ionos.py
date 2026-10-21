@@ -156,6 +156,26 @@ class DeploymentTests(unittest.TestCase):
         self.assertEqual((self.remote / 'public/index.html').read_text(), 'previous frontend')
         self.assert_preserved()
 
+    def test_waitlist_diagnostic_reports_status_without_echoing_arbitrary_bodies(self):
+        from urllib.error import HTTPError
+        cases = [
+            (503, b'{"accepted":false,"error":"temporarily_unavailable"}', 'temporarily_unavailable'),
+            (403, b'{"accepted":false,"error":"origin_not_allowed"}', 'origin_not_allowed'),
+            (404, b'<html>DO_NOT_LOG_RESPONSE</html>', 'non-JSON response'),
+            (500, b'{"error":"DO_NOT_LOG_RESPONSE"}', 'unexpected_response'),
+            (500, b'{"error":["DO_NOT_LOG_RESPONSE"]}', 'unexpected_response'),
+            (500, b'["DO_NOT_LOG_RESPONSE"]', 'unexpected_response'),
+        ]
+        for status, body, code in cases:
+            with self.subTest(status=status, body=body):
+                error = HTTPError('https://example.test/api', status, 'fixture', {}, io.BytesIO(body))
+                with patch.object(deploy, 'urlopen', side_effect=error):
+                    with self.assertRaises(deploy.ReleaseError) as failure:
+                        deploy.verify_waitlist(SHA)
+                self.assertIn('HTTP ' + str(status), str(failure.exception))
+                self.assertIn(code, str(failure.exception))
+                self.assertNotIn('DO_NOT_LOG_RESPONSE', str(failure.exception))
+
     def test_partial_publish_failure_restores_previous_frontend(self):
         self.sftp.fail_publish = True
         with self.assertRaises(OSError):
