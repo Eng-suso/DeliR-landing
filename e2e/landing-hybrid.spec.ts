@@ -141,7 +141,9 @@ test('video plan uses available recordings and preserves language', async ({ pag
   const mobile = testInfo.project.name === 'mobile-safari';
   await page.setViewportSize({ width: mobile ? 375 : 1440, height: 900 });
   await page.goto('/v2');
-  await page.getByRole('link', { name: 'Mostra piano video' }).click();
+  await expect(page.getByRole('complementary', { name: 'Produzione video' })).toHaveCount(0);
+  await expect(page).not.toHaveTitle(/anteprima|preview/i);
+  await page.goto('/v2?studio=1');
   await expect(page).toHaveURL(/studio=1/);
   await expect(page.locator('.hybrid-plan-card')).toHaveCount(4);
   await expect(page.locator('#piano-video')).toContainText('Nessun nuovo video è obbligatorio');
@@ -157,9 +159,10 @@ test('video plan uses available recordings and preserves language', async ({ pag
   await expect(page).toHaveURL(/lang=en/);
   await expect(page.locator('#video-plan-title')).toHaveText('The demos are already available.');
   if (mobile) await menu.click();
-  await page.getByRole('link', { name: 'Hide video plan' }).click();
+  await page.getByRole('link', { name: 'Back to the landing page' }).click();
   await expect(page).toHaveURL(/lang=en/);
   await expect(page.locator('#piano-video')).toHaveCount(0);
+  await expect(page.getByRole('complementary', { name: 'Video production' })).toHaveCount(0);
 });
 
 test('keyboard opens menus, supporting content, full demo and FAQ', async ({ page }) => {

@@ -142,3 +142,10 @@ Verifica della revisione: lint, TypeScript, build con 16 documenti prerenderizza
 L'apertura non richiede più il caricamento manuale del file pubblico descritto nella revisione precedente: la pipeline IONOS include ora il solo `api/waitlist.php` nella pubblicazione con backup e rollback. La build della release abilita il modulo; la configurazione privata rimane quella dichiarata installata e verificata dal titolare. Le build locali senza flag conservano il fallback, mentre `npm run dev` mostra l'anteprima compilabile senza invio.
 
 Prima dell'HTML, il rilascio verifica l'endpoint con un payload vuoto: deve essere eseguito da PHP e rifiutato come richiesta non valida. Un 404, 503 o risposta inattesa fa ripristinare i file precedenti. La verifica non inserisce lead o altri dati; prova di scrittura reale riferita dal titolare, transazioni/deduplicazione/quote verificate dalla CI su database temporaneo. [Procedura di pubblicazione aggiornata](ionos-automatic-deployment.md).
+
+
+## Rimozione dei percorsi demo — 21 ottobre 2026
+
+Su richiesta del titolare, eliminati avviso e flusso di sola validazione locale della waitlist e del pilot. I moduli compaiono solo con destinazione e informativa configurate, in sviluppo come in produzione; altrimenti il contatto email è esplicito. La nota privacy descrive il canale effettivo. Queste regole sostituiscono le precedenti indicazioni sull’anteprima compilabile.
+
+La V2 ordinaria non mostra più la barra di revisione o un titolo browser di anteprima. Le indicazioni per produrre i video restano accessibili soltanto con `?studio=1`; noindex e le diciture sui dati simulati restano invariati. I flag di build e il rilascio automatico IONOS della PR20 non cambiano.

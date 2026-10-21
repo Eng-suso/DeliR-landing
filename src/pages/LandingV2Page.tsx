@@ -30,7 +30,7 @@ export default function LandingV2Page() {
     <SkipLink />
     <FragmentNavigation smooth />
     <V2Motion />
-    <div className="relative z-10"><PreviewToolbarV2 studio={studio} /></div>
+    {studio ? <div className="relative z-10"><PreviewToolbarV2 /></div> : null}
     <Navbar motionControl={false} homeHref={language === 'it' ? '/v2#hero' : '/v2?lang=en#hero'} />
     <main id="main-content" className="relative z-10">
       <Hero compact subheadline={hybridExperience[language].subheadline} />

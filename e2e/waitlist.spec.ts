@@ -22,8 +22,12 @@ test('pilot validates before sending and confirms only accepted submissions', as
   await expect(page).toHaveURL(/\/pilot#application$/);
   await expect(page.locator('#application')).toBeInViewport();
   await expect(page.locator('#application')).toBeFocused();
+  if (await page.getByRole('link', { name: 'Scrivimi per valutare un pilot' }).isVisible()) {
+    await expect(page.getByRole('form')).toHaveCount(0);
+    expect(requests).toEqual([]);
+    return;
+  }
   const submit = page.locator('form button[type="submit"]');
-  const preview = await page.getByText('Anteprima del modulo', { exact: true }).isVisible();
   await submit.click();
   await expect(page.getByLabel('Nome e cognome')).toBeFocused();
   await expect(page.getByText('Inserisci il tuo nome.', { exact: true })).toBeVisible();
@@ -33,17 +37,23 @@ test('pilot validates before sending and confirms only accepted submissions', as
   await page.getByLabel('Tempistica dell’incarico').selectOption('active');
   await page.getByLabel('Processo o problema da analizzare').fill('Review a fictional procurement approval process.');
   await submit.click();
-  if (preview) {
-    await expect(page.getByText('I dati sono pronti, ma l’invio non è ancora disponibile. La richiesta non è stata trasmessa.')).toBeVisible();
-    expect(requests).toEqual([]);
-  } else {
-    await expect(page.getByText('Non siamo riusciti a inviare la candidatura. Riprova.', { exact: true })).toBeVisible();
-    await expect(page.getByLabel('Nome e cognome')).toHaveValue('Demo User');
-    await expect(page.getByText('Candidatura ricevuta.', { exact: true })).toHaveCount(0);
-    await submit.click();
-    await expect(page.getByRole('heading', { name: 'Candidatura ricevuta.' })).toBeVisible();
-    expect(attempts).toBe(2);
-    expect(requests).toHaveLength(2);
+  await expect(page.getByText('Non siamo riusciti a inviare la candidatura. Riprova.', { exact: true })).toBeVisible();
+  await expect(page.getByLabel('Nome e cognome')).toHaveValue('Demo User');
+  await expect(page.getByText('Candidatura ricevuta.', { exact: true })).toHaveCount(0);
+  await submit.click();
+  await expect(page.getByRole('heading', { name: 'Candidatura ricevuta.' })).toBeVisible();
+  expect(attempts).toBe(2);
+  expect(requests).toHaveLength(2);
+});
+
+test('public pages have no developer preview copy in either language', async ({ page }) => {
+  for (const path of ['/v2', '/pilot', '/waitlist', '/privacy']) {
+    for (const language of ['it', 'en']) {
+      await page.goto(`${path}?lang=${language}`);
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+      await expect(page.locator('body')).not.toContainText(/anteprima del modulo|form preview|verifica i dati|check your details|anteprima DeliR|DeliR preview|nessun dato viene inviato o salvato/i);
+      await expect(page.locator('.v2-preview-bar')).toHaveCount(0);
+    }
   }
 });
 

@@ -19,33 +19,25 @@ export default function WaitlistPage({ captureEnabled }: { captureEnabled: boole
   const [fields, setFields] = useState<WaitlistFields>(emptyFields);
   const [errors, setErrors] = useState<WaitlistErrors>({});
   const [submitError, setSubmitError] = useState('');
-  const [previewChecked, setPreviewChecked] = useState(false);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   const busy = useRef(false);
   const started = useRef(false);
   const success = useRef<HTMLHeadingElement>(null);
   const clientReady = typeof window !== 'undefined';
-  // The local preview is interactive without opening production intake.
-  const preview = import.meta.env.DEV && !captureEnabled;
 
   useEffect(() => { if (status === 'success') success.current?.focus(); }, [status]);
   function updateField(field: keyof WaitlistFields, value: string) {
     setFields(current => ({ ...current, [field]: value }));
     setErrors(current => ({ ...current, [field]: undefined }));
     setSubmitError('');
-    setPreviewChecked(false);
   }
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if ((!captureEnabled && !preview) || busy.current) return;
+    if (!captureEnabled || busy.current) return;
     const nextErrors = validateWaitlist(fields);
     setErrors(nextErrors);
     const firstInvalid = (Object.keys(nextErrors) as Array<keyof WaitlistFields>)[0];
     if (firstInvalid) { document.getElementById(firstInvalid)?.focus(); return; }
-    if (preview) {
-      setPreviewChecked(true);
-      return;
-    }
     busy.current = true;
     setStatus('submitting');
     setSubmitError('');
@@ -83,8 +75,7 @@ export default function WaitlistPage({ captureEnabled }: { captureEnabled: boole
         <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Ti scriverò all’indirizzo indicato quando aprirò nuovi accessi a DeliR. Nessun pagamento richiesto.' : 'I’ll email you when I open new access to DeliR. No payment required.'}</p>
         <p className="mt-5 text-sm leading-6 text-slate-600">{it ? 'Hai già un progetto o un processo reale su cui vuoi lavorare?' : 'Already have a real project or process you want to work on?'}</p>
         <a data-pilot-section="waitlist-success" href={pilotApplicationHref(language)} className="btn-secondary mt-3 whitespace-normal">{it ? 'Avvia un pilot' : 'Start a pilot'}<ArrowRight aria-hidden="true" className="size-4" /></a>
-      </section> : captureEnabled || preview ? <form method="post" noValidate onSubmit={handleSubmit} aria-label={it ? 'Iscrizione alla lista d’attesa DeliR' : 'DeliR waitlist signup'} onFocusCapture={() => { if (captureEnabled && !started.current) { started.current = true; trackInterestEvent('interest_form_started', language); } }} className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
-        {preview ? <p className="mb-6 border-l-2 border-brand-blue pl-3 text-sm leading-6 text-slate-600">{it ? 'Anteprima del modulo. Puoi provare la compilazione; nessun dato viene inviato o salvato.' : 'Form preview. You can try it out; no details are sent or saved.'}</p> : null}
+      </section> : captureEnabled ? <form method="post" noValidate onSubmit={handleSubmit} aria-label={it ? 'Iscrizione alla lista d’attesa DeliR' : 'DeliR waitlist signup'} onFocusCapture={() => { if (!started.current) { started.current = true; trackInterestEvent('interest_form_started', language); } }} className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
         <label htmlFor="email" className="block text-sm font-semibold">Email</label>
         <input id="email" name="email" type="email" inputMode="email" autoComplete="email" spellCheck={false} required maxLength={254} disabled={locked} value={fields.email} onChange={event => updateField('email', event.target.value)} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'email-error' : undefined} className="control-enterprise mt-2 !text-base" placeholder={it ? 'nome@studio.it…' : 'you@practice.com…'} />
         {errors.email ? <p id="email-error" className="mt-2 text-sm text-red-700">{errorText.email}</p> : null}
@@ -108,11 +99,10 @@ export default function WaitlistPage({ captureEnabled }: { captureEnabled: boole
         {errors.timing ? <p id="timing-error" className="mt-2 text-sm text-red-700">{errorText.timing}</p> : null}
         <p className="mt-5 text-xs leading-6 text-slate-600">{it ? 'Con l’invio chiedi di essere contattato sulla disponibilità di accesso a DeliR. Puoi ritirare la richiesta scrivendo a ' : 'Submitting asks to be contacted about DeliR access availability. Withdraw your request by emailing '}<a href={`mailto:${publicContactEmail}`} className="underline underline-offset-4">{publicContactEmail}</a>. {it ? 'Leggi l’' : 'Read the '}<a href={privacyNoticeUrl || (it ? '/privacy' : '/privacy?lang=en')} className="font-semibold text-brand-blue underline underline-offset-4">{it ? 'informativa privacy' : 'privacy notice'}</a>.</p>
         {submitError ? <p role="alert" className="mt-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm leading-6 text-red-800">{submitError}</p> : null}
-        {previewChecked ? <p role="status" className="mt-4 text-sm leading-6 text-brand-blue">{it ? 'I dati sono pronti. Nell’anteprima locale non vengono inviati né salvati.' : 'Your details are ready. The local preview does not send or save them.'}</p> : null}
-        <button type="submit" disabled={locked} aria-busy={status === 'submitting'} className="btn-primary mt-5 w-full whitespace-normal">{status === 'submitting' ? (it ? 'Iscrizione in corso…' : 'Joining…') : preview ? (it ? 'Verifica i dati' : 'Check your details') : interestCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4" /></button>
+        <button type="submit" disabled={locked} aria-busy={status === 'submitting'} className="btn-primary mt-5 w-full whitespace-normal">{status === 'submitting' ? (it ? 'Iscrizione in corso…' : 'Joining…') : interestCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4" /></button>
       </form> : <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8" aria-labelledby="interest-pending">
-        <h2 id="interest-pending" className="text-xl font-semibold">{it ? 'La lista d’attesa online non è ancora aperta.' : 'The online waitlist is not open yet.'}</h2>
-        <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Puoi già scrivermi per chiedere di essere aggiunto. Il link apre il tuo programma email; l’invio avviene lì.' : 'You can already email me to ask to be added. The link opens your email app; send your message there.'}</p>
+        <h2 id="interest-pending" className="text-xl font-semibold">{it ? 'Entra in contatto con DeliR.' : 'Get in touch with DeliR.'}</h2>
+        <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Scrivimi per chiedere di essere aggiunto alla lista d’attesa. Il link apre il tuo programma email; l’invio avviene lì.' : 'Email me to ask to be added to the waitlist. The link opens your email app; send your message there.'}</p>
         <a href={productInterestEmailHref(language)} className="btn-primary mt-5 whitespace-normal">{it ? 'Scrivimi per entrare nella lista d’attesa' : 'Email me to join the waitlist'}<ArrowRight aria-hidden="true" className="size-4" /></a>
       </section>}
       <div className="mt-8 border-t border-slate-200 pt-6">
