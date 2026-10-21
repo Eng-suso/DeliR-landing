@@ -64,3 +64,24 @@ Il deploy include una sola eccezione alla conservazione delle API: `api/waitlist
 La verifica invia soltanto `{}` e richiede HTTP 422 con `accepted:false` e `error:invalid_request`. Questo controllo verifica esecuzione PHP, presenza delle librerie/configurazione e gate privato abilitato. Il payload viene scartato prima della connessione database: non crea lead fittizi né verifica autonomamente il database reale. Per la scrittura reale resta l'evidenza riferita dal titolare; la CI prova il contratto e le transazioni su MariaDB isolato.
 
 Se l'endpoint manca, viene servito come file statico, il gate è chiuso oppure il controllo fallisce, il deploy ripristina i file già sostituiti e non pubblica l'HTML con la raccolta attiva. Il normale controllo di fine rilascio ripete anche la verifica endpoint. La pubblicazione resta nel job `deploy-ionos`, dopo quality, push su main e protezioni dell'ambiente `ionos-production` esistenti. La PR non esegue alcun rilascio da sola.
+
+## Diagnosi del rilascio — 21 ottobre 2026
+
+La quality del commit `ad8af712c992ec0165511f46622d6b6da42775be` è passata. Entrambi i tentativi di deploy del run `39652289267` si sono fermati alla verifica waitlist; il marker pubblico dopo il primo ripristino è rimasto `17d8be6ad687643ba58b2aa6f09c1088806899b6`. Il titolare ha confermato file privato presente e `waitlist_enabled` booleano `true`; questo dato non identifica da solo il motivo del rifiuto HTTP.
+
+Il controllo ora riporta lo stato HTTP e soltanto un codice di protocollo riconosciuto, senza stampare il corpo della risposta. La condizione di successo resta esattamente HTTP 422 con `accepted:false` e `error:invalid_request`. La risposta pubblica ai problemi di configurazione resta generica.
+
+L'entrypoint waitlist registra la causa con prefisso `interest_` in `/private/delir/diagnostic.log`, lo stesso file privato già gestito dalla manutenzione del pilot: lock esclusivo, limite di circa 64 KiB, timestamp e soli codici fissi. Non vengono registrati campi del modulo, IP, credenziali, configurazione o testo delle eccezioni. Se il log non è scrivibile, il log PHP riceve soltanto `delir_interest_diagnostic_unavailable`.
+
+Solo dopo il fallimento del probe, se l'account SFTP consente già l'accesso, il deploy legge quel singolo log privato e riporta in Actions esclusivamente un codice `interest_` riconosciuto degli ultimi due minuti. Config e richieste non vengono letti; non sono modificati file privati. Percorsi con symlink, log oltre 66 KiB, testo libero, eventi vecchi e accessi negati sono ignorati senza stampare contenuti o dettagli dell'eccezione. Un account confinato a `/public` non acquisisce nuovi permessi e continua a richiedere la lettura manuale del solo codice da IONOS.
+
+| Codice privato | Verifica |
+| --- | --- |
+| `interest_private_config_missing` / `interest_private_waitlist_missing` / `interest_private_pilot_missing` | Posizione, nome e lettura del file indicato sotto `/private/delir`. |
+| `interest_private_library_invalid` / `interest_private_handler_missing` | Sintassi delle librerie e presenza di `delir_handle_interest` nel file waitlist privato. |
+| `interest_private_config_invalid` | Sintassi del config e restituzione di un array PHP. |
+| `interest_php_extensions_missing` | Estensione `pdo_mysql` nel runtime PHP del dominio. |
+| `interest_capture_disabled` | Valore booleano `true` nel config effettivamente letto; la stringa `'true'` resta rifiutata. |
+| `interest_request_failed` | Errore residuo del gestore; non vengono pubblicati stack trace. |
+
+I codici database esistenti sono registrati solo per richieste valide che raggiungono il gestore; il probe di rilascio invia `{}` e non verifica le scritture nel database. Leggere soltanto l'ultima riga `interest_` dal log privato per una diagnosi; non condividere il config o il log completo. I test usano directory temporanee e un database CI isolato, mai dati di produzione.

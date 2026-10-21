@@ -34,6 +34,52 @@ try {
     interest_check(false, 'connection failure must not accept');
 } catch (RuntimeException $error) { interest_check(true, 'failure propagates to public generic response'); }
 
+// Run the actual public entrypoint against disposable private files, never IONOS.
+$fixture = sys_get_temp_dir() . '/delir-interest-endpoint-' . bin2hex(random_bytes(8));
+mkdir($fixture . '/public/api', 0700, true);
+mkdir($fixture . '/private/delir', 0700, true);
+copy(__DIR__ . '/../../public/api/waitlist.php', $fixture . '/public/api/waitlist.php');
+$cases = ['capture_disabled', 'string_gate', 'private_config_missing', 'private_config_invalid',
+    'private_waitlist_missing', 'private_pilot_missing', 'private_library_invalid', 'private_handler_missing',
+    'php_extensions_missing', 'database_connection_failed', 'request_failed', 'bounded_log'];
+foreach ($cases as $case) {
+    $configFile = $fixture . '/private/delir/config.php';
+    $libraryFile = $fixture . '/private/delir/waitlist.php';
+    $pilotFile = $fixture . '/private/delir/pilot.php';
+    $logFile = $fixture . '/private/delir/diagnostic.log';
+    if (is_file($logFile)) unlink($logFile);
+    copy(__DIR__ . '/waitlist.php', $libraryFile);
+    copy(__DIR__ . '/pilot.php', $pilotFile);
+    file_put_contents($configFile, "<?php return ['waitlist_enabled' => false, 'test_marker' => 'DO_NOT_LOG_RESPONSE'];");
+    if ($case === 'string_gate') file_put_contents($configFile, "<?php return ['waitlist_enabled' => 'true'];");
+    if ($case === 'private_config_missing') unlink($configFile);
+    if ($case === 'private_config_invalid') file_put_contents($configFile, '<?php invalid syntax');
+    if ($case === 'private_waitlist_missing') unlink($libraryFile);
+    if ($case === 'private_pilot_missing') unlink($pilotFile);
+    if ($case === 'private_library_invalid') file_put_contents($libraryFile, '<?php invalid syntax');
+    if ($case === 'private_handler_missing') file_put_contents($libraryFile, '<?php // library with an incompatible entrypoint');
+    if ($case === 'php_extensions_missing') file_put_contents($configFile, "<?php return ['waitlist_enabled' => true];");
+    if (in_array($case, ['database_connection_failed', 'request_failed'], true)) {
+        $message = $case === 'request_failed' ? 'DO_NOT_LOG_RESPONSE' : $case;
+        file_put_contents($libraryFile, "<?php function delir_handle_interest(...\$args): array { throw new RuntimeException('" . $message . "'); }");
+    }
+    if ($case === 'bounded_log') file_put_contents($logFile, str_repeat('x', 65537));
+    $process = proc_open([PHP_BINARY, '-n', $fixture . '/public/api/waitlist.php'], [1 => ['pipe', 'w'], 2 => ['pipe', 'w']], $pipes);
+    if (!is_resource($process)) throw new RuntimeException('test process unavailable');
+    $output = stream_get_contents($pipes[1]);
+    $stderr = stream_get_contents($pipes[2]);
+    fclose($pipes[1]); fclose($pipes[2]);
+    interest_check(proc_close($process) === 0, 'entrypoint catches ' . $case);
+    interest_check(json_decode($output, true) === ['accepted' => false, 'error' => 'temporarily_unavailable'], 'generic response ' . $case);
+    $log = file_get_contents($logFile);
+    $event = in_array($case, ['string_gate', 'bounded_log'], true) ? 'capture_disabled' : $case;
+    interest_check(str_contains($log, 'interest_' . $event), 'private diagnostic ' . $case);
+    interest_check(!str_contains($output . $log . $stderr, 'DO_NOT_LOG_RESPONSE'), 'no values leaked ' . $case);
+    interest_check(strlen($log) < 512, 'bounded fixed-code log ' . $case);
+}
+foreach ([$configFile, $libraryFile, $pilotFile, $logFile, $fixture . '/public/api/waitlist.php'] as $file) if (is_file($file)) unlink($file);
+foreach (['/public/api', '/public', '/private/delir', '/private', ''] as $directory) rmdir($fixture . $directory);
+
 $dsn = getenv('DELIR_TEST_DSN');
 if ($dsn) {
     if (!preg_match('/(?:^|;)dbname=delir_test(?:;|$)/', $dsn)) throw new RuntimeException('disposable database required');

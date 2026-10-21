@@ -11,6 +11,7 @@ import stat
 import sys
 import time
 from pathlib import Path, PurePosixPath
+from datetime import datetime
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
@@ -163,13 +164,55 @@ def verify_waitlist(sha):
         with urlopen(request, timeout=20) as result:
             status, body = result.status, result.read(4096)
     except HTTPError as error:
-        status, body = error.code, error.read(4096)
+        with error:
+            status, body = error.code, error.read(4096)
     try:
         payload = json.loads(body)
     except (ValueError, UnicodeError):
-        raise ReleaseError('Waitlist endpoint did not execute as the expected PHP API') from None
+        raise ReleaseError('Waitlist readiness failed (HTTP ' + str(status) + ', non-JSON response)') from None
     if status != 422 or payload != {'accepted': False, 'error': 'invalid_request'}:
-        raise ReleaseError('Waitlist endpoint is unavailable or its private intake is not enabled')
+        # Only fixed protocol codes may reach Actions logs; never echo response bodies.
+        known = {'temporarily_unavailable', 'https_required', 'origin_not_allowed',
+                 'method_not_allowed', 'json_required', 'body_too_large',
+                 'invalid_request', 'invalid_application', 'too_many_requests', 'client_unavailable'}
+        code = payload.get('error') if isinstance(payload, dict) else None
+        safe_code = code if isinstance(code, str) and code in known else 'unexpected_response'
+        raise ReleaseError('Waitlist readiness failed (HTTP ' + str(status) + ', ' + safe_code + ')')
+
+
+def private_waitlist_event(sftp, remote):
+    # Read only this bounded diagnostic log, never config, requests or credentials.
+    # Accounts restricted to /public may not expose it; that is not a deploy error.
+    if remote == '/':
+        return None
+    private = posixpath.join(posixpath.dirname(remote), 'private', 'delir')
+    events = {'private_directory_missing', 'private_config_missing', 'private_waitlist_missing',
+              'private_pilot_missing', 'private_library_invalid', 'private_handler_missing',
+              'private_config_invalid', 'php_extensions_missing', 'capture_disabled',
+              'request_failed', 'rate_secret_invalid', 'database_configuration_invalid',
+              'database_connection_failed', 'database_write_failed'}
+    try:
+        for folder in [posixpath.dirname(private), private]:
+            info = attributes(sftp, folder)
+            if info is None or not stat.S_ISDIR(info.st_mode):
+                return None
+        path = private + '/diagnostic.log'
+        info = attributes(sftp, path)
+        if info is None or not stat.S_ISREG(info.st_mode) or info.st_size > 66000:
+            return None
+        with sftp.open(path, 'rb') as stream:
+            body = stream.read(66001)
+        if len(body) > 66000:
+            return None
+        for line in reversed(body.decode('ascii', errors='replace').splitlines()):
+            match = re.fullmatch(r'(\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\+00:00) interest_([a-z_]+)', line)
+            if match and match[2] in events:
+                age = time.time() - datetime.fromisoformat(match[1]).timestamp()
+                return 'interest_' + match[2] if -5 <= age <= 120 else None
+    except Exception:
+        # Do not echo remote paths, data or exception details on denied access.
+        return None
+    return None
 
 
 def deploy(sftp, build, sha, remote, release_id, check=verify, http=response, probe=verify_waitlist):
@@ -224,7 +267,13 @@ def deploy(sftp, build, sha, remote, release_id, check=verify, http=response, pr
             sftp.rename(stage + '/' + name, final)
             if name == WAITLIST_ENTRYPOINT:
                 # Fail before publishing HTML that opens the form.
-                probe(sha)
+                try:
+                    probe(sha)
+                except ReleaseError:
+                    event = private_waitlist_event(sftp, remote)
+                    if event:
+                        print('::notice::Waitlist private diagnostic: ' + event)
+                    raise
         # Retry transient HTTP failures while the release is still reversible.
         for attempt in range(3):
             try:
