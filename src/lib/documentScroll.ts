@@ -1,8 +1,9 @@
 import type Lenis from 'lenis';
 
-let controller: Lenis | undefined;
+type DocumentScroller = Pick<Lenis, 'resize' | 'scrollTo' | 'isStopped'>;
+let controller: DocumentScroller | undefined;
 
-export function registerDocumentScroll(instance: Lenis) {
+export function registerDocumentScroll(instance: DocumentScroller) {
   controller = instance;
   return () => { if (controller === instance) controller = undefined; };
 }

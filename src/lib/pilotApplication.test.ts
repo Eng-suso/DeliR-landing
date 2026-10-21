@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { submitPilotApplication, validatePilotApplication, type PilotApplicationFields } from './pilotApplication';
 
 const validFields: PilotApplicationFields = {
@@ -8,6 +8,9 @@ const validFields: PilotApplicationFields = {
   timing: 'active',
   projectBrief: ' Review the indirect procurement approval process. ',
 };
+
+beforeEach(() => vi.stubEnv('VITE_PILOT_ENDPOINT', '/api/pilot'));
+afterEach(() => vi.unstubAllEnvs());
 
 describe('validatePilotApplication', () => {
   it('accepts a complete application', () => {
