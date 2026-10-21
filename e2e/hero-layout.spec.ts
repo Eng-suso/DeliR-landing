@@ -13,7 +13,7 @@ for (const language of ['it', 'en'] as const) {
       await page.locator('.landing-page[data-client-ready="true"]').waitFor();
       await expect(page.locator('.hero-description > p')).toHaveText(approved[language]);
       await expect(page.locator('.hybrid-hero-benefits li')).toHaveCount(3);
-      const reassurance = language === 'it' ? 'Iscrizione gratuita · Nessun obbligo d’acquisto · Nessun documento del cliente richiesto' : 'Free signup · No purchase obligation · No client documents needed';
+      const reassurance = language === 'it' ? 'Iscrizione gratuita · Senza impegno · Nessuna carta' : 'Free signup · No commitment · No card required';
       await expect(page.locator('.hero-actions > p').first()).toHaveText(reassurance);
       await expect(page.locator('#early-access .btn-primary + p')).toHaveText(reassurance);
       await expect(page.locator('.hero-description')).toBeVisible();
