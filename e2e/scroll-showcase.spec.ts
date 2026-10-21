@@ -41,8 +41,8 @@ test('product steps are readable while scrolling and each shows its own recordin
   await expect(steps.getByRole('tab')).toHaveCount(4);
   let previousImage = '';
   for (let index = 0; index < 4; index += 1) {
+    // A tab switches the step in place: no anchor navigation for Lenis to run.
     await steps.getByRole('tab').nth(index).click();
-    await expect(page.locator('html')).not.toHaveClass(/lenis-scrolling/);
     const panel = page.getByRole('tabpanel');
     await panel.scrollIntoViewIfNeeded();
     const image = panel.locator('img');

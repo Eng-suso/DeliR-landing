@@ -21,6 +21,8 @@ test('V2 Lenis wheel, anchors, keyboard, dialogs and route cleanup share one scr
   const steps = page.getByRole('tablist', { name: 'Passaggi del prodotto' });
   await steps.getByRole('tab', { name: /Analisi e simulazione/ }).click();
   await expect(steps.getByRole('tab', { name: /Analisi e simulazione/ })).toHaveAttribute('aria-selected', 'true');
+  // Home inside the tab list selects the first step (ARIA tabs); leave it to scroll the page.
+  await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
   await page.mouse.wheel(0, 900);
   await page.keyboard.press('Home');
   await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(2);
