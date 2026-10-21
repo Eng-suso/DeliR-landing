@@ -28,7 +28,7 @@ export default function V2Motion() {
           const state = entry.isIntersecting ? 'visible' : entry.boundingClientRect.top < window.innerHeight / 2 ? 'above' : 'below';
           (entry.target as HTMLElement).dataset.v2Visibility = state;
         }
-      }, { threshold: 0, rootMargin: `-${(header?.offsetHeight ?? 72) + 24}px 0px -${Math.min(80, window.innerHeight * .1)}px 0px` });
+      }, { threshold: 0, rootMargin: `-${(Number.parseFloat(getComputedStyle(root).getPropertyValue('--delir-nav-height')) || 72) + 24}px 0px -${Math.min(80, window.innerHeight * .1)}px 0px` });
       targets.forEach(target => observer?.observe(target));
     };
     update();

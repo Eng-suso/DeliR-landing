@@ -46,7 +46,8 @@ export default function SmoothScroll({ controlledAnchors = false }: { controlled
     reducedMotion.addEventListener('change', sync);
     const modalObserver = new MutationObserver(dialogs);
     if (controlledAnchors) {
-      modalObserver.observe(document.body, { subtree: true, attributes: true, attributeFilter: ['open'] });
+      // History can unmount an open scene dialog without a close-attribute event.
+      modalObserver.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['open'] });
       document.addEventListener('keydown', keyboard, true);
       document.addEventListener('pointerdown', interrupt, true);
     }
