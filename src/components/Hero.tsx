@@ -10,24 +10,24 @@ import ProductFilm from './ProductFilm';
 const narration = {
   it: [
     { start: 0, text: 'Dalle informazioni del cliente a un processo chiaro.' },
-    { start: 5, text: 'Verifica il modello, insieme alle sue fonti.' },
-    { start: 10, text: 'Simula l’As-Is e individua il collo di bottiglia.' },
-    { start: 15, text: 'Confronta gli scenari To-Be del caso dimostrativo.' },
-    { start: 20, text: 'Condividi il processo con il cliente.' },
+    { start: 4.7, text: 'Verifica il modello, insieme alle sue fonti.' },
+    { start: 9.2, text: 'Simula l’As-Is e individua il collo di bottiglia.' },
+    { start: 13.8, text: 'Confronta gli scenari To-Be del caso dimostrativo.' },
+    { start: 18.4, text: 'Condividi il processo con il cliente.' },
   ],
   en: [
     { start: 0, text: 'From client information to a clear process.' },
-    { start: 5, text: 'Review the model alongside its sources.' },
-    { start: 10, text: 'Simulate the As-Is and identify the bottleneck.' },
-    { start: 15, text: 'Compare the To-Be scenarios in the demo case.' },
-    { start: 20, text: 'Share the process with the client.' },
+    { start: 4.7, text: 'Review the model alongside its sources.' },
+    { start: 9.2, text: 'Simulate the As-Is and identify the bottleneck.' },
+    { start: 13.8, text: 'Compare the To-Be scenarios in the demo case.' },
+    { start: 18.4, text: 'Share the process with the client.' },
   ],
 };
 
 export default function Hero({ compact = false, subheadline, benefits }: { compact?: boolean; subheadline?: string; benefits?: readonly string[] }) {
   const { language } = useLanguage();
   const t = copy[language];
-  const film = <ProductFilm key={language} clip={productClips.hero} priority minimal continuous={compact} narration={narration[language]} cover={compact ? { poster: productClips.evidence.poster, posterSrcSet: productClips.evidence.posterSrcSet, description: productClips.evidence.description[language] } : undefined} />;
+  const film = <ProductFilm key={language} clip={productClips.hero} priority minimal continuous={compact} narration={narration[language]} />;
   return <section id="hero" className="premium-hero bg-white pb-10 pt-10 sm:pb-14 sm:pt-14" aria-labelledby="hero-title">
     <div className="section-shell hero-layout">
       <div className="hero-heading min-w-0">

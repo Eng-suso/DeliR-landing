@@ -27,8 +27,8 @@ export function ProofV2({ variant, studio }: { variant: 'as-is' | 'decision'; st
       <div className="v2-proof-heading"><p className="landing-eyebrow">{t.demo}</p><h2 id={`proof-${variant}-title`} className="v2-title mt-4">{module.output}</h2></div>
       <VideoSlotV2 id={variant === 'as-is' ? 'proof-as-is' : 'proof-decision'} studio={studio} />
       {variant === 'as-is' ? <div className="v2-proof-mobile-details">
-        <DemoStillV2 clip={productClips.sources} />
-        <DemoStillV2 clip={productClips.corrected} />
+        <DemoStillV2 clip={productClips.evidence} />
+        <DemoStillV2 clip={productClips.gaps} />
       </div> : null}
       <div className="v2-section-action"><ActionV2 /></div>
     </div>

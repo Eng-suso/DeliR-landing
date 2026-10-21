@@ -380,22 +380,5 @@
   .premium-journey .product-index-link { padding: 10px; min-height: 44px; }
   .premium-journey .product-screen-stage { padding: 12px; }
   .premium-journey .journey-description h3 { font-size: 24px; }
-  .product-film[data-clip="evidenze-sul-processo"] > div:first-child { aspect-ratio: 380 / 650 !important; }
-  .product-film[data-clip="evidenze-sul-processo"] > div:first-child > img,
-  .product-film[data-clip="evidenze-sul-processo"] > div:first-child > video { position: absolute; width: 505.2632%; height: auto; max-width: none; left: -405.2632%; top: -16.9231%; }
-  .product-film[data-clip="lacuna-aperta"] > div:first-child { aspect-ratio: 900 / 500 !important; }
-  .product-film[data-clip="lacuna-aperta"] > div:first-child > img,
-  .product-film[data-clip="lacuna-aperta"] > div:first-child > video { position: absolute; width: 213.3333%; height: auto; max-width: none; left: -59.3333%; top: -52%; }
-  .product-film[data-clip="confronto"] > div:first-child { aspect-ratio: 480 / 500 !important; }
-  .product-film[data-clip="confronto"] > div:first-child > img,
-  .product-film[data-clip="confronto"] > div:first-child > video { position: absolute; width: 400%; height: auto; max-width: none; left: -298.3333%; top: -32%; }
 }
 
-@media (max-width: 639px) {
-  .product-film[data-clip="memoria"] > div:first-child { aspect-ratio: 880 / 465 !important; }
-  .product-film[data-clip="memoria"] > div:first-child > img,
-  .product-film[data-clip="memoria"] > div:first-child > video { position: absolute; width: 218.1818%; height: auto; max-width: none; left: -27.2727%; top: -52.6882%; }
-  .product-film[data-clip="review-to-be"] > div:first-child { aspect-ratio: 800 / 700 !important; }
-  .product-film[data-clip="review-to-be"] > div:first-child > img,
-  .product-film[data-clip="review-to-be"] > div:first-child > video { position: absolute; width: 240%; height: auto; max-width: none; left: -135%; top: -37.1429%; }
-}

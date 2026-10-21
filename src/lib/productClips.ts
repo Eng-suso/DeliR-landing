@@ -1,39 +1,27 @@
-import { heroMedia, heroPoster as hero, heroPosterSrcSet as heroSrcSet } from './heroMedia';
-import sources from '../../artifacts/landing-media/images/fonti-e-affermazioni.jpg';
-import chat from '../../artifacts/landing-media/images/chat-discovery.jpg';
-import gap from '../../artifacts/landing-media/images/lacuna-aperta.jpg';
-import hidden from '../../artifacts/landing-media/images/passaggio-nascosto.jpg';
-import review from '../../artifacts/landing-media/images/review-as-is.jpg';
-import corrected from '../../artifacts/landing-media/images/as-is-corretto.jpg';
-import evidence from '../../artifacts/landing-media/images/evidenze-fonti-frame.jpg';
-import owner from '../../artifacts/landing-media/images/process-owner.jpg';
-import hypothesis from '../../artifacts/landing-media/images/ipotesi-to-be.jpg';
-import reviewToBe from '../../artifacts/landing-media/images/review-proposta-frame.jpg';
-import simulationAsIs from '../../artifacts/landing-media/images/simulazione-as-is.jpg';
-import simulationToBe from '../../artifacts/landing-media/images/simulazione-to-be.jpg';
-import heatmap from '../../artifacts/landing-media/images/heatmap-collo-di-bottiglia.jpg';
-import eventLog from '../../artifacts/landing-media/images/event-log.jpg';
-import comparison from '../../artifacts/landing-media/images/confronto.jpg';
-import memory from '../../artifacts/landing-media/images/memoria.jpg';
-
-import sourcesSrcSet from '../../artifacts/landing-media/images/fonti-e-affermazioni.jpg?w=480;960;1440;1920&format=webp&as=srcset';
-import chatSrcSet from '../../artifacts/landing-media/images/chat-discovery.jpg?w=480;960;1440;1920&format=webp&as=srcset';
-import gapSrcSet from '../../artifacts/landing-media/images/lacuna-aperta.jpg?w=480;960;1440;1920&format=webp&as=srcset';
-import hiddenSrcSet from '../../artifacts/landing-media/images/passaggio-nascosto.jpg?w=480;960;1440;1920&format=webp&as=srcset';
-import reviewSrcSet from '../../artifacts/landing-media/images/review-as-is.jpg?w=480;960;1440;1920&format=webp&as=srcset';
-import correctedSrcSet from '../../artifacts/landing-media/images/as-is-corretto.jpg?w=480;960;1440;1920&format=webp&as=srcset';
-import evidenceSrcSet from '../../artifacts/landing-media/images/evidenze-fonti-frame.jpg?w=480;960;1440;1920&format=webp&as=srcset';
-import ownerSrcSet from '../../artifacts/landing-media/images/process-owner.jpg?w=480;960;1440;1920&format=webp&as=srcset';
-import hypothesisSrcSet from '../../artifacts/landing-media/images/ipotesi-to-be.jpg?w=480;960;1440;1920&format=webp&as=srcset';
-import reviewToBeSrcSet from '../../artifacts/landing-media/images/review-proposta-frame.jpg?w=480;960;1440;1920&format=webp&as=srcset';
-import simulationAsIsSrcSet from '../../artifacts/landing-media/images/simulazione-as-is.jpg?w=480;960;1440;1920&format=webp&as=srcset';
-import simulationToBeSrcSet from '../../artifacts/landing-media/images/simulazione-to-be.jpg?w=480;960;1440;1920&format=webp&as=srcset';
-import heatmapSrcSet from '../../artifacts/landing-media/images/heatmap-collo-di-bottiglia.jpg?w=480;960;1440;1920&format=webp&as=srcset';
-import eventLogSrcSet from '../../artifacts/landing-media/images/event-log.jpg?w=480;960;1440;1920&format=webp&as=srcset';
-import comparisonSrcSet from '../../artifacts/landing-media/images/confronto.jpg?w=480;960;1440;1920&format=webp&as=srcset';
-import memorySrcSet from '../../artifacts/landing-media/images/memoria.jpg?w=480;960;1440;1920&format=webp&as=srcset';
+import { heroMedia } from './heroMedia';
+import evidenceIt from '../../artifacts/landing-media/images/v3/evidenze.it.jpg';
+import evidenceItSet from '../../artifacts/landing-media/images/v3/evidenze.it.jpg?w=480;960;1440;1600&format=webp&as=srcset';
+import evidenceEn from '../../artifacts/landing-media/images/v3/evidenze.en.jpg';
+import evidenceEnSet from '../../artifacts/landing-media/images/v3/evidenze.en.jpg?w=480;960;1440;1600&format=webp&as=srcset';
+import gapsIt from '../../artifacts/landing-media/images/v3/lacune.it.jpg';
+import gapsItSet from '../../artifacts/landing-media/images/v3/lacune.it.jpg?w=480;960;1440;1600&format=webp&as=srcset';
+import gapsEn from '../../artifacts/landing-media/images/v3/lacune.en.jpg';
+import gapsEnSet from '../../artifacts/landing-media/images/v3/lacune.en.jpg?w=480;960;1440;1600&format=webp&as=srcset';
+import contextIt from '../../artifacts/landing-media/images/v3/contesto.it.jpg';
+import contextItSet from '../../artifacts/landing-media/images/v3/contesto.it.jpg?w=480;960;1440;1600&format=webp&as=srcset';
+import contextEn from '../../artifacts/landing-media/images/v3/contesto.en.jpg';
+import contextEnSet from '../../artifacts/landing-media/images/v3/contesto.en.jpg?w=480;960;1440;1600&format=webp&as=srcset';
+import decisionsIt from '../../artifacts/landing-media/images/v3/decisioni.it.jpg';
+import decisionsItSet from '../../artifacts/landing-media/images/v3/decisioni.it.jpg?w=480;960;1440;1600&format=webp&as=srcset';
+import decisionsEn from '../../artifacts/landing-media/images/v3/decisioni.en.jpg';
+import decisionsEnSet from '../../artifacts/landing-media/images/v3/decisioni.en.jpg?w=480;960;1440;1600&format=webp&as=srcset';
+import scenariosIt from '../../artifacts/landing-media/images/v3/scenari.it.jpg';
+import scenariosItSet from '../../artifacts/landing-media/images/v3/scenari.it.jpg?w=480;960;1440;1600&format=webp&as=srcset';
+import scenariosEn from '../../artifacts/landing-media/images/v3/scenari.en.jpg';
+import scenariosEnSet from '../../artifacts/landing-media/images/v3/scenari.en.jpg?w=480;960;1440;1600&format=webp&as=srcset';
 
 type Localized = { it: string; en: string };
+export type ClipMedia = { poster: string; posterSrcSet: string; mp4: string; captions: string };
 export type ProductClip = {
   id: string;
   poster: string;
@@ -43,93 +31,86 @@ export type ProductClip = {
   height: number;
   title: Localized;
   description: Localized;
-  localizedMedia?: Record<'it' | 'en', { poster: string; posterSrcSet: string; mp4: string; captions: string }>;
+  localizedMedia: Record<'it' | 'en', ClipMedia>;
 };
 
-const posterSets: Record<string, string> = {
-  [hero]: heroSrcSet,
-  [sources]: sourcesSrcSet,
-  [chat]: chatSrcSet,
-  [gap]: gapSrcSet,
-  [hidden]: hiddenSrcSet,
-  [review]: reviewSrcSet,
-  [corrected]: correctedSrcSet,
-  [evidence]: evidenceSrcSet,
-  [owner]: ownerSrcSet,
-  [hypothesis]: hypothesisSrcSet,
-  [reviewToBe]: reviewToBeSrcSet,
-  [simulationAsIs]: simulationAsIsSrcSet,
-  [simulationToBe]: simulationToBeSrcSet,
-  [heatmap]: heatmapSrcSet,
-  [eventLog]: eventLogSrcSet,
-  [comparison]: comparisonSrcSet,
-  [memory]: memorySrcSet,
-};
+const media = (id: string, it: [string, string], en: [string, string]): ProductClip['localizedMedia'] => ({
+  it: { poster: it[0], posterSrcSet: it[1], mp4: `/product-clips/v3/${id}.it.mp4`, captions: `/product-clips/v3/${id}.it.vtt` },
+  en: { poster: en[0], posterSrcSet: en[1], mp4: `/product-clips/v3/${id}.en.mp4`, captions: `/product-clips/v3/${id}.en.vtt` },
+});
 
-function clip(id: string, poster: string, duration: number, title: Localized, description: Localized): ProductClip {
-  return { id, poster, posterSrcSet: posterSets[poster], duration, width: 1920, height: 1080, title, description };
-}
-
-// The uploaded recordings identify the people and company as fictional demo data.
+// One demo case end to end: a purchase request at a fictional company, recorded
+// in the product with the interface in each language (BK-GPT e2e/launch-media/simple).
 // Descriptions are text alternatives for the silent recordings, not outcome claims.
 export const productClips = {
-  hero: { ...clip('hero-loop', hero, 25,
-    { it: 'DeliR in azione', en: 'DeliR in action' },
-    { it: 'Il caso dimostrativo segue le fonti del cliente, il modello BPMN e le evidenze delle attività, la simulazione AS-IS, il confronto TO-BE e la condivisione del processo con il cliente. I valori mostrati sono simulati.', en: 'The demo follows client sources, the BPMN model and activity evidence, AS-IS simulation, TO-BE comparison and sharing the process with the client. The values shown are simulated.' }), localizedMedia: heroMedia },
-  sources: clip('fonti-e-affermazioni', sources, 12.7,
-    { it: 'Fonti e affermazioni', en: 'Sources and statements' },
-    { it: 'Il progetto raccoglie le fonti dell’incarico. La registrazione apre le interviste e le informazioni da cui ricostruire il processo.', en: 'The project gathers engagement sources. The recording opens interviews and information used to reconstruct the process.' }),
-  chat: clip('chat-discovery', chat, 18,
-    { it: 'Chat di processo', en: 'Process chat' },
-    { it: 'La chat di processo collega la conversazione alle evidenze AS-IS, ai ruoli e alle eccezioni. La richiesta di una decisione resta distinta dal messaggio.', en: 'Process chat connects the conversation to AS-IS evidence, roles and exceptions. A decision request stays separate from the message.' }),
-  gap: clip('lacuna-aperta', gap, 10.87,
-    { it: 'Lacuna aperta', en: 'Open question' },
-    { it: 'Una soglia di autorizzazione non dichiarata nelle fonti rimane un punto da chiarire nel caso dimostrativo.', en: 'An authorization threshold absent from the sources remains an open question in the demo case.' }),
-  hidden: clip('passaggio-nascosto', hidden, 13.9,
-    { it: 'Passaggio nascosto', en: 'Hidden handoff' },
-    { it: 'Le interviste mostrano prospettive diverse sul processo. La registrazione segue un passaggio operativo attraverso le fonti disponibili.', en: 'Interviews show different perspectives on the process. The recording follows an operating handoff through available sources.' }),
-  review: clip('review-as-is', review, 28.63,
-    { it: 'Review AS-IS', en: 'AS-IS review' },
-    { it: 'Il canvas AS-IS viene esaminato per attività. La review affianca al modello i punti da discutere e le proposte.', en: 'The AS-IS canvas is examined activity by activity. Review places discussion points and proposals alongside the model.' }),
-  corrected: clip('as-is-corretto', corrected, 13.2,
-    { it: 'AS-IS corretto', en: 'Corrected AS-IS' },
-    { it: 'La registrazione mostra il modello AS-IS dopo la correzione, nel contesto del processo dimostrativo.', en: 'The recording shows the AS-IS model after correction, in the context of the demo process.' }),
-  evidence: clip('evidenze-sul-processo', evidence, 11.1,
-    { it: 'Evidenze sul processo', en: 'Process evidence' },
-    { it: 'Un’attività del canvas BPMN viene aperta insieme al pannello di conoscenza ed evidenze che ne conserva il contesto.', en: 'A BPMN canvas activity is opened alongside the knowledge and evidence panel that retains its context.' }),
-  owner: clip('process-owner', owner, 11.07,
-    { it: 'Process owner', en: 'Process owner' },
-    { it: 'La review presenta una proposta e un punto da verificare con il process owner prima di confermare il modello.', en: 'Review presents a proposal and a point to check with the process owner before confirming the model.' }),
-  hypothesis: clip('ipotesi-to-be', hypothesis, 7.13,
-    { it: 'Ipotesi TO-BE', en: 'TO-BE hypothesis' },
-    { it: 'La registrazione passa dal contesto AS-IS alle ipotesi di modifica del processo nel caso dimostrativo.', en: 'The recording moves from AS-IS context to proposed process changes in the demo case.' }),
-  reviewToBe: clip('review-to-be', reviewToBe, 32.5,
-    { it: 'Review TO-BE', en: 'TO-BE review' },
-    { it: 'Le proposte TO-BE vengono esaminate sul processo, distinguendo la modifica ipotizzata dai punti ancora da verificare.', en: 'TO-BE proposals are reviewed on the process, separating the proposed change from points still requiring verification.' }),
-  simulationAsIs: clip('simulazione-as-is', simulationAsIs, 12.2,
-    { it: 'Simulazione AS-IS', en: 'AS-IS simulation' },
-    { it: 'Il replay della simulazione AS-IS mostra il flusso e gli indicatori della run dimostrativa.', en: 'The AS-IS simulation replay shows the flow and indicators of the demo run.' }),
-  simulationToBe: clip('simulazione-to-be', simulationToBe, 12.9,
-    { it: 'Simulazione TO-BE', en: 'TO-BE simulation' },
-    { it: 'Il replay TO-BE mostra l’esecuzione dello scenario ipotizzato. I risultati dipendono dai parametri della simulazione.', en: 'The TO-BE replay shows the proposed scenario running. Results depend on simulation parameters.' }),
-  heatmap: clip('heatmap-collo-di-bottiglia', heatmap, 7.93,
-    { it: 'Heatmap e colli di bottiglia', en: 'Heatmap and bottlenecks' },
-    { it: 'La heatmap evidenzia l’attesa sul modello e apre il dettaglio dell’attività nel risultato della simulazione dimostrativa.', en: 'The heatmap highlights waiting on the model and opens the activity detail in the demo simulation results.' }),
-  eventLog: clip('event-log', eventLog, 14.77,
-    { it: 'Event log', en: 'Event log' },
-    { it: 'La registrazione apre gli eventi della run per leggere il dettaglio delle attività e dell’esecuzione.', en: 'The recording opens run events to inspect activity and execution details.' }),
-  comparison: clip('confronto', comparison, 5.33,
-    { it: 'Confronto degli scenari', en: 'Scenario comparison' },
-    { it: 'Gli scenari AS-IS e TO-BE vengono confrontati sullo stesso processo. Le differenze mostrate sono valori del caso dimostrativo, non risultati garantiti.', en: 'AS-IS and TO-BE scenarios are compared on the same process. The differences shown are demo values, not guaranteed results.' }),
-  memory: clip('memoria', memory, 9.63,
-    { it: 'Contesto dell’incarico', en: 'Engagement context' },
-    { it: 'La panoramica del progetto conserva obiettivo, avanzamento, fonti, decisioni e deliverable del caso dimostrativo.', en: 'The project overview retains the goal, progress, sources, decisions and deliverables of the demo engagement.' }),
+  hero: {
+    id: 'hero-loop', poster: heroMedia.it.poster, posterSrcSet: heroMedia.it.posterSrcSet, duration: 23.6, width: 1600, height: 900, localizedMedia: heroMedia,
+    title: { it: 'DeliR in azione', en: 'DeliR in action' },
+    description: {
+      it: 'Una richiesta di acquisto, dal caso dimostrativo: le fonti del cliente diventano un processo BPMN, ogni attività è collegata alla frase che la sostiene, la simulazione As-Is mostra il collo di bottiglia, gli scenari To-Be vengono confrontati e il processo va al cliente con un link. Azienda, persone e valori sono dimostrativi; i risultati sono simulati.',
+      en: 'A purchase request from the demo case: client sources become a BPMN process, each activity is linked to the sentence behind it, the As-Is simulation shows the bottleneck, To-Be scenarios are compared and the process goes to the client through a link. Company, people and values are fictional; results are simulated.',
+    },
+  },
+  evidence: {
+    id: 'evidenze', poster: evidenceIt, posterSrcSet: evidenceItSet, duration: 21.2, width: 1600, height: 900, localizedMedia: media('evidenze', [evidenceIt, evidenceItSet], [evidenceEn, evidenceEnSet]),
+    title: { it: 'Dalle fonti al processo', en: 'From sources to process' },
+    description: {
+      it: 'Si apre l’intervista all’Ufficio Acquisti: ogni affermazione ha la sua citazione verificata. Poi il processo As-Is: il pannello delle evidenze conferma che il disegno coincide con le fonti e mostra la frase che sostiene «Autorizza la spesa».',
+      en: 'The Purchasing interview opens: each statement has its verified quote. Then the As-Is process: the evidence panel confirms the diagram matches the sources and shows the sentence behind «Approve spend».',
+    },
+  },
+  gaps: {
+    id: 'lacune', poster: gapsIt, posterSrcSet: gapsItSet, duration: 21.4, width: 1600, height: 900, localizedMedia: media('lacune', [gapsIt, gapsItSet], [gapsEn, gapsEnSet]),
+    title: { it: 'Versioni che non tornano', en: 'Versions that don’t match' },
+    description: {
+      it: 'Il confronto tra le fonti mostra una divergenza: la procedura dice che la firma arriva entro un giorno lavorativo, l’intervista che la responsabile firma solo il martedì e il giovedì. La soglia di importo, che nessuna fonte dichiara, resta una domanda aperta per il cliente.',
+      en: 'Comparing the sources shows a divergence: the procedure says sign-off comes within one working day, the interview says the manager signs only on Tuesdays and Thursdays. The amount threshold, which no source states, stays an open question for the client.',
+    },
+  },
+  context: {
+    id: 'contesto', poster: contextIt, posterSrcSet: contextItSet, duration: 18.3, width: 1600, height: 900, localizedMedia: media('contesto', [contextIt, contextItSet], [contextEn, contextEnSet]),
+    title: { it: 'Il contesto dell’incarico', en: 'Engagement context' },
+    description: {
+      it: 'Il consulente chiede a DeliR di ricostruire l’As-Is dalle fonti: la risposta arriva con le affermazioni estratte, la divergenza trovata e la domanda aperta. Il progetto conserva obiettivo, avanzamento e punti aperti dell’incarico.',
+      en: 'The consultant asks DeliR to rebuild the As-Is from the sources: the answer comes with the extracted statements, the divergence found and the open question. The project keeps the engagement goal, progress and open points.',
+    },
+  },
+  decisions: {
+    id: 'decisioni', poster: decisionsIt, posterSrcSet: decisionsItSet, duration: 26.7, width: 1600, height: 900, localizedMedia: media('decisioni', [decisionsIt, decisionsItSet], [decisionsEn, decisionsEnSet]),
+    title: { it: 'Modifiche spiegate, fino al cliente', en: 'Explained changes, through to the client' },
+    description: {
+      it: 'In review, DeliR propone il To-Be su «Autorizza la spesa» citando le fonti e indica cosa verificare con la process owner. Nella consegna ogni modifica riporta il perché e le fonti; il cliente riceve un link al cruscotto in sola lettura.',
+      en: 'In review, DeliR proposes the To-Be for «Approve spend», quoting the sources, and flags what to check with the process owner. At handover each change carries its reason and sources; the client gets a read-only dashboard link.',
+    },
+  },
+  scenarios: {
+    id: 'scenari', poster: scenariosIt, posterSrcSet: scenariosItSet, duration: 27.3, width: 1600, height: 900, localizedMedia: media('scenari', [scenariosIt, scenariosItSet], [scenariosEn, scenariosEnSet]),
+    title: { it: 'Simulazione e scenari', en: 'Simulation and scenarios' },
+    description: {
+      it: 'Il replay dell’As-Is mostra le richieste in coda su «Autorizza la spesa»; la heatmap lo indica come collo di bottiglia. Gli scenari To-Be, ripetuti sullo stesso seed, riportano tempo e costo per richiesta con l’intervallo al 95%, e il decision record. Valori simulati del caso dimostrativo, non risultati garantiti.',
+      en: 'The As-Is replay shows requests queuing at «Approve spend»; the heatmap marks it as the bottleneck. To-Be scenarios, repeated on the same seed, report time and cost per request with a 95% interval, and the decision record. Simulated demo values, not guaranteed results.',
+    },
+  },
 } satisfies Record<string, ProductClip>;
 
-export const chapterClips: readonly (readonly ProductClip[])[] = [
-  [productClips.sources, productClips.memory],
-  [productClips.chat, productClips.hidden, productClips.gap],
-  [productClips.evidence, productClips.review, productClips.corrected, productClips.owner],
-  [productClips.heatmap, productClips.eventLog],
-  [productClips.hypothesis, productClips.reviewToBe, productClips.simulationAsIs, productClips.simulationToBe, productClips.comparison],
-];
+// Scene links published before v3 (comparison, shared URLs) open the recording
+// that now covers the same step.
+export const legacySceneFragments: Record<string, string> = {
+  'scene-fonti-e-affermazioni': 'scene-evidenze',
+  'scene-evidenze-sul-processo': 'scene-evidenze',
+  'scene-review-as-is': 'scene-evidenze',
+  'scene-as-is-corretto': 'scene-evidenze',
+  'scene-process-owner': 'scene-decisioni',
+  'scene-lacuna-aperta': 'scene-lacune',
+  'scene-passaggio-nascosto': 'scene-lacune',
+  'scene-chat-discovery': 'scene-contesto',
+  'scene-memoria': 'scene-contesto',
+  'scene-review-to-be': 'scene-decisioni',
+  'scene-ipotesi-to-be': 'scene-decisioni',
+  'scene-confronto': 'scene-scenari',
+  'scene-simulazione-as-is': 'scene-scenari',
+  'scene-simulazione-to-be': 'scene-scenari',
+  'scene-heatmap-collo-di-bottiglia': 'scene-scenari',
+  'scene-event-log': 'scene-scenari',
+};
+

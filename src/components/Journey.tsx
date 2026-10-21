@@ -8,11 +8,11 @@ import { interestCtaLabel, productInterestHref } from '../lib/publicOffer';
 
 // Keep scene deep links and give each recording one home in the story.
 const benefits = [
-  { id: 'product-03', initial: 'evidenze-sul-processo', clips: [productClips.evidence, productClips.sources, productClips.review, productClips.corrected, productClips.owner] },
-  { id: 'product-02', initial: 'lacuna-aperta', clips: [productClips.gap, productClips.chat, productClips.hidden] },
-  { id: 'product-01', initial: 'memoria', clips: [productClips.memory] },
-  { id: 'product-04', initial: 'review-to-be', clips: [productClips.reviewToBe, productClips.hypothesis] },
-  { id: 'product-05', initial: 'confronto', clips: [productClips.comparison, productClips.simulationAsIs, productClips.simulationToBe, productClips.heatmap, productClips.eventLog] },
+  { id: 'product-03', initial: 'evidenze', clips: [productClips.evidence] },
+  { id: 'product-02', initial: 'lacune', clips: [productClips.gaps] },
+  { id: 'product-01', initial: 'contesto', clips: [productClips.context] },
+  { id: 'product-04', initial: 'decisioni', clips: [productClips.decisions] },
+  { id: 'product-05', initial: 'scenari', clips: [productClips.scenarios] },
 ];
 
 

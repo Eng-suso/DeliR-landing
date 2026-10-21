@@ -42,8 +42,7 @@ export default function ProductFilm({ clip, priority = false, minimal = false, a
   // Localized hero recordings are supplied as MP4. Do not fall back to the old-language WebM.
   const webm = localizedMedia ? undefined : `/product-clips/${clip.id}.webm`;
   const captions = localizedMedia?.captions ?? `/product-clips/${clip.id}.${language}.vtt`;
-  const mobileFocus = ['evidenze-sul-processo', 'lacuna-aperta', 'confronto', 'memoria', 'review-to-be'].includes(clip.id);
-  const posterSizes = sizes ?? `${mobileFocus ? '(max-width: 640px) 1920px, ' : ''}${priority ? heroPosterSizes : '(max-width: 640px) calc(100vw - 64px), (max-width: 1023px) calc(100vw - 96px), 640px'}`;
+  const posterSizes = sizes ?? `${priority ? heroPosterSizes : '(max-width: 640px) calc(100vw - 64px), (max-width: 1023px) calc(100vw - 96px), 640px'}`;
   const sentence = narration?.reduce((current, item) => item.start <= playbackTime ? item : current, narration[0]);
   // Frame a detail from the original recording; the dialog retains the full view.
   const mediaStyle = focusFrame ? {
