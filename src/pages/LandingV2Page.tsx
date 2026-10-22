@@ -17,7 +17,6 @@ import FinalCTA from '../components/FinalCTA';
 import Footer from '../components/Footer';
 import PreviewToolbarV2 from '../components/v2/PreviewToolbarV2';
 import ProductVideos from '../components/v2/ProductVideos';
-import HybridVideoPlan from '../components/v2/HybridVideoPlan';
 import HybridProcessPath from '../components/v2/HybridProcessPath';
 import V2Motion from '../components/v2/V2Motion';
 import SmoothScroll from '../components/SmoothScroll';
@@ -35,7 +34,6 @@ export default function LandingV2Page({ homePath = '/v2' }: { homePath?: '/' | '
     <Navbar motionControl={false} readingMode homeHref={`${homePath}${language === 'it' ? '' : '?lang=en'}#hero`} />
     <main id="main-content" className="relative z-10">
       <Hero compact subheadline={hybridExperience[language].subheadline} benefits={hybridExperience[language].benefits} />
-      {studio ? <HybridVideoPlan /> : null}
       <HybridProcessPath />
       <HybridProblem />
       <ProductVideos />
