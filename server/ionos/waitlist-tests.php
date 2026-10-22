@@ -37,17 +37,27 @@ try {
 // Welcome email: accepted notice versions, message, SMTP dialogue, configuration gate.
 interest_check(delir_validate_interest(json_encode(array_replace($fields, ['noticeVersion' => 'product-interest-2026-10-22'])))['noticeVersion'] === 'product-interest-2026-10-22', 'accept the notice announcing the welcome email');
 $mailConfig = ['welcome_mail_enabled' => true, 'smtp_host' => 'smtp.example.test', 'smtp_port' => 465, 'smtp_user' => 'contact@delir.it', 'smtp_password' => 'secret-pass', 'mail_from' => 'contact@delir.it'];
-$message = delir_welcome_message($mailConfig, 'demo@example.test', 'abc123', 1900000000);
+$message = delir_welcome_message($mailConfig, 'demo@example.test', 'abc123', 1900000000, ['practice' => 'in-house', 'timing' => 'active']);
 [$head, $encoded] = explode("\r\n\r\n", $message, 2);
 $text = base64_decode(str_replace("\r\n", '', $encoded), true);
 interest_check(str_contains($head, "To: <demo@example.test>") && str_contains($head, 'From: DeliR <contact@delir.it>'), 'welcome headers');
 interest_check(str_contains($head, 'Subject: =?UTF-8?B?') && str_contains($head, 'Content-Type: text/plain; charset=UTF-8'), 'encoded subject and plain text');
-interest_check(is_string($text) && substr_count($text, DELIR_WALKTHROUGH_URL) === 2, 'walkthrough link in both languages');
+interest_check(is_string($text) && str_contains($text, DELIR_DEMO_URL . "\r\n") && str_contains($text, DELIR_DEMO_URL . '?lang=en'), 'demo page link in both languages');
+interest_check(!str_contains($text, '.mp4'), 'the email links the demo page, not the video file');
+interest_check(str_contains($text, 'Per un team Operations') && str_contains($text, 'For an Operations team'), 'worded for the declared practice');
+interest_check(str_contains($text, 'Hai indicato un incarico già attivo') && str_contains($text, 'You mentioned an active engagement'), 'worded for the declared timing');
+$plain = base64_decode(str_replace("\r\n", '', explode("\r\n\r\n", delir_welcome_message($mailConfig, 'demo@example.test', 'x', 0), 2)[1]), true);
+interest_check(str_contains($plain, 'Guarda come DeliR passa') && str_contains($plain, 'Hai un progetto reale'), 'generic wording without a profile');
+$pilotMail = delir_pilot_confirmation_message($mailConfig, ['to' => 'lead@example.test', 'name' => "Anna\r\n  Rossi", 'timing' => 'next-90-days'], 'p1', 1900000000);
+[$pilotHead, $pilotEncoded] = explode("\r\n\r\n", $pilotMail, 2);
+$pilotText = base64_decode(str_replace("\r\n", '', $pilotEncoded), true);
+interest_check(str_contains($pilotHead, 'To: <lead@example.test>') && str_contains($pilotText, 'Ciao Anna Rossi,') && str_contains($pilotText, 'Hi Anna Rossi,'), 'pilot confirmation greets the applicant by name on one line');
+interest_check(str_contains($pilotText, 'ho ricevuto la tua candidatura al pilot') && str_contains($pilotText, 'incarico nei prossimi 90 giorni') && str_contains($pilotText, DELIR_DEMO_URL), 'pilot confirmation content');
 interest_check(str_contains($text, 'Non ti sei iscritto tu?') && str_contains($text, 'Didn’t sign up?'), 'opt-out line in both languages');
 interest_check(!preg_match('/<img|https?:\/\/[^\s]*\?(utm|t)=/i', $text), 'no tracking in the email');
 foreach (array_filter(explode("\r\n", $encoded)) as $line) interest_check(strlen($line) <= 76 && $line[0] !== '.', 'body lines are short and need no dot-stuffing');
 try { delir_welcome_message($mailConfig, "demo@example.test\r\nBcc: other@example.test", 'x', 0); interest_check(false, 'header injection must fail'); }
-catch (RuntimeException $error) { interest_check($error->getMessage() === 'welcome_mail_address_invalid', 'reject header injection'); }
+catch (RuntimeException $error) { interest_check($error->getMessage() === 'mail_address_invalid', 'reject header injection'); }
 $scripted = static function (array $replies, array &$written): callable {
     return static function () use ($replies, &$written): array {
         $queue = $replies;
@@ -67,12 +77,20 @@ $written = [];
 try {
     delir_smtp_send($mailConfig, 'demo@example.test', $message, $scripted(["220 ready\r\n", "250 ok\r\n", "334 x\r\n", "334 x\r\n", "535 auth failed\r\n"], $written));
     interest_check(false, 'rejected login must fail');
-} catch (RuntimeException $error) { interest_check($error->getMessage() === 'welcome_mail_rejected' && end($written) === 'CLOSED', 'rejected login fails and closes'); }
+} catch (RuntimeException $error) { interest_check($error->getMessage() === 'mail_rejected_auth' && end($written) === 'CLOSED', 'rejected login names the step and closes');
+$written = [];
+try {
+    delir_smtp_send($mailConfig, 'demo@example.test', $message, $scripted(["220 ready\r\n", "250 ok\r\n", "334 x\r\n", "334 x\r\n", "235 ok\r\n", "250 ok\r\n", "550 relay denied\r\n"], $written));
+    interest_check(false, 'rejected recipient must fail');
+} catch (RuntimeException $error) { interest_check($error->getMessage() === 'mail_rejected_recipient', 'rejected recipient names the step'); } }
 $neverOpen = static function (): array { throw new RuntimeException('SMTP must not be opened'); };
 interest_check(delir_send_welcome(array_replace($mailConfig, ['welcome_mail_enabled' => false]), 'demo@example.test', $neverOpen) === false, 'welcome email is off unless enabled');
 interest_check(delir_send_welcome(array_diff_key($mailConfig, ['welcome_mail_enabled' => true]), 'demo@example.test', $neverOpen) === false, 'old configurations send nothing');
 try { delir_send_welcome(array_replace($mailConfig, ['smtp_password' => 'REPLACE_ON_SERVER']), 'demo@example.test', $neverOpen); interest_check(false, 'placeholder must fail'); }
-catch (RuntimeException $error) { interest_check($error->getMessage() === 'welcome_mail_configuration_invalid', 'placeholder credentials are refused before connecting'); }
+catch (RuntimeException $error) { interest_check($error->getMessage() === 'mail_configuration_invalid', 'placeholder credentials are refused before connecting');
+interest_check(delir_send_pilot_confirmation(array_replace($mailConfig, ['welcome_mail_enabled' => false]), ['to' => 'lead@example.test', 'name' => 'Anna', 'timing' => 'active'], $neverOpen) === false, 'pilot confirmation follows the same switch');
+$written = [];
+interest_check(delir_send_pilot_confirmation($mailConfig, ['to' => 'lead@example.test', 'name' => 'Anna', 'timing' => 'active'], $scripted(["220 ready\r\n", "250 ok\r\n", "334 x\r\n", "334 x\r\n", "235 ok\r\n", "250 ok\r\n", "250 ok\r\n", "354 go\r\n", "250 queued\r\n"], $written)) && $written[5] === "RCPT TO:<lead@example.test>\r\n", 'pilot confirmation goes to the applicant'); }
 
 // Run the actual public entrypoint against disposable private files, never IONOS.
 $fixture = sys_get_temp_dir() . '/delir-interest-endpoint-' . bin2hex(random_bytes(8));
@@ -168,6 +186,7 @@ if ($dsn) {
     $connect = static fn(): PDO => $pdo;
     $first = delir_handle_interest($server, $config, static fn() => $welcomeRaw, $connect);
     interest_check($first['body'] === ['accepted' => true] && ($first['welcome_to'] ?? null) === 'welcome@example.test', 'new address gets the welcome email');
+    interest_check(($first['welcome_profile'] ?? null) === ['practice' => 'independent', 'timing' => ''], 'welcome email knows the declared practice and timing');
     $again = delir_handle_interest($server, $config, static fn() => $welcomeRaw, $connect);
     interest_check($again['body'] === $first['body'] && !isset($again['welcome_to']), 'duplicate gets the same answer and no email');
     $oldNotice = delir_handle_interest($server, $config, static fn() => json_encode(array_replace($fields, ['email' => 'old@example.test'])), $connect);
