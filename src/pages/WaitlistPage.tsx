@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import LanguageSwitch from '../components/LanguageSwitch';
@@ -9,8 +9,6 @@ import { submitWaitlist, validateWaitlist, type WaitlistErrors, type WaitlistFie
 import { privacyNoticeUrl, welcomeMailReady } from '../lib/leadCaptureReadiness';
 import { interestCtaLabel, pilotApplicationHref, productInterestEmailHref, publicContactEmail } from '../lib/publicOffer';
 import { trackInterestEvent } from '../privacy/analytics';
-import { formatSeconds, walkthroughVideo } from '../content/productVideos';
-import { ProductVideoDescription, ProductVideoPlayer } from '../components/ProductVideoPlayer';
 import '../styles/premium-landing.css';
 
 const emptyFields: WaitlistFields = { email: '', practice: '', timing: '' };
@@ -71,19 +69,20 @@ export default function WaitlistPage({ captureEnabled }: { captureEnabled: boole
       <p className="landing-eyebrow">Early access</p>
       <h1 className="landing-title mt-4">{it ? 'Entra nella lista d’attesa di DeliR.' : 'Join the DeliR waitlist.'}</h1>
       <p className="mt-5 text-base leading-7 text-slate-600">{it ? 'Lascia la tua email e indicami come lavori. Ti avviserò quando aprirò l’accesso a nuovi utenti.' : 'Leave your email and tell me how you work. I’ll let you know when access opens to new users.'}</p>
+      {captureEnabled && welcomeMailReady && status !== 'success' ? <aside data-waitlist-reward aria-labelledby="waitlist-reward" className="mt-6 flex gap-4 rounded-2xl border border-brand-blue/25 bg-white p-5">
+        <Mail aria-hidden="true" className="box-content size-5 shrink-0 rounded-full bg-brand-blue p-2.5 text-white" />
+        <div>
+          <p id="waitlist-reward" className="text-base font-semibold leading-6 text-brand-ink">{it ? 'In regalo: la demo completa del prodotto, 5 minuti' : 'Your gift: the full 5-minute product demo'}</p>
+          <p className="mt-1 text-sm leading-6 text-slate-600">{it ? 'Tutto il percorso di DeliR in un’unica registrazione, dalle interviste alla consegna. Appena ti iscrivi ti invio via email il link per guardarla.' : 'DeliR’s whole path in one recording, from interviews to handover. As soon as you sign up, I email you the link to watch it.'}</p>
+        </div>
+      </aside> : null}
       {status === 'success' ? <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8" aria-labelledby="interest-success">
         <CheckCircle2 aria-hidden="true" className="size-8 text-brand-blue" />
         <h2 id="interest-success" ref={success} tabIndex={-1} className="mt-4 text-2xl font-semibold">{it ? 'Sei nella lista d’attesa.' : 'You’re on the waitlist.'}</h2>
-        <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Ti scriverò all’indirizzo indicato quando aprirò nuovi accessi a DeliR. Nessun pagamento richiesto.' : 'I’ll email you when I open new access to DeliR. No payment required.'}{welcomeMailReady ? (it ? ' Se è la prima iscrizione con questo indirizzo, ricevi anche una email con il link al video completo.' : ' If this is your first signup with this address, you’ll also receive an email with a link to the full video.') : ''}</p>
-        <p className="mt-5 text-sm leading-6 text-slate-600">{it ? 'Hai già un progetto o un processo reale su cui vuoi lavorare?' : 'Already have a real project or process you want to work on?'}</p>
+        {welcomeMailReady ? <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Controlla la tua casella: ti ho inviato una email di conferma con il link alla demo completa del prodotto (5 minuti). Se non la trovi entro qualche minuto, guarda nello spam. Se ti eri già iscritto con questo indirizzo, non ti arriva una seconda email.' : 'Check your inbox: I sent you a confirmation email with the link to the full product demo (5 minutes). If it is not there within a few minutes, check your spam folder. If you had already signed up with this address, no second email is sent.'}</p> : null}
+        <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Ti scriverò all’indirizzo indicato quando aprirò nuovi accessi a DeliR. Nessun pagamento richiesto.' : 'I’ll email you when I open new access to DeliR. No payment required.'}</p>
+        <p className="mt-8 border-t border-slate-200 pt-6 text-sm leading-6 text-slate-600">{it ? 'Hai già un progetto o un processo reale su cui vuoi lavorare?' : 'Already have a real project or process you want to work on?'}</p>
         <a data-pilot-section="waitlist-success" href={pilotApplicationHref(language)} className="btn-secondary mt-3 whitespace-normal">{it ? 'Avvia un pilot' : 'Start a pilot'}<ArrowRight aria-hidden="true" className="size-4" /></a>
-        {/* The full walkthrough is for people who have just joined, not for the landing. */}
-        <div className="mt-8 border-t border-slate-200 pt-6" data-waitlist-walkthrough>
-          <h3 className="text-lg font-semibold">{it ? `Intanto, guarda tutto il percorso di DeliR (${formatSeconds(walkthroughVideo.seconds)})` : `Meanwhile, watch DeliR’s whole path (${formatSeconds(walkthroughVideo.seconds)})`}</h3>
-          <p className="mt-2 text-sm leading-6 text-slate-600">{walkthroughVideo.summary[language]}</p>
-          <ProductVideoPlayer video={walkthroughVideo} page="waitlist" />
-          <ProductVideoDescription video={walkthroughVideo} />
-        </div>
       </section> : captureEnabled ? <form method="post" noValidate onSubmit={handleSubmit} aria-label={it ? 'Iscrizione alla lista d’attesa DeliR' : 'DeliR waitlist signup'} onFocusCapture={() => { if (!started.current) { started.current = true; trackInterestEvent('interest_form_started', language); } }} className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
         <label htmlFor="email" className="block text-sm font-semibold">Email</label>
         <input id="email" name="email" type="email" inputMode="email" autoComplete="email" spellCheck={false} required maxLength={254} disabled={locked} value={fields.email} onChange={event => updateField('email', event.target.value)} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'email-error' : undefined} className="control-enterprise mt-2 !text-base" placeholder={it ? 'nome@studio.it…' : 'you@practice.com…'} />
@@ -108,7 +107,7 @@ export default function WaitlistPage({ captureEnabled }: { captureEnabled: boole
         {errors.timing ? <p id="timing-error" className="mt-2 text-sm text-red-700">{errorText.timing}</p> : null}
         <p className="mt-5 text-xs leading-6 text-slate-600">{it ? 'Con l’invio chiedi di essere contattato sulla disponibilità di accesso a DeliR. Puoi ritirare la richiesta scrivendo a ' : 'Submitting asks to be contacted about DeliR access availability. Withdraw your request by emailing '}<a href={`mailto:${publicContactEmail}`} className="underline underline-offset-4">{publicContactEmail}</a>. {it ? 'Leggi l’' : 'Read the '}<a href={privacyNoticeUrl || (it ? '/privacy' : '/privacy?lang=en')} className="font-semibold text-brand-blue underline underline-offset-4">{it ? 'informativa privacy' : 'privacy notice'}</a>.</p>
         {submitError ? <p role="alert" className="mt-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm leading-6 text-red-800">{submitError}</p> : null}
-        <button type="submit" disabled={locked} aria-busy={status === 'submitting'} className="btn-primary mt-5 w-full whitespace-normal">{status === 'submitting' ? (it ? 'Iscrizione in corso…' : 'Joining…') : interestCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4" /></button>
+        <button type="submit" disabled={locked} aria-busy={status === 'submitting'} className="btn-primary mt-5 w-full whitespace-normal">{status === 'submitting' ? (it ? 'Iscrizione in corso…' : 'Joining…') : welcomeMailReady ? (it ? 'Iscriviti e ricevi la demo' : 'Join and get the demo') : interestCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4" /></button>
       </form> : <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8" aria-labelledby="interest-pending">
         <h2 id="interest-pending" className="text-xl font-semibold">{it ? 'Entra in contatto con DeliR.' : 'Get in touch with DeliR.'}</h2>
         <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Scrivimi per chiedere di essere aggiunto alla lista d’attesa. Il link apre il tuo programma email; l’invio avviene lì.' : 'Email me to ask to be added to the waitlist. The link opens your email app; send your message there.'}</p>

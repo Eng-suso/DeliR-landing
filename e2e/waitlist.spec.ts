@@ -61,7 +61,7 @@ test('waitlist does not collect data before privacy and delivery are ready', asy
   await page.goto('/waitlist');
   if (process.env.PLAYWRIGHT_WAITLIST_ENABLED === 'true') {
     await expect(page.getByRole('form')).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Entra nella lista d’attesa' })).toBeEnabled();
+    await expect(page.getByRole('button', { name: 'Iscriviti e ricevi la demo' })).toBeEnabled();
     return;
   }
   await expect(page.getByRole('form')).toHaveCount(0);

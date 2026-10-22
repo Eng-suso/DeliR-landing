@@ -20,7 +20,7 @@ test('waitlist validates, preserves errors, and confirms explicit acceptance', a
   await page.goto('/');
   await page.locator('#hero').getByRole('link', { name: 'Entra nella lista d’attesa' }).click();
   await expect(page).toHaveURL(/\/waitlist$/);
-  const submit = page.getByRole('button', { name: 'Entra nella lista d’attesa' });
+  const submit = page.getByRole('button', { name: 'Iscriviti e ricevi la demo' });
   await submit.click();
   await expect(page.getByLabel('Email', { exact: true })).toBeFocused();
   expect(attempts).toBe(0);
@@ -34,12 +34,12 @@ test('waitlist validates, preserves errors, and confirms explicit acceptance', a
   await submit.click();
   await expect(page.getByRole('heading', { name: 'Sei nella lista d’attesa.' })).toBeFocused();
   expect(attempts).toBe(2);
-  await expect(page.getByText(/ricevi anche una email con il link al video completo/)).toBeVisible();
+  await expect(page.getByText(/Ti invio anche la demo via email/)).toBeVisible();
   await expect(page.getByRole('form')).toHaveCount(0);
   // Only now the full walkthrough: poster first, plays on request.
   const walkthrough = page.locator('[data-waitlist-walkthrough]');
-  await expect(walkthrough.getByRole('heading')).toHaveText(/Intanto, guarda tutto il percorso di DeliR \(4:47\)/);
-  await walkthrough.getByRole('button', { name: /Riproduci: Il percorso completo/ }).click();
+  await expect(walkthrough.getByRole('heading')).toHaveText(/La demo completa di DeliR \(4:47\)/);
+  await walkthrough.getByRole('button', { name: /Riproduci: La demo completa del prodotto/ }).click();
   await expect.poll(() => walkthrough.locator('video').evaluate((video: HTMLVideoElement) => video.currentTime), { timeout: 15_000 }).toBeGreaterThan(0);
   await expect(walkthrough.locator('track')).toHaveAttribute('src', '/product-videos/walkthrough.it.vtt');
 });
@@ -56,9 +56,9 @@ test('optional timing and English waitlist flow remain usable on small screens',
   await page.getByLabel('Email', { exact: true }).fill('demo@example.test');
   await page.getByLabel('Practice type').selectOption('consulting-team');
   await page.getByLabel(/When do you think you would use it/).selectOption('active');
-  await page.getByRole('button', { name: 'Join the waitlist' }).click();
+  await page.getByRole('button', { name: 'Join and get the demo' }).click();
   await expect(page.getByRole('heading', { name: 'You’re on the waitlist.' })).toBeFocused();
-  await expect(page.locator('[data-waitlist-walkthrough]').getByRole('button', { name: /Play: The full walkthrough/ })).toBeVisible();
+  await expect(page.locator('[data-waitlist-walkthrough]').getByRole('button', { name: /Play: The full product demo/ })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
