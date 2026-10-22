@@ -39,7 +39,7 @@ describe('Product videos', () => {
     fireEvent.play(video);
     fireEvent.play(video);
     fireEvent.ended(video);
-    expect(tracked.mock.calls).toEqual([['video_play', 'simulation', 'it'], ['video_complete', 'simulation', 'it']]);
+    expect(tracked.mock.calls).toEqual([['video_play', 'simulation', 'it', 'home'], ['video_complete', 'simulation', 'it', 'home']]);
   });
 
   it('moves between steps with the arrow keys and opens a deep-linked step', () => {
@@ -53,14 +53,12 @@ describe('Product videos', () => {
     expect(screen.getByRole('tab', { name: /Evidenze e BPMN/ })).toHaveAttribute('aria-selected', 'true');
   });
 
-  it('opens the full walkthrough in a dialog, in English too', () => {
+  it('keeps three sections and leaves the full walkthrough to the waitlist, in English too', () => {
     fixture.language = 'en';
     const { container } = render(<ProductVideos />);
+    expect(container.querySelectorAll('.pv-section')).toHaveLength(3);
+    expect(screen.getByRole('heading', { name: 'Four steps, from interview to handover.' })).toBeInTheDocument();
     expect(container.querySelector('[data-product-video="walkthrough"]')).toBeNull();
-    fireEvent.click(screen.getByRole('button', { name: /Watch the full walkthrough/ }));
-    const video = container.querySelector('[data-product-video="walkthrough"] video')!;
-    expect(video.querySelector('track')).toHaveAttribute('src', '/product-videos/walkthrough.en.vtt');
-    fireEvent.click(screen.getByRole('button', { name: 'Close' }));
-    expect(container.querySelector('[data-product-video="walkthrough"]')).toBeNull();
+    expect(screen.queryByRole('button', { name: /walkthrough/i })).toBeNull();
   });
 });
