@@ -70,7 +70,7 @@ export function trackPage(pathname: string, language: 'it' | 'en', consented: bo
   if (!analyticsAvailable || !consented || !started || !readConsent()?.analytics) return;
   // Allowlist routes and language; never send arbitrary URL parameters, hash,
   // form content, titles, or a referrer query that might contain personal data.
-  if (!['/', '/pilot', '/waitlist', '/privacy', '/security-data', '/comparison-sources'].includes(pathname)) return;
+  if (!['/', '/pilot', '/waitlist', '/demo', '/privacy', '/security-data', '/comparison-sources'].includes(pathname)) return;
   const page = `${pathname}${language === 'en' ? '?lang=en' : ''}`;
   if (page === previousPage) return;
   const context = {
@@ -126,14 +126,14 @@ const videoEvents: readonly string[] = ['video_play', 'video_complete'];
 // Which product video precedes a waitlist request, and whether new sign-ups watch
 // the walkthrough: only the allowlisted video id, page and language, never
 // playback position, titles or arbitrary URLs.
-export type VideoPage = 'home' | 'waitlist';
+export type VideoPage = 'home' | 'waitlist' | 'demo';
 export function trackVideoEvent(event: VideoEvent, video: string, language: 'it' | 'en', page: VideoPage = 'home'): boolean {
   if (!analyticsAvailable || !started || !readConsent()?.analytics || !videoEvents.includes(event)) return false;
   if (!(productVideoIds as readonly string[]).includes(video)) return false;
   analyticsWindow().gtag?.('event', event, {
     send_to: measurementId, language: language === 'en' ? 'en' : 'it', video_id: video,
-    section: page === 'waitlist' ? 'waitlist-success' : 'caso',
-    page_location: `https://delir.it${page === 'waitlist' ? '/waitlist' : '/'}${language === 'en' ? '?lang=en' : ''}`,
+    section: page === 'waitlist' ? 'waitlist-success' : page === 'demo' ? 'demo' : 'caso',
+    page_location: `https://delir.it${page === 'home' ? '/' : `/${page}`}${language === 'en' ? '?lang=en' : ''}`,
     page_referrer: '',
   });
   return true;

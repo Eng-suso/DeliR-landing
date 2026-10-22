@@ -133,13 +133,13 @@ def verify(sha):
     status, body = response('/release.json', sha)
     if status != 200 or json.loads(body).get('sha') != sha:
         raise ReleaseError('Published release marker does not match the tested commit')
-    for path in ['/', '/?lang=en', '/pilot', '/waitlist', '/privacy', '/security-data', '/comparison-sources']:
+    for path in ['/', '/?lang=en', '/pilot', '/waitlist', '/demo', '/privacy', '/security-data', '/comparison-sources']:
         status, body = response(path, sha)
         if status != 200 or 'DeliR' not in body:
             raise ReleaseError('Published frontend route failed verification: ' + path)
         if path == '/?lang=en' and 'lang="en"' not in body:
             raise ReleaseError('English document is missing')
-        if path in {'/waitlist', '/privacy'} and 'noindex' not in body:
+        if path in {'/waitlist', '/demo', '/privacy'} and 'noindex' not in body:
             raise ReleaseError('Private conversion route lost its noindex directive')
         if path == '/':
             for asset in set(re.findall(r'(?:src|href)="(/assets/[^"?]+\.(?:js|css))"', body)):
