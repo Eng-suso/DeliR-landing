@@ -51,6 +51,13 @@ try {
     if ($result['status'] === 405) header('Allow: POST');
     if ($result['status'] === 429) header('Retry-After: ' . $result['retry_after']);
     echo json_encode($result['body'], JSON_THROW_ON_ERROR);
+    // The visitor already has the answer; the welcome email must never change it.
+    $welcome = $result['welcome_to'] ?? null;
+    if (is_string($welcome) && function_exists('delir_send_welcome')) {
+        if (function_exists('fastcgi_finish_request')) fastcgi_finish_request();
+        try { if (delir_send_welcome($config, $welcome)) delir_interest_private_event($private, 'welcome_mail_sent'); }
+        catch (Throwable $mailError) { delir_interest_private_event($private, 'welcome_mail_failed'); }
+    }
 } catch (Throwable $error) {
     // No request fields, IP, SQL, configuration values or exception details.
     $known = ['rate_secret_invalid', 'database_configuration_invalid', 'database_connection_failed', 'database_write_failed'];
