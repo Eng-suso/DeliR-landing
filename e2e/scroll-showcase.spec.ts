@@ -29,7 +29,7 @@ test('landing remains usable from narrow phones through desktop', async ({ page 
   }
 });
 
-test('benefits are readable while scrolling and navigation reaches their real product screens', async ({ page }, testInfo) => {
+test('product steps are readable while scrolling and each shows its own recording', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Scroll behavior runs once in Chromium');
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -37,24 +37,22 @@ test('benefits are readable while scrolling and navigation reaches their real pr
   await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
   await expect.poll(() => page.evaluate(() => document.documentElement.classList.contains('lenis'))).toBe(true);
 
-  const labels = ['Evidenze', 'Lacune', 'Scenari'];
-  await expect(page.locator('[data-product-benefit="true"]')).toHaveCount(3);
-  await expect(page.locator('.hybrid-more')).not.toHaveAttribute('open', '');
+  const steps = page.getByRole('tablist', { name: 'Passaggi del prodotto' });
+  await expect(steps.getByRole('tab')).toHaveCount(4);
   let previousImage = '';
-  for (let index = 0; index < labels.length; index += 1) {
-    const chapter = page.locator('[data-product-benefit="true"]').nth(index);
-    await page.getByRole('navigation', { name: 'Capitoli del prodotto' }).getByRole('link', { name: labels[index], exact: true }).click();
-    await expect(page.locator('html')).not.toHaveClass(/lenis-scrolling/);
-    await chapter.scrollIntoViewIfNeeded();
-    await expect(chapter).toHaveAttribute('data-product-module', labels[index]);
-    const image = chapter.locator('img');
+  for (let index = 0; index < 4; index += 1) {
+    // A tab switches the step in place: no anchor navigation for Lenis to run.
+    await steps.getByRole('tab').nth(index).click();
+    const panel = page.getByRole('tabpanel');
+    await panel.scrollIntoViewIfNeeded();
+    const image = panel.locator('img');
     await expect.poll(() => image.evaluate((element) => element instanceof HTMLImageElement && element.complete && element.naturalWidth > 0)).toBe(true);
     const source = await image.getAttribute('src');
-    expect(source).toBeTruthy();
+    expect(source).toMatch(/^\/product-videos\/(discovery|evidence|simulation|results)\.jpg$/);
     expect(source).not.toBe(previousImage);
     previousImage = source ?? '';
-    if (index === 0) {
-      await testInfo.attach('evidence-benefit', { body: await chapter.screenshot({ path: testInfo.outputPath('evidence-benefit.png') }), contentType: 'image/png' });
+    if (index === 2) {
+      await testInfo.attach('simulation-step', { body: await panel.screenshot({ path: testInfo.outputPath('simulation-step.png') }), contentType: 'image/png' });
     }
   }
   await testInfo.attach('desktop-fifth-screen', { body: await page.screenshot(), contentType: 'image/png' });

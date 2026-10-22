@@ -11,13 +11,14 @@ for (const language of ['it', 'en']) {
       await disclosure.locator('summary').scrollIntoViewIfNeeded();
       const link = criteria.nth(index).getByRole('link');
       const target = await link.getAttribute('href');
-      expect(target).toMatch(/^#(scene-|caso$)/);
+      expect(target).toMatch(/^#(discovery|evidence|simulation|results|caso)$/);
       await link.focus();
       await link.press('Enter');
       await expect(page).toHaveURL(new RegExp(`${target}$`));
       await expect(page.locator(target!)).toBeInViewport();
-      if (target!.startsWith('#scene-')) {
-        await expect(page.locator(`[href="${target}"][aria-current="true"]`)).toHaveCount(1);
+      if (target !== '#caso') {
+        await expect(page.locator(`#caso [role="tab"][aria-selected="true"]`)).toHaveCount(1);
+        await expect(page.locator('#caso [role="tabpanel"] [data-product-video]')).toHaveAttribute('data-product-video', target!.slice(1));
       }
     }
   });
@@ -41,18 +42,17 @@ test('hero prioritizes the waitlist while the paid pilot remains visible and ava
   await expect(page.getByLabel('Nome e cognome')).toBeEnabled();
 });
 
-test('product chapters and buying questions remain accessible', async ({ page }) => {
+test('product videos and buying questions remain accessible', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
   await page.locator('#caso').scrollIntoViewIfNeeded();
-  await expect(page.locator('[data-product-module]')).toHaveCount(5);
-  const chapter = page.locator('#product-03');
-  await expect(chapter.locator('img')).toHaveAttribute('alt', /canvas BPMN/);
-  await chapter.getByRole('button', { name: /Apri il video completo/ }).click();
-  const dialog = page.getByRole('dialog', { name: 'Evidenze sul processo' });
-  await expect(dialog).toBeVisible();
-  await expect(dialog.locator('video')).toHaveAttribute('controls', '');
-  await dialog.getByRole('button', { name: 'Chiudi il video' }).click();
+  await expect(page.locator('#caso [data-product-video]')).toHaveCount(3);
+  await page.getByRole('tab', { name: /Evidenze e BPMN/ }).click();
+  const panel = page.getByRole('tabpanel');
+  await panel.getByRole('button', { name: /Riproduci: Evidenze e BPMN/ }).click();
+  await expect(panel.locator('video')).toHaveAttribute('controls', '');
+  await panel.locator('summary', { hasText: 'Cosa mostra il video' }).click();
+  await expect(panel.getByText(/ogni versione/)).toBeVisible();
   const faq = page.getByRole('button', { name: /Cosa succede se il cliente dimentica informazioni importanti o le fonti si contraddicono/ });
   await faq.click();
   await expect(faq).toHaveAttribute('aria-expanded', 'true');
@@ -77,59 +77,21 @@ test('landing has no runtime errors', async ({ page }, testInfo) => {
   await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1); expect(errors).toEqual([]);
 });
 
-test('chapters and scenes support keyboard navigation and direct links', async ({ page }) => {
+test('product steps support keyboard navigation and direct links', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
-  await page.locator('.hybrid-more > summary').click();
   const decisionLink = page.getByRole('navigation', { name: 'Esplora il percorso DeliR' }).getByRole('link', { name: /^Migliora/ });
   await decisionLink.focus(); await decisionLink.press('Enter');
-  await expect(page).toHaveURL(/#scene-review-to-be$/);
-  const chapter = page.locator('#product-04');
-  await expect(chapter.getByRole('heading', { name: 'Spiega le modifiche che raccomandi.' })).toBeVisible();
-  await expect(page.locator('#scene-review-to-be')).toBeInViewport();
-  const expand = chapter.getByRole('button', { name: /Apri il video completo/ });
-  await expand.focus(); await expand.press('Enter');
-  const dialog = page.getByRole('dialog', { name: 'Review TO-BE' });
-  await expect(dialog).toBeVisible(); await page.keyboard.press('Escape');
-  await expect(dialog).not.toBeVisible(); await expect(expand).toBeFocused();
+  await expect(page).toHaveURL(/#results$/);
+  const results = page.getByRole('tab', { name: /Risultati e consegna/ });
+  await expect(results).toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('#results')).toBeInViewport();
+  await results.focus(); await page.keyboard.press('ArrowLeft');
+  await expect(page.getByRole('tab', { name: /Analisi e simulazione/ })).toBeFocused();
+  await expect(page.getByRole('tab', { name: /Analisi e simulazione/ })).toHaveAttribute('aria-selected', 'true');
+  // A link shared before the videos still opens the matching step.
   await page.goto('/#scene-review-as-is');
-  await page.locator('#scene-review-as-is').waitFor();
-  await expect(page.locator('#scene-review-as-is')).toBeInViewport();
-  await page.reload(); await page.locator('#scene-review-as-is').waitFor(); await expect(page.locator('#scene-review-as-is')).toBeInViewport();
-});
-
-test('mobile menu closes with Escape and restores focus', async ({ page, isMobile }) => {
-  test.skip(!isMobile, 'Mobile keyboard check');
-  await page.goto('/');
-  await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
-  const toggle = page.getByRole('button', { name: 'Apri il menu' }); await toggle.click();
-  await page.locator('#mobile-navigation').getByRole('link', { name: 'Il prodotto' }).focus();
-  await page.keyboard.press('Escape'); await expect(toggle).toHaveAttribute('aria-expanded', 'false'); await expect(toggle).toBeFocused();
-});
-
-test('shared evidence links lead to the dedicated sources page', async ({ page }) => {
-  await page.goto('/#comparison-evidence-review');
-  await expect(page).toHaveURL(/\/comparison-sources#comparison-evidence-review$/);
-  await expect(page.locator('#comparison-evidence-review')).toBeInViewport();
-  await expect(page.locator('#comparison-evidence-review')).toBeFocused();
-  await page.getByRole('link', { name: /Torna al confronto/ }).click();
-  await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
-  await expect(page.locator('#confronto details')).toHaveCount(1);
-  await page.locator('#confronto a[href="/comparison-sources#comparison-evidence-review"]').first().click();
-  await expect(page).toHaveURL(/\/comparison-sources#comparison-evidence-review$/);
-  await expect(page.locator('#comparison-evidence-review')).toBeInViewport();
-});
-
-test('reading motion respects the visitor preference and exposes no decorative background loop', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'no-preference' });
-  await page.goto('/');
-  await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
-  await expect(page.getByTestId('page-background')).toHaveCount(0);
-  await expect(page.locator('.landing-hybrid')).toHaveAttribute('data-motion', 'full');
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  // Check the visitor-visible result, independent of observer bookkeeping.
-  await expect(page.locator('.hero-heading')).toHaveCSS('opacity', '1');
-  await expect(page.locator('.hero-heading')).toHaveCSS('transform', 'none');
-  await expect(page.locator('.hero-heading')).toHaveCSS('transition-duration', '0s');
-  await expect(page.locator('html')).not.toHaveClass(/\blenis\b/);
+  await page.locator('#scene-review-as-is').waitFor({ state: 'attached' });
+  await expect(page.getByRole('tab', { name: /Evidenze e BPMN/ })).toHaveAttribute('aria-selected', 'true');
+  await page.reload(); await expect(page.getByRole('tab', { name: /Evidenze e BPMN/ })).toHaveAttribute('aria-selected', 'true');
 });

@@ -23,64 +23,41 @@ test('silent films respect reduced motion and play only after opt-in', async ({ 
   await expect.poll(() => hero.locator('video').first().evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
 });
 
-test('all seventeen supplied scenes have keyboard selectors and working media', async ({ page, request }, testInfo) => {
+test('all seven product videos have posters, captions and working media', async ({ page, request }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Asset inventory runs once; playback is tested in every browser');
   await page.goto('/');
   await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
-  await expect(page.locator('[data-product-module]')).toHaveCount(5);
-  await page.locator('.hybrid-more > summary').click();
-  const ids = new Set(['hero-loop']);
-  for (const chapter of await page.locator('[data-product-module]').all()) {
-    await chapter.scrollIntoViewIfNeeded();
-    const selectors = chapter.getByRole('group').getByRole('link');
-    for (const selector of await selectors.all()) {
-      await selector.focus();
-      await selector.press('Enter');
-      await expect(selector).toHaveAttribute('aria-current', 'true');
-      const film = chapter.locator('[data-clip]');
-      const id = await film.getAttribute('data-clip');
-      expect(id).toBeTruthy();
-      ids.add(id!);
-      await expect(film.locator('img')).toHaveAttribute('alt', /\S/);
-      await expect(film.locator('video')).toHaveCount(0);
-    }
-  }
-  expect(ids.size).toBe(17);
-  for (const id of ids) {
-    const files = id === 'hero-loop'
-      ? ['hero-loop-v2.it.mp4', 'hero-loop-v2.en.mp4', 'hero-loop-v2.it.vtt', 'hero-loop-v2.en.vtt']
-      : ['mp4', 'webm', 'it.vtt', 'en.vtt'].map(extension => `${id}.${extension}`);
-    for (const file of files) {
-      const response = await request.head(`/product-clips/${file}`);
-      expect(response.ok(), `${file} is available`).toBe(true);
-      if (/\.(mp4|webm)$/.test(file)) expect(response.headers()['content-type']).toContain('video/');
+  for (const id of ['problem', 'agitate', 'discovery', 'evidence', 'simulation', 'results', 'walkthrough']) {
+    for (const extension of ['mp4', 'webm', 'jpg', 'it.vtt', 'en.vtt']) {
+      const response = await request.head(`/product-videos/${id}.${extension}`);
+      expect(response.ok(), `${id}.${extension} is available`).toBe(true);
+      if (/^(mp4|webm)$/.test(extension)) expect(response.headers()['content-type']).toContain('video/');
     }
   }
 });
 
-test('selected scene and fullscreen dialog remain accessible in English', async ({ page }, testInfo) => {
+test('product videos load only on request and remain accessible in English', async ({ page }, testInfo) => {
+  const videoRequests: string[] = [];
+  page.on('request', (request) => { if (/\/product-videos\/.*\.(mp4|webm)$/.test(request.url())) videoRequests.push(request.url()); });
   await page.goto('/');
   await expect(page.locator('.landing-page[data-client-ready="true"]')).toBeVisible();
   if (testInfo.project.name.includes('mobile')) await page.getByRole('button', { name: 'Apri il menu' }).click();
   await page.getByRole('button', { name: 'English', exact: true }).click();
   if (testInfo.project.name.includes('mobile')) await page.getByRole('button', { name: 'Close navigation menu' }).click();
-  const chapter = page.locator('#product-05');
-  await page.getByRole('navigation', { name: 'Product chapters' }).getByRole('link', { name: 'Scenarios', exact: true }).click();
-  const scene = chapter.getByRole('group').getByRole('link', { name: /Scenario comparison/ });
-  await scene.click();
-  await expect(scene).toHaveAttribute('aria-current', 'true');
-  const expand = chapter.getByRole('button', { name: 'Open full video: Scenario comparison' });
-  await expand.click();
-  const dialog = page.getByRole('dialog', { name: 'Scenario comparison' });
-  await expect(dialog).toBeVisible();
-  await expect(dialog.locator('track')).toHaveAttribute('src', '/product-clips/confronto.en.vtt');
+  await page.locator('#caso').scrollIntoViewIfNeeded();
+  await page.getByRole('tab', { name: /Analysis & Simulation/ }).click();
+  expect(videoRequests).toEqual([]);
+  const panel = page.getByRole('tabpanel');
+  await panel.getByRole('button', { name: /Play: Analysis & Simulation/ }).click();
+  const inline = panel.locator('video');
+  await expect.poll(() => inline.evaluate((video: HTMLVideoElement) => video.currentTime), { timeout: 15_000 }).toBeGreaterThan(0);
+  await expect(inline.locator('track')).toHaveAttribute('src', '/product-videos/simulation.en.vtt');
+  await inline.evaluate((video: HTMLVideoElement) => video.pause());
+  await expect(page.locator('#caso [data-product-video="walkthrough"]')).toHaveCount(0);
   if (testInfo.project.name === 'chromium') {
-    const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
+    const results = await new AxeBuilder({ page }).include('#caso').withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
     expect(results.violations).toEqual([]);
   }
-  await page.keyboard.press('Escape');
-  await expect(dialog).not.toBeVisible();
-  await expect(expand).toBeFocused();
 });
 
 test('video load failure leaves an accessible poster and explanation', async ({ page }, testInfo) => {
@@ -105,7 +82,7 @@ test('desktop autoplay retains visited clips and responds to reduced motion', as
   const hero = page.locator('#hero-product-outcome');
   await hero.scrollIntoViewIfNeeded();
   await expect.poll(() => hero.locator('video').first().evaluate((element: HTMLVideoElement) => element.currentTime)).toBeGreaterThan(0);
-  await page.locator('#product-03').scrollIntoViewIfNeeded();
+  await page.locator('#caso').scrollIntoViewIfNeeded();
   await expect(hero.locator('video')).toHaveCount(1);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect(page.locator('.product-film > div > video')).toHaveCount(0);
@@ -134,22 +111,6 @@ test('visible films and their full-video dialog autoplay on desktop and mobile',
   await expect.poll(() => inlineVideo.evaluate((video: HTMLVideoElement) => video.paused)).toBe(true);
 });
 
-test('a newly selected scene starts without pressing play', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'no-preference' });
-  await page.goto('/#product-03');
-  await expect(page.locator('.landing-page')).toHaveAttribute('data-motion', 'full');
-  const chapter = page.locator('#product-03');
-  const firstFilm = chapter.locator('.product-film');
-  await firstFilm.scrollIntoViewIfNeeded();
-  await expect.poll(() => firstFilm.locator(':scope > div > video').evaluate((video: HTMLVideoElement) => video.currentTime), { timeout: 15_000 }).toBeGreaterThan(0);
-  const secondScene = chapter.getByRole('group').getByRole('link').nth(1);
-  await secondScene.click();
-  await expect(secondScene).toHaveAttribute('aria-current', 'true');
-  await expect.poll(() => page.evaluate(() => document.documentElement.classList.contains('lenis-scrolling'))).toBe(false);
-  const selected = chapter.locator('[data-clip="fonti-e-affermazioni"]');
-  await selected.scrollIntoViewIfNeeded();
-  await expect.poll(() => selected.locator(':scope > div > video').evaluate((video: HTMLVideoElement) => video.currentTime), { timeout: 15_000 }).toBeGreaterThan(0);
-});
 test('Save-Data keeps visible films opt-in even with motion enabled', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Save-Data policy runs once');
   await page.emulateMedia({ reducedMotion: 'no-preference' });

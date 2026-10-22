@@ -9,6 +9,8 @@ import { submitWaitlist, validateWaitlist, type WaitlistErrors, type WaitlistFie
 import { privacyNoticeUrl } from '../lib/leadCaptureReadiness';
 import { interestCtaLabel, pilotApplicationHref, productInterestEmailHref, publicContactEmail } from '../lib/publicOffer';
 import { trackInterestEvent } from '../privacy/analytics';
+import { formatSeconds, walkthroughVideo } from '../content/productVideos';
+import { ProductVideoDescription, ProductVideoPlayer } from '../components/ProductVideoPlayer';
 import '../styles/premium-landing.css';
 
 const emptyFields: WaitlistFields = { email: '', practice: '', timing: '' };
@@ -75,6 +77,13 @@ export default function WaitlistPage({ captureEnabled }: { captureEnabled: boole
         <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Ti scriverò all’indirizzo indicato quando aprirò nuovi accessi a DeliR. Nessun pagamento richiesto.' : 'I’ll email you when I open new access to DeliR. No payment required.'}</p>
         <p className="mt-5 text-sm leading-6 text-slate-600">{it ? 'Hai già un progetto o un processo reale su cui vuoi lavorare?' : 'Already have a real project or process you want to work on?'}</p>
         <a data-pilot-section="waitlist-success" href={pilotApplicationHref(language)} className="btn-secondary mt-3 whitespace-normal">{it ? 'Avvia un pilot' : 'Start a pilot'}<ArrowRight aria-hidden="true" className="size-4" /></a>
+        {/* The full walkthrough is for people who have just joined, not for the landing. */}
+        <div className="mt-8 border-t border-slate-200 pt-6" data-waitlist-walkthrough>
+          <h3 className="text-lg font-semibold">{it ? `Intanto, guarda tutto il percorso di DeliR (${formatSeconds(walkthroughVideo.seconds)})` : `Meanwhile, watch DeliR’s whole path (${formatSeconds(walkthroughVideo.seconds)})`}</h3>
+          <p className="mt-2 text-sm leading-6 text-slate-600">{walkthroughVideo.summary[language]}</p>
+          <ProductVideoPlayer video={walkthroughVideo} page="waitlist" />
+          <ProductVideoDescription video={walkthroughVideo} />
+        </div>
       </section> : captureEnabled ? <form method="post" noValidate onSubmit={handleSubmit} aria-label={it ? 'Iscrizione alla lista d’attesa DeliR' : 'DeliR waitlist signup'} onFocusCapture={() => { if (!started.current) { started.current = true; trackInterestEvent('interest_form_started', language); } }} className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
         <label htmlFor="email" className="block text-sm font-semibold">Email</label>
         <input id="email" name="email" type="email" inputMode="email" autoComplete="email" spellCheck={false} required maxLength={254} disabled={locked} value={fields.email} onChange={event => updateField('email', event.target.value)} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'email-error' : undefined} className="control-enterprise mt-2 !text-base" placeholder={it ? 'nome@studio.it…' : 'you@practice.com…'} />

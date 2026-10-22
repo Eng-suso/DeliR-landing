@@ -18,17 +18,14 @@ for (const language of ['it', 'en']) {
       await expect(page.locator('.v2-quick-action')).toHaveAttribute('href', language === 'it' ? '/waitlist' : '/waitlist?lang=en');
       await expect(page.locator('#pilot')).toBeVisible();
       await expect(page.locator('#confronto table th[scope="col"]')).toHaveCount(8);
-      await expect(page.locator('[data-product-benefit="true"]')).toHaveCount(3);
-      await expect(page.locator('.hybrid-more')).not.toHaveAttribute('open', '');
-      await page.goto(`/?lang=${language}#scene-confronto`);
-      await expect(page.locator('#product-05')).toBeVisible();
-      await expect(page.locator('#scene-confronto')).toBeInViewport();
-      const expand = page.locator('#scene-confronto').getByRole('button', { name: /Apri il video completo|Open full video/ });
-      await expand.click();
-      await expect(page.getByRole('dialog')).toBeVisible();
-      await expect(page.getByRole('dialog').locator('video')).toHaveAttribute('controls', '');
-      await page.keyboard.press('Escape');
-      await expect(expand).toBeFocused();
+      await expect(page.locator('#caso [role="tab"]')).toHaveCount(4);
+      await expect(page.locator('#caso video')).toHaveCount(0);
+      await page.goto(`/?lang=${language}#simulation`);
+      await expect(page.locator('#caso [role="tabpanel"] [data-product-video]')).toHaveAttribute('data-product-video', 'simulation');
+      await expect(page.locator('#caso [role="tabpanel"]')).toBeInViewport();
+      const play = page.locator('#caso [role="tabpanel"]').getByRole('button', { name: /Riproduci|Play/ });
+      await play.click();
+      await expect(page.locator('#caso [role="tabpanel"] video')).toHaveAttribute('controls', '');
     }
   });
 }

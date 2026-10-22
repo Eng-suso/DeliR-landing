@@ -17,7 +17,7 @@ from urllib.request import Request, urlopen
 
 ROOT_FILES = {'index.html', 'index.php', 'no-script.css', 'robots.txt',
               'sitemap.xml', 'favicon.svg', 'og-image.png', 'release.json'}
-FOLDERS = {'assets', 'seo', 'product-clips'}
+FOLDERS = {'assets', 'seo', 'product-clips', 'product-videos'}
 PRESERVED = {'.htaccess', '_headers', '_redirects', 'api'}
 WAITLIST_ENTRYPOINT = 'api/waitlist.php'
 ORIGIN = 'https://delir.it'

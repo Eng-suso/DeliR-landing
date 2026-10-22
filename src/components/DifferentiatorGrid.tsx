@@ -2,11 +2,11 @@ import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 
 const proofLinks = [
-  { id: 'evidence', href: '#scene-evidenze-sul-processo' },
-  { id: 'gaps', href: '#scene-lacuna-aperta' },
-  { id: 'reconciliation', href: '#scene-passaggio-nascosto' },
-  { id: 'memory', href: '#scene-memoria' },
-  { id: 'decisions', href: '#scene-review-to-be' },
+  { id: 'evidence', href: '#evidence' },
+  { id: 'gaps', href: '#discovery' },
+  { id: 'reconciliation', href: '#discovery' },
+  { id: 'memory', href: '#results' },
+  { id: 'decisions', href: '#results' },
   { id: 'continuity', href: '#caso' },
 ];
 

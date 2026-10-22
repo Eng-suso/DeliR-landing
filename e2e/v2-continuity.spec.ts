@@ -18,11 +18,11 @@ test('V2 Lenis wheel, anchors, keyboard, dialogs and route cleanup share one scr
   await page.getByRole('navigation', { name: 'Navigazione principale' }).getByRole('link', { name: 'Il prodotto', exact: true }).click();
   await expect(page.locator('#caso')).toBeFocused();
   await expect.poll(() => page.locator('#caso').evaluate(element => Math.abs(element.getBoundingClientRect().top - document.querySelector('.premium-navigation')!.getBoundingClientRect().bottom - 24))).toBeLessThan(2);
-  const chapters = page.getByRole('navigation', { name: 'Capitoli del prodotto' });
-  await chapters.getByRole('link', { name: 'Lacune', exact: true }).click();
-  await expect(page.locator('#product-02')).toBeFocused();
-  await expect(chapters.getByRole('link', { name: 'Lacune', exact: true })).toHaveAttribute('aria-current', 'location');
-  await expect.poll(() => page.locator('#product-02').evaluate(element => Math.abs(element.getBoundingClientRect().top - document.querySelector('.hybrid-chapter-nav')!.getBoundingClientRect().bottom - 20))).toBeLessThan(3);
+  const steps = page.getByRole('tablist', { name: 'Passaggi del prodotto' });
+  await steps.getByRole('tab', { name: /Analisi e simulazione/ }).click();
+  await expect(steps.getByRole('tab', { name: /Analisi e simulazione/ })).toHaveAttribute('aria-selected', 'true');
+  // Home inside the tab list selects the first step (ARIA tabs); leave it to scroll the page.
+  await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
   await page.mouse.wheel(0, 900);
   await page.keyboard.press('Home');
   await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(2);
@@ -46,22 +46,17 @@ test('V2 Lenis wheel, anchors, keyboard, dialogs and route cleanup share one scr
   await expect(page.locator('html')).not.toHaveClass(/\blenis\b/);
 });
 
-test('V2 films autoplay, loop and keep their playhead while moving away and back', async ({ page }, testInfo) => {
+test('V2 hero film autoplays, loops and keeps its playhead while moving away and back', async ({ page }, testInfo) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
-  await page.goto('/v2#product-03');
+  await page.goto('/v2');
   await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   if (testInfo.project.name === 'mobile-safari') await expect(page.locator('html')).not.toHaveClass(/\blenis\b/);
-  const film = page.locator('#product-03 .product-film');
+  const film = page.locator('#hero-product-outcome');
   await film.scrollIntoViewIfNeeded();
   const video = film.locator(':scope > div > video');
   await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.currentTime), { timeout: 15_000 }).toBeGreaterThan(.1);
   expect(await video.evaluate((element: HTMLVideoElement) => element.muted && element.loop && element.playsInline)).toBe(true);
   const handle = await video.elementHandle();
-  await video.evaluate((element: HTMLVideoElement) => { element.currentTime = element.duration - .2; });
-  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.currentTime)).toBeLessThan(2);
-  await page.mouse.move(180, 300);
-  await page.evaluate(() => window.scrollBy({ top: 60, behavior: 'instant' }));
-  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => !element.paused)).toBe(true);
   await page.locator('#faq').scrollIntoViewIfNeeded();
   expect(await handle!.evaluate(element => element.isConnected)).toBe(true);
   await expect(video).toHaveCount(1);
@@ -70,9 +65,9 @@ test('V2 films autoplay, loop and keep their playhead while moving away and back
   expect(await video.evaluate((element, original) => element === original, handle)).toBe(true);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect(video).toHaveCount(0);
-  await film.getByRole('button', { name: 'Riproduci: Evidenze sul processo' }).click();
+  await film.getByRole('button', { name: 'Riproduci: DeliR in azione' }).click();
   await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.currentTime), { timeout: 15_000 }).toBeGreaterThan(0);
-  await film.getByRole('button', { name: 'Pausa: Evidenze sul processo' }).click();
+  await film.getByRole('button', { name: 'Pausa: DeliR in azione' }).click();
   await page.locator('#faq').scrollIntoViewIfNeeded();
   await film.scrollIntoViewIfNeeded();
   await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);

@@ -107,3 +107,21 @@ it('keeps waitlist signals separate from paid pilot leads', async () => {
   saveConsent(false);
   expect(trackInterestEvent('interest_submit_attempt', 'it')).toBe(false);
 });
+
+it('counts product video plays only for known videos and only after consent', async () => {
+  const { startAnalytics, trackVideoEvent } = await import('./analytics');
+  expect(trackVideoEvent('video_play', 'simulation', 'it')).toBe(false);
+  saveConsent(true); startAnalytics(true);
+  expect(trackVideoEvent('video_play', 'simulation', 'en')).toBe(true);
+  expect(trackVideoEvent('video_complete', 'discovery', 'it')).toBe(true);
+  expect(trackVideoEvent('video_play', 'https://example.com/?email=x', 'it')).toBe(false);
+  const queue = (Reflect.get(window, 'dataLayer') as ArrayLike<unknown>[]).filter(item => item[0] === 'event');
+  expect(queue.map(item => item[1])).toEqual(['video_play', 'video_complete']);
+  expect(queue[0][2]).toMatchObject({ video_id: 'simulation', section: 'caso', page_location: 'https://delir.it/?lang=en' });
+  expect(JSON.stringify(queue)).not.toContain('example.com');
+  expect(trackVideoEvent('video_play', 'walkthrough', 'it', 'waitlist')).toBe(true);
+  const last = (Reflect.get(window, 'dataLayer') as ArrayLike<unknown>[]).filter(item => item[0] === 'event').at(-1)!;
+  expect(last[2]).toMatchObject({ video_id: 'walkthrough', section: 'waitlist-success', page_location: 'https://delir.it/waitlist' });
+  saveConsent(false);
+  expect(trackVideoEvent('video_play', 'results', 'it')).toBe(false);
+});

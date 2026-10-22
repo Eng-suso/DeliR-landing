@@ -1,0 +1,21 @@
+/* Product video player, shared by the landing and the waitlist confirmation.
+   Landing tokens when present, the same values otherwise. */
+.pv-player {
+  --pv-blue: var(--delir-blue, #004580);
+  --pv-edge: var(--delir-edge, #ccd5d9);
+  --pv-tint: var(--delir-tint, #eaf0f3);
+  --pv-ink: var(--delir-ink, #101e2b);
+  position: relative; margin-top: 20px; aspect-ratio: 16 / 9; overflow: hidden;
+  border: 1px solid var(--pv-edge); border-radius: 12px; background: var(--pv-tint);
+}
+.pv-player img, .pv-player video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.pv-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px; color: #fff; background: rgb(12 40 59 / 18%); transition: background 220ms cubic-bezier(.22, 1, .36, 1); }
+.pv-play > svg { box-sizing: content-box; padding: 18px; border-radius: 999px; background: var(--pv-blue); box-shadow: 0 12px 30px rgb(12 40 59 / 30%); }
+.pv-play > span { padding: 6px 12px; border-radius: 999px; background: rgb(12 40 59 / 80%); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.pv-play:hover { background: rgb(12 40 59 / 8%); }
+.pv-play:focus-visible { outline: 3px solid var(--pv-blue); outline-offset: -3px; }
+.pv-failed { position: absolute; inset: auto 12px 12px; padding: 10px 14px; border-radius: 8px; background: #fff; color: var(--pv-ink); font-size: 14px; }
+.pv-description { margin-top: 12px; color: var(--delir-muted, #4d5c68); font-size: 14px; line-height: 1.6; }
+.pv-description > summary { display: inline-flex; align-items: center; min-height: 44px; cursor: pointer; color: var(--delir-blue, #004580); font-weight: 500; text-decoration: underline; text-underline-offset: 4px; }
+.pv-description > p { max-width: 75ch; }
+@media (prefers-reduced-motion: reduce) { .pv-play { transition: none; } }
