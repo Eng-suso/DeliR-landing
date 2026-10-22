@@ -119,6 +119,9 @@ it('counts product video plays only for known videos and only after consent', as
   expect(queue.map(item => item[1])).toEqual(['video_play', 'video_complete']);
   expect(queue[0][2]).toMatchObject({ video_id: 'simulation', section: 'caso', page_location: 'https://delir.it/?lang=en' });
   expect(JSON.stringify(queue)).not.toContain('example.com');
+  expect(trackVideoEvent('video_play', 'walkthrough', 'it', 'waitlist')).toBe(true);
+  const last = (Reflect.get(window, 'dataLayer') as ArrayLike<unknown>[]).filter(item => item[0] === 'event').at(-1)!;
+  expect(last[2]).toMatchObject({ video_id: 'walkthrough', section: 'waitlist-success', page_location: 'https://delir.it/waitlist' });
   saveConsent(false);
   expect(trackVideoEvent('video_play', 'results', 'it')).toBe(false);
 });
