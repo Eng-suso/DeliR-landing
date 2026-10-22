@@ -35,6 +35,13 @@ export const interestCtaLabel = {
   en: 'Join the waitlist',
 } as const;
 
+// The full walkthrough (4:47) is the waitlist reward, sent only by email: the
+// welcome email links to /demo. Show it only where welcomeMailReady is true.
+export const waitlistReward = {
+  it: 'In regalo con l’iscrizione: ricevi via email la demo completa del prodotto (5 minuti)',
+  en: 'Sign-up gift: get the full 5-minute product demo by email',
+} as const;
+
 export const waitlistRiskReversals = {
   it: ['Iscrizione gratuita', 'Senza impegno', 'Nessuna carta'],
   en: ['Free signup', 'No commitment', 'No card required'],

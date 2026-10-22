@@ -1,8 +1,9 @@
 import { heroCopy as copy } from '../content/landingCopy';
-import { ArrowDown, ArrowRight, Check } from 'lucide-react';
+import { ArrowDown, ArrowRight, Check, Play } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { productClips } from '../lib/productClips';
-import { interestCtaLabel, pilotApplicationHref, productInterestHref, waitlistRiskReversals } from '../lib/publicOffer';
+import { interestCtaLabel, pilotApplicationHref, productInterestHref, waitlistReward, waitlistRiskReversals } from '../lib/publicOffer';
+import { welcomeMailReady } from '../lib/leadCaptureReadiness';
 import ProductFilm from './ProductFilm';
 
 
@@ -43,7 +44,8 @@ export default function Hero({ compact = false, subheadline, benefits }: { compa
           <a data-interest-section="hero" href={productInterestHref(language)} className="btn-primary whitespace-normal rounded-full px-7">{interestCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4" /></a>
           <a href="#caso" className="btn-text min-h-11 justify-center text-brand-blue">{t.secondary}<ArrowDown aria-hidden="true" className="size-4" /></a>
         </div>
-        <p className="mt-4 inline-flex items-start gap-2 text-xs leading-5 text-slate-600">{compact ? waitlistRiskReversals[language].join(' · ') : <><Check aria-hidden="true" className="mt-0.5 size-3.5 shrink-0 text-brand-blue" />{t.waitlistNote}</>}</p>
+        {welcomeMailReady ? <p data-waitlist-reward className="mt-4 flex items-start gap-2 text-sm font-semibold leading-6 text-brand-blue"><Play aria-hidden="true" className="mt-1 size-4 shrink-0" />{waitlistReward[language]}</p> : null}
+        <p data-waitlist-reassurance className={`${welcomeMailReady ? 'mt-1' : 'mt-4'} inline-flex items-start gap-2 text-xs leading-5 text-slate-600`}>{compact ? waitlistRiskReversals[language].join(' · ') : <><Check aria-hidden="true" className="mt-0.5 size-3.5 shrink-0 text-brand-blue" />{t.waitlistNote}</>}</p>
         <p className="mt-2 text-sm leading-6 text-slate-600">{t.pilotLead} <a data-pilot-section="hero" href={pilotApplicationHref(language)} className="font-semibold text-brand-blue underline underline-offset-4">{t.pilotAction}</a>.</p>
       </div>
       <div className="hero-visual min-w-0" data-scroll-visual="hero">
