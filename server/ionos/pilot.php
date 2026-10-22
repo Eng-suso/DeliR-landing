@@ -47,8 +47,11 @@ function delir_handle_pilot(array $server, array $config, callable $readBody, ?c
     if (!filter_var($ip, FILTER_VALIDATE_IP)) return delir_result(403, 'client_unavailable');
     try { $pdo = $connect ? $connect() : delir_connect_pilot($config); }
     catch (PDOException $error) { throw new RuntimeException('database_connection_failed', 0, $error); }
-    try { return delir_store_pilot($pdo, $data, $ip, $config['rate_secret'], time()); }
+    try { $result = delir_store_pilot($pdo, $data, $ip, $config['rate_secret'], time()); }
     catch (PDOException $error) { throw new RuntimeException('database_write_failed', 0, $error); }
+    // The entrypoint confirms by email after answering; the public body is unchanged.
+    if ($result['status'] === 201) $result['confirm'] = ['to' => $data['email'], 'name' => $data['name'], 'timing' => $data['timing']];
+    return $result;
 }
 
 function delir_connect_pilot(array $config): PDO

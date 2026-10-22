@@ -33,7 +33,10 @@ it('keeps unconfigured development intake closed too', () => {
 });
 it('requires practice for qualification but does not require timing', () => {
   const fetchMock = vi.spyOn(globalThis, 'fetch');
-  show(); fireEvent.click(screen.getByRole('button', { name: 'Entra nella lista d’attesa' }));
+  show();
+  // Without the welcome email there is no reward to announce.
+  expect(screen.queryByRole('complementary')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Entra nella lista d’attesa' }));
   expect(screen.getByLabelText('Email')).toHaveFocus();
   expect(fetchMock).not.toHaveBeenCalled();
   expect(screen.getByLabelText(/Quando pensi che lo useresti/)).not.toBeRequired();
@@ -50,10 +53,22 @@ it('preserves failed requests and focuses receipt only after server acceptance',
   fireEvent.click(screen.getByRole('button', { name: 'Entra nella lista d’attesa' }));
   await waitFor(() => expect(screen.getByRole('heading', { name: 'Sei nella lista d’attesa.' })).toHaveFocus());
   expect(screen.queryByRole('form')).not.toBeInTheDocument();
-  // The full walkthrough is offered only after a confirmed sign-up, as a poster until play.
-  expect(screen.getByRole('heading', { name: /Intanto, guarda tutto il percorso di DeliR \(4:47\)/ })).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: /Riproduci: Il percorso completo/ })).toBeInTheDocument();
-  expect(document.querySelector('[data-product-video="walkthrough"] video')).toBeNull();
+  // The demo is delivered by email only, never on the confirmation.
+  expect(document.querySelector('[data-product-video]')).toBeNull();
+});
+it('announces the demo by email and points to the inbox when the welcome email is on', async () => {
+  for (const [key, value] of Object.entries({ VITE_PRIVACY_NOTICE_READY: 'true', VITE_LEAD_CAPTURE_READY: 'true', VITE_PRIVACY_NOTICE_URL: '/privacy', VITE_WAITLIST_READY: 'true', VITE_WELCOME_MAIL_READY: 'true' })) vi.stubEnv(key, value);
+  vi.resetModules();
+  const { default: Page } = await import('./WaitlistPage');
+  const { LanguageProvider: Provider } = await import('../i18n/LanguageContext');
+  vi.spyOn(globalThis, 'fetch').mockResolvedValue(Response.json({ accepted: true }, { status: 201 }));
+  render(<MemoryRouter><Provider><Page captureEnabled /></Provider></MemoryRouter>);
+  expect(screen.getByRole('complementary', { name: 'In regalo: la demo completa del prodotto, 5 minuti' })).toBeVisible();
+  fill();
+  fireEvent.click(screen.getByRole('button', { name: 'Iscriviti e ricevi la demo' }));
+  await waitFor(() => expect(screen.getByRole('heading', { name: 'Sei nella lista d’attesa.' })).toHaveFocus());
+  expect(screen.getByText(/ti ho inviato una email di conferma con il link alla demo/)).toBeVisible();
+  expect(document.querySelector('[data-product-video]')).toBeNull();
 });
 it('prevents multiple requests while the server response is pending', async () => {
   let resolve!: (response: Response) => void;

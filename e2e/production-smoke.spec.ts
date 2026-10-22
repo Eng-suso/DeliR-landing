@@ -13,7 +13,7 @@ test('critical production routes render', async ({ page }, testInfo) => {
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   if (process.env.PLAYWRIGHT_WAITLIST_ENABLED === 'true') {
     await expect(page.getByRole('form')).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Entra nella lista d’attesa' })).toBeEnabled();
+    await expect(page.getByRole('button', { name: 'Iscriviti e ricevi la demo' })).toBeEnabled();
   } else {
     await expect(page.getByRole('heading', { name: 'La lista d’attesa online non è ancora aperta.' })).toBeVisible();
     await expect(page.getByRole('form')).toHaveCount(0);

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 // Serve build-time HTML; no database, credentials, visitor data or AI calls.
 $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
-$routes = ['/' => 'home', '/pilot' => 'pilot', '/security-data' => 'security-data', '/comparison-sources' => 'comparison-sources', '/privacy' => 'privacy', '/waitlist' => 'waitlist', '/v2' => 'v2'];
+$routes = ['/' => 'home', '/pilot' => 'pilot', '/security-data' => 'security-data', '/comparison-sources' => 'comparison-sources', '/privacy' => 'privacy', '/waitlist' => 'waitlist', '/demo' => 'demo', '/v2' => 'v2'];
 $language = ($_GET['lang'] ?? '') === 'en' ? 'en' : 'it';
 $name = $routes[$path] ?? '404';
 $file = __DIR__ . '/seo/' . $name . '.' . $language . '.html';

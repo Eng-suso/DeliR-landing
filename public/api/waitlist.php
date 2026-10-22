@@ -22,6 +22,12 @@ function delir_interest_private_event(string $private, string $event): void
         flock($handle, LOCK_UN);
     } finally { fclose($handle); }
 }
+/** "_rejected_auth" for the library's fixed mail codes, nothing for anything else. */
+function delir_mail_failure(Throwable $error): string
+{
+    $code = $error instanceof RuntimeException ? $error->getMessage() : '';
+    return preg_match('/^(?:welcome_)?mail_([a-z_]{1,40})$/', $code, $match) === 1 ? '_' . $match[1] : '';
+}
 try {
     if (!is_dir($private)) throw new RuntimeException('unconfigured');
     $stage = 'private_config_missing';
@@ -52,12 +58,14 @@ try {
     if ($result['status'] === 429) header('Retry-After: ' . $result['retry_after']);
     echo json_encode($result['body'], JSON_THROW_ON_ERROR);
     // The visitor already has the answer; the welcome email must never change it.
+    // Each outcome is a fixed code: sent, disabled, failed_<step>, or not_due for a
+    // repeat address or the earlier notice. Never the address or the server reply.
     $welcome = $result['welcome_to'] ?? null;
     if (is_string($welcome) && function_exists('delir_send_welcome')) {
         if (function_exists('fastcgi_finish_request')) fastcgi_finish_request();
-        try { if (delir_send_welcome($config, $welcome)) delir_interest_private_event($private, 'welcome_mail_sent'); }
-        catch (Throwable $mailError) { delir_interest_private_event($private, 'welcome_mail_failed'); }
-    }
+        try { delir_interest_private_event($private, delir_send_welcome($config, $welcome, null, $result['welcome_profile'] ?? []) ? 'welcome_mail_sent' : 'welcome_mail_disabled'); }
+        catch (Throwable $mailError) { delir_interest_private_event($private, 'welcome_mail_failed' . delir_mail_failure($mailError)); }
+    } elseif ($result['status'] === 201) delir_interest_private_event($private, 'welcome_mail_not_due');
 } catch (Throwable $error) {
     // No request fields, IP, SQL, configuration values or exception details.
     $known = ['rate_secret_invalid', 'database_configuration_invalid', 'database_connection_failed', 'database_write_failed'];

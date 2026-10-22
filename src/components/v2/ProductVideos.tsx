@@ -1,10 +1,11 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Play } from 'lucide-react';
 import { useId, useRef, useState } from 'react';
 import { journeyCopy } from '../../content/landingCopy';
 import { formatSeconds, legacyFragments, narrativeVideos, solveVideos, type ProductVideo, type ProductVideoId } from '../../content/productVideos';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { useFragment } from '../../lib/useFragment';
-import { interestCtaLabel, productInterestHref } from '../../lib/publicOffer';
+import { interestCtaLabel, productInterestHref, waitlistReward } from '../../lib/publicOffer';
+import { welcomeMailReady } from '../../lib/leadCaptureReadiness';
 import { ProductVideoDescription, ProductVideoPlayer } from '../ProductVideoPlayer';
 
 const copy = {
@@ -99,7 +100,10 @@ export default function ProductVideos() {
       </article>
 
       <div className="mt-10 flex flex-col gap-5 border-t border-slate-200 pt-8 lg:flex-row lg:items-center lg:justify-between">
-        <p className="max-w-2xl text-base font-medium leading-7 text-brand-ink">{journey.principle}</p>
+        <div className="max-w-2xl">
+          <p className="text-base font-medium leading-7 text-brand-ink">{journey.principle}</p>
+          {welcomeMailReady ? <p data-waitlist-reward className="mt-2 flex items-start gap-2 text-sm font-semibold leading-6 text-brand-blue"><Play aria-hidden="true" className="mt-1 size-4 shrink-0" />{waitlistReward[language]}</p> : null}
+        </div>
         <a data-interest-section="caso" href={productInterestHref(language)} className="btn-primary whitespace-normal">{interestCtaLabel[language]}<ArrowRight aria-hidden="true" className="size-4" /></a>
       </div>
     </div>

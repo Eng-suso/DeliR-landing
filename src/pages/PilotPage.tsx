@@ -17,7 +17,7 @@ import FragmentNavigation from '../components/FragmentNavigation';
 import { useFragment } from '../lib/useFragment';
 import '../styles/premium-landing.css';
 import { trackPilotEvent } from '../privacy/analytics';
-import { privacyNoticeUrl } from '../lib/leadCaptureReadiness';
+import { privacyNoticeUrl, welcomeMailReady } from '../lib/leadCaptureReadiness';
 
 const emptyFields: PilotApplicationFields = { name: '', email: '', practice: '', timing: '', projectBrief: '' };
 const fieldClass = 'control-enterprise mt-2 !text-base';
@@ -151,6 +151,7 @@ export default function PilotPage({ captureEnabled }: PilotPageProps) {
               <span className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-700"><ClipboardCheck aria-hidden="true" className="h-8 w-8" /></span>
               <h2 id="application-title" tabIndex={-1} className="mt-6 font-display text-3xl font-medium text-slate-950">{t.success}</h2>
               <p className="mt-3 max-w-md text-base leading-7 text-slate-600">{t.successBody}</p>
+              {welcomeMailReady ? <p className="mt-3 max-w-md text-base leading-7 text-slate-600">{language === 'it' ? 'Ti ho inviato una email di conferma con il link alla demo completa del prodotto. Se non la trovi entro qualche minuto, guarda nello spam.' : 'I sent you a confirmation email with the link to the full product demo. If it is not there within a few minutes, check your spam folder.'}</p> : null}
               <Link to={homeHref} className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-blue-700 hover:text-blue-900">{t.back}<ArrowRight aria-hidden="true" className="h-4 w-4" /></Link>
             </div>
           ) : (

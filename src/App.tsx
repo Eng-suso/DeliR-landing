@@ -10,6 +10,7 @@ import ConsentManager from './components/ConsentManager';
 // The primary conversion page is critical content: avoid a second JS/CSS
 // waterfall before the hero. Secondary routes still load on demand.
 const WaitlistPage = lazy(() => import('./pages/WaitlistPage'));
+const DemoPage = lazy(() => import('./pages/DemoPage'));
 const PilotPage = lazy(() => import('./pages/PilotPage'));
 const SecurityDataPage = lazy(() => import('./pages/SecurityDataPage'));
 const ComparisonSourcesPage = lazy(() => import('./pages/ComparisonSourcesPage'));
@@ -28,6 +29,7 @@ export default function App() {
             <Route path="/" element={<LandingV2Page homePath="/" />} />
             <Route path="/pilot" element={<PilotPage captureEnabled={pilotCaptureReady} />} />
             <Route path="/waitlist" element={<WaitlistPage captureEnabled={waitlistCaptureReady} />} />
+            <Route path="/demo" element={<DemoPage />} />
             <Route path="/security-data" element={<SecurityDataPage />} />
             <Route path="/comparison-sources" element={<ComparisonSourcesPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />

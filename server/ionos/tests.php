@@ -114,6 +114,8 @@ if ($dsn) {
     check($pdo->query('SELECT name FROM pilot_applications LIMIT 1')->fetchColumn() === $data['name'], 'injection stored as literal text');
     check(!str_contains(json_encode($pdo->query('SELECT * FROM pilot_rate_limits')->fetchAll(PDO::FETCH_ASSOC)), '192.0.2.1'), 'no raw IP');
     check(delir_store_pilot($pdo, $data, '192.0.2.1', $config['rate_secret'], $clock + 900)['status'] === 201, 'quota window expires');
+    $accepted = delir_handle_pilot(array_replace($server, ['REMOTE_ADDR' => '192.0.2.77']), $config, static fn() => $raw, static fn() => $pdo);
+    check($accepted['body'] === ['accepted' => true] && ($accepted['confirm']['to'] ?? null) === strtolower(json_decode($raw, true)['email']), 'accepted application carries its confirmation address');
     $pdo->exec('DELETE FROM pilot_rate_limits');
     for ($i = 0; $i < 100; $i++) check(delir_store_pilot($pdo, $data, '192.0.2.' . ($i + 1), $config['rate_secret'], $clock)['status'] === 201, 'global quota allows');
     check(delir_store_pilot($pdo, $data, '192.0.2.200', $config['rate_secret'], $clock)['status'] === 429, 'global quota blocks');
