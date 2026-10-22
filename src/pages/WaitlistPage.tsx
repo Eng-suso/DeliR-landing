@@ -6,7 +6,7 @@ import LanguageSwitch from '../components/LanguageSwitch';
 import SkipLink from '../components/SkipLink';
 import { useLanguage } from '../i18n/LanguageContext';
 import { submitWaitlist, validateWaitlist, type WaitlistErrors, type WaitlistFields } from '../lib/waitlist';
-import { privacyNoticeUrl } from '../lib/leadCaptureReadiness';
+import { privacyNoticeUrl, welcomeMailReady } from '../lib/leadCaptureReadiness';
 import { interestCtaLabel, pilotApplicationHref, productInterestEmailHref, publicContactEmail } from '../lib/publicOffer';
 import { trackInterestEvent } from '../privacy/analytics';
 import { formatSeconds, walkthroughVideo } from '../content/productVideos';
@@ -74,7 +74,7 @@ export default function WaitlistPage({ captureEnabled }: { captureEnabled: boole
       {status === 'success' ? <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8" aria-labelledby="interest-success">
         <CheckCircle2 aria-hidden="true" className="size-8 text-brand-blue" />
         <h2 id="interest-success" ref={success} tabIndex={-1} className="mt-4 text-2xl font-semibold">{it ? 'Sei nella lista d’attesa.' : 'You’re on the waitlist.'}</h2>
-        <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Ti scriverò all’indirizzo indicato quando aprirò nuovi accessi a DeliR. Nessun pagamento richiesto.' : 'I’ll email you when I open new access to DeliR. No payment required.'}</p>
+        <p className="mt-3 text-base leading-7 text-slate-600">{it ? 'Ti scriverò all’indirizzo indicato quando aprirò nuovi accessi a DeliR. Nessun pagamento richiesto.' : 'I’ll email you when I open new access to DeliR. No payment required.'}{welcomeMailReady ? (it ? ' Se è la prima iscrizione con questo indirizzo, ricevi anche una email con il link al video completo.' : ' If this is your first signup with this address, you’ll also receive an email with a link to the full video.') : ''}</p>
         <p className="mt-5 text-sm leading-6 text-slate-600">{it ? 'Hai già un progetto o un processo reale su cui vuoi lavorare?' : 'Already have a real project or process you want to work on?'}</p>
         <a data-pilot-section="waitlist-success" href={pilotApplicationHref(language)} className="btn-secondary mt-3 whitespace-normal">{it ? 'Avvia un pilot' : 'Start a pilot'}<ArrowRight aria-hidden="true" className="size-4" /></a>
         {/* The full walkthrough is for people who have just joined, not for the landing. */}

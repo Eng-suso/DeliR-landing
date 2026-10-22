@@ -34,6 +34,46 @@ try {
     interest_check(false, 'connection failure must not accept');
 } catch (RuntimeException $error) { interest_check(true, 'failure propagates to public generic response'); }
 
+// Welcome email: accepted notice versions, message, SMTP dialogue, configuration gate.
+interest_check(delir_validate_interest(json_encode(array_replace($fields, ['noticeVersion' => 'product-interest-2026-10-22'])))['noticeVersion'] === 'product-interest-2026-10-22', 'accept the notice announcing the welcome email');
+$mailConfig = ['welcome_mail_enabled' => true, 'smtp_host' => 'smtp.example.test', 'smtp_port' => 465, 'smtp_user' => 'contact@delir.it', 'smtp_password' => 'secret-pass', 'mail_from' => 'contact@delir.it'];
+$message = delir_welcome_message($mailConfig, 'demo@example.test', 'abc123', 1900000000);
+[$head, $encoded] = explode("\r\n\r\n", $message, 2);
+$text = base64_decode(str_replace("\r\n", '', $encoded), true);
+interest_check(str_contains($head, "To: <demo@example.test>") && str_contains($head, 'From: DeliR <contact@delir.it>'), 'welcome headers');
+interest_check(str_contains($head, 'Subject: =?UTF-8?B?') && str_contains($head, 'Content-Type: text/plain; charset=UTF-8'), 'encoded subject and plain text');
+interest_check(is_string($text) && substr_count($text, DELIR_WALKTHROUGH_URL) === 2, 'walkthrough link in both languages');
+interest_check(str_contains($text, 'Non ti sei iscritto tu?') && str_contains($text, 'Didn’t sign up?'), 'opt-out line in both languages');
+interest_check(!preg_match('/<img|https?:\/\/[^\s]*\?(utm|t)=/i', $text), 'no tracking in the email');
+foreach (array_filter(explode("\r\n", $encoded)) as $line) interest_check(strlen($line) <= 76 && $line[0] !== '.', 'body lines are short and need no dot-stuffing');
+try { delir_welcome_message($mailConfig, "demo@example.test\r\nBcc: other@example.test", 'x', 0); interest_check(false, 'header injection must fail'); }
+catch (RuntimeException $error) { interest_check($error->getMessage() === 'welcome_mail_address_invalid', 'reject header injection'); }
+$scripted = static function (array $replies, array &$written): callable {
+    return static function () use ($replies, &$written): array {
+        $queue = $replies;
+        return [
+            'read' => static function () use (&$queue): string { return (string) array_shift($queue); },
+            'write' => static function (string $data) use (&$written): void { $written[] = $data; },
+            'close' => static function () use (&$written): void { $written[] = 'CLOSED'; },
+        ];
+    };
+};
+$written = [];
+delir_smtp_send($mailConfig, 'demo@example.test', $message, $scripted(["220 ready\r\n", "250-smtp\r\n", "250 AUTH LOGIN\r\n", "334 VXNlcm5hbWU6\r\n", "334 UGFzc3dvcmQ6\r\n", "235 ok\r\n", "250 ok\r\n", "250 ok\r\n", "354 go\r\n", "250 queued\r\n"], $written));
+interest_check($written[0] === "EHLO delir.it\r\n" && $written[2] === base64_encode('contact@delir.it') . "\r\n", 'SMTP greeting and login');
+interest_check($written[4] === "MAIL FROM:<contact@delir.it>\r\n" && $written[5] === "RCPT TO:<demo@example.test>\r\n", 'SMTP envelope');
+interest_check(str_ends_with($written[7], "\r\n.\r\n") && end($written) === 'CLOSED', 'message terminated and connection closed');
+$written = [];
+try {
+    delir_smtp_send($mailConfig, 'demo@example.test', $message, $scripted(["220 ready\r\n", "250 ok\r\n", "334 x\r\n", "334 x\r\n", "535 auth failed\r\n"], $written));
+    interest_check(false, 'rejected login must fail');
+} catch (RuntimeException $error) { interest_check($error->getMessage() === 'welcome_mail_rejected' && end($written) === 'CLOSED', 'rejected login fails and closes'); }
+$neverOpen = static function (): array { throw new RuntimeException('SMTP must not be opened'); };
+interest_check(delir_send_welcome(array_replace($mailConfig, ['welcome_mail_enabled' => false]), 'demo@example.test', $neverOpen) === false, 'welcome email is off unless enabled');
+interest_check(delir_send_welcome(array_diff_key($mailConfig, ['welcome_mail_enabled' => true]), 'demo@example.test', $neverOpen) === false, 'old configurations send nothing');
+try { delir_send_welcome(array_replace($mailConfig, ['smtp_password' => 'REPLACE_ON_SERVER']), 'demo@example.test', $neverOpen); interest_check(false, 'placeholder must fail'); }
+catch (RuntimeException $error) { interest_check($error->getMessage() === 'welcome_mail_configuration_invalid', 'placeholder credentials are refused before connecting'); }
+
 // Run the actual public entrypoint against disposable private files, never IONOS.
 $fixture = sys_get_temp_dir() . '/delir-interest-endpoint-' . bin2hex(random_bytes(8));
 mkdir($fixture . '/public/api', 0700, true);
@@ -121,6 +161,17 @@ if ($dsn) {
     interest_check(delir_cleanup_interest($pdo, false) === 1, 'retention dry run counts');
     interest_check((int) $pdo->query('SELECT COUNT(*) FROM product_interest')->fetchColumn() === 1, 'dry run preserves requests');
     interest_check(delir_cleanup_interest($pdo, true) === 1, 'twelve-month retention removes expired requests');
+    // Only a new address shown the welcome notice gets the email; duplicates stay silent.
+    $pdo->exec('DELETE FROM product_interest');
+    $pdo->exec('DELETE FROM pilot_rate_limits');
+    $welcomeRaw = json_encode(array_replace($fields, ['email' => 'welcome@example.test', 'noticeVersion' => 'product-interest-2026-10-22']));
+    $connect = static fn(): PDO => $pdo;
+    $first = delir_handle_interest($server, $config, static fn() => $welcomeRaw, $connect);
+    interest_check($first['body'] === ['accepted' => true] && ($first['welcome_to'] ?? null) === 'welcome@example.test', 'new address gets the welcome email');
+    $again = delir_handle_interest($server, $config, static fn() => $welcomeRaw, $connect);
+    interest_check($again['body'] === $first['body'] && !isset($again['welcome_to']), 'duplicate gets the same answer and no email');
+    $oldNotice = delir_handle_interest($server, $config, static fn() => json_encode(array_replace($fields, ['email' => 'old@example.test'])), $connect);
+    interest_check(!isset($oldNotice['welcome_to']), 'no email to people shown the earlier notice');
     echo "MariaDB product-interest integration passed.\n";
 } elseif (in_array('--require-db', $argv, true)) {
     throw new RuntimeException('DELIR_TEST_DSN required');

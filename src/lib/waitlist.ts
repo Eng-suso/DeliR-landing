@@ -1,4 +1,7 @@
-export const interestNoticeVersion = 'product-interest-2026-10-12';
+import { welcomeMailReady } from './leadCaptureReadiness';
+
+// The 2026-10-22 notice adds the welcome email with the product walkthrough.
+export const interestNoticeVersion = welcomeMailReady ? 'product-interest-2026-10-22' : 'product-interest-2026-10-12';
 export const interestPractices = ['independent', 'consulting-team', 'in-house', 'other'] as const;
 export const interestTimings = ['active', 'next-90-days', 'exploring'] as const;
 export type WaitlistFields = { email: string; practice: string; timing: string };

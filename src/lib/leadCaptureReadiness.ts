@@ -8,3 +8,6 @@ const enabled = privacyNoticeReady && import.meta.env.VITE_LEAD_CAPTURE_READY ==
 export const pilotCaptureReady = enabled && Boolean(import.meta.env.VITE_PILOT_ENDPOINT?.trim());
 export const waitlistCaptureReady = enabled && import.meta.env.VITE_WAITLIST_READY === 'true'
   && Boolean(import.meta.env.VITE_WAITLIST_ENDPOINT?.trim());
+// Set only after the private IONOS library and SMTP configuration are installed:
+// the earlier private library rejects the notice version that announces the email.
+export const welcomeMailReady = waitlistCaptureReady && import.meta.env.VITE_WELCOME_MAIL_READY === 'true';

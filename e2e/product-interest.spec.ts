@@ -11,7 +11,7 @@ test('waitlist validates, preserves errors, and confirms explicit acceptance', a
     attempts++;
     expect(route.request().postDataJSON()).toEqual({
       email: 'demo@example.test', practice: 'independent', timing: '',
-      source: 'delir-product-interest', noticeVersion: 'product-interest-2026-10-12',
+      source: 'delir-product-interest', noticeVersion: 'product-interest-2026-10-22',
     });
     await route.fulfill(attempts === 1
       ? { status: 200, contentType: 'text/html', body: '<html>Wrong endpoint</html>' }
@@ -34,6 +34,7 @@ test('waitlist validates, preserves errors, and confirms explicit acceptance', a
   await submit.click();
   await expect(page.getByRole('heading', { name: 'Sei nella lista d’attesa.' })).toBeFocused();
   expect(attempts).toBe(2);
+  await expect(page.getByText(/ricevi anche una email con il link al video completo/)).toBeVisible();
   await expect(page.getByRole('form')).toHaveCount(0);
   // Only now the full walkthrough: poster first, plays on request.
   const walkthrough = page.locator('[data-waitlist-walkthrough]');
