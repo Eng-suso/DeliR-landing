@@ -52,6 +52,19 @@ try {
     if ($result['status'] === 405) header('Allow: POST');
     if ($result['status'] === 429) header('Retry-After: ' . $result['retry_after']);
     echo json_encode($result['body'], JSON_THROW_ON_ERROR);
+    // Confirmation email after the answer, with the waitlist library's SMTP client.
+    // Fixed codes only; a delivery failure never changes the accepted application.
+    $confirm = $result['confirm'] ?? null;
+    if (is_array($confirm) && is_file($private . '/waitlist.php')) {
+        if (function_exists('fastcgi_finish_request')) fastcgi_finish_request();
+        try {
+            require_once $private . '/waitlist.php';
+            if (function_exists('delir_send_pilot_confirmation')) delir_private_event($private, delir_send_pilot_confirmation($config, $confirm) ? 'pilot_confirmation_sent' : 'pilot_confirmation_disabled');
+        } catch (Throwable $mailError) {
+            $code = $mailError instanceof RuntimeException ? $mailError->getMessage() : '';
+            delir_private_event($private, 'pilot_confirmation_failed' . (preg_match('/^mail_([a-z_]{1,40})$/', $code, $match) === 1 ? '_' . $match[1] : ''));
+        }
+    }
 } catch (Throwable $error) {
     // Fixed event only. Never log payloads, IP addresses, SQL or exception text.
     $known = ['rate_secret_invalid', 'database_configuration_invalid', 'database_connection_failed', 'database_write_failed'];
