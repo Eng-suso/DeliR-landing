@@ -1,6 +1,6 @@
 # Product videos — Problem → Agitate → Solve
 
-The product section (`#caso`) replaces the wall of 17 clips with six short videos and one optional walkthrough. Visitors are not asked to watch a course in order: each video stands on its own, and the Solve steps are a tab list so a consultant can go straight to the step they care about, then join the waitlist.
+The product section (`#caso`) replaces the wall of 17 clips with three sections — Problem, Agitate, Solve — and six short videos. Visitors are not asked to watch a course in order: each video stands on its own, and the four Solve steps are a tab list so a consultant can go straight to the step they care about, then join the waitlist. The old clips are removed from the site; only the hero recording remains in `public/product-clips`.
 
 | Section | Video | Length | What it shows (product only) |
 | --- | --- | --- | --- |
@@ -10,7 +10,7 @@ The product section (`#caso`) replaces the wall of 17 clips with six short video
 | 03 Solve | `evidence` | 49 s | As-Is in BPMN 2.0 (2 lanes, 5 activities) → evidence 100% → quote per element → version history |
 | 03 Solve | `simulation` | ~59 s | As-Is replay with the whole process and six moving KPIs → heatmap → To-Be replay |
 | 03 Solve | `results` | ~41 s | As-Is / To-Be comparison → handover checks → read-only process-owner dashboard |
-| Optional | `walkthrough` | see file | Every product scene in full, in one recording |
+| After sign-up | `walkthrough` | 4:47 | Every product scene in full, in one recording — shown on the waitlist confirmation, not on the landing |
 
 ## Source and editing rules
 
@@ -45,4 +45,5 @@ Durations in `src/content/productVideos.ts` must match the files (`ffprobe`). Te
 - Posters only; a video downloads when the visitor presses play (no autoplay, Save-Data friendly).
 - Captions IT/EN from the same labels; native controls.
 - Deep links: `#discovery`, `#evidence`, `#simulation`, `#results`. Earlier `#product-*` and `#scene-*` links open the matching step.
-- Measurement (only with analytics consent): `video_play` and `video_complete` with the allowlisted `video_id`. With `interest_cta_clicked` in the same session this shows which step precedes a waitlist request.
+- The full walkthrough appears only after a confirmed waitlist sign-up (`/waitlist` confirmation). The backend sends no email today; sending it by email needs a mail provider and an updated privacy notice.
+- Measurement (only with analytics consent): `video_play` and `video_complete` with the allowlisted `video_id`, `section` `caso` on the landing and `waitlist-success` after sign-up. With `interest_cta_clicked` in the same session this shows which step precedes a waitlist request and whether new sign-ups watch the walkthrough.
