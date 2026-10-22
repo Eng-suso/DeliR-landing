@@ -44,3 +44,19 @@ it('keeps intake closed when the notice is not ready despite endpoint and captur
   expect(result.pilotCaptureReady).toBe(false);
   expect(result.waitlistCaptureReady).toBe(false);
 });
+
+it.each([
+  ['', false, 'product-interest-2026-10-12'],
+  ['false', false, 'product-interest-2026-10-12'],
+  ['true', true, 'product-interest-2026-10-22'],
+] as const)('announces the welcome email only once the server is ready (%s)', async (flag, expectedReady, expectedNotice) => {
+  vi.stubEnv('VITE_PRIVACY_NOTICE_READY', 'true');
+  vi.stubEnv('VITE_LEAD_CAPTURE_READY', 'true');
+  vi.stubEnv('VITE_PRIVACY_NOTICE_URL', '/privacy');
+  vi.stubEnv('VITE_WAITLIST_READY', 'true');
+  vi.stubEnv('VITE_WAITLIST_ENDPOINT', '/api/waitlist.php');
+  vi.stubEnv('VITE_WELCOME_MAIL_READY', flag);
+  expect((await import('./leadCaptureReadiness')).welcomeMailReady).toBe(expectedReady);
+  // The earlier private library accepts only the earlier notice version.
+  expect((await import('./waitlist')).interestNoticeVersion).toBe(expectedNotice);
+});
