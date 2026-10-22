@@ -23,12 +23,9 @@ for (const language of ['it', 'en']) {
       await page.goto(`/?lang=${language}#simulation`);
       await expect(page.locator('#caso [role="tabpanel"] [data-product-video]')).toHaveAttribute('data-product-video', 'simulation');
       await expect(page.locator('#caso [role="tabpanel"]')).toBeInViewport();
-      const open = page.locator('#caso').getByRole('button', { name: /Guarda il percorso completo|Watch the full walkthrough/ });
-      await open.click();
-      await expect(page.getByRole('dialog')).toBeVisible();
-      await expect(page.getByRole('dialog').locator('video')).toHaveAttribute('controls', '');
-      await page.keyboard.press('Escape');
-      await expect(open).toBeFocused();
+      const play = page.locator('#caso [role="tabpanel"]').getByRole('button', { name: /Riproduci|Play/ });
+      await play.click();
+      await expect(page.locator('#caso [role="tabpanel"] video')).toHaveAttribute('controls', '');
     }
   });
 }

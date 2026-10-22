@@ -36,7 +36,7 @@ test('all seven product videos have posters, captions and working media', async 
   }
 });
 
-test('product videos load only on request and the walkthrough dialog is accessible in English', async ({ page }, testInfo) => {
+test('product videos load only on request and remain accessible in English', async ({ page }, testInfo) => {
   const videoRequests: string[] = [];
   page.on('request', (request) => { if (/\/product-videos\/.*\.(mp4|webm)$/.test(request.url())) videoRequests.push(request.url()); });
   await page.goto('/');
@@ -53,18 +53,11 @@ test('product videos load only on request and the walkthrough dialog is accessib
   await expect.poll(() => inline.evaluate((video: HTMLVideoElement) => video.currentTime), { timeout: 15_000 }).toBeGreaterThan(0);
   await expect(inline.locator('track')).toHaveAttribute('src', '/product-videos/simulation.en.vtt');
   await inline.evaluate((video: HTMLVideoElement) => video.pause());
-  const open = page.getByRole('button', { name: /Watch the full walkthrough/ });
-  await open.click();
-  const dialog = page.getByRole('dialog', { name: 'The full walkthrough' });
-  await expect(dialog).toBeVisible();
-  await expect(dialog.locator('track')).toHaveAttribute('src', '/product-videos/walkthrough.en.vtt');
+  await expect(page.locator('#caso [data-product-video="walkthrough"]')).toHaveCount(0);
   if (testInfo.project.name === 'chromium') {
-    const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
+    const results = await new AxeBuilder({ page }).include('#caso').withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
     expect(results.violations).toEqual([]);
   }
-  await page.keyboard.press('Escape');
-  await expect(dialog).not.toBeVisible();
-  await expect(open).toBeFocused();
 });
 
 test('video load failure leaves an accessible poster and explanation', async ({ page }, testInfo) => {

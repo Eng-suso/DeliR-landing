@@ -1,16 +1,15 @@
 import { expect, test } from '@playwright/test';
 
-test('the walkthrough dialog holds scroll ownership and releases it on close', async ({ page }, testInfo) => {
+test('the hero film dialog holds scroll ownership and releases it on close', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Fine-pointer controller ownership runs in Chromium.');
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.emulateMedia({ reducedMotion: 'no-preference' });
-  await page.goto('/v2#caso');
+  await page.goto('/v2');
+  await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
   await expect(page.locator('html')).toHaveClass(/\blenis\b/);
-  const open = page.getByRole('button', { name: /Guarda il percorso completo/ });
-  await open.scrollIntoViewIfNeeded();
-  await expect(page.locator('html')).not.toHaveClass(/lenis-scrolling/);
+  const open = page.locator('#hero-product-outcome').getByRole('button', { name: 'Apri il video completo: DeliR in azione' });
   await open.click();
-  await expect(page.getByRole('dialog', { name: 'Il percorso completo' })).toBeVisible();
+  await expect(page.getByRole('dialog', { name: 'DeliR in azione' })).toBeVisible();
   await expect(page.locator('html')).toHaveClass(/lenis-stopped/);
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog')).toHaveCount(0);

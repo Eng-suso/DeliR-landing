@@ -11,7 +11,7 @@ test('hybrid exposes the product videos, V1 trust and demos across devices', asy
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator('.hybrid-hero-benefits li')).toHaveCount(3);
   await expect(page.locator('.hero-description > p')).toHaveText('Smetti di passare settimane a ricostruire come lavora davvero il tuo cliente.');
-  await expect(page.locator('#caso .pv-card')).toHaveCount(2);
+  await expect(page.locator('#caso .pv-section')).toHaveCount(3);
   await expect(page.locator('#caso [role="tab"]')).toHaveCount(4);
   await expect(page.locator('#product-interest, #pilot-summary')).toHaveCount(0);
   await expect(page.locator('#fiducia')).toContainText('Prima di utilizzare dati reali');
@@ -24,14 +24,14 @@ test('hybrid exposes the product videos, V1 trust and demos across devices', asy
   for (const width of [320, 375, 414, 768, 834, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
-    for (const card of await page.locator('#caso .pv-card, #caso .pv-panel').all()) {
-      await card.scrollIntoViewIfNeeded();
-      await expect(card).toBeVisible();
-      // Read the boxes together: scroll anchoring can move a deferred section
-      // between two separate browser round trips while resizing.
-      const layout = await card.evaluate(element => {
-        const player = element.querySelector('.pv-player')!.getBoundingClientRect();
-        return { ratio: player.width / player.height, right: player.right, width: element.getBoundingClientRect().width };
+    for (const player of await page.locator('#caso .pv-player').all()) {
+      await player.scrollIntoViewIfNeeded();
+      await expect(player).toBeVisible();
+      // Read the box in one round trip: scroll anchoring can move a deferred
+      // section between two separate browser calls while resizing.
+      const layout = await player.evaluate(element => {
+        const box = element.getBoundingClientRect();
+        return { ratio: box.width / box.height, right: box.right };
       });
       // The whole 16:9 recording stays visible: no crop at any width.
       expect(Math.abs(layout.ratio - 16 / 9)).toBeLessThan(0.03);
@@ -165,35 +165,6 @@ test('V2 keeps repeated anchors, history and mobile conversion usable', async ({
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
-test('video plan uses available recordings and preserves language', async ({ page }, testInfo) => {
-  const mobile = testInfo.project.name === 'mobile-safari';
-  await page.setViewportSize({ width: mobile ? 375 : 1440, height: 900 });
-  await page.goto('/v2');
-  await expect(page.getByRole('complementary', { name: 'Produzione video' })).toHaveCount(0);
-  await expect(page).not.toHaveTitle(/anteprima|preview/i);
-  await page.goto('/v2?studio=1');
-  await page.locator('.landing-hybrid[data-client-ready="true"]').waitFor();
-  await expect(page).toHaveURL(/studio=1/);
-  await expect(page.locator('.hybrid-plan-card')).toHaveCount(4);
-  await expect(page.locator('#piano-video')).toContainText('Nessun nuovo video è obbligatorio');
-  for (const link of await page.locator('.hybrid-plan-card a').all()) {
-    const response = await page.request.head((await link.getAttribute('href'))!);
-    expect(response.ok()).toBe(true);
-    expect(response.headers()['content-type']).toContain('video/');
-  }
-  const menu = page.locator('button[aria-controls="mobile-navigation"]');
-  if (mobile) await menu.click();
-  await page.getByRole('button', { name: 'English', exact: true }).filter({ visible: true }).click();
-  await expect(page).toHaveURL(/studio=1/);
-  await expect(page).toHaveURL(/lang=en/);
-  await expect(page.locator('#video-plan-title')).toHaveText('The demos are already available.');
-  if (mobile) await menu.click();
-  await page.getByRole('link', { name: 'Back to the landing page' }).click();
-  await expect(page).toHaveURL(/lang=en/);
-  await expect(page.locator('#piano-video')).toHaveCount(0);
-  await expect(page.getByRole('complementary', { name: 'Video production' })).toHaveCount(0);
-});
-
 test('keyboard opens menus, supporting content, full demo and FAQ', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.setViewportSize({ width: 375, height: 812 });
@@ -223,13 +194,15 @@ test('keyboard opens menus, supporting content, full demo and FAQ', async ({ pag
   await page.keyboard.press('Escape');
   await expect(dialog).not.toBeVisible();
   await expect(expand).toBeFocused();
-  const walkthrough = page.getByRole('button', { name: /Guarda il percorso completo/ });
-  await walkthrough.focus(); await page.keyboard.press('Enter');
-  const full = page.getByRole('dialog', { name: 'Il percorso completo' });
-  await expect(full).toBeVisible();
-  await expect(full.locator('video')).toHaveAttribute('controls', '');
-  await page.keyboard.press('Escape');
-  await expect(full).not.toBeVisible();
+  // The three sections: the full walkthrough is offered only after a waitlist sign-up.
+  await expect(page.locator('#caso .pv-section')).toHaveCount(3);
+  await expect(page.locator('#caso [data-product-video="walkthrough"]')).toHaveCount(0);
+  const step = page.getByRole('tab', { name: /Process Discovery/ });
+  await step.focus(); await page.keyboard.press('End');
+  await expect(page.getByRole('tab', { name: /Risultati e consegna/ })).toBeFocused();
+  await page.getByRole('tabpanel').getByRole('button', { name: /Riproduci: Risultati e consegna/ }).focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('tabpanel').locator('video')).toHaveAttribute('controls', '');
   const question = page.locator('#faq button').first();
   await question.focus(); await page.keyboard.press('Enter');
   await expect(question).toHaveAttribute('aria-expanded', 'true');

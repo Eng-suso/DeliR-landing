@@ -35,6 +35,12 @@ test('waitlist validates, preserves errors, and confirms explicit acceptance', a
   await expect(page.getByRole('heading', { name: 'Sei nella lista d’attesa.' })).toBeFocused();
   expect(attempts).toBe(2);
   await expect(page.getByRole('form')).toHaveCount(0);
+  // Only now the full walkthrough: poster first, plays on request.
+  const walkthrough = page.locator('[data-waitlist-walkthrough]');
+  await expect(walkthrough.getByRole('heading')).toHaveText(/Intanto, guarda tutto il percorso di DeliR \(4:47\)/);
+  await walkthrough.getByRole('button', { name: /Riproduci: Il percorso completo/ }).click();
+  await expect.poll(() => walkthrough.locator('video').evaluate((video: HTMLVideoElement) => video.currentTime), { timeout: 15_000 }).toBeGreaterThan(0);
+  await expect(walkthrough.locator('track')).toHaveAttribute('src', '/product-videos/walkthrough.it.vtt');
 });
 
 test('optional timing and English waitlist flow remain usable on small screens', async ({ page }) => {
@@ -51,6 +57,8 @@ test('optional timing and English waitlist flow remain usable on small screens',
   await page.getByLabel(/When do you think you would use it/).selectOption('active');
   await page.getByRole('button', { name: 'Join the waitlist' }).click();
   await expect(page.getByRole('heading', { name: 'You’re on the waitlist.' })).toBeFocused();
+  await expect(page.locator('[data-waitlist-walkthrough]').getByRole('button', { name: /Play: The full walkthrough/ })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
 test('waitlist keeps pilot as an explicit alternative and sends no automatic external data', async ({ page }, testInfo) => {
