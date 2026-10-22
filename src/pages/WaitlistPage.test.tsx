@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { LanguageProvider } from '../i18n/LanguageContext';
 import WaitlistPage from './WaitlistPage';
 
-vi.mock('../privacy/analytics', () => ({ trackInterestEvent: vi.fn(() => true) }));
+vi.mock('../privacy/analytics', () => ({ trackInterestEvent: vi.fn(() => true), trackVideoEvent: vi.fn(() => true) }));
 beforeEach(() => { localStorage.clear(); vi.stubEnv('VITE_WAITLIST_ENDPOINT', '/api/waitlist.php'); });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllEnvs(); });
 function show(enabled = true) {
@@ -45,10 +45,15 @@ it('preserves failed requests and focuses receipt only after server acceptance',
   await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('non è stata confermata'));
   expect(screen.getByLabelText('Email')).toHaveValue('demo@example.test');
   expect(screen.queryByRole('heading', { name: 'Sei nella lista d’attesa.' })).not.toBeInTheDocument();
+  expect(document.querySelector('[data-product-video="walkthrough"]')).toBeNull();
   fetchMock.mockResolvedValue(Response.json({ accepted: true }, { status: 201 }));
   fireEvent.click(screen.getByRole('button', { name: 'Entra nella lista d’attesa' }));
   await waitFor(() => expect(screen.getByRole('heading', { name: 'Sei nella lista d’attesa.' })).toHaveFocus());
   expect(screen.queryByRole('form')).not.toBeInTheDocument();
+  // The full walkthrough is offered only after a confirmed sign-up, as a poster until play.
+  expect(screen.getByRole('heading', { name: /Intanto, guarda tutto il percorso di DeliR \(4:47\)/ })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /Riproduci: Il percorso completo/ })).toBeInTheDocument();
+  expect(document.querySelector('[data-product-video="walkthrough"] video')).toBeNull();
 });
 it('prevents multiple requests while the server response is pending', async () => {
   let resolve!: (response: Response) => void;
