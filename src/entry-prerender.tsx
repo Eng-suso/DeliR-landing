@@ -10,7 +10,7 @@ import WaitlistPage from './pages/WaitlistPage';
 import DemoPage from './pages/DemoPage';
 import NotFoundPage from './pages/NotFoundPage';
 import { pilotCaptureReady, waitlistCaptureReady } from './lib/leadCaptureReadiness';
-export { pageMetadata, siteRoutes } from './lib/siteMetadata';
+export { pageMetadata, siteRoutes, indexableRoutes, siteUrl } from './lib/siteMetadata';
 export { structuredData } from './lib/structuredData';
 
 // Render the same public components and readiness flags as the browser application.

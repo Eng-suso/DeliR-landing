@@ -16,7 +16,7 @@ from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 ROOT_FILES = {'index.html', 'index.php', 'no-script.css', 'robots.txt',
-              'sitemap.xml', 'favicon.svg', 'og-image.png', 'release.json'}
+              'sitemap.xml', 'llms.txt', 'favicon.svg', 'og-image.png', 'release.json'}
 FOLDERS = {'assets', 'seo', 'product-clips', 'product-videos'}
 PRESERVED = {'.htaccess', '_headers', '_redirects', 'api'}
 WAITLIST_ENTRYPOINT = 'api/waitlist.php'
@@ -145,7 +145,7 @@ def verify(sha):
             for asset in set(re.findall(r'(?:src|href)="(/assets/[^"?]+\.(?:js|css))"', body)):
                 if response(asset, sha)[0] != 200:
                     raise ReleaseError('Published entry asset is unavailable')
-    for path in ['/robots.txt', '/sitemap.xml']:
+    for path in ['/robots.txt', '/sitemap.xml', '/llms.txt']:
         if response(path, sha)[0] != 200:
             raise ReleaseError('Published SEO document is unavailable')
     if response('/delir-deploy-missing-' + sha, sha)[0] != 404:

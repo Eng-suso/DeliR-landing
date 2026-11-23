@@ -22,9 +22,15 @@ export const metadataCopy = {
 };
 
 export const siteRoutes = ['/', '/pilot', '/security-data', '/comparison-sources', '/privacy', '/waitlist', '/demo', '/v2'] as const;
+export const siteUrl = (pathname: string, language: 'it' | 'en') => `https://delir.it${pathname}${language === 'en' ? '?lang=en' : ''}`;
+
+// Only indexable documents declare language alternates; a missing page declares no canonical.
 export function pageMetadata(pathname: string, language: 'it' | 'en') {
-  if (pathname === '/v2') return { title: metadataCopy[language].home[0], description: metadataCopy[language].home[1], key: 'preview', robots: 'noindex, follow', canonical: `https://delir.it/v2${language === 'en' ? '?lang=en' : ''}` };
+  if (pathname === '/v2') return { title: metadataCopy[language].home[0], description: metadataCopy[language].home[1], key: 'preview', robots: 'noindex, follow', indexable: false, canonical: siteUrl('/v2', language) };
   const key = pathname === '/' ? 'home' : pathname === '/pilot' ? 'pilot' : pathname === '/waitlist' ? 'waitlist' : pathname === '/demo' ? 'demo' : pathname === '/privacy' ? 'privacy' : pathname === '/security-data' ? 'security' : pathname === '/comparison-sources' ? 'comparison' : 'missing';
   const [title, description] = metadataCopy[language][key];
-  return { title, description, key, robots: key === 'missing' || key === 'waitlist' || key === 'demo' || key === 'privacy' ? 'noindex, follow' : 'index, follow', canonical: `https://delir.it${pathname}${language === 'en' ? '?lang=en' : ''}` };
+  const indexable = !(key === 'missing' || key === 'waitlist' || key === 'demo' || key === 'privacy');
+  return { title, description, key, robots: indexable ? 'index, follow' : 'noindex, follow', indexable, canonical: key === 'missing' ? '' : siteUrl(pathname, language) };
 }
+
+export const indexableRoutes = siteRoutes.filter(route => pageMetadata(route, 'it').indexable);

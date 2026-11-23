@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { pageMetadata } from '../lib/siteMetadata';
+import { pageMetadata, siteUrl } from '../lib/siteMetadata';
 import { structuredData } from '../lib/structuredData';
 import { preload } from 'react-dom';
 import { productClips } from '../lib/productClips';
@@ -14,7 +14,7 @@ export default function SiteMetadata() {
   useEffect(() => {
     const hero = productClips.evidence;
     if (pathname === '/') preload(hero.poster, { as: 'image', imageSrcSet: hero.posterSrcSet, imageSizes: heroPosterSizes, fetchPriority: 'high' });
-    const { title, description, robots, canonical } = pageMetadata(pathname, language);
+    const { title, description, robots, canonical, indexable } = pageMetadata(pathname, language);
     document.title = title;
     const setMeta = (attribute: 'name' | 'property', name: string, content: string) => {
       let element = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${name}"]`);
@@ -31,14 +31,18 @@ export default function SiteMetadata() {
     setMeta('property', 'og:description', description);
     setMeta('property', 'og:locale', language === 'it' ? 'it_IT' : 'en_US');
     setMeta('property', 'og:locale:alternate', language === 'it' ? 'en_US' : 'it_IT');
-    setMeta('property', 'og:url', canonical);
+    setMeta('property', 'og:url', canonical || 'https://delir.it/');
     let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    if (!link) { link = document.createElement('link'); link.rel = 'canonical'; document.head.append(link); }
-    link.href = canonical;
-    for (const locale of ['it', 'en', 'x-default']) {
+    if (!canonical) link?.remove();
+    else {
+      if (!link) { link = document.createElement('link'); link.rel = 'canonical'; document.head.append(link); }
+      link.href = canonical;
+    }
+    for (const locale of ['it', 'en', 'x-default'] as const) {
       let alternate = document.head.querySelector<HTMLLinkElement>(`link[hreflang="${locale}"]`);
+      if (!indexable) { alternate?.remove(); continue; }
       if (!alternate) { alternate = document.createElement('link'); alternate.rel = 'alternate'; alternate.hreflang = locale; document.head.append(alternate); }
-      alternate.href = `https://delir.it${pathname}${locale === 'en' ? '?lang=en' : ''}`;
+      alternate.href = siteUrl(pathname, locale === 'en' ? 'en' : 'it');
     }
     let schema = document.getElementById('delir-structured-data');
     if (!schema) { schema = document.createElement('script'); schema.id = 'delir-structured-data'; schema.setAttribute('type', 'application/ld+json'); document.head.append(schema); }
