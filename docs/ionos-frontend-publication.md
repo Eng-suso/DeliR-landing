@@ -1,6 +1,6 @@
 # Pubblicare il frontend con HTML IT/EN su IONOS
 
-Preparazione locale: `npm run build`. Caricare **il contenuto** di `dist/` nella directory `/public` collegata a delir.it, inclusi `.htaccess`, `index.php`, `index.html`, `seo/`, `assets/`, `no-script.css`, `robots.txt` e `sitemap.xml`. Non caricare sorgenti, `node_modules`, file `.env` o la directory privata.
+Preparazione locale: `npm run build`. Caricare **il contenuto** di `dist/` nella directory `/public` collegata a delir.it, inclusi `.htaccess`, `index.php`, `index.html`, `seo/`, `assets/`, `no-script.css`, `robots.txt`, `sitemap.xml` e `llms.txt` (questi ultimi due generati dalla build). Non caricare sorgenti, `node_modules`, file `.env` o la directory privata.
 
 Prima dell'upload conservare una copia del frontend e dell'eventuale `.htaccess` esistente. Se quest'ultimo contiene regole operative, confrontarle e integrarle: non sostituirlo alla cieca. SFTP deve mostrare anche i file nascosti. Caricare prima gli asset e i documenti `seo/`, poi i file di ingresso; non svuotare `/public` né rimuovere l'API funzionante. Nessuna modifica a `/private/delir/config.php` o alle credenziali database.
 
@@ -12,7 +12,7 @@ Verificare dopo upload:
 - `/pilot`, `/security-data`, `/comparison-sources`: 200, anche dopo ricarica e nelle varianti EN.
 - `/privacy` e `/waitlist`: `noindex, follow` nell'HTML iniziale.
 - `/indirizzo-inesistente`: 404 reale.
-- `/robots.txt` e `/sitemap.xml`: 200; nessun asset mancante e nessun errore server dopo le nuove regole.
+- `/robots.txt`, `/sitemap.xml` e `/llms.txt`: 200; nessun asset mancante e nessun errore server dopo le nuove regole.
 - API pilot esistente e configurazione privata preservate. Non usare richieste con dati reali per un controllo tecnico.
 
 La risposta HTTPS e gli eventuali reindirizzamenti HTTP/www devono essere controllati in produzione prima di richiedere l'indicizzazione. Se IONOS rifiuta una direttiva `.htaccess`, ripristinare la copia e correggere la direttiva identificata nei log: non esporre directory o file privati per risolvere l'errore.
