@@ -8,7 +8,7 @@ export function structuredData(pathname: string, language: 'it' | 'en') {
   const meta = pageMetadata(pathname, language);
   // Entity facts only: no prices, ratings or reviews until they exist and are visible on the page.
   const graph: object[] = [
-    { '@type': 'Organization', '@id': ORGANIZATION_ID, name: 'DeliR', url: 'https://delir.it/', logo: 'https://delir.it/favicon.svg', email: 'contact@delir.it' },
+    { '@type': 'Organization', '@id': ORGANIZATION_ID, name: 'DeliR', url: 'https://delir.it/', logo: 'https://delir.it/favicon.svg', email: 'contact@delir.it', sameAs: ['https://www.linkedin.com/company/delir/'] },
     { '@type': 'WebSite', '@id': 'https://delir.it/#website', name: 'DeliR', url: 'https://delir.it/', inLanguage: ['it', 'en'], publisher: { '@id': ORGANIZATION_ID } },
   ];
   // A missing page has no canonical URL to describe.
