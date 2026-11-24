@@ -89,12 +89,20 @@ Crea la pagina su linkedin.com → **Per le aziende** → **Crea una pagina azie
 
 ## 5. Directory software
 
-Registrati e crea la scheda prodotto. Testo uguale per tutte.
+Molte directory rifiutano i prodotti non ancora rilasciati e le landing con lista d’attesa (es. SaaSHub lo dice esplicitamente). Quindi due fasi. Le schede vanno inviate da te: alcune directory non accettano invii automatici.
 
-- **Product Hunt** — https://www.producthunt.com (lancialo quando hai la pagina LinkedIn e i video pronti)
+**Adesso (pre-lancio, lista d’attesa):**
+
+- **BetaList** — https://betalist.com (fatto per startup non ancora lanciate)
+
+**Al lancio pubblico (quando chiunque può registrarsi e usare DeliR):**
+
+- **Product Hunt** — https://www.producthunt.com (account personale come Maker; il lancio si gioca in 24 ore)
 - **SaaSHub** — https://www.saashub.com
 - **G2** — https://www.g2.com (sezione "for vendors")
 - **Capterra** — https://www.capterra.com/vendors
+
+Molte richiedono un sito in inglese: usa `https://delir.it/?lang=en`.
 
 **Nome:** DeliR
 **Sito:** https://delir.it
