@@ -20,7 +20,7 @@ describe('public search metadata', () => {
     const software = graph.find(item => item['@type'] === 'SoftwareApplication');
     expect(software).toMatchObject({ name: 'DeliR', description: pageMetadata('/', 'en').description, publisher: { '@id': 'https://delir.it/#organization' } });
     for (const claim of ['offers', 'aggregateRating', 'review']) expect(software).not.toHaveProperty(claim);
-    expect(graph.find(item => item['@type'] === 'Organization')).toMatchObject({ url: 'https://delir.it/' });
+    expect(graph.find(item => item['@type'] === 'Organization')).toMatchObject({ url: 'https://delir.it/', sameAs: ['https://www.linkedin.com/company/delir/'] });
   });
   it('gives missing pages no canonical and lists only indexable routes', () => {
     expect(pageMetadata('/missing', 'it').canonical).toBe('');
